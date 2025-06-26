@@ -1,0 +1,36 @@
+I have an existing internship-matching site at https://www.intrn.xyz/. I’d like you to:
+
+1. **Analyze the current site**  
+   – Note its structure, pages, and user flows.  
+   – Identify pain points in UX and visual design.
+
+2. **Backend architecture**  
+   – Set up a secure user-authentication system (email/password signup & login) for two roles: Students and Companies.  
+   – Use a modern framework (e.g. Node.js/Express or Python/Flask) with a relational database (e.g. PostgreSQL) or NoSQL (e.g. MongoDB) for storing users, internships, applications, and blog posts.  
+   – Include password hashing, session management (JWT or server sessions), and email verification.
+
+3. **Core features**  
+   – **Students**: Browse/search/filter internships by location, field, duration; save favorites; apply online.  
+   – **Companies**: Create a company profile; post/edit internship listings; view applicant list and contact info.  
+   – **Blog**: CMS-driven blog section for career advice — authors can create/edit posts.  
+   – **Admin panel**: Manage users, internships, and blog posts.
+
+4. **Frontend redesign**  
+   – Implement a sleek, mobile-first UI with React (or your preferred SPA framework).  
+   – Modern component library (e.g. Tailwind UI or Material-UI).  
+   – Clear role-based dashboards: Students see internships & profile; Companies see dashboard & listings.  
+   – Global navigation: three-line “hamburger” menu (or top bar) that expands to show links to Dashboard, Search, Blog, Profile, Help.
+
+5. **UX/UI details**  
+   – Clean typography, consistent spacing, vibrant but professional color palette.  
+   – Responsive cards for internship listings, with hover effects.  
+   – Animated transitions for menu open/close and page navigation.  
+   – Accessible forms with inline validation and helpful error messages.
+
+6. **Additional polish**  
+   – Email notifications: confirmation on signup, application receipts.  
+   – Onboarding wizard: guide new users through setting up profiles.  
+   – Search autocomplete and saved filters.  
+   – SEO essentials: meta tags, sitemap, robots.txt.
+
+Please scaffold the full project structure, show me the key code files (server entry, routes/controllers, models, frontend components, styling), and include deployment instructions (e.g. on Replit or Vercel). Let’s build a polished, production-ready internship portal.
