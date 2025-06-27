@@ -35,6 +35,11 @@ export default function Navigation() {
 
   if (user?.role === "admin") {
     userNavItems.push({ href: "/admin", label: "Admin", icon: Settings });
+    
+    // Special backend access for admin1, admin2, admin3
+    if (['admin1', 'admin2', 'admin3'].includes(user.username)) {
+      userNavItems.push({ href: "/admin-backend", label: "Backend", icon: User });
+    }
   }
 
   const NavLinks = ({ mobile = false, onItemClick = () => {} }) => (

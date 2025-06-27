@@ -8,6 +8,47 @@ export function registerRoutes(app: Express): Server {
   // Authentication routes
   setupAuth(app);
 
+  // Middleware to check admin access for specific users
+  const requireSpecialAdmin = (req: any, res: any, next: any) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
+    
+    if (!['admin1', 'admin2', 'admin3'].includes(req.user.username)) {
+      return res.status(403).json({ error: "Access denied" });
+    }
+    
+    next();
+  };
+
+  // Admin backend routes - only accessible by admin1, admin2, admin3
+  app.get("/api/admin/companies", requireSpecialAdmin, async (req, res) => {
+    try {
+      const companies = await storage.getCompaniesList();
+      res.json(companies);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch companies" });
+    }
+  });
+
+  app.get("/api/admin/students", requireSpecialAdmin, async (req, res) => {
+    try {
+      const students = await storage.getStudentsList();
+      res.json(students);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch students" });
+    }
+  });
+
+  app.get("/api/admin/pending-signups", requireSpecialAdmin, async (req, res) => {
+    try {
+      const pendingUsers = await storage.getPendingSignups();
+      res.json(pendingUsers);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch pending signups" });
+    }
+  });
+
   // Internship routes
   app.get("/api/internships", async (req, res) => {
     try {

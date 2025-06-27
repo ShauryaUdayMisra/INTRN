@@ -42,6 +42,11 @@ export interface IStorage {
   updateBlogPost(id: number, updates: Partial<InsertBlogPost>): Promise<BlogPost | undefined>;
   deleteBlogPost(id: number): Promise<boolean>;
   
+  // Admin-specific methods
+  getCompaniesList(): Promise<User[]>;
+  getStudentsList(): Promise<User[]>;
+  getPendingSignups(): Promise<User[]>;
+  
   sessionStore: session.SessionStore;
 }
 
@@ -240,6 +245,33 @@ export class DatabaseStorage implements IStorage {
   async deleteBlogPost(id: number): Promise<boolean> {
     const result = await db.delete(blogPosts).where(eq(blogPosts.id, id));
     return result.rowCount > 0;
+  }
+
+  // Admin-specific methods
+  async getCompaniesList(): Promise<User[]> {
+    const companies = await db.select().from(users).where(eq(users.role, "company"));
+    return companies;
+  }
+
+  async getStudentsList(): Promise<User[]> {
+    const students = await db.select().from(users).where(eq(users.role, "student"));
+    return students;
+  }
+
+  async getPendingSignups(): Promise<User[]> {
+    // For now, return all recently created users (within last 7 days)
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    
+    const pendingUsers = await db.select()
+      .from(users)
+      .where(
+        and(
+          or(eq(users.role, "student"), eq(users.role, "company")),
+          eq(users.profileComplete, false)
+        )
+      );
+    return pendingUsers;
   }
 }
 
