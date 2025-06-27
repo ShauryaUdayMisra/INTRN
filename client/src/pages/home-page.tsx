@@ -37,33 +37,34 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <Navigation />
       
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary-50 to-white py-20 lg:py-32 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-gray-100 via-gray-50 to-white py-20 lg:py-32 overflow-hidden">
         {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-10 w-20 h-20 bg-primary rounded-full"></div>
-          <div className="absolute top-32 right-20 w-16 h-16 bg-secondary-500 rounded-full"></div>
-          <div className="absolute bottom-20 left-1/4 w-12 h-12 bg-green-500 rounded-full"></div>
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-20 left-10 w-32 h-32 bg-gray-400 rounded-full blur-xl"></div>
+          <div className="absolute top-32 right-20 w-24 h-24 bg-gray-500 rounded-full blur-xl"></div>
+          <div className="absolute bottom-20 left-1/4 w-20 h-20 bg-gray-300 rounded-full blur-xl"></div>
+          <div className="absolute top-1/2 right-1/3 w-16 h-16 bg-gray-600 rounded-full blur-xl"></div>
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-              Connect Students with
-              <span className="text-primary"> Dream Internships</span>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-800 mb-6">
+              India's Premier Platform for
+              <span className="text-gray-600"> High School Internships</span>
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              The modern platform where talented students discover meaningful internships and forward-thinking companies find their next generation of leaders.
+              Bridge the gap in internship opportunities! Connect with verified companies across India and gain real-world experience while building your future career.
             </p>
 
             {/* Dual Role CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
               <Button 
                 size="lg" 
-                className="w-full sm:w-auto px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
+                className="w-full sm:w-auto px-8 py-4 text-lg font-semibold bg-gray-700 hover:bg-gray-800 text-white shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
                 onClick={handleStudentSignup}
               >
                 <GraduationCap className="mr-2 h-5 w-5" />
@@ -72,7 +73,7 @@ export default function HomePage() {
               <Button 
                 variant="outline" 
                 size="lg" 
-                className="w-full sm:w-auto px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 border-2 hover:border-primary"
+                className="w-full sm:w-auto px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 border-2 border-gray-600 text-gray-700 hover:border-gray-700 hover:bg-gray-50"
                 onClick={handleCompanySignup}
               >
                 <Building className="mr-2 h-5 w-5" />
@@ -83,20 +84,20 @@ export default function HomePage() {
             {/* Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16">
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary">12,500+</div>
-                <div className="text-gray-600">Active Students</div>
+                <div className="text-3xl font-bold text-gray-700">1,200+</div>
+                <div className="text-gray-500">High School Students</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary">850+</div>
-                <div className="text-gray-600">Partner Companies</div>
+                <div className="text-3xl font-bold text-gray-700">85+</div>
+                <div className="text-gray-500">Verified Companies</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary">3,200+</div>
-                <div className="text-gray-600">Internships Posted</div>
+                <div className="text-3xl font-bold text-gray-700">350+</div>
+                <div className="text-gray-500">Successful Placements</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary">89%</div>
-                <div className="text-gray-600">Success Rate</div>
+                <div className="text-3xl font-bold text-gray-700">96%</div>
+                <div className="text-gray-500">Safety Rating</div>
               </div>
             </div>
           </div>
@@ -104,11 +105,11 @@ export default function HomePage() {
       </section>
 
       {/* Search Section */}
-      <section className="bg-white py-16 -mt-10 relative z-10">
+      <section className="bg-gray-50 py-16 -mt-10 relative z-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Card className="shadow-xl">
+          <Card className="shadow-xl border-gray-200 bg-white">
             <CardContent className="p-8">
-              <h2 className="text-2xl font-bold text-center mb-8">Find Your Perfect Internship</h2>
+              <h2 className="text-2xl font-bold text-center mb-8 text-gray-800">Find Your Perfect Internship</h2>
               
               <form onSubmit={handleSearch} className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div className="md:col-span-2">
@@ -130,11 +131,11 @@ export default function HomePage() {
               <div className="mt-6">
                 <span className="text-sm text-gray-600 mr-4">Popular searches:</span>
                 <div className="inline-flex flex-wrap gap-2 mt-2">
-                  <Badge variant="secondary" className="cursor-pointer hover:bg-gray-200 transition-colors">Software Engineering</Badge>
-                  <Badge variant="secondary" className="cursor-pointer hover:bg-gray-200 transition-colors">Marketing</Badge>
-                  <Badge variant="secondary" className="cursor-pointer hover:bg-gray-200 transition-colors">Data Science</Badge>
-                  <Badge variant="secondary" className="cursor-pointer hover:bg-gray-200 transition-colors">Design</Badge>
-                  <Badge variant="secondary" className="cursor-pointer hover:bg-gray-200 transition-colors">Finance</Badge>
+                  <Badge variant="secondary" className="cursor-pointer hover:bg-gray-300 transition-colors bg-gray-200 text-gray-700">Technology</Badge>
+                  <Badge variant="secondary" className="cursor-pointer hover:bg-gray-300 transition-colors bg-gray-200 text-gray-700">Marketing</Badge>
+                  <Badge variant="secondary" className="cursor-pointer hover:bg-gray-300 transition-colors bg-gray-200 text-gray-700">Finance</Badge>
+                  <Badge variant="secondary" className="cursor-pointer hover:bg-gray-300 transition-colors bg-gray-200 text-gray-700">Design</Badge>
+                  <Badge variant="secondary" className="cursor-pointer hover:bg-gray-300 transition-colors bg-gray-200 text-gray-700">Business</Badge>
                 </div>
               </div>
             </CardContent>
@@ -143,11 +144,11 @@ export default function HomePage() {
       </section>
 
       {/* Featured Internships */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Featured Internships</h2>
-            <p className="text-xl text-gray-600">Hand-picked opportunities from top companies</p>
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">Featured Internships</h2>
+            <p className="text-xl text-gray-600">Hand-picked opportunities from verified companies</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -169,43 +170,43 @@ export default function HomePage() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">How It Works</h2>
-            <p className="text-xl text-gray-600">Simple steps to find your dream internship</p>
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">How INTRN Works</h2>
+            <p className="text-xl text-gray-600">Simple steps to start your internship journey</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center group">
-              <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-primary/20 transition-colors">
-                <GraduationCap className="h-8 w-8 text-primary" />
+              <div className="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gray-300 transition-colors">
+                <GraduationCap className="h-8 w-8 text-gray-600" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">1. Create Your Profile</h3>
-              <p className="text-gray-600">Build a compelling profile showcasing your skills, experience, and career goals. Upload your resume and portfolio.</p>
+              <h3 className="text-xl font-semibold text-gray-800 mb-4">1. Choose Your Interests</h3>
+              <p className="text-gray-600">Select which areas you want to work in and how long you want to work. We'll match you with relevant opportunities.</p>
             </div>
 
             <div className="text-center group">
-              <div className="w-20 h-20 bg-secondary-500/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-secondary-500/20 transition-colors">
-                <Search className="h-8 w-8 text-secondary-500" />
+              <div className="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gray-300 transition-colors">
+                <Search className="h-8 w-8 text-gray-600" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">2. Browse & Apply</h3>
-              <p className="text-gray-600">Search through thousands of internships from top companies. Filter by location, field, and duration to find perfect matches.</p>
+              <h3 className="text-xl font-semibold text-gray-800 mb-4">2. Get Connected</h3>
+              <p className="text-gray-600">INTRN connects you with verified companies offering internships in your areas of interest.</p>
             </div>
 
             <div className="text-center group">
-              <div className="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-green-500/20 transition-colors">
-                <Building className="h-8 w-8 text-green-500" />
+              <div className="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gray-300 transition-colors">
+                <Building className="h-8 w-8 text-gray-600" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">3. Get Hired</h3>
-              <p className="text-gray-600">Connect directly with hiring managers, schedule interviews, and land your dream internship. We'll support you throughout the process.</p>
+              <h3 className="text-xl font-semibold text-gray-800 mb-4">3. Earn Certificate</h3>
+              <p className="text-gray-600">Complete your internship, gain valuable experience, and receive a certificate. Both you and the company rate each other.</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Blog Preview */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Career Insights</h2>
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">Career Insights</h2>
             <p className="text-xl text-gray-600">Expert advice to help you succeed in your internship journey</p>
           </div>
 
@@ -288,20 +289,19 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-primary to-secondary-500 py-20">
+      <section className="bg-gradient-to-r from-gray-700 to-gray-800 py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">
             Ready to Start Your Internship Journey?
           </h2>
-          <p className="text-xl text-primary-100 mb-8">
-            Join thousands of students and companies already using Intrn to build successful careers and teams.
+          <p className="text-xl text-gray-200 mb-8">
+            Join thousands of high school students and companies already using INTRN to build successful careers and teams.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button 
               size="lg" 
-              variant="secondary" 
-              className="w-full sm:w-auto px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
+              className="w-full sm:w-auto px-8 py-4 text-lg font-semibold bg-white text-gray-800 hover:bg-gray-100 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
               onClick={handleStudentSignup}
             >
               <GraduationCap className="mr-2 h-5 w-5" />
@@ -310,7 +310,7 @@ export default function HomePage() {
             <Button 
               size="lg" 
               variant="outline" 
-              className="w-full sm:w-auto px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 border-2 border-white text-white hover:bg-white hover:text-primary"
+              className="w-full sm:w-auto px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 border-2 border-white text-white hover:bg-white hover:text-gray-800"
               onClick={handleCompanySignup}
             >
               <Building className="mr-2 h-5 w-5" />
@@ -326,10 +326,10 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div className="md:col-span-1">
               <div className="flex items-center mb-4">
-                <span className="text-2xl font-bold text-primary">intrn</span>
+                <span className="text-2xl font-bold text-white">INTRN</span>
               </div>
               <p className="text-gray-400 mb-4">
-                Connecting talented students with meaningful internship opportunities at leading companies worldwide.
+                Bridging the gap in internship opportunities for high school students across India, connecting them with verified companies.
               </p>
             </div>
 
@@ -366,7 +366,7 @@ export default function HomePage() {
 
           <div className="border-t border-gray-800 pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center">
-              <p className="text-gray-400 text-sm">© 2023 Intrn. All rights reserved.</p>
+              <p className="text-gray-400 text-sm">© 2025 INTRN. All rights reserved.</p>
               <div className="flex space-x-6 mt-4 md:mt-0">
                 <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">Privacy</a>
                 <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">Terms</a>

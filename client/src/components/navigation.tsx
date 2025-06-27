@@ -45,9 +45,9 @@ export default function Navigation() {
           href={item.href}
           className={`${
             mobile
-              ? "block px-3 py-2 text-base font-medium text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors"
-              : "text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium transition-colors"
-          } ${location === item.href ? "text-primary" : ""}`}
+              ? "block px-3 py-2 text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition-colors"
+              : "text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-colors"
+          } ${location === item.href ? "text-gray-900 font-semibold" : ""}`}
           onClick={onItemClick}
         >
           {mobile && <item.icon className="inline mr-2 h-4 w-4" />}
@@ -64,7 +64,7 @@ export default function Navigation() {
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex-shrink-0">
-              <span className="text-2xl font-bold text-primary">intrn</span>
+              <span className="text-2xl font-bold text-gray-800">INTRN</span>
             </Link>
           </div>
 
@@ -146,7 +146,7 @@ export default function Navigation() {
               <SheetContent side="right" className="w-80">
                 <div className="flex flex-col h-full">
                   <div className="flex items-center mb-8">
-                    <span className="text-2xl font-bold text-primary">intrn</span>
+                    <span className="text-2xl font-bold text-gray-800">INTRN</span>
                   </div>
 
                   <nav className="flex-1">
