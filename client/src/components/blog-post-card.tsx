@@ -3,15 +3,18 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BlogPost } from "@shared/schema";
 import { Calendar, User, ArrowRight } from "lucide-react";
+import { useLocation } from "wouter";
 
 interface BlogPostCardProps {
   post: BlogPost;
 }
 
 export default function BlogPostCard({ post }: BlogPostCardProps) {
+  const [, setLocation] = useLocation();
+  
   const handleReadMore = () => {
-    // Navigate to full blog post - would implement routing here
     console.log("Navigate to blog post:", post.slug);
+    setLocation(`/blog/${post.slug}`);
   };
 
   return (
