@@ -317,8 +317,7 @@ export default function HomePage() {
             </Button>
             <Button 
               size="lg" 
-              variant="outline" 
-              className="w-full sm:w-auto px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 border-2 border-white text-white hover:bg-white hover:text-gray-800"
+              className="w-full sm:w-auto px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 bg-gray-600 hover:bg-gray-500 text-white border-2 border-gray-600 hover:border-gray-500"
               onClick={handleCompanySignup}
             >
               <Building className="mr-2 h-5 w-5" />
