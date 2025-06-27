@@ -322,7 +322,7 @@ export default function HomePage() {
               onClick={handleCompanySignup}
             >
               <Building className="mr-2 h-5 w-5" />
-              Post Internships
+              Join as Company
             </Button>
           </div>
         </div>
