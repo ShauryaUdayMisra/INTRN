@@ -1,9 +1,11 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider } from "@/hooks/use-auth";
+import { AnimatePresence } from "framer-motion";
+import PageTransition from "@/components/page-transition";
 import HomePage from "@/pages/home-page";
 import AuthPage from "@/pages/auth-page";
 import DashboardPage from "@/pages/dashboard-page";
@@ -18,20 +20,24 @@ import NotFound from "@/pages/not-found";
 import { ProtectedRoute } from "./lib/protected-route";
 
 function Router() {
+  const [location] = useLocation();
+  
   return (
-    <Switch>
-      <Route path="/" component={HomePage} />
-      <Route path="/auth" component={AuthPage} />
-      <ProtectedRoute path="/dashboard" component={DashboardPage} />
-      <ProtectedRoute path="/search" component={SearchPage} />
-      <Route path="/blog/:slug" component={BlogPostDetail} />
-      <Route path="/blog" component={BlogPage} />
-      <ProtectedRoute path="/admin" component={AdminPage} />
-      <Route path="/admin-backend" component={AdminBackend} />
-      <ProtectedRoute path="/student-onboarding" component={StudentOnboarding} />
-      <ProtectedRoute path="/company-application" component={CompanyApplication} />
-      <Route component={NotFound} />
-    </Switch>
+    <AnimatePresence mode="wait">
+      <Switch key={location}>
+        <Route path="/" component={() => <PageTransition><HomePage /></PageTransition>} />
+        <Route path="/auth" component={() => <PageTransition><AuthPage /></PageTransition>} />
+        <ProtectedRoute path="/dashboard" component={() => <PageTransition><DashboardPage /></PageTransition>} />
+        <ProtectedRoute path="/search" component={() => <PageTransition><SearchPage /></PageTransition>} />
+        <Route path="/blog/:slug" component={() => <PageTransition><BlogPostDetail /></PageTransition>} />
+        <Route path="/blog" component={() => <PageTransition><BlogPage /></PageTransition>} />
+        <ProtectedRoute path="/admin" component={() => <PageTransition><AdminPage /></PageTransition>} />
+        <Route path="/admin-backend" component={() => <PageTransition><AdminBackend /></PageTransition>} />
+        <ProtectedRoute path="/student-onboarding" component={() => <PageTransition><StudentOnboarding /></PageTransition>} />
+        <ProtectedRoute path="/company-application" component={() => <PageTransition><CompanyApplication /></PageTransition>} />
+        <Route component={() => <PageTransition><NotFound /></PageTransition>} />
+      </Switch>
+    </AnimatePresence>
   );
 }
 
