@@ -11,6 +11,8 @@ import SearchPage from "@/pages/search-page";
 import BlogPage from "@/pages/blog-page";
 import AdminPage from "@/pages/admin-page";
 import AdminBackend from "@/pages/admin-backend";
+import StudentOnboarding from "@/pages/student-onboarding";
+import CompanyApplication from "@/pages/company-application";
 import NotFound from "@/pages/not-found";
 import { ProtectedRoute } from "./lib/protected-route";
 
@@ -24,6 +26,8 @@ function Router() {
       <Route path="/blog" component={BlogPage} />
       <ProtectedRoute path="/admin" component={AdminPage} />
       <Route path="/admin-backend" component={AdminBackend} />
+      <ProtectedRoute path="/student-onboarding" component={StudentOnboarding} />
+      <ProtectedRoute path="/company-application" component={CompanyApplication} />
       <Route component={NotFound} />
     </Switch>
   );

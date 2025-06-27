@@ -55,6 +55,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     },
     onSuccess: (user: SelectUser) => {
       queryClient.setQueryData(["/api/user"], user);
+      
+      // Redirect to appropriate onboarding flow
+      if (user.role === "student" && !user.profileComplete) {
+        window.location.href = "/student-onboarding";
+      } else if (user.role === "company" && !user.profileComplete) {
+        window.location.href = "/company-application";
+      }
     },
     onError: (error: Error) => {
       toast({

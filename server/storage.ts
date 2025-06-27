@@ -1,4 +1,4 @@
-import { users, internships, applications, favorites, blogPosts, type User, type InsertUser, type Internship, type InsertInternship, type Application, type InsertApplication, type Favorite, type BlogPost, type InsertBlogPost } from "@shared/schema";
+import { users, internships, applications, favorites, blogPosts, companyRequests, type User, type InsertUser, type Internship, type InsertInternship, type Application, type InsertApplication, type Favorite, type BlogPost, type InsertBlogPost, type CompanyRequest, type InsertCompanyRequest } from "@shared/schema";
 import { db } from "./db";
 import { eq, and, desc, ilike, or } from "drizzle-orm";
 import session from "express-session";
@@ -46,6 +46,11 @@ export interface IStorage {
   getCompaniesList(): Promise<User[]>;
   getStudentsList(): Promise<User[]>;
   getPendingSignups(): Promise<User[]>;
+  
+  // Company request methods
+  getCompanyRequests(): Promise<CompanyRequest[]>;
+  createCompanyRequest(request: InsertCompanyRequest & { userId: number }): Promise<CompanyRequest>;
+  updateCompanyRequestStatus(id: number, status: string, adminNotes?: string, reviewedBy?: number): Promise<CompanyRequest | undefined>;
   
   sessionStore: session.SessionStore;
 }
@@ -272,6 +277,38 @@ export class DatabaseStorage implements IStorage {
         )
       );
     return pendingUsers;
+  }
+
+  // Company request methods
+  async getCompanyRequests(): Promise<CompanyRequest[]> {
+    return await db.select().from(companyRequests).orderBy(desc(companyRequests.submittedAt));
+  }
+
+  async createCompanyRequest(request: InsertCompanyRequest & { userId: number }): Promise<CompanyRequest> {
+    const [newRequest] = await db
+      .insert(companyRequests)
+      .values(request)
+      .returning();
+    return newRequest;
+  }
+
+  async updateCompanyRequestStatus(
+    id: number, 
+    status: string, 
+    adminNotes?: string, 
+    reviewedBy?: number
+  ): Promise<CompanyRequest | undefined> {
+    const [updatedRequest] = await db
+      .update(companyRequests)
+      .set({
+        status: status as any,
+        adminNotes,
+        reviewedBy,
+        reviewedAt: new Date(),
+      })
+      .where(eq(companyRequests.id, id))
+      .returning();
+    return updatedRequest;
   }
 }
 

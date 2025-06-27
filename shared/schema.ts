@@ -14,8 +14,16 @@ export const users = pgTable("users", {
   companyName: text("company_name"),
   bio: text("bio"),
   skills: text("skills").array(),
+  hobbies: text("hobbies").array(),
+  interestedFields: text("interested_fields").array(),
+  internshipDuration: text("internship_duration"), // 1-3 months, 3-6 months, 6+ months
+  preferredCompanies: text("preferred_companies").array(),
   location: text("location"),
   website: text("website"),
+  companyField: text("company_field"), // tech, agriculture, finance, etc.
+  internshipType: text("internship_type"), // online, offline, hybrid
+  isApproved: boolean("is_approved").default(false),
+  termsAccepted: boolean("terms_accepted").default(false),
   profileComplete: boolean("profile_complete").default(false),
   createdAt: timestamp("created_at").defaultNow(),
 });
@@ -70,6 +78,23 @@ export const blogPosts = pgTable("blog_posts", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
+export const companyRequests = pgTable("company_requests", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id),
+  companyName: text("company_name").notNull(),
+  companyField: text("company_field").notNull(),
+  internshipType: text("internship_type").notNull(),
+  description: text("description").notNull(),
+  website: text("website"),
+  location: text("location").notNull(),
+  termsAccepted: boolean("terms_accepted").notNull(),
+  status: text("status", { enum: ["pending", "approved", "rejected"] }).default("pending"),
+  adminNotes: text("admin_notes"),
+  submittedAt: timestamp("submitted_at").defaultNow(),
+  reviewedAt: timestamp("reviewed_at"),
+  reviewedBy: integer("reviewed_by").references(() => users.id),
+});
+
 // Relations
 export const usersRelations = relations(users, ({ many }) => ({
   internships: many(internships),
@@ -116,6 +141,17 @@ export const blogPostsRelations = relations(blogPosts, ({ one }) => ({
   }),
 }));
 
+export const companyRequestsRelations = relations(companyRequests, ({ one }) => ({
+  user: one(users, {
+    fields: [companyRequests.userId],
+    references: [users.id],
+  }),
+  reviewer: one(users, {
+    fields: [companyRequests.reviewedBy],
+    references: [users.id],
+  }),
+}));
+
 // Insert schemas
 export const insertUserSchema = createInsertSchema(users, {
   email: z.string().email(),
@@ -130,8 +166,15 @@ export const insertUserSchema = createInsertSchema(users, {
   companyName: true,
   bio: true,
   skills: true,
+  hobbies: true,
+  interestedFields: true,
+  internshipDuration: true,
+  preferredCompanies: true,
   location: true,
   website: true,
+  companyField: true,
+  internshipType: true,
+  termsAccepted: true,
 });
 
 export const insertInternshipSchema = createInsertSchema(internships, {
@@ -156,6 +199,15 @@ export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
   publishedAt: true,
 });
 
+export const insertCompanyRequestSchema = createInsertSchema(companyRequests).omit({
+  id: true,
+  userId: true,
+  status: true,
+  submittedAt: true,
+  reviewedAt: true,
+  reviewedBy: true,
+});
+
 // Types
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -166,3 +218,5 @@ export type InsertApplication = z.infer<typeof insertApplicationSchema>;
 export type Favorite = typeof favorites.$inferSelect;
 export type BlogPost = typeof blogPosts.$inferSelect;
 export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;
+export type CompanyRequest = typeof companyRequests.$inferSelect;
+export type InsertCompanyRequest = z.infer<typeof insertCompanyRequestSchema>;

@@ -267,6 +267,84 @@ export function registerRoutes(app: Express): Server {
     }
   });
 
+  // Student onboarding route
+  app.patch("/api/user/profile", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ message: "Authentication required" });
+    }
+
+    try {
+      const updates = req.body;
+      const updatedUser = await storage.updateUser(req.user.id, { 
+        ...updates, 
+        profileComplete: true 
+      });
+      if (updatedUser) {
+        res.json(updatedUser);
+      } else {
+        res.status(404).json({ message: "User not found" });
+      }
+    } catch (error) {
+      res.status(400).json({ message: "Failed to update profile" });
+    }
+  });
+
+  // Company application route
+  app.post("/api/company-application", async (req, res) => {
+    if (!req.isAuthenticated() || req.user.role !== "company") {
+      return res.status(403).json({ message: "Access denied" });
+    }
+
+    try {
+      const applicationData = {
+        ...req.body,
+        userId: req.user.id,
+      };
+      const request = await storage.createCompanyRequest(applicationData);
+      res.status(201).json(request);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to submit application" });
+    }
+  });
+
+  // Admin routes for company requests
+  app.get("/api/admin/company-requests", async (req, res) => {
+    if (!req.isAuthenticated() || req.user.role !== "admin") {
+      return res.status(403).json({ message: "Access denied" });
+    }
+
+    try {
+      const requests = await storage.getCompanyRequests();
+      res.json(requests);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch company requests" });
+    }
+  });
+
+  app.patch("/api/admin/company-request/:id", async (req, res) => {
+    if (!req.isAuthenticated() || req.user.role !== "admin") {
+      return res.status(403).json({ message: "Access denied" });
+    }
+
+    try {
+      const requestId = parseInt(req.params.id);
+      const { status, adminNotes } = req.body;
+      const request = await storage.updateCompanyRequestStatus(
+        requestId, 
+        status, 
+        adminNotes, 
+        req.user.id
+      );
+      if (request) {
+        res.json(request);
+      } else {
+        res.status(404).json({ message: "Company request not found" });
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update company request" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

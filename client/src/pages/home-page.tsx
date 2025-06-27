@@ -52,10 +52,18 @@ export default function HomePage() {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-800 mb-6">
+            <div className="mb-8">
+              <h1 className="text-8xl sm:text-9xl lg:text-[12rem] font-black tracking-tight text-gray-800 mb-4 leading-none">
+                INTRN
+              </h1>
+              <p className="text-2xl sm:text-3xl text-gray-600 font-semibold tracking-wide">
+                Bridging Dreams with Opportunities
+              </p>
+            </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 mb-6">
               India's Premier Platform for
               <span className="text-gray-600"> High School Internships</span>
-            </h1>
+            </h2>
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
               Bridge the gap in internship opportunities! Connect with verified companies across India and gain real-world experience while building your future career.
             </p>
