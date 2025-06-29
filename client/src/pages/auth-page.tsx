@@ -12,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { insertUserSchema } from "@shared/schema";
 import { z } from "zod";
 import { GraduationCap, Building, Users, TrendingUp, Award, Globe } from "lucide-react";
+import SocialLogin from "@/components/social-login";
 
 const loginSchema = z.object({
   username: z.string().min(1, "Username is required"),
@@ -146,6 +147,8 @@ export default function AuthPage() {
                       {loginMutation.isPending ? "Signing In..." : "Sign In"}
                     </Button>
                   </form>
+                  
+                  <SocialLogin />
                 </CardContent>
               </Card>
             </TabsContent>
@@ -275,6 +278,8 @@ export default function AuthPage() {
                       {registerMutation.isPending ? "Creating Account..." : "Create Account"}
                     </Button>
                   </form>
+                  
+                  <SocialLogin />
                 </CardContent>
               </Card>
             </TabsContent>

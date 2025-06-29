@@ -1,12 +1,16 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { setupAuth } from "./auth";
+import { setupOAuth } from "./oauth";
 import { storage } from "./storage";
 import { insertInternshipSchema, insertApplicationSchema, insertBlogPostSchema } from "@shared/schema";
 
-export function registerRoutes(app: Express): Server {
+export async function registerRoutes(app: Express): Promise<Server> {
   // Authentication routes
   setupAuth(app);
+  
+  // OAuth routes for social login
+  await setupOAuth(app);
 
   // Middleware to check admin access for specific users
   const requireSpecialAdmin = (req: any, res: any, next: any) => {
@@ -68,7 +72,7 @@ export function registerRoutes(app: Express): Server {
     try {
       const id = parseInt(req.params.id);
       // Note: This is a soft delete - just mark as inactive rather than actual deletion
-      const user = await storage.updateUser(id, { profileComplete: false });
+      const user = await storage.updateUser(id, { termsAccepted: false });
       if (!user) {
         return res.status(404).json({ error: "User not found" });
       }
