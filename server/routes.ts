@@ -49,6 +49,139 @@ export function registerRoutes(app: Express): Server {
     }
   });
 
+  // Comprehensive admin routes for user management
+  app.patch("/api/admin/users/:id", requireSpecialAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const updates = req.body;
+      const user = await storage.updateUser(id, updates);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      res.json(user);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update user" });
+    }
+  });
+
+  app.delete("/api/admin/users/:id", requireSpecialAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      // Note: This is a soft delete - just mark as inactive rather than actual deletion
+      const user = await storage.updateUser(id, { profileComplete: false });
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      res.json({ message: "User deactivated successfully" });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to delete user" });
+    }
+  });
+
+  // Admin routes for applications management
+  app.get("/api/admin/applications", requireSpecialAdmin, async (req, res) => {
+    try {
+      const applications = await storage.getApplications();
+      res.json(applications);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch applications" });
+    }
+  });
+
+  app.patch("/api/admin/applications/:id/status", requireSpecialAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const { status } = req.body;
+      const application = await storage.updateApplicationStatus(id, status);
+      if (!application) {
+        return res.status(404).json({ error: "Application not found" });
+      }
+      res.json(application);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update application status" });
+    }
+  });
+
+  // Admin routes for internships management
+  app.patch("/api/admin/internships/:id", requireSpecialAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const updates = req.body;
+      const internship = await storage.updateInternship(id, updates);
+      if (!internship) {
+        return res.status(404).json({ error: "Internship not found" });
+      }
+      res.json(internship);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update internship" });
+    }
+  });
+
+  app.delete("/api/admin/internships/:id", requireSpecialAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const success = await storage.deleteInternship(id);
+      if (!success) {
+        return res.status(404).json({ error: "Internship not found" });
+      }
+      res.json({ message: "Internship deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to delete internship" });
+    }
+  });
+
+  // Admin routes for blog management
+  app.patch("/api/admin/blog/:id", requireSpecialAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const updates = req.body;
+      const post = await storage.updateBlogPost(id, updates);
+      if (!post) {
+        return res.status(404).json({ error: "Blog post not found" });
+      }
+      res.json(post);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update blog post" });
+    }
+  });
+
+  app.delete("/api/admin/blog/:id", requireSpecialAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const success = await storage.deleteBlogPost(id);
+      if (!success) {
+        return res.status(404).json({ error: "Blog post not found" });
+      }
+      res.json({ message: "Blog post deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to delete blog post" });
+    }
+  });
+
+  // Admin routes for company requests management
+  app.get("/api/admin/company-requests", requireSpecialAdmin, async (req, res) => {
+    try {
+      const requests = await storage.getCompanyRequests();
+      res.json(requests);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch company requests" });
+    }
+  });
+
+  app.patch("/api/admin/company-requests/:id", requireSpecialAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const { status, adminNotes, reviewedBy } = req.body;
+      const request = await storage.updateCompanyRequestStatus(id, status, adminNotes, reviewedBy);
+      if (!request) {
+        return res.status(404).json({ error: "Company request not found" });
+      }
+      res.json(request);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update company request" });
+    }
+  });
+
   // Internship routes
   app.get("/api/internships", async (req, res) => {
     try {
