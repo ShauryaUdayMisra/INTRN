@@ -16,6 +16,7 @@ import AdminPage from "@/pages/admin-page";
 import AdminBackend from "@/pages/admin-backend";
 import StudentOnboarding from "@/pages/student-onboarding";
 import CompanyApplication from "@/pages/company-application";
+import PlatformStatus from "@/pages/platform-status";
 import NotFound from "@/pages/not-found";
 import { ProtectedRoute } from "./lib/protected-route";
 
@@ -33,6 +34,7 @@ function Router() {
         <Route path="/blog" component={() => <PageTransition><BlogPage /></PageTransition>} />
         <ProtectedRoute path="/admin" component={() => <PageTransition><AdminPage /></PageTransition>} />
         <Route path="/admin-backend" component={() => <PageTransition><AdminBackend /></PageTransition>} />
+        <Route path="/status" component={() => <PageTransition><PlatformStatus /></PageTransition>} />
         <ProtectedRoute path="/student-onboarding" component={() => <PageTransition><StudentOnboarding /></PageTransition>} />
         <ProtectedRoute path="/company-application" component={() => <PageTransition><CompanyApplication /></PageTransition>} />
         <Route component={() => <PageTransition><NotFound /></PageTransition>} />

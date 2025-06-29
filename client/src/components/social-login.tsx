@@ -51,11 +51,10 @@ export default function SocialLogin() {
     window.location.href = `/api/auth/${providerId}`;
   };
 
-  console.log('SocialLogin component rendering');
+
 
   return (
-    <div className="space-y-4 mt-6 p-4 border-2 border-red-500">
-      <div className="text-center text-red-500 font-bold">SOCIAL LOGIN COMPONENT</div>
+    <div className="space-y-4 mt-6">
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
           <div className="w-full border-t border-gray-300" />
@@ -67,17 +66,19 @@ export default function SocialLogin() {
         </div>
       </div>
       
-      <div className="grid grid-cols-1 gap-3">
+      <div className="space-y-3">
         {socialProviders.map((provider) => (
           <Button
             key={provider.id}
             type="button"
             variant="outline"
             onClick={() => handleSocialLogin(provider.id)}
-            className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+            className="w-full flex items-center justify-center py-3 px-4 border-2 border-gray-200 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200"
           >
-            {provider.icon}
-            <span className="ml-2">Continue with {provider.name}</span>
+            <div className="flex items-center justify-center w-5 h-5 mr-3">
+              {provider.icon}
+            </div>
+            <span>Continue with {provider.name}</span>
           </Button>
         ))}
       </div>

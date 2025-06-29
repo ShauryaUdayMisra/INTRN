@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Internship, BlogPost } from "@shared/schema";
 import InternshipCard from "@/components/internship-card";
 import BlogPostCard from "@/components/blog-post-card";
+import SearchBar from "@/components/search-bar";
 import { GraduationCap, Building, Search, MapPin, Clock, DollarSign, Quote } from "lucide-react";
 
 export default function HomePage() {
@@ -118,23 +119,7 @@ export default function HomePage() {
           <Card className="shadow-xl border-gray-200 bg-white">
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold text-center mb-8 text-gray-800">Find Your Perfect Internship</h2>
-              
-              <form onSubmit={handleSearch} className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">What are you looking for?</label>
-                  <Input placeholder="Job title, company, or keywords" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
-                  <Input placeholder="City, state, or remote" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">&nbsp;</label>
-                  <Button type="submit" className="w-full">
-                    <Search className="mr-2 h-4 w-4" />Search
-                  </Button>
-                </div>
-              </form>
+              <SearchBar />
 
               <div className="mt-6">
                 <span className="text-sm text-gray-600 mr-4">Popular searches:</span>

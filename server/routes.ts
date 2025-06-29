@@ -3,6 +3,8 @@ import { createServer, type Server } from "http";
 import { setupAuth } from "./auth";
 import { setupOAuth } from "./oauth";
 import { storage } from "./storage";
+import { seedSampleData } from "./seed-data";
+import { seedBlogPosts } from "./seed-blog";
 import { insertInternshipSchema, insertApplicationSchema, insertBlogPostSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -11,6 +13,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   // OAuth routes for social login
   await setupOAuth(app);
+  
+  // Seeding disabled temporarily due to schema mismatch
+  // await seedSampleData();
 
   // Middleware to check admin access for specific users
   const requireSpecialAdmin = (req: any, res: any, next: any) => {
