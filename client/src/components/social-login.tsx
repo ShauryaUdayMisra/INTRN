@@ -54,8 +54,7 @@ export default function SocialLogin() {
 
 
   return (
-    <div className="mt-6 space-y-4 border-2 border-red-500 p-4">
-      <div className="text-red-600 font-bold">SOCIAL LOGIN COMPONENT IS HERE</div>
+    <div className="mt-6 space-y-4">
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
           <div className="w-full border-t border-gray-300" />
