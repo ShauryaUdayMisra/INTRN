@@ -51,14 +51,17 @@ export default function SocialLogin() {
     window.location.href = `/api/auth/${providerId}`;
   };
 
+  console.log('SocialLogin component rendering');
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 mt-6 p-4 border-2 border-red-500">
+      <div className="text-center text-red-500 font-bold">SOCIAL LOGIN COMPONENT</div>
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
-          <Separator className="w-full" />
+          <div className="w-full border-t border-gray-300" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">
+          <span className="bg-white px-2 text-gray-500">
             Or continue with
           </span>
         </div>
@@ -71,7 +74,7 @@ export default function SocialLogin() {
             type="button"
             variant="outline"
             onClick={() => handleSocialLogin(provider.id)}
-            className="w-full"
+            className="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
           >
             {provider.icon}
             <span className="ml-2">Continue with {provider.name}</span>
