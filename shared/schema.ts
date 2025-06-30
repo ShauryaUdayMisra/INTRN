@@ -1,16 +1,29 @@
-import { pgTable, text, serial, integer, boolean, timestamp, jsonb } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, integer, boolean, timestamp, jsonb, varchar, index } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
+// Session storage table for Replit Auth
+export const sessions = pgTable(
+  "sessions",
+  {
+    sid: varchar("sid").primaryKey(),
+    sess: jsonb("sess").notNull(),
+    expire: timestamp("expire").notNull(),
+  },
+  (table) => [index("IDX_session_expire").on(table.expire)],
+);
+
+// User storage table updated for Replit Auth
 export const users = pgTable("users", {
-  id: serial("id").primaryKey(),
-  username: text("username").notNull().unique(),
-  email: text("email").notNull().unique(),
-  password: text("password").notNull(),
-  role: text("role", { enum: ["student", "company", "admin"] }).notNull(),
-  firstName: text("first_name"),
-  lastName: text("last_name"),
+  id: varchar("id").primaryKey().notNull(), // Replit user ID (string)
+  email: varchar("email").unique(),
+  firstName: varchar("first_name"),
+  lastName: varchar("last_name"),
+  profileImageUrl: varchar("profile_image_url"),
+  
+  // Custom platform fields
+  role: text("role", { enum: ["student", "company", "admin"] }).default("student"),
   companyName: text("company_name"),
   bio: text("bio"),
   skills: text("skills").array(),
@@ -22,10 +35,14 @@ export const users = pgTable("users", {
   website: text("website"),
   companyField: text("company_field"), // tech, agriculture, finance, etc.
   internshipType: text("internship_type"), // online, offline, hybrid
+  university: text("university"),
+  graduationYear: integer("graduation_year"),
   isApproved: boolean("is_approved").default(false),
   termsAccepted: boolean("terms_accepted").default(false),
   profileComplete: boolean("profile_complete").default(false),
+  
   createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 export const internships = pgTable("internships", {
@@ -152,29 +169,24 @@ export const companyRequestsRelations = relations(companyRequests, ({ one }) => 
   }),
 }));
 
-// Insert schemas
-export const insertUserSchema = createInsertSchema(users, {
-  email: z.string().email(),
-  role: z.enum(["student", "company", "admin"]),
+// Insert schemas for Replit Auth
+export const upsertUserSchema = createInsertSchema(users, {
+  email: z.string().email().optional(),
+  role: z.enum(["student", "company", "admin"]).optional(),
 }).pick({
-  username: true,
+  id: true,
   email: true,
-  password: true,
-  role: true,
   firstName: true,
   lastName: true,
-  companyName: true,
-  bio: true,
-  skills: true,
-  hobbies: true,
-  interestedFields: true,
-  internshipDuration: true,
-  preferredCompanies: true,
-  location: true,
-  website: true,
-  companyField: true,
-  internshipType: true,
-  termsAccepted: true,
+  profileImageUrl: true,
+});
+
+export const insertUserSchema = createInsertSchema(users, {
+  email: z.string().email().optional(),
+  role: z.enum(["student", "company", "admin"]).optional(),
+}).omit({
+  createdAt: true,
+  updatedAt: true,
 });
 
 export const insertInternshipSchema = createInsertSchema(internships, {
@@ -210,6 +222,7 @@ export const insertCompanyRequestSchema = createInsertSchema(companyRequests).om
 
 // Types
 export type User = typeof users.$inferSelect;
+export type UpsertUser = z.infer<typeof upsertUserSchema>;
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type Internship = typeof internships.$inferSelect;
 export type InsertInternship = z.infer<typeof insertInternshipSchema>;

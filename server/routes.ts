@@ -487,6 +487,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Simple Replit Auth demo endpoint
+  app.get("/api/login", (req, res) => {
+    // This demonstrates where Replit Auth would be integrated
+    // For now, it redirects to the existing auth page
+    res.redirect("/auth?demo=replit");
+  });
+
+  // Replit Auth user endpoint for demonstration
+  app.get("/api/auth/user", (req, res) => {
+    // This would integrate with Replit Auth
+    // For now, it returns unauthorized to show the demo works
+    res.status(401).json({ message: "Replit Auth not fully configured" });
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

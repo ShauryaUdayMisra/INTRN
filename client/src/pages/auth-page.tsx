@@ -33,6 +33,9 @@ export default function AuthPage() {
   const { user, loginMutation, registerMutation } = useAuth();
   const [, setLocation] = useLocation();
   const [activeTab, setActiveTab] = useState("login");
+  
+  // Check if this is a Replit Auth demo
+  const isReplitDemo = new URLSearchParams(window.location.search).get("demo") === "replit";
 
   const loginForm = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),

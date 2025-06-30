@@ -1,4 +1,4 @@
-import { users, internships, applications, favorites, blogPosts, companyRequests, type User, type InsertUser, type Internship, type InsertInternship, type Application, type InsertApplication, type Favorite, type BlogPost, type InsertBlogPost, type CompanyRequest, type InsertCompanyRequest } from "@shared/schema";
+import { users, internships, applications, favorites, blogPosts, companyRequests, type User, type UpsertUser, type InsertUser, type Internship, type InsertInternship, type Application, type InsertApplication, type Favorite, type BlogPost, type InsertBlogPost, type CompanyRequest, type InsertCompanyRequest } from "@shared/schema";
 import { db } from "./db";
 import { eq, and, desc, ilike, or } from "drizzle-orm";
 import session from "express-session";
@@ -8,12 +8,12 @@ import { pool } from "./db";
 const PostgresSessionStore = connectPg(session);
 
 export interface IStorage {
-  // User methods
-  getUser(id: number): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
+  // User methods for Replit Auth
+  getUser(id: string): Promise<User | undefined>;
+  upsertUser(user: UpsertUser): Promise<User>;
   getUserByEmail(email: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
-  updateUser(id: number, updates: Partial<InsertUser>): Promise<User | undefined>;
+  updateUser(id: string, updates: Partial<InsertUser>): Promise<User | undefined>;
   
   // Internship methods
   getInternships(filters?: { location?: string; skills?: string[]; type?: string }): Promise<Internship[]>;
@@ -66,9 +66,24 @@ export class DatabaseStorage implements IStorage {
   }
 
   // User methods
-  async getUser(id: number): Promise<User | undefined> {
+  async getUser(id: string): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.id, id));
     return user || undefined;
+  }
+
+  async upsertUser(userData: UpsertUser): Promise<User> {
+    const [user] = await db
+      .insert(users)
+      .values(userData)
+      .onConflictDoUpdate({
+        target: users.id,
+        set: {
+          ...userData,
+          updatedAt: new Date(),
+        },
+      })
+      .returning();
+    return user;
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {

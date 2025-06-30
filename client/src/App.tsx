@@ -7,6 +7,7 @@ import { AuthProvider } from "@/hooks/use-auth";
 import { AnimatePresence } from "framer-motion";
 import PageTransition from "@/components/page-transition";
 import HomePage from "@/pages/home-page";
+import LandingPage from "@/pages/landing-page";
 import AuthPage from "@/pages/auth-page";
 import DashboardPage from "@/pages/dashboard-page";
 import SearchPage from "@/pages/search-page";
@@ -27,7 +28,8 @@ function Router() {
   return (
     <AnimatePresence mode="wait">
       <Switch key={location}>
-        <Route path="/" component={() => <PageTransition><HomePage /></PageTransition>} />
+        <Route path="/" component={() => <PageTransition><LandingPage /></PageTransition>} />
+        <Route path="/home" component={() => <PageTransition><HomePage /></PageTransition>} />
         <Route path="/auth" component={() => <PageTransition><AuthPage /></PageTransition>} />
         <ProtectedRoute path="/dashboard" component={() => <PageTransition><DashboardPage /></PageTransition>} />
         <ProtectedRoute path="/search" component={() => <PageTransition><SearchPage /></PageTransition>} />
