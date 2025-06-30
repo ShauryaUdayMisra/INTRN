@@ -14,8 +14,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // OAuth routes for social login
   await setupOAuth(app);
   
-  // Seeding disabled temporarily due to schema mismatch
-  // await seedSampleData();
+  // Seed admin accounts and sample data
+  await seedSampleData();
 
   // Middleware to check admin access for specific users
   const requireSpecialAdmin = (req: any, res: any, next: any) => {

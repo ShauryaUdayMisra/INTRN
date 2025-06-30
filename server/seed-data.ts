@@ -1,22 +1,38 @@
 import { storage } from "./storage";
+import { scrypt, randomBytes } from "crypto";
+import { promisify } from "util";
+
+const scryptAsync = promisify(scrypt);
+
+async function hashPassword(password: string) {
+  const salt = randomBytes(16).toString("hex");
+  const buf = (await scryptAsync(password, salt, 64)) as Buffer;
+  return `${buf.toString("hex")}.${salt}`;
+}
 
 export async function seedSampleData() {
   try {
     console.log("🌱 Seeding sample data...");
 
-    // Create admin users (already exist from auth setup)
+    // Hash admin passwords properly
+    const adminPassword = await hashPassword("admin");
+
+    // Create admin users
     const adminUsers = [
-      { username: "admin1", email: "admin1@intrn.xyz", password: "$2a$10$8K1p5c1dUz8k0kYH5M9KYOGx7UJC3k8F5O1N1P1Q1R1S1T1U1V1W1X", role: "admin" as const },
-      { username: "admin2", email: "admin2@intrn.xyz", password: "$2a$10$8K1p5c1dUz8k0kYH5M9KYOGx7UJC3k8F5O1N1P1Q1R1S1T1U1V1W1X", role: "admin" as const },
-      { username: "admin3", email: "admin3@intrn.xyz", password: "$2a$10$8K1p5c1dUz8k0kYH5M9KYOGx7UJC3k8F5O1N1P1Q1R1S1T1U1V1W1X", role: "admin" as const }
+      { username: "admin1", email: "admin1@intrn.xyz", password: adminPassword, role: "admin" as const },
+      { username: "admin2", email: "admin2@intrn.xyz", password: adminPassword, role: "admin" as const },
+      { username: "admin3", email: "admin3@intrn.xyz", password: adminPassword, role: "admin" as const }
     ];
+
+    // Hash company passwords properly  
+    const companyPassword = await hashPassword("company123");
 
     // Create sample companies
     const sampleCompanies = [
       {
         username: "tcs_recruiter",
         email: "careers@tcs.com",
-        password: "$2a$10$8K1p5c1dUz8k0kYH5M9KYOGx7UJC3k8F5O1N1P1Q1R1S1T1U1V1W1X", // password: "company123"
+        password: companyPassword,
         role: "company" as const,
         companyName: "Tata Consultancy Services",
         firstName: "Rajesh",
@@ -27,7 +43,7 @@ export async function seedSampleData() {
       {
         username: "infosys_hr",
         email: "recruitment@infosys.com", 
-        password: "$2a$10$8K1p5c1dUz8k0kYH5M9KYOGx7UJC3k8F5O1N1P1Q1R1S1T1U1V1W1X",
+        password: companyPassword,
         role: "company" as const,
         companyName: "Infosys Limited",
         firstName: "Priya",
@@ -38,7 +54,7 @@ export async function seedSampleData() {
       {
         username: "flipkart_talent",
         email: "internships@flipkart.com",
-        password: "$2a$10$8K1p5c1dUz8k0kYH5M9KYOGx7UJC3k8F5O1N1P1Q1R1S1T1U1V1W1X",
+        password: companyPassword,
         role: "company" as const,
         companyName: "Flipkart",
         firstName: "Amit",
@@ -48,12 +64,15 @@ export async function seedSampleData() {
       }
     ];
 
+    // Hash student passwords properly
+    const studentPassword = await hashPassword("student123");
+
     // Create sample students
     const sampleStudents = [
       {
         username: "rahul_dev",
         email: "rahul.sharma@student.com",
-        password: "$2a$10$8K1p5c1dUz8k0kYH5M9KYOGx7UJC3k8F5O1N1P1Q1R1S1T1U1V1W1X", // password: "student123"
+        password: studentPassword,
         role: "student" as const,
         firstName: "Rahul",
         lastName: "Sharma",
@@ -66,7 +85,7 @@ export async function seedSampleData() {
       {
         username: "priya_data",
         email: "priya.singh@student.com",
-        password: "$2a$10$8K1p5c1dUz8k0kYH5M9KYOGx7UJC3k8F5O1N1P1Q1R1S1T1U1V1W1X",
+        password: studentPassword,
         role: "student" as const,
         firstName: "Priya",
         lastName: "Singh", 
@@ -79,7 +98,7 @@ export async function seedSampleData() {
       {
         username: "arjun_mobile",
         email: "arjun.kumar@student.com",
-        password: "$2a$10$8K1p5c1dUz8k0kYH5M9KYOGx7UJC3k8F5O1N1P1Q1R1S1T1U1V1W1X",
+        password: studentPassword,
         role: "student" as const,
         firstName: "Arjun",
         lastName: "Kumar",
@@ -90,6 +109,22 @@ export async function seedSampleData() {
         graduationYear: 2025
       }
     ];
+
+    // Seed admin users first
+    console.log("Creating admin accounts...");
+    for (const admin of adminUsers) {
+      try {
+        const existingUser = await storage.getUserByEmail(admin.email);
+        if (!existingUser) {
+          const user = await storage.createUser(admin);
+          console.log(`✓ Created admin: ${admin.username}`);
+        } else {
+          console.log(`✓ Admin ${admin.username} already exists`);
+        }
+      } catch (error) {
+        console.log(`Admin ${admin.username} creation failed:`, error);
+      }
+    }
 
     // Seed users
     const createdCompanies = [];
