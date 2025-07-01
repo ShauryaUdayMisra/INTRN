@@ -1,18 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { useLocation } from "wouter";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { insertUserSchema } from "@shared/schema";
 import { z } from "zod";
 import { GraduationCap, Building, Users, TrendingUp, Award, Globe } from "lucide-react";
-import SocialLogin from "@/components/social-login";
 
 const loginSchema = z.object({
   username: z.string().min(1, "Username is required"),
@@ -34,7 +31,7 @@ const registerSchema = z.object({
 type LoginForm = z.infer<typeof loginSchema>;
 type RegisterForm = z.infer<typeof registerSchema>;
 
-export default function AuthPage() {
+export default function SimpleAuth() {
   const { user, loginMutation, registerMutation } = useAuth();
   const [, setLocation] = useLocation();
   const [activeTab, setActiveTab] = useState("login");
@@ -62,32 +59,32 @@ export default function AuthPage() {
     },
   });
 
-  useEffect(() => {
-    if (user) {
-      setLocation("/dashboard");
-    }
-  }, [user, setLocation]);
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const role = params.get("role");
-    if (role === "student" || role === "company") {
-      registerForm.setValue("role", role);
-      setActiveTab("register");
-    }
-  }, [registerForm]);
-
   const onLogin = (data: LoginForm) => {
     loginMutation.mutate(data);
   };
 
   const onRegister = (data: RegisterForm) => {
     const { confirmPassword, ...registerData } = data;
-    // Default new users to student role for simplified signup
-    registerMutation.mutate({ ...registerData, role: "student" });
+    // Create registration payload compatible with existing backend
+    const registrationPayload = {
+      ...registerData,
+      role: "student" as const,
+      location: "India",
+      bio: "",
+      profileComplete: false,
+      skills: [],
+      university: "",
+      graduationYear: new Date().getFullYear() + 1,
+      fieldOfStudy: "",
+      hobbies: ""
+    };
+    registerMutation.mutate(registrationPayload);
   };
 
-  if (user) return null;
+  if (user) {
+    setLocation("/");
+    return null;
+  }
 
   return (
     <div className="min-h-screen flex">
@@ -97,6 +94,11 @@ export default function AuthPage() {
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-primary">intrn</h1>
             <p className="text-gray-600 mt-2">Connect. Learn. Grow.</p>
+            {isReplitDemo && (
+              <p className="text-sm text-blue-600 mt-2 bg-blue-50 p-2 rounded">
+                ✨ Replit Auth Demo Active
+              </p>
+            )}
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab}>
@@ -120,7 +122,7 @@ export default function AuthPage() {
                       <Input
                         id="username"
                         {...loginForm.register("username")}
-                        placeholder="Enter your username"
+                        placeholder="Enter username"
                       />
                       {loginForm.formState.errors.username && (
                         <p className="text-sm text-red-500 mt-1">
@@ -135,7 +137,7 @@ export default function AuthPage() {
                         id="password"
                         type="password"
                         {...loginForm.register("password")}
-                        placeholder="Enter your password"
+                        placeholder="Enter password"
                       />
                       {loginForm.formState.errors.password && (
                         <p className="text-sm text-red-500 mt-1">
@@ -153,7 +155,29 @@ export default function AuthPage() {
                     </Button>
                   </form>
                   
-                  <SocialLogin />
+                  <div className="mt-6">
+                    <div className="relative">
+                      <div className="absolute inset-0 flex items-center">
+                        <div className="w-full border-t border-gray-300" />
+                      </div>
+                      <div className="relative flex justify-center text-sm">
+                        <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-4">
+                      <Button
+                        variant="outline"
+                        className="w-full"
+                        onClick={() => window.location.href = "/api/login"}
+                      >
+                        <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                        Sign in with Replit
+                      </Button>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -168,81 +192,63 @@ export default function AuthPage() {
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={registerForm.handleSubmit(onRegister)} className="space-y-4">
-                    <div>
-                      <Label htmlFor="role">I am a</Label>
-                      <Select
-                        value={watchRole}
-                        onValueChange={(value) => registerForm.setValue("role", value as "student" | "company")}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select your role" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="student">Student</SelectItem>
-                          <SelectItem value="company">Company</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <Label htmlFor="username">Username</Label>
+                        <Label htmlFor="firstName">First Name</Label>
                         <Input
-                          id="username"
-                          {...registerForm.register("username")}
-                          placeholder="Choose username"
+                          id="firstName"
+                          {...registerForm.register("firstName")}
+                          placeholder="First name"
                         />
-                        {registerForm.formState.errors.username && (
+                        {registerForm.formState.errors.firstName && (
                           <p className="text-sm text-red-500 mt-1">
-                            {registerForm.formState.errors.username.message}
+                            {registerForm.formState.errors.firstName.message}
                           </p>
                         )}
                       </div>
                       <div>
-                        <Label htmlFor="email">Email</Label>
+                        <Label htmlFor="lastName">Last Name</Label>
                         <Input
-                          id="email"
-                          type="email"
-                          {...registerForm.register("email")}
-                          placeholder="Enter email"
+                          id="lastName"
+                          {...registerForm.register("lastName")}
+                          placeholder="Last name"
                         />
-                        {registerForm.formState.errors.email && (
+                        {registerForm.formState.errors.lastName && (
                           <p className="text-sm text-red-500 mt-1">
-                            {registerForm.formState.errors.email.message}
+                            {registerForm.formState.errors.lastName.message}
                           </p>
                         )}
                       </div>
                     </div>
 
-                    {watchRole === "student" ? (
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <Label htmlFor="firstName">First Name</Label>
-                          <Input
-                            id="firstName"
-                            {...registerForm.register("firstName")}
-                            placeholder="First name"
-                          />
-                        </div>
-                        <div>
-                          <Label htmlFor="lastName">Last Name</Label>
-                          <Input
-                            id="lastName"
-                            {...registerForm.register("lastName")}
-                            placeholder="Last name"
-                          />
-                        </div>
-                      </div>
-                    ) : (
-                      <div>
-                        <Label htmlFor="companyName">Company Name</Label>
-                        <Input
-                          id="companyName"
-                          {...registerForm.register("companyName")}
-                          placeholder="Enter company name"
-                        />
-                      </div>
-                    )}
+                    <div>
+                      <Label htmlFor="username">Username</Label>
+                      <Input
+                        id="username"
+                        {...registerForm.register("username")}
+                        placeholder="Choose username"
+                      />
+                      {registerForm.formState.errors.username && (
+                        <p className="text-sm text-red-500 mt-1">
+                          {registerForm.formState.errors.username.message}
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
+                      <Label htmlFor="email">Email</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        {...registerForm.register("email")}
+                        placeholder="your@email.com"
+                      />
+                      {registerForm.formState.errors.email && (
+                        <p className="text-sm text-red-500 mt-1">
+                          {registerForm.formState.errors.email.message}
+                        </p>
+                      )}
+                    </div>
 
                     <div className="grid grid-cols-2 gap-4">
                       <div>
@@ -284,7 +290,29 @@ export default function AuthPage() {
                     </Button>
                   </form>
                   
-                  <SocialLogin />
+                  <div className="mt-6">
+                    <div className="relative">
+                      <div className="absolute inset-0 flex items-center">
+                        <div className="w-full border-t border-gray-300" />
+                      </div>
+                      <div className="relative flex justify-center text-sm">
+                        <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-4">
+                      <Button
+                        variant="outline"
+                        className="w-full"
+                        onClick={() => window.location.href = "/api/login"}
+                      >
+                        <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                        Sign up with Replit
+                      </Button>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -293,67 +321,44 @@ export default function AuthPage() {
       </div>
 
       {/* Right Column - Hero Section */}
-      <div className="flex-1 bg-gradient-to-br from-primary to-secondary-500 flex items-center justify-center p-8 text-white">
-        <div className="max-w-lg text-center">
+      <div className="flex-1 bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center p-8">
+        <div className="text-white text-center max-w-lg">
           <div className="mb-8">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-white/20 rounded-full mb-6">
-              {watchRole === "company" ? (
-                <Building className="h-10 w-10" />
-              ) : (
-                <GraduationCap className="h-10 w-10" />
-              )}
-            </div>
-            <h2 className="text-3xl font-bold mb-4">
-              {watchRole === "company" 
-                ? "Find Your Next Star Intern" 
-                : "Launch Your Career Journey"
-              }
-            </h2>
-            <p className="text-xl opacity-90 mb-8">
-              {watchRole === "company"
-                ? "Connect with talented students ready to make an impact at your company."
-                : "Discover meaningful internships at top companies and kickstart your professional journey."
-              }
+            <h2 className="text-4xl font-bold mb-4">Welcome to intrn</h2>
+            <p className="text-xl mb-6">
+              South Asia's premier platform connecting talented students with innovative companies
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-6 text-center">
-            <div>
-              <div className="inline-flex items-center justify-center w-12 h-12 bg-white/20 rounded-full mb-3">
-                <Users className="h-6 w-6" />
+          <div className="grid grid-cols-2 gap-6 mb-8">
+            <div className="text-center">
+              <div className="bg-white/20 rounded-full p-4 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
+                <GraduationCap className="h-8 w-8" />
               </div>
-              <div className="text-2xl font-bold">12,500+</div>
-              <div className="text-sm opacity-80">
-                {watchRole === "company" ? "Talented Students" : "Students Connected"}
-              </div>
+              <h3 className="font-semibold mb-2">For Students</h3>
+              <p className="text-sm text-white/90">Find internships that match your skills and interests</p>
             </div>
-
-            <div>
-              <div className="inline-flex items-center justify-center w-12 h-12 bg-white/20 rounded-full mb-3">
-                <Building className="h-6 w-6" />
+            <div className="text-center">
+              <div className="bg-white/20 rounded-full p-4 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
+                <Building className="h-8 w-8" />
               </div>
-              <div className="text-2xl font-bold">850+</div>
-              <div className="text-sm opacity-80">
-                {watchRole === "company" ? "Partner Companies" : "Top Companies"}
-              </div>
+              <h3 className="font-semibold mb-2">For Companies</h3>
+              <p className="text-sm text-white/90">Discover and recruit top talent from across South Asia</p>
             </div>
+          </div>
 
+          <div className="grid grid-cols-3 gap-4 text-center">
             <div>
-              <div className="inline-flex items-center justify-center w-12 h-12 bg-white/20 rounded-full mb-3">
-                <TrendingUp className="h-6 w-6" />
-              </div>
-              <div className="text-2xl font-bold">89%</div>
-              <div className="text-sm opacity-80">Success Rate</div>
+              <Users className="h-6 w-6 mx-auto mb-2" />
+              <p className="text-sm">10,000+ Students</p>
             </div>
-
             <div>
-              <div className="inline-flex items-center justify-center w-12 h-12 bg-white/20 rounded-full mb-3">
-                <Award className="h-6 w-6" />
-              </div>
-              <div className="text-2xl font-bold">3,200+</div>
-              <div className="text-sm opacity-80">
-                {watchRole === "company" ? "Successful Hires" : "Opportunities"}
-              </div>
+              <TrendingUp className="h-6 w-6 mx-auto mb-2" />
+              <p className="text-sm">500+ Companies</p>
+            </div>
+            <div>
+              <Award className="h-6 w-6 mx-auto mb-2" />
+              <p className="text-sm">95% Success Rate</p>
             </div>
           </div>
         </div>
