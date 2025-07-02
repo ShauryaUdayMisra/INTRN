@@ -56,6 +56,9 @@ const companySignupSchema = z.object({
   certificateProvided: z.boolean(),
   networkingOpportunities: z.boolean(),
   
+  // Additional Benefits
+  additionalBenefits: z.array(z.string()).optional(),
+  
   // Verification Documents
   gstNumber: z.string().optional(),
   panNumber: z.string().optional(),
@@ -95,6 +98,7 @@ export default function CompanySignup() {
       structuredProgram: false,
       certificateProvided: false,
       networkingOpportunities: false,
+      additionalBenefits: [],
       termsAccepted: false,
       accurateInfoConfirmed: false,
     },
@@ -416,16 +420,20 @@ export default function CompanySignup() {
               
               <div>
                 <Label htmlFor="stipendRange">Monthly Stipend Range *</Label>
+                <p className="text-sm text-gray-600 mb-2">
+                  Fair compensation helps attract quality talent and shows respect for interns' contributions
+                </p>
                 <Select onValueChange={(value) => form.setValue("stipendRange", value)}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select stipend range" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="unpaid">Unpaid (Certificate only)</SelectItem>
                     <SelectItem value="5000-10000">₹5,000 - ₹10,000</SelectItem>
                     <SelectItem value="10000-20000">₹10,000 - ₹20,000</SelectItem>
                     <SelectItem value="20000-30000">₹20,000 - ₹30,000</SelectItem>
-                    <SelectItem value="30000+">₹30,000+</SelectItem>
+                    <SelectItem value="30000-50000">₹30,000 - ₹50,000</SelectItem>
+                    <SelectItem value="50000+">₹50,000+</SelectItem>
+                    <SelectItem value="unpaid">Unpaid (Certificate + Learning focused)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -489,6 +497,32 @@ export default function CompanySignup() {
                   <Label htmlFor="networkingOpportunities">Networking opportunities</Label>
                 </div>
               </div>
+            </div>
+
+            <div className="space-y-4">
+              <Label>Additional Benefits Offered</Label>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                {["Flexible Hours", "Health Insurance", "Free Lunch", "Transportation Allowance", "Learning Budget", "Conference Tickets", "Team Outings", "Work from Home Days", "Performance Bonus"].map((benefit) => (
+                  <div key={benefit} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={benefit}
+                      checked={form.watch("additionalBenefits")?.includes(benefit)}
+                      onCheckedChange={(checked) => {
+                        const current = form.getValues("additionalBenefits") || [];
+                        if (checked) {
+                          form.setValue("additionalBenefits", [...current, benefit]);
+                        } else {
+                          form.setValue("additionalBenefits", current.filter(b => b !== benefit));
+                        }
+                      }}
+                    />
+                    <Label htmlFor={benefit} className="text-sm">{benefit}</Label>
+                  </div>
+                ))}
+              </div>
+              <p className="text-sm text-gray-600">
+                Additional perks make your internship more attractive to top candidates
+              </p>
             </div>
           </div>
         );
