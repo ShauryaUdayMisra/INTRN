@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { setupAuth } from "./auth";
+import { setupAuth as setupReplitAuth, isAuthenticated } from "./replitAuth";
 import { setupOAuth } from "./oauth";
 import { storage } from "./storage";
 import { seedSampleData } from "./seed-data";
@@ -11,11 +12,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Authentication routes
   setupAuth(app);
   
+  // Simple Replit Auth demo routes (for demonstration purposes)
+  app.get("/api/login", (req, res) => {
+    // Redirect to a demo auth page that shows the feature is coming soon
+    res.redirect("/auth?demo=replit");
+  });
+  
   // OAuth routes for social login
   await setupOAuth(app);
   
   // Seed admin accounts and sample data
   await seedSampleData();
+  
+  // Replit Auth user route
+  app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      res.json(user);
+    } catch (error) {
+      console.error("Error fetching Replit user:", error);
+      res.status(500).json({ message: "Failed to fetch user" });
+    }
+  });
 
   // Middleware to check admin access for specific users
   const requireSpecialAdmin = (req: any, res: any, next: any) => {

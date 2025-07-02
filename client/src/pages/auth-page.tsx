@@ -41,6 +41,15 @@ export default function AuthPage() {
   
   // Check if this is a Replit Auth demo
   const isReplitDemo = new URLSearchParams(window.location.search).get("demo") === "replit";
+  
+  useEffect(() => {
+    if (isReplitDemo) {
+      // Show demo message and clear URL parameter
+      setTimeout(() => {
+        window.history.replaceState({}, '', '/auth');
+      }, 100);
+    }
+  }, [isReplitDemo]);
 
   const loginForm = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
@@ -97,6 +106,12 @@ export default function AuthPage() {
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-primary">intrn</h1>
             <p className="text-gray-600 mt-2">Connect. Learn. Grow.</p>
+            
+            {isReplitDemo && (
+              <div className="mt-4 p-3 bg-blue-100 border border-blue-300 rounded-lg text-blue-800 text-sm">
+                <p><strong>Replit Auth Demo:</strong> This feature redirects here to show the integration capability. Use the regular sign-in below to access the platform.</p>
+              </div>
+            )}
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab}>

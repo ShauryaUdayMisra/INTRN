@@ -9,7 +9,7 @@ import connectPg from "connect-pg-simple";
 import { storage } from "./storage";
 
 if (!process.env.REPLIT_DOMAINS) {
-  throw new Error("Environment variable REPLIT_DOMAINS not provided");
+  console.log("REPLIT_DOMAINS not provided - Replit Auth will be skipped");
 }
 
 const getOidcConfig = memoize(
@@ -67,10 +67,12 @@ async function upsertUser(
 }
 
 export async function setupAuth(app: Express) {
-  app.set("trust proxy", 1);
-  app.use(getSession());
-  app.use(passport.initialize());
-  app.use(passport.session());
+  if (!process.env.REPLIT_DOMAINS || !process.env.REPL_ID) {
+    console.log("Skipping Replit Auth - missing required environment variables");
+    return;
+  }
+
+  // Don't set up session/passport again as they're already set up in auth.ts
 
   const config = await getOidcConfig();
 
