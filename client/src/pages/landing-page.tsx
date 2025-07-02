@@ -61,15 +61,24 @@ export default function LandingPage() {
               className="bg-blue-600 hover:bg-blue-700 text-lg px-8 py-3"
               onClick={() => setLocation("/auth")}
             >
-              Get Started <ArrowRight className="ml-2 h-5 w-5" />
+              Find Internships <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
             <Button 
               size="lg" 
               variant="outline" 
-              className="text-lg px-8 py-3"
+              className="text-lg px-8 py-3 border-blue-600 text-blue-600 hover:bg-blue-50"
+              onClick={() => setLocation("/company-signup")}
+            >
+              I'm a Company
+            </Button>
+          </div>
+          <div className="mt-4">
+            <Button 
+              variant="ghost" 
+              className="text-blue-600 hover:text-blue-700"
               onClick={() => window.location.href = "/api/login"}
             >
-              Sign in with Replit
+              Sign in with Replit →
             </Button>
           </div>
         </div>

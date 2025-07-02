@@ -17,6 +17,7 @@ import AdminPage from "@/pages/admin-page";
 import AdminBackend from "@/pages/admin-backend";
 import StudentOnboarding from "@/pages/student-onboarding";
 import CompanyApplication from "@/pages/company-application";
+import CompanySignup from "@/pages/company-signup";
 import PlatformStatus from "@/pages/platform-status";
 import OAuthSetup from "@/pages/oauth-setup";
 import NotFound from "@/pages/not-found";
@@ -31,6 +32,7 @@ function Router() {
         <Route path="/" component={() => <PageTransition><LandingPage /></PageTransition>} />
         <Route path="/home" component={() => <PageTransition><HomePage /></PageTransition>} />
         <Route path="/auth" component={() => <PageTransition><SimpleAuth /></PageTransition>} />
+        <Route path="/company-signup" component={() => <PageTransition><CompanySignup /></PageTransition>} />
         <ProtectedRoute path="/dashboard" component={() => <PageTransition><DashboardPage /></PageTransition>} />
         <ProtectedRoute path="/search" component={() => <PageTransition><SearchPage /></PageTransition>} />
         <Route path="/blog/:slug" component={() => <PageTransition><BlogPostDetail /></PageTransition>} />
