@@ -24,7 +24,7 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       {/* Header */}
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -48,6 +48,16 @@ export default function LandingPage() {
       {/* Hero Section */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-16">
+          {/* Large INTRN Logo */}
+          <div className="flex items-center justify-center mb-8 animate-pulse">
+            <div className="w-20 h-20 bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center shadow-2xl transform hover:scale-110 transition-transform duration-300">
+              <span className="text-white font-bold text-4xl">I</span>
+            </div>
+            <span className="text-7xl font-bold text-gray-900 ml-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent hover:from-purple-600 hover:to-blue-600 transition-all duration-500">
+              INTRN
+            </span>
+          </div>
+          
           <h1 className="text-5xl font-bold text-gray-900 mb-6">
             Connect with Your Future
           </h1>
@@ -58,7 +68,7 @@ export default function LandingPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               size="lg" 
-              className="bg-blue-600 hover:bg-blue-700 text-lg px-8 py-3"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-lg px-8 py-4 shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-200"
               onClick={() => setLocation("/auth")}
             >
               Find Internships <ArrowRight className="ml-2 h-5 w-5" />
@@ -66,7 +76,7 @@ export default function LandingPage() {
             <Button 
               size="lg" 
               variant="outline" 
-              className="text-lg px-8 py-3 border-blue-600 text-blue-600 hover:bg-blue-50"
+              className="text-lg px-8 py-4 border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
               onClick={() => setLocation("/company-signup")}
             >
               I'm a Company
@@ -85,31 +95,33 @@ export default function LandingPage() {
 
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
-          <div className="text-center">
-            <div className="text-3xl font-bold text-blue-600 mb-2">10K+</div>
-            <div className="text-gray-600">Active Students</div>
+          <div className="text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">10K+</div>
+            <div className="text-gray-600 font-medium">Active Students</div>
           </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-blue-600 mb-2">500+</div>
-            <div className="text-gray-600">Partner Companies</div>
+          <div className="text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">500+</div>
+            <div className="text-gray-600 font-medium">Partner Companies</div>
           </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-blue-600 mb-2">2K+</div>
-            <div className="text-gray-600">Internships Posted</div>
+          <div className="text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">2K+</div>
+            <div className="text-gray-600 font-medium">Internships Posted</div>
           </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-blue-600 mb-2">95%</div>
-            <div className="text-gray-600">Success Rate</div>
+          <div className="text-center p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">95%</div>
+            <div className="text-gray-600 font-medium">Success Rate</div>
           </div>
         </div>
 
         {/* Features */}
         <div className="grid md:grid-cols-3 gap-8 mb-16">
-          <Card className="text-center p-6">
+          <Card className="text-center p-6 hover:shadow-xl transition-shadow duration-300 border-0 shadow-lg">
             <CardHeader>
-              <Users className="h-12 w-12 text-blue-600 mx-auto mb-4" />
-              <CardTitle>For Students</CardTitle>
-              <CardDescription>
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Users className="h-8 w-8 text-white" />
+              </div>
+              <CardTitle className="text-xl">For Students</CardTitle>
+              <CardDescription className="text-gray-600">
                 Discover internships that match your skills and interests
               </CardDescription>
             </CardHeader>
@@ -123,11 +135,13 @@ export default function LandingPage() {
             </CardContent>
           </Card>
 
-          <Card className="text-center p-6">
+          <Card className="text-center p-6 hover:shadow-xl transition-shadow duration-300 border-0 shadow-lg">
             <CardHeader>
-              <Building className="h-12 w-12 text-blue-600 mx-auto mb-4" />
-              <CardTitle>For Companies</CardTitle>
-              <CardDescription>
+              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Building className="h-8 w-8 text-white" />
+              </div>
+              <CardTitle className="text-xl">For Companies</CardTitle>
+              <CardDescription className="text-gray-600">
                 Find talented interns from top universities
               </CardDescription>
             </CardHeader>
@@ -141,11 +155,13 @@ export default function LandingPage() {
             </CardContent>
           </Card>
 
-          <Card className="text-center p-6">
+          <Card className="text-center p-6 hover:shadow-xl transition-shadow duration-300 border-0 shadow-lg">
             <CardHeader>
-              <TrendingUp className="h-12 w-12 text-blue-600 mx-auto mb-4" />
-              <CardTitle>Proven Results</CardTitle>
-              <CardDescription>
+              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <TrendingUp className="h-8 w-8 text-white" />
+              </div>
+              <CardTitle className="text-xl">Proven Results</CardTitle>
+              <CardDescription className="text-gray-600">
                 Join the success stories of our community
               </CardDescription>
             </CardHeader>
@@ -161,9 +177,11 @@ export default function LandingPage() {
         </div>
 
         {/* South Asia Focus */}
-        <div className="bg-blue-50 rounded-2xl p-8 mb-16">
+        <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-12 mb-16 shadow-lg">
           <div className="flex items-center justify-center mb-6">
-            <Globe className="h-16 w-16 text-blue-600" />
+            <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+              <Globe className="h-10 w-10 text-white" />
+            </div>
           </div>
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-4">
             Built for South Asia
@@ -199,10 +217,10 @@ export default function LandingPage() {
           </p>
           <Button 
             size="lg" 
-            className="bg-blue-600 hover:bg-blue-700 text-lg px-12 py-4"
+            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-xl px-16 py-6 shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300"
             onClick={() => setLocation("/auth")}
           >
-            Sign Up Now <ArrowRight className="ml-2 h-6 w-6" />
+            Sign Up Now <ArrowRight className="ml-3 h-6 w-6" />
           </Button>
         </div>
       </main>
