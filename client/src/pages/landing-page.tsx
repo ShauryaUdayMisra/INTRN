@@ -86,7 +86,7 @@ export default function LandingPage() {
             <Button 
               variant="ghost" 
               className="text-blue-600 hover:text-blue-700"
-              onClick={() => window.location.href = "/api/login"}
+              onClick={() => setLocation("/auth?demo=replit")}
             >
               Sign in with Replit →
             </Button>
