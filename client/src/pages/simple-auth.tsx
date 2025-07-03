@@ -95,9 +95,9 @@ export default function SimpleAuth() {
             <h1 className="text-3xl font-bold text-primary">intrn</h1>
             <p className="text-gray-600 mt-2">Connect. Learn. Grow.</p>
             {isReplitDemo && (
-              <p className="text-sm text-blue-600 mt-2 bg-blue-50 p-2 rounded">
-                ✨ Replit Auth Demo Active
-              </p>
+              <div className="mt-4 p-3 bg-blue-100 border border-blue-300 rounded-lg text-blue-800 text-sm">
+                <p><strong>Replit Auth Demo:</strong> This feature redirects here to show the integration capability. Use the regular sign-in below to access the platform.</p>
+              </div>
             )}
           </div>
 
