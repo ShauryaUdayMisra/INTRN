@@ -80,15 +80,15 @@ export default function LandingPage() {
           </div>
           
           <h1 className="text-4xl md:text-6xl font-bold text-black mb-8 leading-tight">
-            Code Your
+            Internships for
             <br />
             <span className="bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">
-              Future
+              Highschoolers
             </span>
           </h1>
           <p className="text-lg md:text-xl text-black mb-12 max-w-2xl mx-auto leading-relaxed font-medium">
-            Next-gen internships for ambitious high schoolers. Ship real code, build killer projects, 
-            level up your skills with industry pros.
+            Find meaningful internship opportunities designed for high school students. 
+            Gain real-world experience and build your skills with professional mentorship.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-8">
@@ -97,7 +97,7 @@ export default function LandingPage() {
               className="bg-primary hover:bg-primary/90 text-white text-lg px-10 py-4 rounded-2xl font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 min-w-[200px]"
               onClick={() => setLocation("/auth")}
             >
-              Start Building
+              Get Started
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
             <Button 
