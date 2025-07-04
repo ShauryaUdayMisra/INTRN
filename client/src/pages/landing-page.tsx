@@ -69,7 +69,7 @@ export default function LandingPage() {
               <span className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">
                 intrn
               </span>
-              <div className="flex items-center justify-center text-xs font-semibold text-primary-600 tracking-[0.2em] mt-1 uppercase">
+              <div className="flex items-center justify-center text-xs font-semibold text-black tracking-[0.2em] mt-1 uppercase">
                 <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                   <path d="M19 7h-1V6c0-.55-.45-1-1-1s-1 .45-1 1v1h-1c-.55 0-1 .45-1 1s.45 1 1 1h1v1c0 .55.45 1 1 1s1-.45 1-1V9h1c.55 0 1-.45 1-1s-.45-1-1-1z"/>
