@@ -522,7 +522,7 @@ export default function CompanySignup() {
             <div>
               <Label>Technical Skills Required *</Label>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-2">
-                {["JavaScript", "Python", "Java", "React", "Node.js", "SQL", "HTML/CSS", "Machine Learning", "Data Analysis", "Mobile Development", "UI/UX Design", "Digital Marketing"].map((skill) => (
+                {["HTML/CSS", "Canva Design", "Social Media", "Microsoft Office", "Google Workspace", "Basic Photography", "Video Editing", "Content Writing", "WordPress", "Digital Marketing", "Data Entry", "Customer Service", "Basic Coding", "Graphic Design", "UI/UX Design", "Python", "JavaScript"].map((skill) => (
                   <div key={skill} className="flex items-center space-x-2">
                     <Checkbox
                       id={skill}
@@ -548,7 +548,7 @@ export default function CompanySignup() {
             <div>
               <Label>Soft Skills Required *</Label>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-2">
-                {["Communication", "Teamwork", "Problem Solving", "Leadership", "Time Management", "Adaptability", "Critical Thinking", "Creativity", "Attention to Detail"].map((skill) => (
+                {["Communication", "Teamwork", "Punctuality", "Following Instructions", "Friendly Attitude", "Eagerness to Learn", "Organizing Skills", "Basic Phone Skills", "Email Writing", "Time Management", "Responsibility", "Creativity", "Problem Solving", "Leadership", "Adaptability"].map((skill) => (
                   <div key={skill} className="flex items-center space-x-2">
                     <Checkbox
                       id={skill}

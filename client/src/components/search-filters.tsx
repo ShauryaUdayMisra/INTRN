@@ -25,14 +25,16 @@ export default function SearchFilters({ filters, onFiltersChange }: SearchFilter
   ];
 
   const popularSkills = [
-    "JavaScript", "Python", "React", "Node.js", "Java", "SQL",
-    "Machine Learning", "Data Science", "Marketing", "Design",
-    "Product Management", "Sales", "Finance", "Accounting"
+    "Social Media", "Marketing", "Design", "Content Writing", "Customer Service",
+    "Data Entry", "Microsoft Office", "Google Workspace", "Photography", "Video Editing",
+    "Canva Design", "HTML/CSS", "WordPress", "Sales", "Basic Coding",
+    "JavaScript", "Python", "UI/UX Design"
   ];
 
   const popularLocations = [
-    "San Francisco, CA", "New York, NY", "Austin, TX", "Seattle, WA",
-    "Boston, MA", "Los Angeles, CA", "Chicago, IL", "Denver, CO"
+    "Mumbai, India", "Delhi, India", "Bangalore, India", "Chennai, India",
+    "Pune, India", "Hyderabad, India", "Kolkata, India", "Ahmedabad, India",
+    "Dhaka, Bangladesh", "Karachi, Pakistan", "Lahore, Pakistan", "Colombo, Sri Lanka"
   ];
 
   const handleLocationChange = (location: string) => {
