@@ -8,12 +8,13 @@ import { pool } from "./db";
 const PostgresSessionStore = connectPg(session);
 
 export interface IStorage {
-  // User methods for Replit Auth
-  getUser(id: string): Promise<User | undefined>;
+  // User methods
+  getUser(id: number): Promise<User | undefined>;
   upsertUser(user: UpsertUser): Promise<User>;
   getUserByEmail(email: string): Promise<User | undefined>;
+  getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
-  updateUser(id: string, updates: Partial<InsertUser>): Promise<User | undefined>;
+  updateUser(id: number, updates: Partial<InsertUser>): Promise<User | undefined>;
   
   // Internship methods
   getInternships(filters?: { location?: string; skills?: string[]; type?: string }): Promise<Internship[]>;
@@ -66,10 +67,12 @@ export class DatabaseStorage implements IStorage {
   }
 
   // User methods
-  async getUser(id: string): Promise<User | undefined> {
+  async getUser(id: number): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.id, id));
     return user || undefined;
   }
+
+
 
   async upsertUser(userData: UpsertUser): Promise<User> {
     const [user] = await db
@@ -104,7 +107,7 @@ export class DatabaseStorage implements IStorage {
     return user;
   }
 
-  async updateUser(id: number, updates: Partial<InsertUser>): Promise<User | undefined> {
+  async updateUser(id: string, updates: Partial<InsertUser>): Promise<User | undefined> {
     const [user] = await db
       .update(users)
       .set(updates)

@@ -16,11 +16,13 @@ export const sessions = pgTable(
 
 // User storage table updated for Replit Auth
 export const users = pgTable("users", {
-  id: varchar("id").primaryKey().notNull(), // Replit user ID (string)
-  email: varchar("email").unique(),
-  firstName: varchar("first_name"),
-  lastName: varchar("last_name"),
-  profileImageUrl: varchar("profile_image_url"),
+  id: serial("id").primaryKey(), // Auto-incrementing integer ID to match existing database
+  username: text("username").notNull().unique(),
+  email: text("email").notNull().unique(),
+  password: text("password").notNull(),
+  firstName: text("first_name"),
+  lastName: text("last_name"),
+  profileImageUrl: text("profile_image_url"),
   
   // Custom platform fields
   role: text("role", { enum: ["student", "company", "admin"] }).default("student"),
