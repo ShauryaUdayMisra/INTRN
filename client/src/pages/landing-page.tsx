@@ -59,11 +59,11 @@ export default function LandingPage() {
           </div>
           
           <h1 className="text-5xl font-bold text-gray-900 mb-6">
-            Connect with Your Future
+            Internships for Highschoolers
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-            The leading internship platform for South Asia. Join thousands of students 
-            finding their dream internships with top companies across India and beyond.
+            The leading internship platform for high school students in South Asia. Join thousands of 
+            8th-12th grade students finding valuable learning experiences with top companies across India.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 

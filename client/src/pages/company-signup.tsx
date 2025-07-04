@@ -41,7 +41,6 @@ const companySignupSchema = z.object({
   // Internship Program Details
   workArrangement: z.string().min(1, "Please select work arrangement"),
   internshipDuration: z.string().min(1, "Please select internship duration"),
-  stipendRange: z.string().min(1, "Please select stipend range"),
   mentorshipProgram: z.boolean(),
   trainingProvided: z.boolean(),
   
@@ -161,7 +160,7 @@ export default function CompanySignup() {
       case 3:
         return ["industryType", "companySize", "location", "description"];
       case 4:
-        return ["workArrangement", "internshipDuration", "stipendRange"];
+        return ["workArrangement", "internshipDuration"];
       case 5:
         return ["technicalSkills", "softSkills", "educationLevel", "termsAccepted", "accurateInfoConfirmed"];
       default:
@@ -419,23 +418,13 @@ export default function CompanySignup() {
               </div>
               
               <div>
-                <Label htmlFor="stipendRange">Monthly Stipend Range *</Label>
-                <p className="text-sm text-gray-600 mb-2">
-                  Fair compensation helps attract quality talent and shows respect for interns' contributions
-                </p>
-                <Select onValueChange={(value) => form.setValue("stipendRange", value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select stipend range" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="5000-10000">₹5,000 - ₹10,000</SelectItem>
-                    <SelectItem value="10000-20000">₹10,000 - ₹20,000</SelectItem>
-                    <SelectItem value="20000-30000">₹20,000 - ₹30,000</SelectItem>
-                    <SelectItem value="30000-50000">₹30,000 - ₹50,000</SelectItem>
-                    <SelectItem value="50000+">₹50,000+</SelectItem>
-                    <SelectItem value="unpaid">Unpaid (Certificate + Learning focused)</SelectItem>
-                  </SelectContent>
-                </Select>
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <h4 className="font-medium text-blue-900 mb-2">Unpaid Internships for High School Students</h4>
+                  <p className="text-sm text-blue-700">
+                    This platform focuses on providing valuable learning experiences for high school students. 
+                    All internships are unpaid and emphasize skill development, mentorship, and real-world experience.
+                  </p>
+                </div>
               </div>
             </div>
 
@@ -589,11 +578,9 @@ export default function CompanySignup() {
                   <SelectValue placeholder="Select education level" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="high-school">High School (12th Grade)</SelectItem>
-                  <SelectItem value="diploma">Diploma</SelectItem>
-                  <SelectItem value="bachelors">Bachelor's Degree</SelectItem>
-                  <SelectItem value="masters">Master's Degree</SelectItem>
-                  <SelectItem value="any">Any Education Level</SelectItem>
+                  <SelectItem value="8th-grade">8th Grade+</SelectItem>
+                  <SelectItem value="10th-grade">10th Grade+</SelectItem>
+                  <SelectItem value="12th-grade">12th Grade+</SelectItem>
                 </SelectContent>
               </Select>
             </div>
