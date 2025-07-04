@@ -69,22 +69,26 @@ export default function LandingPage() {
               <span className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">
                 intrn
               </span>
-              <div className="text-xs font-semibold text-primary-600 tracking-[0.2em] mt-1 uppercase">
+              <div className="flex items-center justify-center text-xs font-semibold text-primary-600 tracking-[0.2em] mt-1 uppercase">
+                <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                  <path d="M19 7h-1V6c0-.55-.45-1-1-1s-1 .45-1 1v1h-1c-.55 0-1 .45-1 1s.45 1 1 1h1v1c0 .55.45 1 1 1s1-.45 1-1V9h1c.55 0 1-.45 1-1s-.45-1-1-1z"/>
+                </svg>
                 For Highschoolers
               </div>
             </div>
           </div>
           
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-8 leading-tight">
-            Future-Ready
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-8 leading-tight">
+            Code Your
             <br />
             <span className="bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">
-              Internships
+              Future
             </span>
           </h1>
-          <p className="text-lg md:text-xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
-            Empowering high school students across South Asia with meaningful learning experiences. 
-            Connect with top companies and build your future today.
+          <p className="text-lg md:text-xl text-gray-700 mb-12 max-w-2xl mx-auto leading-relaxed font-medium">
+            Next-gen internships for ambitious high schoolers. Ship real code, build killer projects, 
+            level up your skills with industry pros.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-8">
@@ -93,7 +97,7 @@ export default function LandingPage() {
               className="bg-primary hover:bg-primary/90 text-white text-lg px-10 py-4 rounded-2xl font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 min-w-[200px]"
               onClick={() => setLocation("/auth")}
             >
-              Find Internships
+              Start Building
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
             <Button 
@@ -102,7 +106,7 @@ export default function LandingPage() {
               className="text-lg px-10 py-4 rounded-2xl border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 min-w-[200px]"
               onClick={() => setLocation("/company-signup")}
             >
-              Post Internships
+              Hire Talent
             </Button>
           </div>
         </div>
@@ -113,32 +117,32 @@ export default function LandingPage() {
             <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
               <Zap className="w-8 h-8 text-white" />
             </div>
-            <div className="text-4xl font-bold text-gray-900 mb-2">10K+</div>
-            <div className="text-gray-600 font-medium">Active Students</div>
+            <div className="text-4xl font-bold text-gray-800 mb-2">10K+</div>
+            <div className="text-gray-700 font-medium">Active Builders</div>
           </div>
           
           <div className="text-center group">
             <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
               <Compass className="w-8 h-8 text-white" />
             </div>
-            <div className="text-4xl font-bold text-gray-900 mb-2">500+</div>
-            <div className="text-gray-600 font-medium">Companies</div>
+            <div className="text-4xl font-bold text-gray-800 mb-2">500+</div>
+            <div className="text-gray-700 font-medium">Tech Companies</div>
           </div>
           
           <div className="text-center group">
             <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
               <Brain className="w-8 h-8 text-white" />
             </div>
-            <div className="text-4xl font-bold text-gray-900 mb-2">2K+</div>
-            <div className="text-gray-600 font-medium">Opportunities</div>
+            <div className="text-4xl font-bold text-gray-800 mb-2">2K+</div>
+            <div className="text-gray-700 font-medium">Live Projects</div>
           </div>
           
           <div className="text-center group">
             <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
               <Award className="w-8 h-8 text-white" />
             </div>
-            <div className="text-4xl font-bold text-gray-900 mb-2">95%</div>
-            <div className="text-gray-600 font-medium">Success Rate</div>
+            <div className="text-4xl font-bold text-gray-800 mb-2">95%</div>
+            <div className="text-gray-700 font-medium">Ship Rate</div>
           </div>
         </div>
 
@@ -148,9 +152,9 @@ export default function LandingPage() {
             <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg border border-primary-100 group-hover:shadow-xl transition-all duration-300">
               <Brain className="w-10 h-10 text-primary-600" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Skill Development</h3>
-            <p className="text-gray-600 leading-relaxed">
-              Focus on building practical skills and gaining real-world experience through hands-on learning opportunities.
+            <h3 className="text-2xl font-bold text-gray-800 mb-4">Ship Real Code</h3>
+            <p className="text-gray-700 leading-relaxed">
+              Build production apps, deploy to cloud, and contribute to repos that millions use daily.
             </p>
           </div>
 
@@ -158,9 +162,9 @@ export default function LandingPage() {
             <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg border border-primary-100 group-hover:shadow-xl transition-all duration-300">
               <Zap className="w-10 h-10 text-primary-600" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Mentorship</h3>
-            <p className="text-gray-600 leading-relaxed">
-              Connect with industry professionals who guide your learning journey and career development.
+            <h3 className="text-2xl font-bold text-gray-800 mb-4">Level Up Fast</h3>
+            <p className="text-gray-700 leading-relaxed">
+              Pair with senior devs, learn cutting-edge frameworks, and master tools that top companies use.
             </p>
           </div>
 
@@ -168,9 +172,9 @@ export default function LandingPage() {
             <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg border border-primary-100 group-hover:shadow-xl transition-all duration-300">
               <Award className="w-10 h-10 text-primary-600" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Recognition</h3>
-            <p className="text-gray-600 leading-relaxed">
-              Earn certificates and build a strong foundation for your future academic and career pursuits.
+            <h3 className="text-2xl font-bold text-gray-800 mb-4">Build Your Rep</h3>
+            <p className="text-gray-700 leading-relaxed">
+              Stack commits, earn certs, and create a portfolio that gets you noticed by top tech companies.
             </p>
           </div>
         </div>
