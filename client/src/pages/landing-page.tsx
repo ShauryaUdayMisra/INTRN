@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useAuth } from "@/hooks/use-auth";
 import { useLocation } from "wouter";
 import { useEffect } from "react";
-import { ArrowRight, Users, Building, TrendingUp, Globe, BookOpen, Trophy, Heart, Star } from "lucide-react";
+import { ArrowRight, Zap, Compass, TrendingUp, Sparkles, Brain, Award, Flame, Target } from "lucide-react";
 
 // Custom Student Icon Component (based on attached image)
 const StudentIcon = ({ className }: { className?: string }) => (
@@ -65,7 +65,7 @@ export default function LandingPage() {
                 <StudentIcon className="w-12 h-12 text-white" />
               </div>
               <div className="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center shadow-lg">
-                <Star className="w-3 h-3 text-yellow-700" />
+                <Target className="w-3 h-3 text-yellow-700" />
               </div>
             </div>
             <div className="ml-6">
@@ -119,7 +119,7 @@ export default function LandingPage() {
             <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition-opacity duration-300"></div>
             <div className="relative text-center p-6 bg-white rounded-2xl border border-blue-100 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <div className="w-12 h-12 mx-auto mb-3 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
-                <Users className="w-6 h-6 text-white" />
+                <Zap className="w-6 h-6 text-white" />
               </div>
               <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-1">10K+</div>
               <div className="text-gray-600 font-medium text-sm">Active Students</div>
@@ -130,7 +130,7 @@ export default function LandingPage() {
             <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-blue-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition-opacity duration-300"></div>
             <div className="relative text-center p-6 bg-white rounded-2xl border border-emerald-100 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <div className="w-12 h-12 mx-auto mb-3 bg-gradient-to-br from-emerald-500 to-blue-500 rounded-xl flex items-center justify-center">
-                <Building className="w-6 h-6 text-white" />
+                <Compass className="w-6 h-6 text-white" />
               </div>
               <div className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent mb-1">500+</div>
               <div className="text-gray-600 font-medium text-sm">Partner Companies</div>
@@ -141,7 +141,7 @@ export default function LandingPage() {
             <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition-opacity duration-300"></div>
             <div className="relative text-center p-6 bg-white rounded-2xl border border-purple-100 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <div className="w-12 h-12 mx-auto mb-3 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
-                <BookOpen className="w-6 h-6 text-white" />
+                <Brain className="w-6 h-6 text-white" />
               </div>
               <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-1">2K+</div>
               <div className="text-gray-600 font-medium text-sm">Learning Opportunities</div>
@@ -152,7 +152,7 @@ export default function LandingPage() {
             <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition-opacity duration-300"></div>
             <div className="relative text-center p-6 bg-white rounded-2xl border border-orange-100 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <div className="w-12 h-12 mx-auto mb-3 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center">
-                <Trophy className="w-6 h-6 text-white" />
+                <Award className="w-6 h-6 text-white" />
               </div>
               <div className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent mb-1">95%</div>
               <div className="text-gray-600 font-medium text-sm">Success Rate</div>
@@ -175,10 +175,10 @@ export default function LandingPage() {
             </CardHeader>
             <CardContent className="relative z-10">
               <ul className="text-sm text-gray-600 space-y-3 text-left">
-                <li className="flex items-center"><Heart className="w-4 h-4 text-red-500 mr-2" /> Skill-building opportunities</li>
-                <li className="flex items-center"><BookOpen className="w-4 h-4 text-blue-500 mr-2" /> Real-world experience</li>
-                <li className="flex items-center"><Users className="w-4 h-4 text-green-500 mr-2" /> Mentorship programs</li>
-                <li className="flex items-center"><Star className="w-4 h-4 text-yellow-500 mr-2" /> Career exploration</li>
+                <li className="flex items-center"><Flame className="w-4 h-4 text-red-500 mr-2" /> Skill-building opportunities</li>
+                <li className="flex items-center"><Brain className="w-4 h-4 text-blue-500 mr-2" /> Real-world experience</li>
+                <li className="flex items-center"><Zap className="w-4 h-4 text-green-500 mr-2" /> Mentorship programs</li>
+                <li className="flex items-center"><Target className="w-4 h-4 text-yellow-500 mr-2" /> Career exploration</li>
               </ul>
             </CardContent>
           </Card>
@@ -187,7 +187,7 @@ export default function LandingPage() {
             <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 to-blue-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <CardHeader className="relative z-10">
               <div className="w-20 h-20 bg-gradient-to-br from-emerald-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl group-hover:scale-110 transition-transform duration-300">
-                <Building className="w-10 h-10 text-white" />
+                <Compass className="w-10 h-10 text-white" />
               </div>
               <CardTitle className="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">For Companies</CardTitle>
               <CardDescription className="text-gray-600 mt-3">
@@ -196,10 +196,10 @@ export default function LandingPage() {
             </CardHeader>
             <CardContent className="relative z-10">
               <ul className="text-sm text-gray-600 space-y-3 text-left">
-                <li className="flex items-center"><Heart className="w-4 h-4 text-red-500 mr-2" /> Build future talent pipeline</li>
-                <li className="flex items-center"><BookOpen className="w-4 h-4 text-blue-500 mr-2" /> Provide learning experiences</li>
-                <li className="flex items-center"><Users className="w-4 h-4 text-green-500 mr-2" /> Mentor young minds</li>
-                <li className="flex items-center"><Star className="w-4 h-4 text-yellow-500 mr-2" /> Social impact initiatives</li>
+                <li className="flex items-center"><Flame className="w-4 h-4 text-red-500 mr-2" /> Build future talent pipeline</li>
+                <li className="flex items-center"><Brain className="w-4 h-4 text-blue-500 mr-2" /> Provide learning experiences</li>
+                <li className="flex items-center"><Zap className="w-4 h-4 text-green-500 mr-2" /> Mentor young minds</li>
+                <li className="flex items-center"><Target className="w-4 h-4 text-yellow-500 mr-2" /> Social impact initiatives</li>
               </ul>
             </CardContent>
           </Card>
@@ -208,7 +208,7 @@ export default function LandingPage() {
             <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-pink-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <CardHeader className="relative z-10">
               <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl group-hover:scale-110 transition-transform duration-300">
-                <Trophy className="w-10 h-10 text-white" />
+                <Award className="w-10 h-10 text-white" />
               </div>
               <CardTitle className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Learning Focused</CardTitle>
               <CardDescription className="text-gray-600 mt-3">
@@ -217,10 +217,10 @@ export default function LandingPage() {
             </CardHeader>
             <CardContent className="relative z-10">
               <ul className="text-sm text-gray-600 space-y-3 text-left">
-                <li className="flex items-center"><Heart className="w-4 h-4 text-red-500 mr-2" /> Skill-based learning</li>
-                <li className="flex items-center"><BookOpen className="w-4 h-4 text-blue-500 mr-2" /> Real project experience</li>
-                <li className="flex items-center"><Users className="w-4 h-4 text-green-500 mr-2" /> Industry mentorship</li>
-                <li className="flex items-center"><Star className="w-4 h-4 text-yellow-500 mr-2" /> Certificate programs</li>
+                <li className="flex items-center"><Flame className="w-4 h-4 text-red-500 mr-2" /> Skill-based learning</li>
+                <li className="flex items-center"><Brain className="w-4 h-4 text-blue-500 mr-2" /> Real project experience</li>
+                <li className="flex items-center"><Zap className="w-4 h-4 text-green-500 mr-2" /> Industry mentorship</li>
+                <li className="flex items-center"><Target className="w-4 h-4 text-yellow-500 mr-2" /> Certificate programs</li>
               </ul>
             </CardContent>
           </Card>
@@ -233,10 +233,10 @@ export default function LandingPage() {
             <div className="flex items-center justify-center mb-8">
               <div className="relative">
                 <div className="w-24 h-24 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-2xl">
-                  <Globe className="w-12 h-12 text-white" />
+                  <Sparkles className="w-12 h-12 text-white" />
                 </div>
                 <div className="absolute -top-2 -right-2 w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center shadow-lg">
-                  <Star className="w-4 h-4 text-yellow-700" />
+                  <Target className="w-4 h-4 text-yellow-700" />
                 </div>
               </div>
             </div>
@@ -251,21 +251,21 @@ export default function LandingPage() {
             <div className="grid md:grid-cols-3 gap-6">
               <div className="text-center p-6 bg-white/50 rounded-xl backdrop-blur-sm">
                 <div className="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
-                  <BookOpen className="w-6 h-6 text-white" />
+                  <Brain className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="font-bold text-gray-900 mb-2">Skill Development</h3>
                 <p className="text-sm text-gray-600">Focus on building practical skills and gaining real-world experience</p>
               </div>
               <div className="text-center p-6 bg-white/50 rounded-xl backdrop-blur-sm">
                 <div className="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-emerald-500 to-blue-500 rounded-xl flex items-center justify-center">
-                  <Users className="w-6 h-6 text-white" />
+                  <Zap className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="font-bold text-gray-900 mb-2">Mentorship</h3>
                 <p className="text-sm text-gray-600">Connect with industry professionals who guide your learning journey</p>
               </div>
               <div className="text-center p-6 bg-white/50 rounded-xl backdrop-blur-sm">
                 <div className="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
-                  <Trophy className="w-6 h-6 text-white" />
+                  <Award className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="font-bold text-gray-900 mb-2">Career Exploration</h3>
                 <p className="text-sm text-gray-600">Discover different career paths and find your passion early</p>
