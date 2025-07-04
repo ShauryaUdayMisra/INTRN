@@ -156,78 +156,7 @@ export async function seedSampleData() {
       }
     }
 
-    // Get all companies for internship creation
-    const allCompanies = await storage.getCompaniesList();
-    
-    if (allCompanies.length > 0) {
-      // Create sample internships
-      const sampleInternships = [
-        {
-          title: "Software Development Intern",
-          description: "Join our development team to build scalable web applications using modern technologies. You'll work on real projects that impact millions of users.",
-          requirements: "Strong programming skills in JavaScript/TypeScript, experience with React/Node.js, knowledge of databases",
-          location: "Mumbai, India",
-          type: "hybrid" as const,
-          duration: "3 months",
-          stipend: "₹25,000/month",
-          skills: ["JavaScript", "React", "Node.js", "MongoDB"],
-          companyId: allCompanies[0].id
-        },
-        {
-          title: "Data Science Intern", 
-          description: "Work with our data science team to analyze large datasets and build machine learning models. Gain hands-on experience with real-world data problems.",
-          requirements: "Knowledge of Python, machine learning libraries (scikit-learn, pandas), statistics background",
-          location: "Bangalore, India",
-          type: "onsite" as const,
-          duration: "6 months",
-          stipend: "₹30,000/month", 
-          skills: ["Python", "Machine Learning", "SQL", "Data Analysis"],
-          companyId: allCompanies[1]?.id || allCompanies[0].id
-        },
-        {
-          title: "Mobile App Development Intern",
-          description: "Develop mobile applications for Android and iOS platforms. Work on consumer-facing apps used by millions of customers.",
-          requirements: "Experience with Java/Kotlin for Android or Swift for iOS, understanding of mobile UI/UX principles",
-          location: "Bangalore, India", 
-          type: "remote" as const,
-          duration: "4 months",
-          stipend: "₹28,000/month",
-          skills: ["Java", "Kotlin", "Android", "Mobile Development"],
-          companyId: allCompanies[2]?.id || allCompanies[0].id
-        },
-        {
-          title: "UI/UX Design Intern",
-          description: "Create intuitive and beautiful user interfaces for web and mobile applications. Collaborate with product teams to improve user experience.",
-          requirements: "Proficiency in design tools (Figma, Adobe XD), understanding of user-centered design principles",
-          location: "Delhi, India",
-          type: "hybrid" as const, 
-          duration: "3 months",
-          stipend: "₹22,000/month",
-          skills: ["UI/UX Design", "Figma", "Adobe XD", "Prototyping"],
-          companyId: allCompanies[0].id
-        },
-        {
-          title: "Backend Development Intern",
-          description: "Build robust APIs and microservices that power our platform. Learn about scalable architecture and cloud technologies.",
-          requirements: "Knowledge of backend technologies (Node.js, Python, Java), understanding of databases and APIs",
-          location: "Mumbai, India",
-          type: "onsite" as const,
-          duration: "6 months", 
-          stipend: "₹35,000/month",
-          skills: ["Node.js", "Python", "AWS", "Microservices"],
-          companyId: allCompanies[1]?.id || allCompanies[0].id
-        }
-      ];
-
-      for (const internship of sampleInternships) {
-        try {
-          await storage.createInternship(internship);
-          console.log(`✓ Created internship: ${internship.title}`);
-        } catch (error) {
-          console.log(`Internship ${internship.title} might already exist`);
-        }
-      }
-    }
+    // Note: Internship creation removed - only real company signups will create internships
 
     console.log("✅ Sample data seeding completed!");
     
