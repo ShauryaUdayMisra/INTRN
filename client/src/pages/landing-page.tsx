@@ -53,35 +53,37 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-pink-50 to-violet-50">
       {/* Floating Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-20 h-20 bg-purple-200/30 rounded-full blur-xl animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-32 h-32 bg-blue-200/20 rounded-full blur-2xl animate-pulse delay-1000"></div>
-        <div className="absolute bottom-20 left-1/4 w-24 h-24 bg-indigo-200/25 rounded-full blur-xl animate-pulse delay-500"></div>
+        <div className="absolute top-20 left-10 w-20 h-20 bg-orange-300/40 rounded-full blur-xl animate-pulse"></div>
+        <div className="absolute top-40 right-20 w-32 h-32 bg-pink-300/30 rounded-full blur-2xl animate-pulse delay-1000"></div>
+        <div className="absolute bottom-20 left-1/4 w-24 h-24 bg-violet-300/35 rounded-full blur-xl animate-pulse delay-500"></div>
+        <div className="absolute top-1/2 right-1/4 w-16 h-16 bg-cyan-300/25 rounded-full blur-lg animate-pulse delay-700"></div>
+        <div className="absolute bottom-40 right-10 w-28 h-28 bg-emerald-300/20 rounded-full blur-2xl animate-pulse delay-300"></div>
       </div>
 
       {/* Header */}
-      <header className="relative z-10 bg-white/80 backdrop-blur-md shadow-sm border-b border-white/20">
+      <header className="relative z-10 bg-white/90 backdrop-blur-md shadow-lg border-b border-orange-100/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-3">
               <div className="relative">
-                <div className="w-12 h-12 bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
+                <div className="w-12 h-12 bg-gradient-to-br from-orange-500 via-pink-500 to-violet-600 rounded-2xl flex items-center justify-center shadow-xl">
                   <StudentIcon className="w-6 h-6 text-white" />
                 </div>
-                <div className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full flex items-center justify-center">
-                  <Sparkles className="w-2 h-2 text-yellow-700" />
+                <div className="absolute -top-1 -right-1 w-4 h-4 bg-cyan-400 rounded-full flex items-center justify-center shadow-md">
+                  <Sparkles className="w-2 h-2 text-cyan-800" />
                 </div>
               </div>
               <div>
-                <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">intrn</span>
-                <div className="text-xs text-gray-500 font-medium">for highschoolers</div>
+                <span className="text-2xl font-bold bg-gradient-to-r from-orange-600 via-pink-600 to-violet-600 bg-clip-text text-transparent">intrn</span>
+                <div className="text-xs text-orange-600 font-medium">for highschoolers</div>
               </div>
             </div>
             <Button 
               variant="outline" 
-              className="border-purple-200 text-purple-700 hover:bg-purple-50 transition-all duration-300"
+              className="border-orange-300 text-orange-700 hover:bg-orange-50 hover:border-orange-400 transition-all duration-300 shadow-md"
               onClick={() => setLocation("/auth")}
             >
               Get Started
@@ -99,20 +101,20 @@ export default function LandingPage() {
           className="text-center mb-20"
         >
           <div className="mb-8">
-            <span className="inline-block px-4 py-2 bg-purple-100 text-purple-700 rounded-full text-sm font-medium mb-6">
+            <span className="inline-block px-6 py-3 bg-gradient-to-r from-orange-100 to-pink-100 text-orange-700 rounded-full text-sm font-bold mb-6 shadow-lg border border-orange-200">
               🎓 Designed specifically for high school students
             </span>
             <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
               Your{" "}
               <span className="relative">
-                <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-orange-600 via-pink-600 to-violet-600 bg-clip-text text-transparent">
                   first step
                 </span>
-                <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full"></div>
+                <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-orange-500 via-pink-500 to-violet-500 rounded-full shadow-md"></div>
               </span>
               {" "}into the{" "}
               <br />
-              <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-violet-600 via-cyan-600 to-emerald-600 bg-clip-text text-transparent">
                 professional world
               </span>
             </h1>
@@ -125,7 +127,7 @@ export default function LandingPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
             <Button 
               size="lg" 
-              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white text-lg px-8 py-6 rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+              className="bg-gradient-to-r from-orange-500 via-pink-500 to-violet-600 hover:from-orange-600 hover:via-pink-600 hover:to-violet-700 text-white text-lg px-10 py-6 rounded-2xl shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 border-none"
               onClick={() => setLocation("/auth")}
             >
               Start Your Journey <ArrowRight className="ml-2 h-5 w-5" />
@@ -133,7 +135,7 @@ export default function LandingPage() {
             <Button 
               variant="outline" 
               size="lg"
-              className="border-2 border-purple-200 text-purple-700 hover:bg-purple-50 text-lg px-8 py-6 rounded-2xl transition-all duration-300"
+              className="border-3 border-orange-300 bg-gradient-to-r from-orange-50 to-pink-50 text-orange-700 hover:bg-gradient-to-r hover:from-orange-100 hover:to-pink-100 hover:border-orange-400 text-lg px-10 py-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl"
               onClick={() => setLocation("/search")}
             >
               Explore Internships
@@ -141,18 +143,18 @@ export default function LandingPage() {
           </div>
 
           {/* Trust Indicators */}
-          <div className="flex flex-wrap justify-center items-center gap-8 text-sm text-gray-500">
-            <div className="flex items-center gap-2">
-              <CheckCircle className="w-4 h-4 text-green-500" />
-              <span>100% Free for Students</span>
+          <div className="flex flex-wrap justify-center items-center gap-8 text-sm font-medium">
+            <div className="flex items-center gap-2 px-4 py-2 bg-emerald-100 rounded-full border border-emerald-200">
+              <CheckCircle className="w-4 h-4 text-emerald-600" />
+              <span className="text-emerald-700">100% Free for Students</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Heart className="w-4 h-4 text-red-500" />
-              <span>Focus on Learning, Not Payment</span>
+            <div className="flex items-center gap-2 px-4 py-2 bg-rose-100 rounded-full border border-rose-200">
+              <Heart className="w-4 h-4 text-rose-600" />
+              <span className="text-rose-700">Focus on Learning, Not Payment</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Star className="w-4 h-4 text-yellow-500" />
-              <span>8th Grade & Above Welcome</span>
+            <div className="flex items-center gap-2 px-4 py-2 bg-amber-100 rounded-full border border-amber-200">
+              <Star className="w-4 h-4 text-amber-600" />
+              <span className="text-amber-700">8th Grade & Above Welcome</span>
             </div>
           </div>
         </motion.div>
@@ -164,9 +166,9 @@ export default function LandingPage() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="mb-20"
         >
-          <div className="bg-gradient-to-br from-white/80 to-purple-50/80 backdrop-blur-md rounded-3xl p-12 shadow-2xl border border-white/20">
+          <div className="bg-gradient-to-br from-white/90 to-orange-50/80 backdrop-blur-md rounded-3xl p-12 shadow-2xl border border-orange-100/30">
             <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+              <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-orange-600 via-pink-600 to-violet-600 bg-clip-text text-transparent">
                 We Believe Every High Schooler Deserves a Chance
               </h2>
               <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
@@ -178,9 +180,9 @@ export default function LandingPage() {
             <div className="grid md:grid-cols-3 gap-8">
               <motion.div 
                 whileHover={{ scale: 1.05 }}
-                className="text-center p-6 bg-white/60 rounded-2xl backdrop-blur-sm border border-white/30"
+                className="text-center p-8 bg-gradient-to-br from-orange-100/80 to-pink-100/80 rounded-3xl backdrop-blur-sm border-2 border-orange-200/50 shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
+                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-orange-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-lg">
                   <Lightbulb className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3">Discover Your Passion</h3>
@@ -191,9 +193,9 @@ export default function LandingPage() {
               
               <motion.div 
                 whileHover={{ scale: 1.05 }}
-                className="text-center p-6 bg-white/60 rounded-2xl backdrop-blur-sm border border-white/30"
+                className="text-center p-8 bg-gradient-to-br from-pink-100/80 to-violet-100/80 rounded-3xl backdrop-blur-sm border-2 border-pink-200/50 shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl flex items-center justify-center">
+                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-pink-500 to-violet-600 rounded-2xl flex items-center justify-center shadow-lg">
                   <Users className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3">Build Real Connections</h3>
@@ -204,9 +206,9 @@ export default function LandingPage() {
               
               <motion.div 
                 whileHover={{ scale: 1.05 }}
-                className="text-center p-6 bg-white/60 rounded-2xl backdrop-blur-sm border border-white/30"
+                className="text-center p-8 bg-gradient-to-br from-violet-100/80 to-cyan-100/80 rounded-3xl backdrop-blur-sm border-2 border-violet-200/50 shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-2xl flex items-center justify-center">
+                <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-violet-500 to-cyan-600 rounded-2xl flex items-center justify-center shadow-lg">
                   <Rocket className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3">Get Ahead Early</h3>
@@ -225,43 +227,43 @@ export default function LandingPage() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20"
         >
-          <Card className="text-center p-6 bg-gradient-to-br from-blue-50 to-purple-50 border-none shadow-lg hover:shadow-xl transition-all duration-300">
+          <Card className="text-center p-6 bg-gradient-to-br from-orange-100 to-pink-100 border-2 border-orange-200/50 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
             <CardContent className="p-0">
-              <div className="w-12 h-12 mx-auto mb-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
-                <Users className="h-6 w-6 text-white" />
+              <div className="w-14 h-14 mx-auto mb-3 bg-gradient-to-br from-orange-500 to-pink-600 rounded-xl flex items-center justify-center shadow-lg">
+                <Users className="h-7 w-7 text-white" />
               </div>
-              <div className="text-2xl font-bold text-gray-900 mb-1">2,500+</div>
-              <div className="text-sm text-gray-600">Active Students</div>
+              <div className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent mb-1">2,500+</div>
+              <div className="text-sm font-semibold text-gray-700">Active Students</div>
             </CardContent>
           </Card>
           
-          <Card className="text-center p-6 bg-gradient-to-br from-purple-50 to-indigo-50 border-none shadow-lg hover:shadow-xl transition-all duration-300">
+          <Card className="text-center p-6 bg-gradient-to-br from-pink-100 to-violet-100 border-2 border-pink-200/50 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
             <CardContent className="p-0">
-              <div className="w-12 h-12 mx-auto mb-3 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center">
-                <Building className="h-6 w-6 text-white" />
+              <div className="w-14 h-14 mx-auto mb-3 bg-gradient-to-br from-pink-500 to-violet-600 rounded-xl flex items-center justify-center shadow-lg">
+                <Building className="h-7 w-7 text-white" />
               </div>
-              <div className="text-2xl font-bold text-gray-900 mb-1">450+</div>
-              <div className="text-sm text-gray-600">Partner Companies</div>
+              <div className="text-3xl font-bold bg-gradient-to-r from-pink-600 to-violet-600 bg-clip-text text-transparent mb-1">450+</div>
+              <div className="text-sm font-semibold text-gray-700">Partner Companies</div>
             </CardContent>
           </Card>
           
-          <Card className="text-center p-6 bg-gradient-to-br from-indigo-50 to-blue-50 border-none shadow-lg hover:shadow-xl transition-all duration-300">
+          <Card className="text-center p-6 bg-gradient-to-br from-violet-100 to-cyan-100 border-2 border-violet-200/50 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
             <CardContent className="p-0">
-              <div className="w-12 h-12 mx-auto mb-3 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-xl flex items-center justify-center">
-                <TrendingUp className="h-6 w-6 text-white" />
+              <div className="w-14 h-14 mx-auto mb-3 bg-gradient-to-br from-violet-500 to-cyan-600 rounded-xl flex items-center justify-center shadow-lg">
+                <TrendingUp className="h-7 w-7 text-white" />
               </div>
-              <div className="text-2xl font-bold text-gray-900 mb-1">85%</div>
-              <div className="text-sm text-gray-600">Success Rate</div>
+              <div className="text-3xl font-bold bg-gradient-to-r from-violet-600 to-cyan-600 bg-clip-text text-transparent mb-1">85%</div>
+              <div className="text-sm font-semibold text-gray-700">Success Rate</div>
             </CardContent>
           </Card>
           
-          <Card className="text-center p-6 bg-gradient-to-br from-blue-50 to-green-50 border-none shadow-lg hover:shadow-xl transition-all duration-300">
+          <Card className="text-center p-6 bg-gradient-to-br from-cyan-100 to-emerald-100 border-2 border-cyan-200/50 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
             <CardContent className="p-0">
-              <div className="w-12 h-12 mx-auto mb-3 bg-gradient-to-br from-blue-500 to-green-600 rounded-xl flex items-center justify-center">
-                <Award className="h-6 w-6 text-white" />
+              <div className="w-14 h-14 mx-auto mb-3 bg-gradient-to-br from-cyan-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
+                <Award className="h-7 w-7 text-white" />
               </div>
-              <div className="text-2xl font-bold text-gray-900 mb-1">3,200+</div>
-              <div className="text-sm text-gray-600">Internships Completed</div>
+              <div className="text-3xl font-bold bg-gradient-to-r from-cyan-600 to-emerald-600 bg-clip-text text-transparent mb-1">3,200+</div>
+              <div className="text-sm font-semibold text-gray-700">Internships Completed</div>
             </CardContent>
           </Card>
         </motion.div>
@@ -274,7 +276,7 @@ export default function LandingPage() {
           className="mb-20"
         >
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-orange-600 via-pink-600 to-violet-600 bg-clip-text text-transparent">
               How It Works
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -285,12 +287,12 @@ export default function LandingPage() {
           <div className="grid md:grid-cols-3 gap-8">
             <motion.div 
               whileHover={{ scale: 1.02 }}
-              className="relative text-center p-8 bg-white/70 rounded-3xl shadow-lg border border-white/30 backdrop-blur-sm"
+              className="relative text-center p-8 bg-gradient-to-br from-orange-100/80 to-pink-100/80 rounded-3xl shadow-xl border-2 border-orange-200/50 backdrop-blur-sm"
             >
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-orange-500 to-pink-500 text-white rounded-full flex items-center justify-center font-bold shadow-lg">
                 1
               </div>
-              <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-purple-500 to-blue-600 rounded-2xl flex items-center justify-center">
+              <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-orange-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-lg">
                 <GraduationCap className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Create Your Profile</h3>
@@ -301,12 +303,12 @@ export default function LandingPage() {
             
             <motion.div 
               whileHover={{ scale: 1.02 }}
-              className="relative text-center p-8 bg-white/70 rounded-3xl shadow-lg border border-white/30 backdrop-blur-sm"
+              className="relative text-center p-8 bg-gradient-to-br from-pink-100/80 to-violet-100/80 rounded-3xl shadow-xl border-2 border-pink-200/50 backdrop-blur-sm"
             >
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-pink-500 to-violet-500 text-white rounded-full flex items-center justify-center font-bold shadow-lg">
                 2
               </div>
-              <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center">
+              <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-pink-500 to-violet-600 rounded-2xl flex items-center justify-center shadow-lg">
                 <Target className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Find Perfect Matches</h3>
@@ -317,12 +319,12 @@ export default function LandingPage() {
             
             <motion.div 
               whileHover={{ scale: 1.02 }}
-              className="relative text-center p-8 bg-white/70 rounded-3xl shadow-lg border border-white/30 backdrop-blur-sm"
+              className="relative text-center p-8 bg-gradient-to-br from-violet-100/80 to-cyan-100/80 rounded-3xl shadow-xl border-2 border-violet-200/50 backdrop-blur-sm"
             >
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold">
+              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-violet-500 to-cyan-500 text-white rounded-full flex items-center justify-center font-bold shadow-lg">
                 3
               </div>
-              <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center">
+              <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-violet-500 to-cyan-600 rounded-2xl flex items-center justify-center shadow-lg">
                 <Rocket className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Start Learning</h3>
@@ -340,7 +342,7 @@ export default function LandingPage() {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="mb-20"
         >
-          <div className="bg-gradient-to-br from-purple-600 to-blue-600 rounded-3xl p-12 text-white shadow-2xl">
+          <div className="bg-gradient-to-br from-orange-500 via-pink-500 to-violet-600 rounded-3xl p-12 text-white shadow-2xl">
             <div className="text-center">
               <div className="w-20 h-20 mx-auto mb-6 bg-white/20 rounded-full flex items-center justify-center">
                 <MessageCircle className="w-10 h-10 text-white" />
@@ -362,11 +364,11 @@ export default function LandingPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1 }}
-          className="text-center bg-gradient-to-br from-white/80 to-purple-50/80 backdrop-blur-md rounded-3xl p-12 shadow-2xl border border-white/20"
+          className="text-center bg-gradient-to-br from-white/90 to-orange-50/80 backdrop-blur-md rounded-3xl p-12 shadow-2xl border-2 border-orange-100/50"
         >
           <h2 className="text-4xl font-bold text-gray-900 mb-6">
             Ready to Start Your
-            <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-orange-600 via-pink-600 to-violet-600 bg-clip-text text-transparent">
               {" "}Professional Journey?
             </span>
           </h2>
@@ -376,7 +378,7 @@ export default function LandingPage() {
           </p>
           <Button 
             size="lg" 
-            className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white text-xl px-12 py-6 rounded-2xl shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300"
+            className="bg-gradient-to-r from-orange-500 via-pink-500 to-violet-600 hover:from-orange-600 hover:via-pink-600 hover:to-violet-700 text-white text-xl px-12 py-6 rounded-2xl shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300"
             onClick={() => setLocation("/auth")}
           >
             Join Intrn Today <ArrowRight className="ml-3 h-6 w-6" />
