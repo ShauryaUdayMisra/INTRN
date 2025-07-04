@@ -62,7 +62,7 @@ export default function LandingPage() {
           <div className="flex items-center justify-center mb-12 group">
             <div className="relative">
               <div className="w-20 h-20 bg-gradient-to-br from-primary-500 to-primary-600 rounded-3xl flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-all duration-500">
-                <StudentIcon className="w-10 h-10 text-white" />
+                <span className="text-4xl font-bold text-white">i</span>
               </div>
             </div>
             <div className="ml-6">
@@ -79,14 +79,14 @@ export default function LandingPage() {
             </div>
           </div>
           
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-8 leading-tight">
+          <h1 className="text-4xl md:text-6xl font-bold text-black mb-8 leading-tight">
             Code Your
             <br />
             <span className="bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">
               Future
             </span>
           </h1>
-          <p className="text-lg md:text-xl text-gray-700 mb-12 max-w-2xl mx-auto leading-relaxed font-medium">
+          <p className="text-lg md:text-xl text-black mb-12 max-w-2xl mx-auto leading-relaxed font-medium">
             Next-gen internships for ambitious high schoolers. Ship real code, build killer projects, 
             level up your skills with industry pros.
           </p>
@@ -117,32 +117,32 @@ export default function LandingPage() {
             <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
               <Zap className="w-8 h-8 text-white" />
             </div>
-            <div className="text-4xl font-bold text-gray-800 mb-2">10K+</div>
-            <div className="text-gray-700 font-medium">Active Builders</div>
+            <div className="text-4xl font-bold text-black mb-2">10K+</div>
+            <div className="text-black font-medium">Active Builders</div>
           </div>
           
           <div className="text-center group">
             <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
               <Compass className="w-8 h-8 text-white" />
             </div>
-            <div className="text-4xl font-bold text-gray-800 mb-2">500+</div>
-            <div className="text-gray-700 font-medium">Tech Companies</div>
+            <div className="text-4xl font-bold text-black mb-2">500+</div>
+            <div className="text-black font-medium">Tech Companies</div>
           </div>
           
           <div className="text-center group">
             <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
               <Brain className="w-8 h-8 text-white" />
             </div>
-            <div className="text-4xl font-bold text-gray-800 mb-2">2K+</div>
-            <div className="text-gray-700 font-medium">Live Projects</div>
+            <div className="text-4xl font-bold text-black mb-2">2K+</div>
+            <div className="text-black font-medium">Live Projects</div>
           </div>
           
           <div className="text-center group">
             <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
               <Award className="w-8 h-8 text-white" />
             </div>
-            <div className="text-4xl font-bold text-gray-800 mb-2">95%</div>
-            <div className="text-gray-700 font-medium">Ship Rate</div>
+            <div className="text-4xl font-bold text-black mb-2">95%</div>
+            <div className="text-black font-medium">Ship Rate</div>
           </div>
         </div>
 
@@ -152,8 +152,8 @@ export default function LandingPage() {
             <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg border border-primary-100 group-hover:shadow-xl transition-all duration-300">
               <Brain className="w-10 h-10 text-primary-600" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-800 mb-4">Ship Real Code</h3>
-            <p className="text-gray-700 leading-relaxed">
+            <h3 className="text-2xl font-bold text-black mb-4">Ship Real Code</h3>
+            <p className="text-black leading-relaxed">
               Build production apps, deploy to cloud, and contribute to repos that millions use daily.
             </p>
           </div>
@@ -162,8 +162,8 @@ export default function LandingPage() {
             <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg border border-primary-100 group-hover:shadow-xl transition-all duration-300">
               <Zap className="w-10 h-10 text-primary-600" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-800 mb-4">Level Up Fast</h3>
-            <p className="text-gray-700 leading-relaxed">
+            <h3 className="text-2xl font-bold text-black mb-4">Level Up Fast</h3>
+            <p className="text-black leading-relaxed">
               Pair with senior devs, learn cutting-edge frameworks, and master tools that top companies use.
             </p>
           </div>
@@ -172,8 +172,8 @@ export default function LandingPage() {
             <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg border border-primary-100 group-hover:shadow-xl transition-all duration-300">
               <Award className="w-10 h-10 text-primary-600" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-800 mb-4">Build Your Rep</h3>
-            <p className="text-gray-700 leading-relaxed">
+            <h3 className="text-2xl font-bold text-black mb-4">Build Your Rep</h3>
+            <p className="text-black leading-relaxed">
               Stack commits, earn certs, and create a portfolio that gets you noticed by top tech companies.
             </p>
           </div>

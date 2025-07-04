@@ -115,11 +115,7 @@ export default function CompanySignup() {
       return response.json();
     },
     onSuccess: () => {
-      toast({
-        title: "Registration Successful!",
-        description: "Your company registration has been submitted for review. You'll receive an email confirmation shortly.",
-      });
-      setLocation("/auth");
+      setLocation("/company-thank-you");
     },
     onError: (error: Error) => {
       toast({

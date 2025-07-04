@@ -4,7 +4,7 @@
 
 :root {
   --background: hsl(0, 0%, 100%);
-  --foreground: hsl(240, 10%, 15%);
+  --foreground: hsl(240, 10%, 3.9%);
   --muted: hsl(270, 20%, 98%);
   --muted-foreground: hsl(240, 5%, 44%);
   --popover: hsl(0, 0%, 100%);
