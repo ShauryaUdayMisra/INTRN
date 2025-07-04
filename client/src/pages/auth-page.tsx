@@ -99,13 +99,18 @@ export default function AuthPage() {
   if (user) return null;
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex bg-gradient-to-br from-primary-50 via-purple-50 to-primary-100">
       {/* Left Column - Forms */}
-      <div className="flex-1 flex items-center justify-center p-8 bg-white">
+      <div className="flex-1 flex items-center justify-center p-8">
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-primary">intrn</h1>
-            <p className="text-gray-600 mt-2">Connect. Learn. Grow.</p>
+            <div className="flex items-center justify-center mb-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center mr-3">
+                <span className="text-white font-bold text-xl">I</span>
+              </div>
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">intrn</h1>
+            </div>
+            <p className="text-gray-600">Connect. Learn. Grow.</p>
             
             {isReplitDemo && (
               <div className="mt-4 p-3 bg-blue-100 border border-blue-300 rounded-lg text-blue-800 text-sm">
@@ -161,7 +166,7 @@ export default function AuthPage() {
 
                     <Button
                       type="submit"
-                      className="w-full"
+                      className="w-full bg-primary hover:bg-primary/90 text-white rounded-xl"
                       disabled={loginMutation.isPending}
                     >
                       {loginMutation.isPending ? "Signing In..." : "Sign In"}
@@ -292,7 +297,7 @@ export default function AuthPage() {
 
                     <Button
                       type="submit"
-                      className="w-full"
+                      className="w-full bg-primary hover:bg-primary/90 text-white rounded-xl"
                       disabled={registerMutation.isPending}
                     >
                       {registerMutation.isPending ? "Creating Account..." : "Create Account"}
