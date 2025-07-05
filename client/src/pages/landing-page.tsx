@@ -5,13 +5,16 @@ import { useLocation } from "wouter";
 import { useEffect } from "react";
 import { ArrowRight, Zap, Compass, TrendingUp, Sparkles, Brain, Award, Flame, Target, GraduationCap } from "lucide-react";
 
-// Custom Student Icon Component (based on attached image)
-const StudentIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 100 100" className={className} fill="currentColor">
-    <path d="M50 15 L20 25 L20 35 L80 35 L80 25 Z" />
-    <circle cx="50" cy="50" r="12" />
-    <path d="M35 62 Q35 58 40 58 L60 58 Q65 58 65 62 L65 75 Q65 78 62 78 L38 78 Q35 78 35 75 Z" />
-    <path d="M42 58 L42 50 Q42 45 50 45 Q58 45 58 50 L58 58" />
+// Custom Diploma Scroll Icon Component (based on attached image)
+const DiplomaIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="currentColor">
+    {/* Rolled diploma/scroll */}
+    <path d="M3 4h18v2L19 8v8l2 2v2H3v-2l2-2V8L3 6V4z"/>
+    <path d="M6 8h12v8H6V8z"/>
+    {/* Ribbon/tie */}
+    <path d="M11 16h2v4l-1-1-1 1v-4z"/>
+    {/* Seal/emblem */}
+    <circle cx="12" cy="12" r="2"/>
   </svg>
 );
 
@@ -40,10 +43,8 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center shadow-lg">
-                <StudentIcon className="w-6 h-6 text-white" />
-              </div>
-              <span className="text-3xl font-bold bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">intrn</span>
+              <DiplomaIcon className="w-8 h-8 text-black" />
+              <span className="text-3xl font-bold text-black">intrn</span>
             </div>
             <Button 
               onClick={() => setLocation("/auth")}
@@ -60,11 +61,7 @@ export default function LandingPage() {
         <div className="text-center mb-20">
           {/* Modern Minimalist Logo */}
           <div className="flex items-center justify-center mb-12 group">
-            <div className="relative">
-              <div className="w-20 h-20 bg-gradient-to-br from-primary-500 to-primary-600 rounded-3xl flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-all duration-500">
-                <GraduationCap className="w-10 h-10 text-white" />
-              </div>
-            </div>
+            <DiplomaIcon className="w-16 h-16 text-black transform group-hover:scale-110 transition-all duration-500" />
             <div className="ml-6">
               <span className="text-6xl md:text-7xl font-bold text-black">
                 intrn
@@ -200,9 +197,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="flex items-center justify-center mb-6">
-              <div className="w-10 h-10 bg-white rounded-2xl flex items-center justify-center mr-3">
-                <StudentIcon className="w-5 h-5 text-primary-600" />
-              </div>
+              <DiplomaIcon className="w-8 h-8 text-black mr-3" />
               <span className="text-3xl font-bold text-black">intrn</span>
             </div>
             <p className="text-black text-lg mb-8 max-w-2xl mx-auto">
