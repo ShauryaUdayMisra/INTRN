@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useAuth } from "@/hooks/use-auth";
 import { useLocation } from "wouter";
 import { useEffect } from "react";
-import { ArrowRight, Zap, Compass, TrendingUp, Sparkles, Brain, Award, Flame, Target } from "lucide-react";
+import { ArrowRight, Zap, Compass, TrendingUp, Sparkles, Brain, Award, Flame, Target, GraduationCap } from "lucide-react";
 
 // Custom Student Icon Component (based on attached image)
 const StudentIcon = ({ className }: { className?: string }) => (
@@ -62,20 +62,13 @@ export default function LandingPage() {
           <div className="flex items-center justify-center mb-12 group">
             <div className="relative">
               <div className="w-20 h-20 bg-gradient-to-br from-primary-500 to-primary-600 rounded-3xl flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-all duration-500">
-                <span className="text-4xl font-bold text-white">i</span>
+                <GraduationCap className="w-10 h-10 text-white" />
               </div>
             </div>
             <div className="ml-6">
               <span className="text-6xl md:text-7xl font-bold text-black">
                 intrn
               </span>
-              <div className="flex items-center justify-center text-xs font-semibold text-black tracking-[0.2em] mt-1 uppercase">
-                <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                  <path d="M19 7h-1V6c0-.55-.45-1-1-1s-1 .45-1 1v1h-1c-.55 0-1 .45-1 1s.45 1 1 1h1v1c0 .55.45 1 1 1s1-.45 1-1V9h1c.55 0 1-.45 1-1s-.45-1-1-1z"/>
-                </svg>
-                For Highschoolers
-              </div>
             </div>
           </div>
           
