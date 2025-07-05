@@ -94,9 +94,9 @@ export default function LandingPage() {
               size="lg" 
               variant="outline" 
               className="text-lg px-10 py-4 rounded-2xl border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 min-w-[200px]"
-              onClick={() => setLocation("/company-signup")}
+              onClick={() => setLocation("/company-info")}
             >
-              Hire Talent
+              For Companies
             </Button>
           </div>
         </div>

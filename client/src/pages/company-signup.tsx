@@ -10,62 +10,35 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Progress } from "@/components/ui/progress";
-import { Building2, Users, MapPin, Clock, FileText, CheckCircle } from "lucide-react";
+import { Building2, Users, CheckCircle, ArrowLeft, ArrowRight } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
 
-// Multi-step form schema
+// Simplified 3-step form schema
 const companySignupSchema = z.object({
-  // Basic Company Information
+  // Step 1: Basic Information
   companyName: z.string().min(2, "Company name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
   password: z.string().min(8, "Password must be at least 8 characters"),
   confirmPassword: z.string(),
-  website: z.string().url("Please enter a valid website URL").optional().or(z.literal("")),
-  foundedYear: z.number().min(1800).max(new Date().getFullYear()),
+  website: z.string().optional(),
   
-  // Contact Information
+  // Step 2: Company Details
   contactName: z.string().min(2, "Contact name is required"),
   contactTitle: z.string().min(2, "Contact title is required"),
   phoneNumber: z.string().min(10, "Please enter a valid phone number"),
-  
-  // Company Details
-  industryType: z.string().min(1, "Please select an industry type"),
-  companySize: z.string().min(1, "Please select company size"),
   location: z.string().min(2, "Company location is required"),
-  description: z.string().min(50, "Please provide a detailed company description (minimum 50 characters)"),
+  description: z.string().min(1, "Please provide a company description"),
   
-  // Internship Program Details
+  // Step 3: Internship Details
   workArrangement: z.string().min(1, "Please select work arrangement"),
   internshipDuration: z.string().min(1, "Please select internship duration"),
-  mentorshipProgram: z.boolean(),
-  trainingProvided: z.boolean(),
-  
-  // Skills and Requirements
   technicalSkills: z.array(z.string()).min(1, "Please select at least one technical skill"),
-  softSkills: z.array(z.string()).min(1, "Please select at least one soft skill"),
-  educationLevel: z.string().min(1, "Please select minimum education level"),
-  
-  // Support and Resources
-  dedicatedMentor: z.boolean(),
-  structuredProgram: z.boolean(),
-  certificateProvided: z.boolean(),
-  networkingOpportunities: z.boolean(),
-  
-  // Additional Benefits
-  additionalBenefits: z.array(z.string()).optional(),
-  
-  // Verification Documents
-  gstNumber: z.string().optional(),
-  panNumber: z.string().optional(),
-  companyRegistration: z.string().optional(),
   
   // Agreement
   termsAccepted: z.boolean().refine(val => val === true, "You must accept the terms and conditions"),
-  accurateInfoConfirmed: z.boolean().refine(val => val === true, "You must confirm the information is accurate"),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
   path: ["confirmPassword"],
@@ -75,10 +48,19 @@ type CompanySignupForm = z.infer<typeof companySignupSchema>;
 
 const STEPS = [
   { id: 1, title: "Basic Information", icon: Building2 },
-  { id: 2, title: "Contact Details", icon: Users },
-  { id: 3, title: "Company Profile", icon: FileText },
-  { id: 4, title: "Internship Program", icon: Clock },
-  { id: 5, title: "Requirements", icon: CheckCircle },
+  { id: 2, title: "Company Details", icon: Users },
+  { id: 3, title: "Internship Program", icon: CheckCircle },
+];
+
+const TECHNICAL_SKILLS = [
+  "Social Media", "Marketing", "Design", "Content Writing", "Customer Service", 
+  "Data Entry", "Microsoft Office", "Google Workspace", "Photography", 
+  "Video Editing", "Canva Design", "Basic Programming", "Web Development"
+];
+
+const LOCATIONS = [
+  "Mumbai", "Delhi", "Bangalore", "Chennai", "Pune", "Hyderabad", 
+  "Kolkata", "Ahmedabad", "Dhaka", "Karachi", "Lahore", "Colombo"
 ];
 
 export default function CompanySignup() {
@@ -88,18 +70,10 @@ export default function CompanySignup() {
 
   const form = useForm<CompanySignupForm>({
     resolver: zodResolver(companySignupSchema),
+    mode: "onChange",
     defaultValues: {
       technicalSkills: [],
-      softSkills: [],
-      mentorshipProgram: false,
-      trainingProvided: false,
-      dedicatedMentor: false,
-      structuredProgram: false,
-      certificateProvided: false,
-      networkingOpportunities: false,
-      additionalBenefits: [],
       termsAccepted: false,
-      accurateInfoConfirmed: false,
     },
   });
 
@@ -109,7 +83,7 @@ export default function CompanySignup() {
         ...data,
         role: "company",
         profileComplete: false,
-        username: data.email, // Use email as username for companies
+        username: data.email,
       };
       const response = await apiRequest("POST", "/api/register", registrationData);
       return response.json();
@@ -126,129 +100,86 @@ export default function CompanySignup() {
     },
   });
 
-  const progress = (currentStep / STEPS.length) * 100;
-
-  const nextStep = async () => {
-    const fieldsToValidate = getFieldsForStep(currentStep);
-    const isValid = await form.trigger(fieldsToValidate);
-    
-    if (isValid && currentStep < STEPS.length) {
+  const onSubmit = (data: CompanySignupForm) => {
+    if (currentStep < 3) {
       setCurrentStep(currentStep + 1);
+    } else {
+      signupMutation.mutate(data);
     }
   };
 
-  const prevStep = () => {
+  const goToPreviousStep = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
     }
   };
 
-  const onSubmit = (data: CompanySignupForm) => {
-    signupMutation.mutate(data);
-  };
-
-  const getFieldsForStep = (step: number): (keyof CompanySignupForm)[] => {
-    switch (step) {
-      case 1:
-        return ["companyName", "email", "password", "confirmPassword", "website", "foundedYear"];
-      case 2:
-        return ["contactName", "contactTitle", "phoneNumber"];
-      case 3:
-        return ["industryType", "companySize", "location", "description"];
-      case 4:
-        return ["workArrangement", "internshipDuration"];
-      case 5:
-        return ["technicalSkills", "softSkills", "educationLevel", "termsAccepted", "accurateInfoConfirmed"];
-      default:
-        return [];
+  const goToNextStep = () => {
+    if (currentStep < 3) {
+      setCurrentStep(currentStep + 1);
     }
   };
+
+  const progress = (currentStep / STEPS.length) * 100;
 
   const renderStepContent = () => {
     switch (currentStep) {
       case 1:
         return (
           <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="companyName">Company Name *</Label>
-                <Input
-                  id="companyName"
-                  {...form.register("companyName")}
-                  placeholder="Enter your company name"
-                />
-                {form.formState.errors.companyName && (
-                  <p className="text-sm text-red-600 mt-1">{form.formState.errors.companyName.message}</p>
-                )}
-              </div>
-              
-              <div>
-                <Label htmlFor="email">Business Email *</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  {...form.register("email")}
-                  placeholder="company@example.com"
-                />
-                {form.formState.errors.email && (
-                  <p className="text-sm text-red-600 mt-1">{form.formState.errors.email.message}</p>
-                )}
-              </div>
+            <div>
+              <Label htmlFor="companyName">Company Name *</Label>
+              <Input
+                {...form.register("companyName")}
+                placeholder="Your company name"
+              />
+              {form.formState.errors.companyName && (
+                <p className="text-red-500 text-sm mt-1">{form.formState.errors.companyName.message}</p>
+              )}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="password">Password *</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  {...form.register("password")}
-                  placeholder="Create a strong password"
-                />
-                {form.formState.errors.password && (
-                  <p className="text-sm text-red-600 mt-1">{form.formState.errors.password.message}</p>
-                )}
-              </div>
-              
-              <div>
-                <Label htmlFor="confirmPassword">Confirm Password *</Label>
-                <Input
-                  id="confirmPassword"
-                  type="password"
-                  {...form.register("confirmPassword")}
-                  placeholder="Confirm your password"
-                />
-                {form.formState.errors.confirmPassword && (
-                  <p className="text-sm text-red-600 mt-1">{form.formState.errors.confirmPassword.message}</p>
-                )}
-              </div>
+            <div>
+              <Label htmlFor="email">Email Address *</Label>
+              <Input
+                {...form.register("email")}
+                type="email"
+                placeholder="company@example.com"
+              />
+              {form.formState.errors.email && (
+                <p className="text-red-500 text-sm mt-1">{form.formState.errors.email.message}</p>
+              )}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="website">Company Website</Label>
-                <Input
-                  id="website"
-                  {...form.register("website")}
-                  placeholder="https://www.yourcompany.com"
-                />
-                {form.formState.errors.website && (
-                  <p className="text-sm text-red-600 mt-1">{form.formState.errors.website.message}</p>
-                )}
-              </div>
-              
-              <div>
-                <Label htmlFor="foundedYear">Founded Year *</Label>
-                <Input
-                  id="foundedYear"
-                  type="number"
-                  {...form.register("foundedYear", { valueAsNumber: true })}
-                  placeholder="2020"
-                />
-                {form.formState.errors.foundedYear && (
-                  <p className="text-sm text-red-600 mt-1">{form.formState.errors.foundedYear.message}</p>
-                )}
-              </div>
+            <div>
+              <Label htmlFor="password">Password *</Label>
+              <Input
+                {...form.register("password")}
+                type="password"
+                placeholder="Choose a secure password"
+              />
+              {form.formState.errors.password && (
+                <p className="text-red-500 text-sm mt-1">{form.formState.errors.password.message}</p>
+              )}
+            </div>
+
+            <div>
+              <Label htmlFor="confirmPassword">Confirm Password *</Label>
+              <Input
+                {...form.register("confirmPassword")}
+                type="password"
+                placeholder="Confirm your password"
+              />
+              {form.formState.errors.confirmPassword && (
+                <p className="text-red-500 text-sm mt-1">{form.formState.errors.confirmPassword.message}</p>
+              )}
+            </div>
+
+            <div>
+              <Label htmlFor="website">Website (Optional)</Label>
+              <Input
+                {...form.register("website")}
+                placeholder="https://yourcompany.com"
+              />
             </div>
           </div>
         );
@@ -256,41 +187,67 @@ export default function CompanySignup() {
       case 2:
         return (
           <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="contactName">Primary Contact Name *</Label>
-                <Input
-                  id="contactName"
-                  {...form.register("contactName")}
-                  placeholder="John Smith"
-                />
-                {form.formState.errors.contactName && (
-                  <p className="text-sm text-red-600 mt-1">{form.formState.errors.contactName.message}</p>
-                )}
-              </div>
-              
-              <div>
-                <Label htmlFor="contactTitle">Contact Title/Position *</Label>
-                <Input
-                  id="contactTitle"
-                  {...form.register("contactTitle")}
-                  placeholder="HR Manager, CEO, Recruiter"
-                />
-                {form.formState.errors.contactTitle && (
-                  <p className="text-sm text-red-600 mt-1">{form.formState.errors.contactTitle.message}</p>
-                )}
-              </div>
+            <div>
+              <Label htmlFor="contactName">Contact Person Name *</Label>
+              <Input
+                {...form.register("contactName")}
+                placeholder="Full name of contact person"
+              />
+              {form.formState.errors.contactName && (
+                <p className="text-red-500 text-sm mt-1">{form.formState.errors.contactName.message}</p>
+              )}
+            </div>
+
+            <div>
+              <Label htmlFor="contactTitle">Contact Person Title *</Label>
+              <Input
+                {...form.register("contactTitle")}
+                placeholder="e.g. HR Manager, Founder, etc."
+              />
+              {form.formState.errors.contactTitle && (
+                <p className="text-red-500 text-sm mt-1">{form.formState.errors.contactTitle.message}</p>
+              )}
             </div>
 
             <div>
               <Label htmlFor="phoneNumber">Phone Number *</Label>
               <Input
-                id="phoneNumber"
                 {...form.register("phoneNumber")}
-                placeholder="+91 98765 43210"
+                placeholder="+91 9876543210"
               />
               {form.formState.errors.phoneNumber && (
-                <p className="text-sm text-red-600 mt-1">{form.formState.errors.phoneNumber.message}</p>
+                <p className="text-red-500 text-sm mt-1">{form.formState.errors.phoneNumber.message}</p>
+              )}
+            </div>
+
+            <div>
+              <Label htmlFor="location">Company Location *</Label>
+              <Select onValueChange={(value) => form.setValue("location", value)}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select your location" />
+                </SelectTrigger>
+                <SelectContent>
+                  {LOCATIONS.map((location) => (
+                    <SelectItem key={location} value={location}>
+                      {location}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {form.formState.errors.location && (
+                <p className="text-red-500 text-sm mt-1">{form.formState.errors.location.message}</p>
+              )}
+            </div>
+
+            <div>
+              <Label htmlFor="description">Company Description *</Label>
+              <Textarea
+                {...form.register("description")}
+                placeholder="Brief description of your company and what you do"
+                rows={4}
+              />
+              {form.formState.errors.description && (
+                <p className="text-red-500 text-sm mt-1">{form.formState.errors.description.message}</p>
               )}
             </div>
           </div>
@@ -299,317 +256,79 @@ export default function CompanySignup() {
       case 3:
         return (
           <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="industryType">Industry Type *</Label>
-                <Select onValueChange={(value) => form.setValue("industryType", value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select industry" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="technology">Technology & Software</SelectItem>
-                    <SelectItem value="finance">Finance & Banking</SelectItem>
-                    <SelectItem value="healthcare">Healthcare & Pharmaceuticals</SelectItem>
-                    <SelectItem value="ecommerce">E-commerce & Retail</SelectItem>
-                    <SelectItem value="manufacturing">Manufacturing</SelectItem>
-                    <SelectItem value="consulting">Consulting</SelectItem>
-                    <SelectItem value="education">Education & EdTech</SelectItem>
-                    <SelectItem value="media">Media & Entertainment</SelectItem>
-                    <SelectItem value="automotive">Automotive</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-                {form.formState.errors.industryType && (
-                  <p className="text-sm text-red-600 mt-1">{form.formState.errors.industryType.message}</p>
-                )}
-              </div>
-              
-              <div>
-                <Label htmlFor="companySize">Company Size *</Label>
-                <Select onValueChange={(value) => form.setValue("companySize", value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select company size" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="startup">Startup (1-10 employees)</SelectItem>
-                    <SelectItem value="small">Small (11-50 employees)</SelectItem>
-                    <SelectItem value="medium">Medium (51-200 employees)</SelectItem>
-                    <SelectItem value="large">Large (201-1000 employees)</SelectItem>
-                    <SelectItem value="enterprise">Enterprise (1000+ employees)</SelectItem>
-                  </SelectContent>
-                </Select>
-                {form.formState.errors.companySize && (
-                  <p className="text-sm text-red-600 mt-1">{form.formState.errors.companySize.message}</p>
-                )}
-              </div>
-            </div>
-
             <div>
-              <Label htmlFor="location">Company Location *</Label>
-              <Input
-                id="location"
-                {...form.register("location")}
-                placeholder="Mumbai, India"
-              />
-              {form.formState.errors.location && (
-                <p className="text-sm text-red-600 mt-1">{form.formState.errors.location.message}</p>
-              )}
-            </div>
-
-            <div>
-              <Label htmlFor="description">Company Description *</Label>
-              <Textarea
-                id="description"
-                {...form.register("description")}
-                placeholder="Tell us about your company, what you do, your mission, and what makes you unique..."
-                rows={4}
-              />
-              {form.formState.errors.description && (
-                <p className="text-sm text-red-600 mt-1">{form.formState.errors.description.message}</p>
-              )}
-            </div>
-          </div>
-        );
-
-      case 4:
-        return (
-          <div className="space-y-6">
-            <div>
-              <Label>Work Arrangement *</Label>
-              <RadioGroup onValueChange={(value) => form.setValue("workArrangement", value)}>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="onsite" id="onsite" />
-                  <Label htmlFor="onsite">On-site (Office-based)</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="remote" id="remote" />
-                  <Label htmlFor="remote">Remote (Work from home)</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="hybrid" id="hybrid" />
-                  <Label htmlFor="hybrid">Hybrid (Mix of office and remote)</Label>
-                </div>
-              </RadioGroup>
+              <Label htmlFor="workArrangement">Work Arrangement *</Label>
+              <Select onValueChange={(value) => form.setValue("workArrangement", value)}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select work arrangement" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="remote">Remote</SelectItem>
+                  <SelectItem value="hybrid">Hybrid</SelectItem>
+                  <SelectItem value="in-person">In-Person</SelectItem>
+                </SelectContent>
+              </Select>
               {form.formState.errors.workArrangement && (
-                <p className="text-sm text-red-600 mt-1">{form.formState.errors.workArrangement.message}</p>
+                <p className="text-red-500 text-sm mt-1">{form.formState.errors.workArrangement.message}</p>
               )}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="internshipDuration">Internship Duration *</Label>
-                <Select onValueChange={(value) => form.setValue("internshipDuration", value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select duration" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="1-month">1 Month</SelectItem>
-                    <SelectItem value="2-months">2 Months</SelectItem>
-                    <SelectItem value="3-months">3 Months</SelectItem>
-                    <SelectItem value="6-months">6 Months</SelectItem>
-                    <SelectItem value="12-months">12 Months</SelectItem>
-                    <SelectItem value="flexible">Flexible</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              <div>
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <h4 className="font-medium text-blue-900 mb-2">Unpaid Internships for High School Students</h4>
-                  <p className="text-sm text-blue-700">
-                    This platform focuses on providing valuable learning experiences for high school students. 
-                    All internships are unpaid and emphasize skill development, mentorship, and real-world experience.
-                  </p>
-                </div>
-              </div>
+            <div>
+              <Label htmlFor="internshipDuration">Internship Duration *</Label>
+              <Select onValueChange={(value) => form.setValue("internshipDuration", value)}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select duration" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="1-month">1 Month</SelectItem>
+                  <SelectItem value="2-months">2 Months</SelectItem>
+                  <SelectItem value="3-months">3 Months</SelectItem>
+                  <SelectItem value="6-months">6 Months</SelectItem>
+                  <SelectItem value="flexible">Flexible</SelectItem>
+                </SelectContent>
+              </Select>
+              {form.formState.errors.internshipDuration && (
+                <p className="text-red-500 text-sm mt-1">{form.formState.errors.internshipDuration.message}</p>
+              )}
             </div>
 
-            <div className="space-y-4">
-              <Label>Program Features</Label>
-              
-              <div className="space-y-3">
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="mentorshipProgram"
-                    checked={form.watch("mentorshipProgram")}
-                    onCheckedChange={(checked) => form.setValue("mentorshipProgram", checked as boolean)}
-                  />
-                  <Label htmlFor="mentorshipProgram">Dedicated mentorship program</Label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="trainingProvided"
-                    checked={form.watch("trainingProvided")}
-                    onCheckedChange={(checked) => form.setValue("trainingProvided", checked as boolean)}
-                  />
-                  <Label htmlFor="trainingProvided">Structured training sessions</Label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="dedicatedMentor"
-                    checked={form.watch("dedicatedMentor")}
-                    onCheckedChange={(checked) => form.setValue("dedicatedMentor", checked as boolean)}
-                  />
-                  <Label htmlFor="dedicatedMentor">One-on-one mentor assigned</Label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="structuredProgram"
-                    checked={form.watch("structuredProgram")}
-                    onCheckedChange={(checked) => form.setValue("structuredProgram", checked as boolean)}
-                  />
-                  <Label htmlFor="structuredProgram">Structured learning path</Label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="certificateProvided"
-                    checked={form.watch("certificateProvided")}
-                    onCheckedChange={(checked) => form.setValue("certificateProvided", checked as boolean)}
-                  />
-                  <Label htmlFor="certificateProvided">Certificate of completion</Label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="networkingOpportunities"
-                    checked={form.watch("networkingOpportunities")}
-                    onCheckedChange={(checked) => form.setValue("networkingOpportunities", checked as boolean)}
-                  />
-                  <Label htmlFor="networkingOpportunities">Networking opportunities</Label>
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <Label>Additional Benefits Offered</Label>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                {["Flexible Hours", "Health Insurance", "Free Lunch", "Transportation Allowance", "Learning Budget", "Conference Tickets", "Team Outings", "Work from Home Days", "Performance Bonus"].map((benefit) => (
-                  <div key={benefit} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={benefit}
-                      checked={form.watch("additionalBenefits")?.includes(benefit)}
-                      onCheckedChange={(checked) => {
-                        const current = form.getValues("additionalBenefits") || [];
-                        if (checked) {
-                          form.setValue("additionalBenefits", [...current, benefit]);
-                        } else {
-                          form.setValue("additionalBenefits", current.filter(b => b !== benefit));
-                        }
-                      }}
-                    />
-                    <Label htmlFor={benefit} className="text-sm">{benefit}</Label>
-                  </div>
-                ))}
-              </div>
-              <p className="text-sm text-gray-600">
-                Additional perks make your internship more attractive to top candidates
-              </p>
-            </div>
-          </div>
-        );
-
-      case 5:
-        return (
-          <div className="space-y-6">
             <div>
               <Label>Technical Skills Required *</Label>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-2">
-                {["HTML/CSS", "Canva Design", "Social Media", "Microsoft Office", "Google Workspace", "Basic Photography", "Video Editing", "Content Writing", "WordPress", "Digital Marketing", "Data Entry", "Customer Service", "Basic Coding", "Graphic Design", "UI/UX Design", "Python", "JavaScript"].map((skill) => (
+              <div className="grid grid-cols-2 gap-4 mt-2">
+                {TECHNICAL_SKILLS.map((skill) => (
                   <div key={skill} className="flex items-center space-x-2">
                     <Checkbox
-                      id={skill}
-                      checked={form.watch("technicalSkills").includes(skill)}
+                      checked={form.watch("technicalSkills")?.includes(skill)}
                       onCheckedChange={(checked) => {
-                        const current = form.getValues("technicalSkills");
+                        const currentSkills = form.getValues("technicalSkills") || [];
                         if (checked) {
-                          form.setValue("technicalSkills", [...current, skill]);
+                          form.setValue("technicalSkills", [...currentSkills, skill]);
                         } else {
-                          form.setValue("technicalSkills", current.filter(s => s !== skill));
+                          form.setValue("technicalSkills", currentSkills.filter(s => s !== skill));
                         }
                       }}
                     />
-                    <Label htmlFor={skill} className="text-sm">{skill}</Label>
+                    <Label className="text-sm font-normal">{skill}</Label>
                   </div>
                 ))}
               </div>
               {form.formState.errors.technicalSkills && (
-                <p className="text-sm text-red-600 mt-1">{form.formState.errors.technicalSkills.message}</p>
+                <p className="text-red-500 text-sm mt-1">{form.formState.errors.technicalSkills.message}</p>
               )}
             </div>
 
-            <div>
-              <Label>Soft Skills Required *</Label>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-2">
-                {["Communication", "Teamwork", "Punctuality", "Following Instructions", "Friendly Attitude", "Eagerness to Learn", "Organizing Skills", "Basic Phone Skills", "Email Writing", "Time Management", "Responsibility", "Creativity", "Problem Solving", "Leadership", "Adaptability"].map((skill) => (
-                  <div key={skill} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={skill}
-                      checked={form.watch("softSkills").includes(skill)}
-                      onCheckedChange={(checked) => {
-                        const current = form.getValues("softSkills");
-                        if (checked) {
-                          form.setValue("softSkills", [...current, skill]);
-                        } else {
-                          form.setValue("softSkills", current.filter(s => s !== skill));
-                        }
-                      }}
-                    />
-                    <Label htmlFor={skill} className="text-sm">{skill}</Label>
-                  </div>
-                ))}
-              </div>
-              {form.formState.errors.softSkills && (
-                <p className="text-sm text-red-600 mt-1">{form.formState.errors.softSkills.message}</p>
-              )}
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                checked={form.watch("termsAccepted")}
+                onCheckedChange={(checked) => form.setValue("termsAccepted", !!checked)}
+              />
+              <Label className="text-sm">
+                I accept the terms and conditions and confirm that all information provided is accurate
+              </Label>
             </div>
-
-            <div>
-              <Label htmlFor="educationLevel">Minimum Education Level *</Label>
-              <Select onValueChange={(value) => form.setValue("educationLevel", value)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select education level" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="8th-grade">8th Grade+</SelectItem>
-                  <SelectItem value="10th-grade">10th Grade+</SelectItem>
-                  <SelectItem value="12th-grade">12th Grade+</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-4 border-t pt-4">
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="termsAccepted"
-                  checked={form.watch("termsAccepted")}
-                  onCheckedChange={(checked) => form.setValue("termsAccepted", checked as boolean)}
-                />
-                <Label htmlFor="termsAccepted" className="text-sm">
-                  I accept the Terms and Conditions and Privacy Policy *
-                </Label>
-              </div>
-              {form.formState.errors.termsAccepted && (
-                <p className="text-sm text-red-600">{form.formState.errors.termsAccepted.message}</p>
-              )}
-
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="accurateInfoConfirmed"
-                  checked={form.watch("accurateInfoConfirmed")}
-                  onCheckedChange={(checked) => form.setValue("accurateInfoConfirmed", checked as boolean)}
-                />
-                <Label htmlFor="accurateInfoConfirmed" className="text-sm">
-                  I confirm that all information provided is accurate and complete *
-                </Label>
-              </div>
-              {form.formState.errors.accurateInfoConfirmed && (
-                <p className="text-sm text-red-600">{form.formState.errors.accurateInfoConfirmed.message}</p>
-              )}
-            </div>
+            {form.formState.errors.termsAccepted && (
+              <p className="text-red-500 text-sm">{form.formState.errors.termsAccepted.message}</p>
+            )}
           </div>
         );
 
@@ -619,77 +338,61 @@ export default function CompanySignup() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Company Registration</h1>
-          <p className="text-gray-600">Join INTRN to connect with talented interns from across South Asia</p>
-        </div>
-
-        {/* Progress Bar */}
-        <div className="mb-8">
-          <div className="flex justify-between items-center mb-4">
-            {STEPS.map((step, index) => {
-              const Icon = step.icon;
-              return (
-                <div
-                  key={step.id}
-                  className={`flex flex-col items-center ${
-                    currentStep >= step.id ? "text-blue-600" : "text-gray-400"
-                  }`}
-                >
-                  <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center border-2 ${
-                      currentStep >= step.id
-                        ? "bg-blue-600 border-blue-600 text-white"
-                        : "border-gray-300"
-                    }`}
-                  >
-                    <Icon size={16} />
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-white py-12">
+      <div className="max-w-2xl mx-auto px-4">
+        <Card className="shadow-2xl">
+          <CardHeader className="text-center">
+            <CardTitle className="text-3xl font-bold text-black">Company Registration</CardTitle>
+            <p className="text-black mt-2">Join our platform and connect with talented high school students</p>
+            
+            {/* Progress Bar */}
+            <div className="mt-6">
+              <Progress value={progress} className="h-3" />
+              <div className="flex justify-between mt-2">
+                {STEPS.map((step) => (
+                  <div key={step.id} className={`flex flex-col items-center ${currentStep >= step.id ? 'text-primary' : 'text-gray-400'}`}>
+                    <step.icon className="w-5 h-5 mb-1" />
+                    <span className="text-xs font-medium">{step.title}</span>
                   </div>
-                  <span className="text-xs mt-2 text-center">{step.title}</span>
-                </div>
-              );
-            })}
-          </div>
-          <Progress value={progress} className="h-2" />
-        </div>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>
-              Step {currentStep} of {STEPS.length}: {STEPS[currentStep - 1].title}
-            </CardTitle>
+                ))}
+              </div>
+            </div>
           </CardHeader>
+
           <CardContent>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               {renderStepContent()}
 
-              <div className="flex justify-between mt-8">
+              <div className="flex justify-between pt-6">
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={prevStep}
+                  onClick={goToPreviousStep}
                   disabled={currentStep === 1}
+                  className="flex items-center space-x-2"
                 >
-                  Previous
+                  <ArrowLeft className="w-4 h-4" />
+                  <span>Previous</span>
                 </Button>
 
-                <div className="flex gap-4">
-                  {currentStep < STEPS.length ? (
-                    <Button type="button" onClick={nextStep}>
-                      Next Step
-                    </Button>
-                  ) : (
-                    <Button 
-                      type="submit" 
-                      disabled={signupMutation.isPending}
-                      className="bg-blue-600 hover:bg-blue-700"
-                    >
-                      {signupMutation.isPending ? "Submitting..." : "Complete Registration"}
-                    </Button>
-                  )}
-                </div>
+                {currentStep < 3 ? (
+                  <Button
+                    type="button"
+                    onClick={goToNextStep}
+                    className="flex items-center space-x-2 bg-primary hover:bg-primary/90"
+                  >
+                    <span>Next</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
+                ) : (
+                  <Button
+                    type="submit"
+                    disabled={signupMutation.isPending}
+                    className="bg-primary hover:bg-primary/90"
+                  >
+                    {signupMutation.isPending ? "Creating Account..." : "Complete Registration"}
+                  </Button>
+                )}
               </div>
             </form>
           </CardContent>

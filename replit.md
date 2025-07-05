@@ -98,6 +98,27 @@ InternHub is a full-stack web application that connects students with internship
 
 Preferred communication style: Simple, everyday language.
 
+## Recent Achievements (July 5, 2025)
+
+### Company Flow Redesign & Simplification (Latest - July 5, 2025)
+- ✅ Changed landing page button from "Hire Talent" to "For Companies"
+- ✅ Created new company info page (/company-info) with compelling copy:
+  - "host an intern with intrn" headline
+  - Student-run platform messaging
+  - "smart, motivated high schoolers want to work with you" value proposition
+  - Clear benefits: top students, no HR overhead, flexible arrangements
+  - "you bring the project. we bring the talent." positioning
+  - 3-step process visualization with numbered steps
+  - "start your journey" call-to-action button
+- ✅ Simplified company signup form from 5 steps to 3 steps:
+  - Step 1: Basic Information (name, email, password, website)
+  - Step 2: Company Details (contact info, location, description)
+  - Step 3: Internship Program (work arrangement, duration, skills)
+- ✅ Removed minimum 50-word requirement from company description
+- ✅ Enabled free navigation between signup steps without validation blocking
+- ✅ Only validates all fields on final submission
+- ✅ Updated button flow: Landing → Company Info → Simplified Signup → Thank You
+
 ## Recent Achievements (July 4, 2025)
 
 ### Modern Purple Theme & UX Redesign (Latest - July 4, 2025)

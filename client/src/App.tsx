@@ -18,6 +18,7 @@ import AdminBackend from "@/pages/admin-backend";
 import StudentOnboarding from "@/pages/student-onboarding";
 import CompanyApplication from "@/pages/company-application";
 import CompanySignup from "@/pages/company-signup";
+import CompanyInfo from "@/pages/company-info";
 import CompanyThankYou from "@/pages/company-thank-you";
 import CompanyStatus from "@/pages/company-status";
 import PlatformStatus from "@/pages/platform-status";
@@ -34,6 +35,7 @@ function Router() {
         <Route path="/" component={() => <PageTransition><LandingPage /></PageTransition>} />
         <Route path="/home" component={() => <PageTransition><HomePage /></PageTransition>} />
         <Route path="/auth" component={() => <PageTransition><SimpleAuth /></PageTransition>} />
+        <Route path="/company-info" component={() => <PageTransition><CompanyInfo /></PageTransition>} />
         <Route path="/company-signup" component={() => <PageTransition><CompanySignup /></PageTransition>} />
         <Route path="/company-thank-you" component={() => <PageTransition><CompanyThankYou /></PageTransition>} />
         <ProtectedRoute path="/company-status" component={() => <PageTransition><CompanyStatus /></PageTransition>} />
