@@ -78,7 +78,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     onError: (error: Error) => {
       console.error("Registration mutation error:", error);
       toast({
-        title: "Registration failed",
+        title: "Registration Failed",
         description: error.message,
         variant: "destructive",
       });
