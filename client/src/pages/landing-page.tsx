@@ -210,13 +210,13 @@ export default function LandingPage() {
               <div className="w-10 h-10 bg-white rounded-2xl flex items-center justify-center mr-3">
                 <StudentIcon className="w-5 h-5 text-primary-600" />
               </div>
-              <span className="text-3xl font-bold">intrn</span>
+              <span className="text-3xl font-bold text-white">intrn</span>
             </div>
-            <p className="text-primary-200 text-lg mb-8 max-w-2xl mx-auto">
+            <p className="text-white text-lg mb-8 max-w-2xl mx-auto">
               Empowering the next generation of talent across South Asia
             </p>
             <div className="border-t border-primary-800 pt-8">
-              <p className="text-primary-300">&copy; 2025 INTRN. Built for high school students.</p>
+              <p className="text-white">&copy; 2025 INTRN. Built for high school students.</p>
             </div>
           </div>
         </div>
