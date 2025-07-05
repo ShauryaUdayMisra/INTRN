@@ -66,7 +66,7 @@ export default function LandingPage() {
               </div>
             </div>
             <div className="ml-6">
-              <span className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">
+              <span className="text-6xl md:text-7xl font-bold text-black">
                 intrn
               </span>
               <div className="flex items-center justify-center text-xs font-semibold text-black tracking-[0.2em] mt-1 uppercase">
@@ -82,7 +82,7 @@ export default function LandingPage() {
           <h1 className="text-4xl md:text-6xl font-bold text-black mb-8 leading-tight">
             Internships for
             <br />
-            <span className="bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">
+            <span className="text-black">
               Highschoolers
             </span>
           </h1>
@@ -184,7 +184,7 @@ export default function LandingPage() {
           <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">
             Ready to Start Your
             <br />
-            <span className="bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">
+            <span className="text-black">
               Future?
             </span>
           </h2>
