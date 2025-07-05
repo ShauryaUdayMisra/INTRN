@@ -59,20 +59,22 @@ export default function LandingPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center mb-20">
           {/* Modern Minimalist Logo */}
-          <div className="flex flex-col items-center justify-center mb-12 group">
-            <div className="relative mb-6">
+          <div className="flex items-center justify-center mb-12 group">
+            <div className="relative">
               <div className="w-20 h-20 bg-gradient-to-br from-primary-500 to-primary-600 rounded-3xl flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-all duration-500">
-                <svg className="w-10 h-10 text-white" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
-                </svg>
+                <span className="text-4xl font-bold text-white">i</span>
               </div>
             </div>
-            <div className="text-center">
+            <div className="ml-6">
               <span className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">
                 intrn
               </span>
-              <div className="text-lg font-semibold text-black mt-2">
-                Internships for Highschoolers
+              <div className="flex items-center justify-center text-xs font-semibold text-black tracking-[0.2em] mt-1 uppercase">
+                <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                  <path d="M19 7h-1V6c0-.55-.45-1-1-1s-1 .45-1 1v1h-1c-.55 0-1 .45-1 1s.45 1 1 1h1v1c0 .55.45 1 1 1s1-.45 1-1V9h1c.55 0 1-.45 1-1s-.45-1-1-1z"/>
+                </svg>
+                For Highschoolers
               </div>
             </div>
           </div>
