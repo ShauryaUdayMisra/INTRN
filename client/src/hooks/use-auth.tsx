@@ -77,11 +77,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     },
     onError: (error: Error) => {
       console.error("Registration mutation error:", error);
-      toast({
-        title: "Registration Failed",
-        description: error.message,
-        variant: "destructive",
-      });
+      
+      // Check if error indicates email already exists
+      if (error.message.includes("email already exists") || error.message.includes("Please sign in instead")) {
+        toast({
+          title: "Account Exists",
+          description: "An account with this email already exists. Redirecting to sign in...",
+          variant: "destructive",
+        });
+        // Redirect to sign in after a brief delay
+        setTimeout(() => {
+          window.location.href = "/auth";
+        }, 2000);
+      } else {
+        toast({
+          title: "Registration Failed",
+          description: error.message,
+          variant: "destructive",
+        });
+      }
     },
   });
 
