@@ -203,20 +203,20 @@ export default function LandingPage() {
       </main>
 
       {/* Footer - Minimalist */}
-      <footer className="bg-primary-900 text-white py-16 mt-24">
+      <footer className="bg-gray-100 py-16 mt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="flex items-center justify-center mb-6">
               <div className="w-10 h-10 bg-white rounded-2xl flex items-center justify-center mr-3">
                 <StudentIcon className="w-5 h-5 text-primary-600" />
               </div>
-              <span className="text-3xl font-bold text-white">intrn</span>
+              <span className="text-3xl font-bold text-black">intrn</span>
             </div>
-            <p className="text-white text-lg mb-8 max-w-2xl mx-auto">
+            <p className="text-black text-lg mb-8 max-w-2xl mx-auto">
               Empowering the next generation of talent across South Asia
             </p>
-            <div className="border-t border-primary-800 pt-8">
-              <p className="text-white">&copy; 2025 INTRN. Built for high school students.</p>
+            <div className="border-t border-gray-300 pt-8">
+              <p className="text-black">&copy; 2025 INTRN. Built for high school students.</p>
             </div>
           </div>
         </div>
