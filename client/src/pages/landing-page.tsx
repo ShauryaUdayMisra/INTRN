@@ -150,45 +150,45 @@ export default function LandingPage() {
         <div className="grid md:grid-cols-3 gap-12 mb-24">
           <div className="text-center group">
             <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg border border-primary-100 group-hover:shadow-xl transition-all duration-300">
-              <Brain className="w-10 h-10 text-primary-600" />
+              <Brain className="w-10 h-10 text-black" />
             </div>
-            <h3 className="text-2xl font-bold text-black mb-4">Ship Real Code</h3>
+            <h3 className="text-2xl font-bold text-black mb-4">Gain Real Experience</h3>
             <p className="text-black leading-relaxed">
-              Build production apps, deploy to cloud, and contribute to repos that millions use daily.
+              Work on meaningful projects, learn from professionals, and build skills for your future career.
             </p>
           </div>
 
           <div className="text-center group">
             <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg border border-primary-100 group-hover:shadow-xl transition-all duration-300">
-              <Zap className="w-10 h-10 text-primary-600" />
+              <Zap className="w-10 h-10 text-black" />
             </div>
-            <h3 className="text-2xl font-bold text-black mb-4">Level Up Fast</h3>
+            <h3 className="text-2xl font-bold text-black mb-4">Learn New Skills</h3>
             <p className="text-black leading-relaxed">
-              Pair with senior devs, learn cutting-edge frameworks, and master tools that top companies use.
+              Develop valuable workplace skills, work with mentors, and discover career paths that interest you.
             </p>
           </div>
 
           <div className="text-center group">
             <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg border border-primary-100 group-hover:shadow-xl transition-all duration-300">
-              <Award className="w-10 h-10 text-primary-600" />
+              <Award className="w-10 h-10 text-black" />
             </div>
-            <h3 className="text-2xl font-bold text-black mb-4">Build Your Rep</h3>
+            <h3 className="text-2xl font-bold text-black mb-4">Build Your Future</h3>
             <p className="text-black leading-relaxed">
-              Stack commits, earn certs, and create a portfolio that gets you noticed by top tech companies.
+              Create a strong resume, gain references, and build connections that help you succeed in college and career.
             </p>
           </div>
         </div>
 
         {/* CTA Section - Clean and Direct */}
         <div className="text-center bg-white rounded-3xl p-16 shadow-lg border border-primary-100">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-black mb-6">
             Ready to Start Your
             <br />
             <span className="bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">
               Future?
             </span>
           </h2>
-          <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
+          <p className="text-xl text-black mb-10 max-w-2xl mx-auto">
             Join thousands of students and companies building the next generation of talent.
           </p>
           <Button 
