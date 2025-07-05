@@ -11,7 +11,7 @@ export default function CompanyInfo() {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-6xl font-bold text-black mb-6">
-            host an intern with <span className="text-primary">intrn</span>
+            Host an intern with <span className="text-primary">intrn</span>
           </h1>
           <p className="text-xl text-black max-w-2xl mx-auto">
             intrn is a student-run platform connecting top high schoolers with real-world internships.
