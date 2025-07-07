@@ -23,6 +23,7 @@ import CompanyThankYou from "@/pages/company-thank-you";
 import CompanyStatus from "@/pages/company-status";
 import PlatformStatus from "@/pages/platform-status";
 import OAuthSetup from "@/pages/oauth-setup";
+import HelpPage from "@/pages/help-page";
 import NotFound from "@/pages/not-found";
 import { ProtectedRoute } from "./lib/protected-route";
 
@@ -46,6 +47,7 @@ function Router() {
         <Route path="/admin-backend" component={() => <PageTransition><AdminBackend /></PageTransition>} />
         <Route path="/status" component={() => <PageTransition><PlatformStatus /></PageTransition>} />
         <Route path="/oauth-setup" component={() => <PageTransition><OAuthSetup /></PageTransition>} />
+        <Route path="/help" component={() => <PageTransition><HelpPage /></PageTransition>} />
         <ProtectedRoute path="/student-onboarding" component={() => <PageTransition><StudentOnboarding /></PageTransition>} />
         <ProtectedRoute path="/company-application" component={() => <PageTransition><CompanyApplication /></PageTransition>} />
         <Route component={() => <PageTransition><NotFound /></PageTransition>} />

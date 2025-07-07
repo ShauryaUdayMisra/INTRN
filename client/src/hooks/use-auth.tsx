@@ -118,13 +118,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     },
     onSuccess: () => {
       queryClient.setQueryData(["/api/user"], null);
+      queryClient.invalidateQueries({ queryKey: ["/api/user"] });
+      // Redirect to landing page after successful logout
+      window.location.href = "/";
     },
     onError: (error: Error) => {
-      toast({
-        title: "Logout failed",
-        description: error.message,
-        variant: "destructive",
-      });
+      // Don't show error toast for logout, just redirect
+      queryClient.setQueryData(["/api/user"], null);
+      window.location.href = "/";
     },
   });
 

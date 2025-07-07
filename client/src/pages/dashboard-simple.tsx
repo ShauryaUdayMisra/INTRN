@@ -77,7 +77,7 @@ export default function DashboardSimple() {
                 </CardContent>
               </Card>
 
-              <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => alert("Help section coming soon! For now, contact support at help@intrn.com")}>
+              <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => window.location.href = "/help"}>
                 <CardHeader>
                   <CardTitle className="flex items-center text-black">
                     <HelpCircle className="w-6 h-6 mr-2 text-primary" />
@@ -86,7 +86,7 @@ export default function DashboardSimple() {
                   <CardDescription className="text-black">Get assistance and learn how to use the platform</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-gray-600">Find answers to common questions and get support</p>
+                  <p className="text-sm text-gray-600">Contact us at intrnxyz@gmail.com for support</p>
                 </CardContent>
               </Card>
 
