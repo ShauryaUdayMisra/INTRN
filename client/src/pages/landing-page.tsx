@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useAuth } from "@/hooks/use-auth";
 import { useLocation } from "wouter";
 import { useEffect } from "react";
-import { ArrowRight, Zap, Compass, TrendingUp, Sparkles, Brain, Award, Flame, Target, GraduationCap, Building } from "lucide-react";
+import { ArrowRight, Zap, Compass, TrendingUp, Sparkles, Brain, Award, Flame, Target, GraduationCap } from "lucide-react";
 
 // Custom Diploma Scroll Icon Component (based on attached image)
 const DiplomaIcon = ({ className }: { className?: string }) => (
