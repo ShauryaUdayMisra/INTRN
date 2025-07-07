@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useAuth } from "@/hooks/use-auth";
 import { useLocation } from "wouter";
 import { useEffect } from "react";
-import { ArrowRight, Zap, Compass, TrendingUp, Sparkles, Brain, Award, Flame, Target, GraduationCap } from "lucide-react";
+import { ArrowRight, Zap, Compass, TrendingUp, Sparkles, Brain, Award, Flame, Target, GraduationCap, Building } from "lucide-react";
 
 // Custom Diploma Scroll Icon Component (based on attached image)
 const DiplomaIcon = ({ className }: { className?: string }) => (
@@ -22,11 +22,7 @@ export default function LandingPage() {
   const { user, isLoading } = useAuth();
   const [, setLocation] = useLocation();
 
-  useEffect(() => {
-    if (!isLoading && user) {
-      setLocation("/home");
-    }
-  }, [user, isLoading, setLocation]);
+  // Remove redirect to /home - keep users on landing page whether logged in or out
 
   if (isLoading) {
     return (
@@ -46,12 +42,32 @@ export default function LandingPage() {
               <DiplomaIcon className="w-8 h-8 text-black" />
               <span className="text-3xl font-bold text-black">intrn</span>
             </div>
-            <Button 
-              onClick={() => setLocation("/auth")}
-              className="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl"
-            >
-              Sign In
-            </Button>
+            {!user ? (
+              <Button 
+                onClick={() => setLocation("/auth")}
+                className="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl"
+              >
+                Sign In
+              </Button>
+            ) : (
+              <div className="flex items-center gap-4">
+                <span className="text-gray-700">Welcome, {user.firstName}!</span>
+                <Button 
+                  onClick={() => setLocation("/dashboard")}
+                  variant="outline"
+                  className="px-4 py-2 rounded-lg font-medium"
+                >
+                  Dashboard
+                </Button>
+                <Button 
+                  onClick={() => window.location.href = "/api/logout"}
+                  variant="outline"
+                  className="px-4 py-2 rounded-lg font-medium"
+                >
+                  Logout
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </header>
@@ -101,40 +117,7 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* Stats - Modern Minimalist */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-24">
-          <div className="text-center group">
-            <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-              <Zap className="w-8 h-8 text-white" />
-            </div>
-            <div className="text-4xl font-bold text-black mb-2">10K+</div>
-            <div className="text-black font-medium">Active Builders</div>
-          </div>
-          
-          <div className="text-center group">
-            <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-              <Compass className="w-8 h-8 text-white" />
-            </div>
-            <div className="text-4xl font-bold text-black mb-2">500+</div>
-            <div className="text-black font-medium">Tech Companies</div>
-          </div>
-          
-          <div className="text-center group">
-            <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-              <Brain className="w-8 h-8 text-white" />
-            </div>
-            <div className="text-4xl font-bold text-black mb-2">2K+</div>
-            <div className="text-black font-medium">Live Projects</div>
-          </div>
-          
-          <div className="text-center group">
-            <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-              <Award className="w-8 h-8 text-white" />
-            </div>
-            <div className="text-4xl font-bold text-black mb-2">95%</div>
-            <div className="text-black font-medium">Ship Rate</div>
-          </div>
-        </div>
+
 
         {/* Features - Clean and Minimalist */}
         <div className="grid md:grid-cols-3 gap-12 mb-24">
@@ -181,14 +164,25 @@ export default function LandingPage() {
           <p className="text-xl text-black mb-10 max-w-2xl mx-auto">
             Join thousands of students and companies building the next generation of talent.
           </p>
-          <Button 
-            size="lg" 
-            className="bg-primary hover:bg-primary/90 text-white text-xl px-12 py-4 rounded-2xl font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
-            onClick={() => setLocation("/auth")}
-          >
-            Get Started Today
-            <ArrowRight className="ml-3 h-6 w-6" />
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <Button 
+              size="lg" 
+              className="bg-primary hover:bg-primary/90 text-white text-xl px-12 py-4 rounded-2xl font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+              onClick={() => setLocation("/auth")}
+            >
+              Get Started Today
+              <ArrowRight className="ml-3 h-6 w-6" />
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="text-xl px-12 py-4 rounded-2xl border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+              onClick={() => setLocation("/company-info")}
+            >
+              I'm a Company
+              <Sparkles className="ml-3 h-6 w-6" />
+            </Button>
+          </div>
         </div>
       </main>
 

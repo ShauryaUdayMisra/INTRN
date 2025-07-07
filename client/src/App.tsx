@@ -33,7 +33,6 @@ function Router() {
     <AnimatePresence mode="wait">
       <Switch key={location}>
         <Route path="/" component={() => <PageTransition><LandingPage /></PageTransition>} />
-        <Route path="/home" component={() => <PageTransition><HomePage /></PageTransition>} />
         <Route path="/auth" component={() => <PageTransition><SimpleAuth /></PageTransition>} />
         <Route path="/company-info" component={() => <PageTransition><CompanyInfo /></PageTransition>} />
         <Route path="/company-signup" component={() => <PageTransition><CompanySignup /></PageTransition>} />
