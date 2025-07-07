@@ -30,9 +30,16 @@ export async function apiRequest(
   url: string,
   data?: unknown | undefined,
 ): Promise<Response> {
-  const res = await fetch(url, {
+  // Handle both development and production environments
+  const baseUrl = import.meta.env.PROD ? '' : '';
+  const fullUrl = baseUrl + url;
+  
+  const res = await fetch(fullUrl, {
     method,
-    headers: data ? { "Content-Type": "application/json" } : {},
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
     body: data ? JSON.stringify(data) : undefined,
     credentials: "include",
   });

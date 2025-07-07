@@ -66,14 +66,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     },
     onSuccess: (user: SelectUser) => {
       console.log("Registration successful, setting user data:", user);
-      queryClient.setQueryData(["/api/user"], user);
       
-      // Redirect to appropriate onboarding flow
-      if (user.role === "student" && !user.profileComplete) {
-        window.location.href = "/student-onboarding";
-      } else if (user.role === "company" && !user.profileComplete) {
-        window.location.href = "/company-application";
-      }
+      // Update query cache properly
+      queryClient.setQueryData(["/api/user"], user);
+      queryClient.invalidateQueries({ queryKey: ["/api/user"] });
+      
+      // Use requestAnimationFrame to ensure state updates happen after render
+      requestAnimationFrame(() => {
+        if (user.role === "student" && !user.profileComplete) {
+          window.location.href = "/student-onboarding";
+        } else if (user.role === "company" && !user.profileComplete) {
+          window.location.href = "/company-application";
+        } else {
+          // For completed profiles, redirect to dashboard
+          window.location.href = "/dashboard";
+        }
+      });
     },
     onError: (error: Error) => {
       console.error("Registration mutation error:", error);
@@ -82,13 +90,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (error.message.includes("email already exists") || error.message.includes("Please sign in instead")) {
         toast({
           title: "Account Exists",
-          description: "An account with this email already exists. Redirecting to sign in...",
+          description: "An account with this email already exists. Please use the sign in tab instead.",
           variant: "destructive",
         });
-        // Redirect to sign in after a brief delay
+        // Switch to sign in tab instead of redirecting
         setTimeout(() => {
-          window.location.href = "/auth";
-        }, 2000);
+          const signInTab = document.querySelector('[data-value="login"]') as HTMLElement;
+          if (signInTab) {
+            signInTab.click();
+          }
+        }, 1000);
       } else {
         toast({
           title: "Registration Failed",

@@ -60,7 +60,10 @@ export default function AuthPage() {
 
   useEffect(() => {
     if (user) {
-      setLocation("/dashboard");
+      // Use setTimeout to avoid state updates during render
+      setTimeout(() => {
+        setLocation("/dashboard");
+      }, 0);
     }
   }, [user, setLocation]);
 
