@@ -82,7 +82,7 @@ export default function SimpleAuth() {
   };
 
   if (user) {
-    setLocation("/");
+    setLocation("/dashboard");
     return null;
   }
 

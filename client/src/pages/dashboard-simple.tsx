@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
 import { Application } from "@shared/schema";
-import { BookOpen, Users, Star, TrendingUp } from "lucide-react";
+import { BookOpen, Users, Star, TrendingUp, HelpCircle, Search, FileText, Settings } from "lucide-react";
 
 export default function DashboardSimple() {
   const { user } = useAuth();
@@ -36,52 +36,93 @@ export default function DashboardSimple() {
           <h1 className="text-3xl font-bold text-black mb-8">Student Dashboard</h1>
           
           <div className="space-y-8">
-            {/* Four Main Sections */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => window.location.href = "/blog"}>
-                <CardHeader>
-                  <CardTitle className="flex items-center text-black">
-                    <BookOpen className="w-6 h-6 mr-2 text-primary" />
-                    Blog
-                  </CardTitle>
-                  <CardDescription className="text-black">Read career advice and industry insights</CardDescription>
-                </CardHeader>
-              </Card>
-
+            {/* Main Dashboard Sections */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => window.location.href = "/search"}>
                 <CardHeader>
                   <CardTitle className="flex items-center text-black">
-                    <TrendingUp className="w-6 h-6 mr-2 text-primary" />
-                    Browse Internships
+                    <Search className="w-6 h-6 mr-2 text-primary" />
+                    Available Internships
                   </CardTitle>
-                  <CardDescription className="text-black">Find and apply to internships</CardDescription>
+                  <CardDescription className="text-black">Discover and apply to new internship opportunities</CardDescription>
                 </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-gray-600">Browse through verified internship opportunities from top companies</p>
+                </CardContent>
               </Card>
 
               <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => window.location.href = "/student-onboarding"}>
                 <CardHeader>
                   <CardTitle className="flex items-center text-black">
-                    <Users className="w-6 h-6 mr-2 text-primary" />
+                    <Settings className="w-6 h-6 mr-2 text-primary" />
                     Edit Profile
                   </CardTitle>
-                  <CardDescription className="text-black">Update experience and skills</CardDescription>
+                  <CardDescription className="text-black">Update your skills, experience, and preferences</CardDescription>
                 </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-gray-600">Keep your profile updated to get better internship matches</p>
+                </CardContent>
+              </Card>
+
+              <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => window.location.href = "/blog"}>
+                <CardHeader>
+                  <CardTitle className="flex items-center text-black">
+                    <BookOpen className="w-6 h-6 mr-2 text-primary" />
+                    Blog & Resources
+                  </CardTitle>
+                  <CardDescription className="text-black">Career advice and industry insights</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-gray-600">Read expert articles on career development and internship success</p>
+                </CardContent>
+              </Card>
+
+              <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => alert("Help section coming soon! For now, contact support at help@intrn.com")}>
+                <CardHeader>
+                  <CardTitle className="flex items-center text-black">
+                    <HelpCircle className="w-6 h-6 mr-2 text-primary" />
+                    Help & Support
+                  </CardTitle>
+                  <CardDescription className="text-black">Get assistance and learn how to use the platform</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-gray-600">Find answers to common questions and get support</p>
+                </CardContent>
               </Card>
 
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center text-black">
                     <Star className="w-6 h-6 mr-2 text-primary" />
-                    Previous Internships
+                    My Applications
                   </CardTitle>
-                  <CardDescription className="text-black">View completed internships</CardDescription>
+                  <CardDescription className="text-black">Track your internship applications</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-black">
+                    {applications.length > 0 ? (
+                      <p>{applications.length} total applications submitted</p>
+                    ) : (
+                      <p>No applications yet. Start browsing internships!</p>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center text-black">
+                    <TrendingUp className="w-6 h-6 mr-2 text-primary" />
+                    Progress
+                  </CardTitle>
+                  <CardDescription className="text-black">Your internship journey so far</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="text-black">
                     {applications.filter(a => a.status === "accepted").length > 0 ? (
                       <p>{applications.filter(a => a.status === "accepted").length} completed internships</p>
                     ) : (
-                      <p>No completed internships yet</p>
+                      <p>Start your first internship application today!</p>
                     )}
                   </div>
                 </CardContent>
