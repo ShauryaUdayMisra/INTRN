@@ -6,6 +6,7 @@ import { setupOAuth } from "./oauth";
 import { storage } from "./storage";
 import { seedSampleData } from "./seed-data";
 import { seedBlogPosts } from "./seed-blog";
+import { seedCustomBlogs } from "./seed-custom-blogs";
 import { insertInternshipSchema, insertApplicationSchema, insertBlogPostSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -23,6 +24,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   // Seed admin accounts and sample data
   await seedSampleData();
+  await seedCustomBlogs();
   
   // Replit Auth user route
   app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {

@@ -19,13 +19,11 @@ export default function BlogPostCard({ post }: BlogPostCardProps) {
 
   return (
     <Card className="bg-white hover:shadow-xl transition-shadow duration-300 overflow-hidden group">
-      {/* Blog post image placeholder */}
-      <div className="relative h-48 bg-gradient-to-br from-primary/10 to-secondary-500/10 overflow-hidden">
-        <img
-          src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400"
-          alt={post.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-        />
+      {/* Purple thumbnail with title */}
+      <div className="relative h-48 bg-gradient-to-br from-primary to-primary/80 overflow-hidden flex items-center justify-center p-6">
+        <h3 className="text-white text-xl font-bold text-center leading-tight group-hover:scale-105 transition-transform duration-300">
+          {post.title}
+        </h3>
       </div>
 
       <CardContent className="p-6">

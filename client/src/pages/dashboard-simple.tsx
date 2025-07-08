@@ -3,11 +3,13 @@ import Navigation from "@/components/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import { Application } from "@shared/schema";
 import { BookOpen, Users, Star, TrendingUp, HelpCircle, Search, FileText, Settings } from "lucide-react";
 
 export default function DashboardSimple() {
   const { user } = useAuth();
+  const [, setLocation] = useLocation();
 
   const { data: applications = [] } = useQuery<Application[]>({
     queryKey: ["/api/applications"],
@@ -64,7 +66,7 @@ export default function DashboardSimple() {
                 </CardContent>
               </Card>
 
-              <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => window.location.href = "/blog"}>
+              <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => setLocation("/blog")}>
                 <CardHeader>
                   <CardTitle className="flex items-center text-black">
                     <BookOpen className="w-6 h-6 mr-2 text-primary" />
