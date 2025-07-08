@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/use-auth";
-import { useLocation } from "wouter";
 import { useEffect } from "react";
+import { useLocation } from "wouter";
 import { ArrowRight, Zap, Compass, TrendingUp, Sparkles, Brain, Award, Flame, Target, GraduationCap } from "lucide-react";
 
 // Custom Diploma Scroll Icon Component (based on attached image)
@@ -22,11 +22,12 @@ export default function LandingPage() {
   const { user, isLoading } = useAuth();
   const [, setLocation] = useLocation();
 
-  // Auto-redirect logged-in users to dashboard
-  if (!isLoading && user) {
-    setLocation("/dashboard");
-    return null;
-  }
+  // Auto-redirect logged-in users to dashboard using useEffect
+  useEffect(() => {
+    if (!isLoading && user) {
+      setLocation("/dashboard");
+    }
+  }, [user, isLoading, setLocation]);
 
   if (isLoading) {
     return (

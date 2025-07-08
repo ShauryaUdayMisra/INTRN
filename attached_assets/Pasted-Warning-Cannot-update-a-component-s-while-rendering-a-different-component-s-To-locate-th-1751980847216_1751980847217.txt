@@ -1,0 +1,16 @@
+Warning: Cannot update a component (`%s`) while rendering a different component (`%s`). To locate the bad setState() call inside `%s`, follow the stack trace as described in https://reactjs.org/link/setstate-in-render%s LandingPage LandingPage LandingPage 
+    at LandingPage (https://da326658-1023-4c61-b5d0-046e2d66eb73-00-3hqhq4gtvvkid.riker.replit.dev/src/pages/landing-page.tsx:51:31)
+    at div
+    at MotionComponent (https://da326658-1023-4c61-b5d0-046e2d66eb73-00-3hqhq4gtvvkid.riker.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/framer-motion.js?v=927d0711:6536:40)
+    at PageTransition (https://da326658-1023-4c61-b5d0-046e2d66eb73-00-3hqhq4gtvvkid.riker.replit.dev/src/components/page-transition.tsx:37:42)
+    at component
+    at Route (https://da326658-1023-4c61-b5d0-046e2d66eb73-00-3hqhq4gtvvkid.riker.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=927d0711:323:16)
+    at Switch (https://da326658-1023-4c61-b5d0-046e2d66eb73-00-3hqhq4gtvvkid.riker.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=927d0711:379:17)
+    at PresenceChild (https://da326658-1023-4c61-b5d0-046e2d66eb73-00-3hqhq4gtvvkid.riker.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/framer-motion.js?v=927d0711:7742:24)
+    at AnimatePresence (https://da326658-1023-4c61-b5d0-046e2d66eb73-00-3hqhq4gtvvkid.riker.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/framer-motion.js?v=927d0711:7800:26)
+    at Router (https://da326658-1023-4c61-b5d0-046e2d66eb73-00-3hqhq4gtvvkid.riker.replit.dev/src/App.tsx?v=K6JaDnhN8SeV1HQs8rCyV:47:22)
+    at Provider (https://da326658-1023-4c61-b5d0-046e2d66eb73-00-3hqhq4gtvvkid.riker.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=927d0711:38:15)
+    at TooltipProvider (https://da326658-1023-4c61-b5d0-046e2d66eb73-00-3hqhq4gtvvkid.riker.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=927d0711:62:5)
+    at AuthProvider (https://da326658-1023-4c61-b5d0-046e2d66eb73-00-3hqhq4gtvvkid.riker.replit.dev/src/hooks/use-auth.tsx:26:32)
+    at QueryClientProvider (https://da326658-1023-4c61-b5d0-046e2d66eb73-00-3hqhq4gtvvkid.riker.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=927d0711:2805:3)
+    at App
