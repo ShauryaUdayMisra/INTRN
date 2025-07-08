@@ -117,15 +117,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await apiRequest("POST", "/api/logout");
     },
     onSuccess: () => {
-      queryClient.setQueryData(["/api/user"], null);
-      queryClient.invalidateQueries({ queryKey: ["/api/user"] });
-      // Redirect to landing page after successful logout
-      window.location.href = "/";
+      // Clear all cached data
+      queryClient.clear();
+      // Force a complete page reload to ensure clean state
+      window.location.reload();
     },
     onError: (error: Error) => {
-      // Don't show error toast for logout, just redirect
-      queryClient.setQueryData(["/api/user"], null);
-      window.location.href = "/";
+      // Clear all cached data even on error
+      queryClient.clear();
+      // Force a complete page reload to ensure clean state
+      window.location.reload();
     },
   });
 
