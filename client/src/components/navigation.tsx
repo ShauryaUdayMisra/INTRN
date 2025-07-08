@@ -18,8 +18,23 @@ export default function Navigation() {
   const [location, setLocation] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const handleLogout = () => {
-    logoutMutation.mutate();
+  const handleLogout = async () => {
+    try {
+      // Call logout API directly
+      await fetch("/api/logout", { method: "POST", credentials: "include" });
+      // Clear any stored data and redirect
+      localStorage.clear();
+      sessionStorage.clear();
+      // Use router navigation instead of window.location
+      setLocation("/");
+      // Force a page refresh to clear all state
+      setTimeout(() => window.location.reload(), 100);
+    } catch (error) {
+      console.error("Logout error:", error);
+      // Still redirect even if logout API fails
+      setLocation("/");
+      setTimeout(() => window.location.reload(), 100);
+    }
   };
 
   const navItems = [

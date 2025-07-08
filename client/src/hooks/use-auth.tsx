@@ -117,16 +117,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await apiRequest("POST", "/api/logout");
     },
     onSuccess: () => {
-      // Clear all cached data
+      // Clear all cached data first
+      queryClient.setQueryData(["/api/user"], null);
       queryClient.clear();
-      // Force a complete page reload to ensure clean state
-      window.location.reload();
+      // Navigate to root and force refresh
+      window.location.href = "/";
     },
     onError: (error: Error) => {
       // Clear all cached data even on error
+      queryClient.setQueryData(["/api/user"], null);
       queryClient.clear();
-      // Force a complete page reload to ensure clean state
-      window.location.reload();
+      // Navigate to root even on error
+      window.location.href = "/";
     },
   });
 
