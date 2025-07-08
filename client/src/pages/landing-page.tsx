@@ -22,7 +22,11 @@ export default function LandingPage() {
   const { user, isLoading } = useAuth();
   const [, setLocation] = useLocation();
 
-  // Remove redirect to /home - keep users on landing page whether logged in or out
+  // Auto-redirect logged-in users to dashboard
+  if (!isLoading && user) {
+    setLocation("/dashboard");
+    return null;
+  }
 
   if (isLoading) {
     return (

@@ -69,9 +69,9 @@ export default function BlogPage() {
       <Navigation />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Blog Header */}
+        {/* Blog Header - Centered */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Career Insights & Advice</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4 mx-auto">Career Insights & Advice</h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Expert guidance, industry insights, and success stories to help you navigate your internship journey.
           </p>
@@ -120,36 +120,25 @@ export default function BlogPage() {
           </Card>
         </div>
 
-        {/* Featured Post */}
+        {/* Featured Post - Without Image */}
         {filteredPosts.length > 0 && (
           <div className="mb-12">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Featured Article</h2>
             <Card className="overflow-hidden">
-              <CardContent className="p-0">
-                <div className="md:flex">
-                  <div className="md:w-1/3">
-                    <img
-                      src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400"
-                      alt="Featured article"
-                      className="w-full h-64 md:h-full object-cover"
-                    />
-                  </div>
-                  <div className="md:w-2/3 p-8">
-                    <div className="flex items-center mb-3">
-                      <Badge>{filteredPosts[0].category}</Badge>
-                      <span className="text-gray-500 text-sm ml-4">
-                        {new Date(filteredPosts[0].createdAt).toLocaleDateString()}
-                      </span>
-                    </div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                      {filteredPosts[0].title}
-                    </h3>
-                    <p className="text-gray-600 mb-6">
-                      {filteredPosts[0].excerpt}
-                    </p>
-                    <Button>Read Full Article</Button>
-                  </div>
+              <CardContent className="p-8">
+                <div className="flex items-center mb-3">
+                  <Badge>{filteredPosts[0].category}</Badge>
+                  <span className="text-gray-500 text-sm ml-4">
+                    {new Date(filteredPosts[0].createdAt).toLocaleDateString()}
+                  </span>
                 </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                  {filteredPosts[0].title}
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  {filteredPosts[0].excerpt}
+                </p>
+                <Button>Read Full Article</Button>
               </CardContent>
             </Card>
           </div>

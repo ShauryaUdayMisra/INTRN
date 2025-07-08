@@ -131,11 +131,7 @@ export default function Navigation() {
                     <Home className="mr-2 h-4 w-4" />
                     Dashboard
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setLocation("/profile")}>
-                    <User className="mr-2 h-4 w-4" />
-                    Profile
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setLocation("/settings")}>
+                  <DropdownMenuItem onClick={() => setLocation("/help")}>
                     <Settings className="mr-2 h-4 w-4" />
                     Settings
                   </DropdownMenuItem>

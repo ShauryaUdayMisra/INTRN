@@ -66,18 +66,7 @@ export default function DashboardSimple() {
                 </CardContent>
               </Card>
 
-              <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => setLocation("/blog")}>
-                <CardHeader>
-                  <CardTitle className="flex items-center text-black">
-                    <BookOpen className="w-6 h-6 mr-2 text-primary" />
-                    Blog & Resources
-                  </CardTitle>
-                  <CardDescription className="text-black">Career advice and industry insights</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-gray-600">Read expert articles on career development and internship success</p>
-                </CardContent>
-              </Card>
+
 
               <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => window.location.href = "/help"}>
                 <CardHeader>
