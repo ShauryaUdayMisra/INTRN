@@ -60,7 +60,16 @@ export default function LandingPage() {
                   Dashboard
                 </Button>
                 <Button 
-                  onClick={() => window.location.href = "/api/logout"}
+                  onClick={async () => {
+                    try {
+                      await fetch("/api/logout", { method: "POST", credentials: "include" });
+                      localStorage.clear();
+                      sessionStorage.clear();
+                      window.location.href = "/";
+                    } catch (error) {
+                      window.location.href = "/";
+                    }
+                  }}
                   variant="outline"
                   className="px-4 py-2 rounded-lg font-medium"
                 >
