@@ -19,9 +19,9 @@ export default function BlogPostCard({ post }: BlogPostCardProps) {
 
   return (
     <Card className="bg-white hover:shadow-xl transition-shadow duration-300 overflow-hidden group">
-      {/* Purple thumbnail with title */}
-      <div className="relative h-48 bg-gradient-to-br from-primary to-primary/80 overflow-hidden flex items-center justify-center p-6">
-        <h3 className="text-white text-xl font-bold text-center leading-tight group-hover:scale-105 transition-transform duration-300">
+      {/* White thumbnail with purple text and outline */}
+      <div className="relative h-48 bg-white border-2 border-primary overflow-hidden flex items-center justify-center p-6">
+        <h3 className="text-primary text-xl font-bold text-center leading-tight group-hover:scale-105 transition-transform duration-300">
           {post.title}
         </h3>
       </div>

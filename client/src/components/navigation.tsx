@@ -91,9 +91,9 @@ export default function Navigation() {
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
+          {/* Desktop Navigation - Centered */}
+          <div className="hidden md:block flex-1">
+            <div className="flex items-baseline justify-center space-x-8">
               <NavLinks />
             </div>
           </div>
