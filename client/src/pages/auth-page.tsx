@@ -13,7 +13,7 @@ import { GraduationCap, Building, Users, TrendingUp, Award, Globe } from "lucide
 import SocialLogin from "@/components/social-login";
 
 const loginSchema = z.object({
-  username: z.string().min(1, "Username is required"),
+  email: z.string().email("Valid email is required"),
   password: z.string().min(1, "Password is required"),
 });
 
@@ -42,7 +42,7 @@ export default function AuthPage() {
   const loginForm = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      username: "",
+      email: "",
       password: "",
     },
   });
@@ -68,7 +68,8 @@ export default function AuthPage() {
   }, [user, setLocation]);
 
   const onLogin = (data: LoginForm) => {
-    loginMutation.mutate(data);
+    // Send email as username to backend for compatibility
+    loginMutation.mutate({ username: data.email, password: data.password });
   };
 
   const onRegister = (data: RegisterForm) => {
@@ -121,15 +122,16 @@ export default function AuthPage() {
                 <CardContent>
                   <form onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-4">
                     <div>
-                      <Label htmlFor="login-username">Username</Label>
+                      <Label htmlFor="login-email">Email</Label>
                       <Input
-                        id="login-username"
-                        {...loginForm.register("username")}
-                        placeholder="Enter username"
+                        id="login-email"
+                        type="email"
+                        {...loginForm.register("email")}
+                        placeholder="Enter email"
                       />
-                      {loginForm.formState.errors.username && (
+                      {loginForm.formState.errors.email && (
                         <p className="text-sm text-red-500 mt-1">
-                          {loginForm.formState.errors.username.message}
+                          {loginForm.formState.errors.email.message}
                         </p>
                       )}
                     </div>

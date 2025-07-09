@@ -20,9 +20,10 @@ const companyApplicationSchema = z.object({
   companyName: z.string().min(1, "Company name is required"),
   companyField: z.string().min(1, "Please select a field"),
   internshipType: z.string().min(1, "Please select internship type"),
-  description: z.string().min(50, "Please provide at least 50 characters describing your company"),
-  website: z.string().url("Please enter a valid website URL").optional().or(z.literal("")),
+  description: z.string().min(1, "Please provide a description of your company"),
+  website: z.string().url("Please enter a valid website URL").min(1, "Website is required"),
   location: z.string().min(1, "Location is required"),
+  technicalSkills: z.string().min(1, "Please specify technical skills required"),
   termsAccepted: z.boolean().refine(val => val === true, {
     message: "You must accept the terms and conditions"
   }),
@@ -63,6 +64,7 @@ export default function CompanyApplication() {
       description: "",
       website: "",
       location: "",
+      technicalSkills: "",
       termsAccepted: false,
     },
   });
@@ -185,7 +187,7 @@ export default function CompanyApplication() {
                       <FormItem>
                         <FormLabel className="flex items-center gap-2">
                           <Globe className="h-4 w-4" />
-                          Website (Optional)
+                          Website (Required)
                         </FormLabel>
                         <FormControl>
                           <Input placeholder="https://yourcompany.com" {...field} />
@@ -246,6 +248,32 @@ export default function CompanyApplication() {
                             <FormLabel htmlFor="hybrid">Hybrid (Mix of online and offline)</FormLabel>
                           </div>
                         </RadioGroup>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </CardContent>
+            </Card>
+
+            {/* Technical Skills */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Technical Skills Required</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <FormField
+                  control={form.control}
+                  name="technicalSkills"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>What technical skills do you need for this internship?</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Please specify the technical skills required for this internship (e.g., Python, JavaScript, Marketing, Design, Content Writing, etc.)"
+                          className="min-h-[100px]"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

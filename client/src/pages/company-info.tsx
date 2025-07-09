@@ -11,91 +11,111 @@ export default function CompanyInfo() {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-6xl font-bold text-black mb-6">
-            Host an intern with <span className="text-primary">intrn</span>
+            Welcome to <span className="text-primary">INTRN</span>
           </h1>
           <p className="text-xl text-black max-w-2xl mx-auto">
-            intrn is a student-run platform connecting top high schoolers with real-world internships.
+            — we're excited to have you on board.
           </p>
         </div>
 
         {/* Main Content */}
         <div className="bg-white rounded-3xl shadow-2xl p-12 mb-12">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-black mb-6">
-              smart, motivated high schoolers want to work with you.
-            </h2>
-            <p className="text-xl text-black">
-              we make it easy to list a real project and get matched fast.
+          <div className="text-left mb-12">
+            <p className="text-lg text-black mb-6">
+              You've just taken the first step toward hosting an intern who's smart, motivated, and ready to contribute. INTRN is a student-run platform built to connect companies like yours with high-performing high school students looking for real-world experience.
+            </p>
+            <p className="text-lg text-black mb-6">
+              These are not your average interns. Our students are curious, capable, and eager to take on meaningful work — not just busywork. Whether you need help with research, marketing, content, product ideas, or design, there's a student out there ready to jump in.
             </p>
           </div>
 
-          {/* Why It Works */}
+          {/* Why Companies Choose INTRN */}
           <div className="mb-12">
-            <h3 className="text-2xl font-bold text-black mb-8 text-center">why it works</h3>
-            <div className="grid md:grid-cols-2 gap-6">
+            <h3 className="text-2xl font-bold text-black mb-8">Why companies choose INTRN:</h3>
+            <div className="space-y-4">
               <div className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-primary rounded-full mt-3 flex-shrink-0"></div>
-                <p className="text-black text-lg">top students, no busywork</p>
+                <p className="text-black text-lg"><strong>Top talent</strong> – we handpick students who are serious about learning and working hard</p>
               </div>
               <div className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-primary rounded-full mt-3 flex-shrink-0"></div>
-                <p className="text-black text-lg">simple onboarding – no HR overhead</p>
+                <p className="text-black text-lg"><strong>No HR hassle</strong> – the process is quick and smooth, with zero overhead</p>
               </div>
               <div className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-primary rounded-full mt-3 flex-shrink-0"></div>
-                <p className="text-black text-lg">remote, hybrid, or in-person</p>
+                <p className="text-black text-lg"><strong>Flexible internships</strong> – host remotely, in-person, or hybrid</p>
               </div>
               <div className="flex items-start space-x-3">
                 <div className="w-2 h-2 bg-primary rounded-full mt-3 flex-shrink-0"></div>
-                <p className="text-black text-lg">great early brand + real impact</p>
+                <p className="text-black text-lg"><strong>Real impact</strong> – students work on actual projects and deliver real results</p>
+              </div>
+              <div className="flex items-start space-x-3">
+                <div className="w-2 h-2 bg-primary rounded-full mt-3 flex-shrink-0"></div>
+                <p className="text-black text-lg"><strong>Build early loyalty</strong> – leave a lasting impression on future leaders</p>
               </div>
             </div>
           </div>
 
           <div className="text-center mb-12">
             <p className="text-2xl font-bold text-black">
-              you bring the project. we bring the talent.
+              You bring the project. We bring the talent.
             </p>
             <div className="border-t border-gray-300 my-8 max-w-md mx-auto"></div>
           </div>
 
           {/* Steps */}
           <div className="mb-12">
-            <h3 className="text-2xl font-bold text-black mb-8 text-center">
-              🚀 list in 3 quick steps
+            <h3 className="text-2xl font-bold text-black mb-8">
+              🚀 How to get started (it's super simple):
             </h3>
             <div className="space-y-6">
               <div className="flex items-start space-x-4">
                 <div className="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0">
                   1
                 </div>
-                <p className="text-black text-lg pt-1">fill the short form</p>
+                <p className="text-black text-lg pt-1">Fill out a short form with your project idea (takes just a few minutes)</p>
               </div>
               <div className="flex items-start space-x-4">
                 <div className="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0">
                   2
                 </div>
-                <p className="text-black text-lg pt-1">we list your project</p>
+                <p className="text-black text-lg pt-1">We list your internship on our platform and promote it to our student network</p>
               </div>
               <div className="flex items-start space-x-4">
                 <div className="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0">
                   3
                 </div>
-                <p className="text-black text-lg pt-1">students apply. you choose.</p>
+                <p className="text-black text-lg pt-1">You choose from applicants and bring an intern on board</p>
               </div>
             </div>
           </div>
 
-          {/* CTA Button */}
-          <div className="text-center">
-            <Button 
-              size="lg" 
-              className="bg-primary hover:bg-primary/90 text-white text-xl px-12 py-6 rounded-2xl font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
-              onClick={() => setLocation("/company-signup")}
-            >
-              start your journey
-              <ArrowRight className="ml-3 h-6 w-6" />
-            </Button>
+          <div className="text-left mb-12">
+            <p className="text-lg text-black">
+              Whether you're looking to mentor young talent, get a fresh perspective, or simply get help on a project, INTRN makes it easy. No long emails. No complicated onboarding. Just great students and real collaboration.
+            </p>
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="text-center space-y-4">
+            <div className="flex justify-center gap-6">
+              <Button 
+                size="lg" 
+                className="bg-primary hover:bg-primary/90 text-white text-xl px-12 py-6 rounded-2xl font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+                onClick={() => setLocation("/company-signup")}
+              >
+                start your journey
+                <ArrowRight className="ml-3 h-6 w-6" />
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline"
+                className="border-primary text-primary hover:bg-primary hover:text-white text-xl px-12 py-6 rounded-2xl font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+                onClick={() => setLocation("/auth?type=company")}
+              >
+                sign in
+              </Button>
+            </div>
           </div>
         </div>
       </div>
