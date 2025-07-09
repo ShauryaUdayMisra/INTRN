@@ -23,7 +23,7 @@ const companySignupSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
   password: z.string().min(8, "Password must be at least 8 characters"),
   confirmPassword: z.string(),
-  website: z.string().optional(),
+  website: z.string().url("Please enter a valid website URL").min(1, "Website is required"),
   
   // Step 2: Company Details
   contactName: z.string().min(2, "Contact name is required"),
@@ -35,7 +35,8 @@ const companySignupSchema = z.object({
   // Step 3: Internship Details
   workArrangement: z.string().min(1, "Please select work arrangement"),
   internshipDuration: z.string().min(1, "Please select internship duration"),
-  technicalSkills: z.array(z.string()).min(1, "Please select at least one technical skill"),
+  technicalSkills: z.string().min(1, "Please specify technical skills required"),
+  otherSkills: z.string().optional(),
   
   // Agreement
   termsAccepted: z.boolean().refine(val => val === true, "You must accept the terms and conditions"),
@@ -72,7 +73,8 @@ export default function CompanySignup() {
     resolver: zodResolver(companySignupSchema),
     mode: "onChange",
     defaultValues: {
-      technicalSkills: [],
+      technicalSkills: "",
+      otherSkills: "",
       termsAccepted: false,
     },
   });
@@ -175,11 +177,14 @@ export default function CompanySignup() {
             </div>
 
             <div>
-              <Label htmlFor="website">Website (Optional)</Label>
+              <Label htmlFor="website">Website (Required)</Label>
               <Input
                 {...form.register("website")}
                 placeholder="https://yourcompany.com"
               />
+              {form.formState.errors.website && (
+                <p className="text-red-500 text-sm mt-1">{form.formState.errors.website.message}</p>
+              )}
             </div>
           </div>
         );
@@ -222,18 +227,10 @@ export default function CompanySignup() {
 
             <div>
               <Label htmlFor="location">Company Location *</Label>
-              <Select onValueChange={(value) => form.setValue("location", value)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select your location" />
-                </SelectTrigger>
-                <SelectContent>
-                  {LOCATIONS.map((location) => (
-                    <SelectItem key={location} value={location}>
-                      {location}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Input
+                {...form.register("location")}
+                placeholder="Enter your company location (e.g., Mumbai, Maharashtra)"
+              />
               {form.formState.errors.location && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.location.message}</p>
               )}
@@ -293,28 +290,24 @@ export default function CompanySignup() {
             </div>
 
             <div>
-              <Label>Technical Skills Required *</Label>
-              <div className="grid grid-cols-2 gap-4 mt-2">
-                {TECHNICAL_SKILLS.map((skill) => (
-                  <div key={skill} className="flex items-center space-x-2">
-                    <Checkbox
-                      checked={form.watch("technicalSkills")?.includes(skill)}
-                      onCheckedChange={(checked) => {
-                        const currentSkills = form.getValues("technicalSkills") || [];
-                        if (checked) {
-                          form.setValue("technicalSkills", [...currentSkills, skill]);
-                        } else {
-                          form.setValue("technicalSkills", currentSkills.filter(s => s !== skill));
-                        }
-                      }}
-                    />
-                    <Label className="text-sm font-normal">{skill}</Label>
-                  </div>
-                ))}
-              </div>
+              <Label htmlFor="technicalSkills">Technical Skills Required *</Label>
+              <Textarea
+                {...form.register("technicalSkills")}
+                placeholder="Please specify the technical skills required for internships (e.g., Social Media, Marketing, Design, Content Writing, etc.)"
+                rows={3}
+              />
               {form.formState.errors.technicalSkills && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.technicalSkills.message}</p>
               )}
+            </div>
+
+            <div>
+              <Label htmlFor="otherSkills">Other Skills (Optional)</Label>
+              <Textarea
+                {...form.register("otherSkills")}
+                placeholder="Any other skills or requirements not mentioned above..."
+                rows={2}
+              />
             </div>
 
             <div className="flex items-center space-x-2">
