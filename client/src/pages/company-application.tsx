@@ -20,10 +20,11 @@ const companyApplicationSchema = z.object({
   companyName: z.string().min(1, "Company name is required"),
   companyField: z.string().min(1, "Please select a field"),
   internshipType: z.string().min(1, "Please select internship type"),
-  description: z.string().min(1, "Please provide a description of your company"),
+  description: z.string().min(1, "Please provide a project description"),
   website: z.string().url("Please enter a valid website URL").min(1, "Website is required"),
   location: z.string().min(1, "Location is required"),
   technicalSkills: z.string().min(1, "Please specify technical skills required"),
+  otherSkills: z.string().optional(),
   termsAccepted: z.boolean().refine(val => val === true, {
     message: "You must accept the terms and conditions"
   }),
@@ -65,6 +66,7 @@ export default function CompanyApplication() {
       website: "",
       location: "",
       technicalSkills: "",
+      otherSkills: "",
       termsAccepted: false,
     },
   });
@@ -79,7 +81,7 @@ export default function CompanyApplication() {
         title: "Application Submitted!",
         description: "Your company application has been submitted for admin review. You'll be notified once approved.",
       });
-      setLocation("/dashboard");
+      setLocation("/company-application-status");
     },
     onError: (error: Error) => {
       toast({
@@ -166,10 +168,10 @@ export default function CompanyApplication() {
                   name="description"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Company Description</FormLabel>
+                      <FormLabel>Project Description</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="Tell us about your company, what you do, and why you want to offer internships to high school students..."
+                          placeholder="Describe the internship project you are offering to high school students..."
                           className="min-h-[120px]"
                           {...field}
                         />
@@ -207,7 +209,7 @@ export default function CompanyApplication() {
                           Location
                         </FormLabel>
                         <FormControl>
-                          <Input placeholder="e.g., Mumbai, Maharashtra" {...field} />
+                          <Input placeholder="Enter your company location (e.g., Mumbai, Maharashtra)" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -272,6 +274,24 @@ export default function CompanyApplication() {
                         <Textarea
                           placeholder="Please specify the technical skills required for this internship (e.g., Python, JavaScript, Marketing, Design, Content Writing, etc.)"
                           className="min-h-[100px]"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="otherSkills"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Other Skills (Optional)</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Any other skills or requirements not mentioned above..."
+                          className="min-h-[80px]"
                           {...field}
                         />
                       </FormControl>

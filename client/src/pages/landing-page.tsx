@@ -197,6 +197,17 @@ export default function LandingPage() {
               <Sparkles className="ml-3 h-6 w-6" />
             </Button>
           </div>
+          
+          <div className="mt-8 text-center">
+            <p className="text-gray-600 mb-4">Already have an account?</p>
+            <Button 
+              variant="ghost" 
+              className="text-primary hover:bg-primary/10 text-lg px-8 py-2 rounded-xl font-medium"
+              onClick={() => setLocation("/auth")}
+            >
+              Sign In
+            </Button>
+          </div>
         </div>
       </main>
 

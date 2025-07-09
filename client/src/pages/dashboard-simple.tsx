@@ -17,6 +17,12 @@ export default function DashboardSimple() {
 
   if (!user) return null;
 
+  // Redirect companies to application status if not approved
+  if (user.role === "company" && !user.isApproved) {
+    setLocation("/company-application-status");
+    return null;
+  }
+
   if (user.role !== "student") {
     return (
       <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100">
