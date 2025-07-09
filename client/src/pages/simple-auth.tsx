@@ -12,12 +12,11 @@ import { z } from "zod";
 import { GraduationCap, Building, Users, TrendingUp, Award, Globe } from "lucide-react";
 
 const loginSchema = z.object({
-  username: z.string().min(1, "Username is required"),
+  email: z.string().email("Valid email is required"),
   password: z.string().min(1, "Password is required"),
 });
 
 const registerSchema = z.object({
-  username: z.string().min(1, "Username is required"),
   email: z.string().email("Valid email is required"),
   password: z.string().min(6, "Password must be at least 6 characters"),
   confirmPassword: z.string(),
@@ -42,7 +41,7 @@ export default function SimpleAuth() {
   const loginForm = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      username: "",
+      email: "",
       password: "",
     },
   });
@@ -50,7 +49,6 @@ export default function SimpleAuth() {
   const registerForm = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      username: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -60,7 +58,8 @@ export default function SimpleAuth() {
   });
 
   const onLogin = (data: LoginForm) => {
-    loginMutation.mutate(data);
+    // Send email as username to backend for compatibility
+    loginMutation.mutate({ username: data.email, password: data.password });
   };
 
   const onRegister = (data: RegisterForm) => {
@@ -68,6 +67,7 @@ export default function SimpleAuth() {
     // Create registration payload compatible with existing backend
     const registrationPayload = {
       ...registerData,
+      username: registerData.email, // Use email as username
       role: "student" as const,
       location: "India",
       bio: "",
@@ -123,15 +123,16 @@ export default function SimpleAuth() {
                 <CardContent>
                   <form onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-4">
                     <div>
-                      <Label htmlFor="username">Username</Label>
+                      <Label htmlFor="email">Email</Label>
                       <Input
-                        id="username"
-                        {...loginForm.register("username")}
-                        placeholder="Enter username"
+                        id="email"
+                        type="email"
+                        {...loginForm.register("email")}
+                        placeholder="Enter email"
                       />
-                      {loginForm.formState.errors.username && (
+                      {loginForm.formState.errors.email && (
                         <p className="text-sm text-red-500 mt-1">
-                          {loginForm.formState.errors.username.message}
+                          {loginForm.formState.errors.email.message}
                         </p>
                       )}
                     </div>
@@ -224,20 +225,6 @@ export default function SimpleAuth() {
                           </p>
                         )}
                       </div>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="username">Username</Label>
-                      <Input
-                        id="username"
-                        {...registerForm.register("username")}
-                        placeholder="Choose username"
-                      />
-                      {registerForm.formState.errors.username && (
-                        <p className="text-sm text-red-500 mt-1">
-                          {registerForm.formState.errors.username.message}
-                        </p>
-                      )}
                     </div>
 
                     <div>
