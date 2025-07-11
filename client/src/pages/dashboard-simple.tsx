@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { Application } from "@shared/schema";
 import { BookOpen, Users, Star, TrendingUp, HelpCircle, Search, FileText, Settings } from "lucide-react";
+import { useEffect } from "react";
 
 export default function DashboardSimple() {
   const { user } = useAuth();
@@ -15,11 +16,17 @@ export default function DashboardSimple() {
     queryKey: ["/api/applications"],
   });
 
+  // Use useEffect to handle redirects to avoid state update during render
+  useEffect(() => {
+    if (user && user.role === "company" && !user.isApproved) {
+      setLocation("/company-application-status");
+    }
+  }, [user, setLocation]);
+
   if (!user) return null;
 
-  // Redirect companies to application status if not approved
+  // Early return for companies that aren't approved
   if (user.role === "company" && !user.isApproved) {
-    setLocation("/company-application-status");
     return null;
   }
 
