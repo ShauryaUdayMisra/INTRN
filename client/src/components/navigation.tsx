@@ -43,10 +43,26 @@ export default function Navigation() {
     { href: "/help", label: "Help", icon: HelpCircle },
   ];
 
-  const userNavItems = user ? [
-    { href: "/dashboard", label: "Dashboard", icon: Home },
-    ...navItems,
-  ] : navItems;
+  // Filter navigation items based on user role
+  const getNavItemsForUser = () => {
+    if (!user) return navItems;
+    
+    const baseItems = [{ href: "/dashboard", label: "Dashboard", icon: Home }];
+    
+    if (user.role === "company") {
+      // Companies only see Blog and Help, no Browse Internships
+      return [
+        ...baseItems,
+        { href: "/blog", label: "Blog", icon: BookOpen },
+        { href: "/help", label: "Help", icon: HelpCircle },
+      ];
+    }
+    
+    // Students and other users see all items
+    return [...baseItems, ...navItems];
+  };
+
+  const userNavItems = getNavItemsForUser();
 
   if (user?.role === "admin") {
     userNavItems.push({ href: "/admin", label: "Admin", icon: Settings });

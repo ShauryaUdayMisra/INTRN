@@ -131,7 +131,7 @@ export default function CompanyApplication() {
                     <FormItem>
                       <FormLabel>Company Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter your company name" {...field} />
+                        <Input placeholder="Your company name" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -192,7 +192,7 @@ export default function CompanyApplication() {
                           Website (Required)
                         </FormLabel>
                         <FormControl>
-                          <Input placeholder="https://yourcompany.com" {...field} />
+                          <Input placeholder="Your website URL" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -209,7 +209,7 @@ export default function CompanyApplication() {
                           Location
                         </FormLabel>
                         <FormControl>
-                          <Input placeholder="Enter your company location (e.g., Mumbai, Maharashtra)" {...field} />
+                          <Input placeholder="Your company location" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

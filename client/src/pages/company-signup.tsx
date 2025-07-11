@@ -12,7 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { Building2, Users, CheckCircle, ArrowLeft, ArrowRight } from "lucide-react";
-import { apiRequest } from "@/lib/queryClient";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
 
@@ -90,7 +90,10 @@ export default function CompanySignup() {
       const response = await apiRequest("POST", "/api/register", registrationData);
       return response.json();
     },
-    onSuccess: () => {
+    onSuccess: (user) => {
+      // Update the auth context with the newly created user
+      queryClient.setQueryData(["/api/user"], user);
+      queryClient.invalidateQueries({ queryKey: ["/api/user"] });
       setLocation("/company-thank-you");
     },
     onError: (error: Error) => {
@@ -145,7 +148,7 @@ export default function CompanySignup() {
               <Input
                 {...form.register("email")}
                 type="email"
-                placeholder="company@example.com"
+                placeholder="Your email address"
               />
               {form.formState.errors.email && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.email.message}</p>
@@ -180,7 +183,7 @@ export default function CompanySignup() {
               <Label htmlFor="website">Website (Required)</Label>
               <Input
                 {...form.register("website")}
-                placeholder="https://yourcompany.com"
+                placeholder="Your company website"
               />
               {form.formState.errors.website && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.website.message}</p>
@@ -218,7 +221,7 @@ export default function CompanySignup() {
               <Label htmlFor="phoneNumber">Phone Number *</Label>
               <Input
                 {...form.register("phoneNumber")}
-                placeholder="+91 9876543210"
+                placeholder="Your phone number"
               />
               {form.formState.errors.phoneNumber && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.phoneNumber.message}</p>
@@ -229,7 +232,7 @@ export default function CompanySignup() {
               <Label htmlFor="location">Company Location *</Label>
               <Input
                 {...form.register("location")}
-                placeholder="Enter your company location (e.g., Mumbai, Maharashtra)"
+                placeholder="Your company location"
               />
               {form.formState.errors.location && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.location.message}</p>
