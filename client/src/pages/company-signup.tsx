@@ -138,6 +138,7 @@ export default function CompanySignup() {
                 {...form.register("companyName")}
                 placeholder="Your company name"
                 autoComplete="off"
+                name="company_name_no_autofill"
               />
               {form.formState.errors.companyName && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.companyName.message}</p>
@@ -151,6 +152,7 @@ export default function CompanySignup() {
                 type="email"
                 placeholder="Your email address"
                 autoComplete="off"
+                name="email_no_autofill"
               />
               {form.formState.errors.email && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.email.message}</p>
@@ -163,6 +165,7 @@ export default function CompanySignup() {
                 {...form.register("password")}
                 type="password"
                 placeholder="Choose a secure password"
+                autoComplete="new-password"
               />
               {form.formState.errors.password && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.password.message}</p>
@@ -175,6 +178,7 @@ export default function CompanySignup() {
                 {...form.register("confirmPassword")}
                 type="password"
                 placeholder="Confirm your password"
+                autoComplete="new-password"
               />
               {form.formState.errors.confirmPassword && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.confirmPassword.message}</p>
@@ -204,6 +208,7 @@ export default function CompanySignup() {
                 {...form.register("contactName")}
                 placeholder="Full name of contact person"
                 autoComplete="off"
+                name="contact_name_no_autofill"
               />
               {form.formState.errors.contactName && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.contactName.message}</p>
@@ -216,6 +221,7 @@ export default function CompanySignup() {
                 {...form.register("contactTitle")}
                 placeholder="e.g. HR Manager, Founder, etc."
                 autoComplete="off"
+                name="contact_title_no_autofill"
               />
               {form.formState.errors.contactTitle && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.contactTitle.message}</p>
@@ -228,6 +234,7 @@ export default function CompanySignup() {
                 {...form.register("phoneNumber")}
                 placeholder="Your phone number"
                 autoComplete="off"
+                name="phone_no_autofill"
               />
               {form.formState.errors.phoneNumber && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.phoneNumber.message}</p>
@@ -240,6 +247,7 @@ export default function CompanySignup() {
                 {...form.register("location")}
                 placeholder="Your company location"
                 autoComplete="off"
+                name="location_no_autofill"
               />
               {form.formState.errors.location && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.location.message}</p>
@@ -366,7 +374,11 @@ export default function CompanySignup() {
           </CardHeader>
 
           <CardContent>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" autoComplete="off">
+              {/* Hidden dummy fields to confuse autofill */}
+              <input type="text" name="fake_email" autoComplete="off" style={{display: 'none'}} tabIndex={-1} />
+              <input type="password" name="fake_password" autoComplete="off" style={{display: 'none'}} tabIndex={-1} />
+              
               {renderStepContent()}
 
               <div className="flex justify-between pt-6">

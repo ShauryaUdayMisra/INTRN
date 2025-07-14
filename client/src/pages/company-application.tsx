@@ -114,7 +114,10 @@ export default function CompanyApplication() {
         </div>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8" autoComplete="off">
+            {/* Hidden dummy fields to confuse autofill */}
+            <input type="text" name="fake_email_comp_app" autoComplete="off" style={{display: 'none'}} tabIndex={-1} />
+            <input type="password" name="fake_password_comp_app" autoComplete="off" style={{display: 'none'}} tabIndex={-1} />
             {/* Company Details */}
             <Card>
               <CardHeader>
