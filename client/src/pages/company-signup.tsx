@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -14,9 +14,9 @@ import { useLocation } from "wouter";
 
 // Simple email/password signup schema
 const companySignupSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
+  email: z.string().min(1, "Email is required").email("Please enter a valid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
-  confirmPassword: z.string(),
+  confirmPassword: z.string().min(1, "Please confirm your password"),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
   path: ["confirmPassword"],
@@ -26,11 +26,12 @@ type CompanySignupForm = z.infer<typeof companySignupSchema>;
 
 export default function CompanySignup() {
   const [, setLocation] = useLocation();
+  const [showFormLink, setShowFormLink] = useState(false);
   const { toast } = useToast();
 
   const form = useForm<CompanySignupForm>({
     resolver: zodResolver(companySignupSchema),
-    mode: "onChange",
+    mode: "onBlur",
     defaultValues: {
       email: "",
       password: "",
@@ -87,11 +88,12 @@ export default function CompanySignup() {
       queryClient.setQueryData(["/api/user"], user);
       queryClient.invalidateQueries({ queryKey: ["/api/user"] });
       
-      // Open Google Form in new tab
-      window.open("https://forms.gle/2JHE82ZwarXYMGdE7", "_blank");
-      
-      // Redirect to thank you page
-      setLocation("/company-thank-you");
+      // Show the form link and success message
+      setShowFormLink(true);
+      toast({
+        title: "Account Created Successfully!",
+        description: "Please click the link below to complete your company details.",
+      });
     },
     onError: (error: Error) => {
       toast({
@@ -198,26 +200,37 @@ export default function CompanySignup() {
               </Button>
             </form>
 
-            {/* Google Form Information */}
-            <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-              <div className="flex items-start gap-3">
-                <ExternalLink className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                <div>
-                  <h3 className="font-medium text-blue-900 mb-1">Next Step: Company Details</h3>
-                  <p className="text-sm text-blue-700 mb-3">
-                    After creating your account, you'll be redirected to fill out your company description and internship details.
-                  </p>
-                  <a 
-                    href="https://forms.gle/2JHE82ZwarXYMGdE7" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800 underline"
-                  >
-                    Preview the form <ExternalLink className="h-3 w-3" />
-                  </a>
+            {/* Google Form Information - Only show after successful signup */}
+            {showFormLink && (
+              <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                <div className="flex items-start gap-3">
+                  <ExternalLink className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <h3 className="font-medium text-green-900 mb-1">✅ Account Created Successfully!</h3>
+                    <p className="text-sm text-green-700 mb-3">
+                      Please click the link below to fill out your company description and internship details.
+                    </p>
+                    <div className="space-y-2">
+                      <a 
+                        href="https://forms.gle/2JHE82ZwarXYMGdE7" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        onClick={() => {
+                          // Redirect to thank you page after opening form
+                          setTimeout(() => setLocation("/company-thank-you"), 1000);
+                        }}
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
+                      >
+                        Complete Company Details <ExternalLink className="h-4 w-4" />
+                      </a>
+                      <p className="text-xs text-green-600">
+                        This is a link to fill in company description.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </CardContent>
         </Card>
 
