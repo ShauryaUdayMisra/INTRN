@@ -138,7 +138,10 @@ export default function CompanySignup() {
                 {...form.register("companyName")}
                 placeholder="Your company name"
                 autoComplete="off"
-                name="company_name_no_autofill"
+                name="company_name_unique_field"
+                data-form-type="other"
+                readOnly
+                onFocus={(e) => e.target.removeAttribute('readonly')}
               />
               {form.formState.errors.companyName && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.companyName.message}</p>
@@ -152,7 +155,10 @@ export default function CompanySignup() {
                 type="email"
                 placeholder="Your email address"
                 autoComplete="off"
-                name="email_no_autofill"
+                name="email_unique_field"
+                data-form-type="other"
+                readOnly
+                onFocus={(e) => e.target.removeAttribute('readonly')}
               />
               {form.formState.errors.email && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.email.message}</p>
@@ -166,6 +172,10 @@ export default function CompanySignup() {
                 type="password"
                 placeholder="Choose a secure password"
                 autoComplete="new-password"
+                name="password_unique_field"
+                data-form-type="other"
+                readOnly
+                onFocus={(e) => e.target.removeAttribute('readonly')}
               />
               {form.formState.errors.password && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.password.message}</p>
@@ -179,6 +189,10 @@ export default function CompanySignup() {
                 type="password"
                 placeholder="Confirm your password"
                 autoComplete="new-password"
+                name="confirm_password_unique_field"
+                data-form-type="other"
+                readOnly
+                onFocus={(e) => e.target.removeAttribute('readonly')}
               />
               {form.formState.errors.confirmPassword && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.confirmPassword.message}</p>
@@ -191,6 +205,10 @@ export default function CompanySignup() {
                 {...form.register("website")}
                 placeholder="Your company website"
                 autoComplete="off"
+                name="website_unique_field"
+                data-form-type="other"
+                readOnly
+                onFocus={(e) => e.target.removeAttribute('readonly')}
               />
               {form.formState.errors.website && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.website.message}</p>
@@ -208,7 +226,10 @@ export default function CompanySignup() {
                 {...form.register("contactName")}
                 placeholder="Full name of contact person"
                 autoComplete="off"
-                name="contact_name_no_autofill"
+                name="contact_name_unique_field"
+                data-form-type="other"
+                readOnly
+                onFocus={(e) => e.target.removeAttribute('readonly')}
               />
               {form.formState.errors.contactName && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.contactName.message}</p>
@@ -221,7 +242,10 @@ export default function CompanySignup() {
                 {...form.register("contactTitle")}
                 placeholder="e.g. HR Manager, Founder, etc."
                 autoComplete="off"
-                name="contact_title_no_autofill"
+                name="contact_title_unique_field"
+                data-form-type="other"
+                readOnly
+                onFocus={(e) => e.target.removeAttribute('readonly')}
               />
               {form.formState.errors.contactTitle && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.contactTitle.message}</p>
@@ -234,7 +258,10 @@ export default function CompanySignup() {
                 {...form.register("phoneNumber")}
                 placeholder="Your phone number"
                 autoComplete="off"
-                name="phone_no_autofill"
+                name="phone_unique_field"
+                data-form-type="other"
+                readOnly
+                onFocus={(e) => e.target.removeAttribute('readonly')}
               />
               {form.formState.errors.phoneNumber && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.phoneNumber.message}</p>
@@ -247,7 +274,10 @@ export default function CompanySignup() {
                 {...form.register("location")}
                 placeholder="Your company location"
                 autoComplete="off"
-                name="location_no_autofill"
+                name="location_unique_field"
+                data-form-type="other"
+                readOnly
+                onFocus={(e) => e.target.removeAttribute('readonly')}
               />
               {form.formState.errors.location && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.location.message}</p>
@@ -255,12 +285,16 @@ export default function CompanySignup() {
             </div>
 
             <div>
-              <Label htmlFor="description">Company Description *</Label>
+              <Label htmlFor="description">Internship Description *</Label>
               <Textarea
                 {...form.register("description")}
-                placeholder="Brief description of your company and what you do"
+                placeholder="Brief description of the internship opportunities you offer"
                 rows={4}
                 autoComplete="off"
+                name="description_unique_field"
+                data-form-type="other"
+                readOnly
+                onFocus={(e) => e.target.removeAttribute('readonly')}
               />
               {form.formState.errors.description && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.description.message}</p>
@@ -374,10 +408,17 @@ export default function CompanySignup() {
           </CardHeader>
 
           <CardContent>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" autoComplete="off">
-              {/* Hidden dummy fields to confuse autofill */}
-              <input type="text" name="fake_email" autoComplete="off" style={{display: 'none'}} tabIndex={-1} />
-              <input type="password" name="fake_password" autoComplete="off" style={{display: 'none'}} tabIndex={-1} />
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" autoComplete="off" data-form-type="other">
+              {/* Comprehensive anti-autofill decoy fields */}
+              <div style={{position: 'absolute', left: '-9999px', opacity: 0, pointerEvents: 'none'}}>
+                <input type="text" name="username" autoComplete="off" tabIndex={-1} />
+                <input type="email" name="email" autoComplete="off" tabIndex={-1} />
+                <input type="password" name="password" autoComplete="new-password" tabIndex={-1} />
+                <input type="text" name="name" autoComplete="off" tabIndex={-1} />
+                <input type="text" name="company" autoComplete="off" tabIndex={-1} />
+                <input type="tel" name="phone" autoComplete="off" tabIndex={-1} />
+                <input type="text" name="address" autoComplete="off" tabIndex={-1} />
+              </div>
               
               {renderStepContent()}
 
