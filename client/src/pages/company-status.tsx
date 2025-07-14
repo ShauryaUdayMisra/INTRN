@@ -52,11 +52,35 @@ export default function CompanyStatus() {
               <div className="text-black">Loading your applications...</div>
             </div>
           ) : companyRequests.length === 0 ? (
-            <Card>
-              <CardContent className="text-center py-8">
-                <p className="text-black">No company applications found.</p>
-              </CardContent>
-            </Card>
+            <div className="space-y-6">
+              <Card className="border-yellow-200 bg-yellow-50">
+                <CardHeader>
+                  <div className="flex items-center gap-3">
+                    <Clock className="w-6 h-6 text-yellow-600" />
+                    <CardTitle className="text-xl text-yellow-800">Application Under Review</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <p className="text-yellow-700">
+                      Thank you for signing up! Your company application is currently being reviewed by our team.
+                    </p>
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                      <h4 className="font-semibold text-blue-800 mb-2">Next Steps:</h4>
+                      <ul className="text-blue-700 text-sm space-y-1">
+                        <li>• Complete your company details in the external form (if you haven't already)</li>
+                        <li>• Our team will review your submission within 48 hours</li>
+                        <li>• You'll receive an email notification once approved</li>
+                        <li>• After approval, you can start posting internship opportunities</li>
+                      </ul>
+                    </div>
+                    <p className="text-yellow-600 text-sm">
+                      Expected review time: 24-48 hours
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           ) : (
             <div className="space-y-6">
               {companyRequests.map((request) => (
