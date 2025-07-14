@@ -99,20 +99,32 @@ export default function CompanyApplication() {
 
   // Clear all form fields on component mount to prevent autofill
   useEffect(() => {
-    // Clear all input fields
-    const inputs = document.querySelectorAll('input, textarea, select');
-    inputs.forEach((input: any) => {
-      if (input.type !== 'submit' && input.type !== 'button') {
-        input.value = '';
-        input.defaultValue = '';
-        if (input.tagName === 'SELECT') {
-          input.selectedIndex = 0;
+    // Aggressive field clearing
+    const clearFields = () => {
+      document.querySelectorAll("input").forEach(input => {
+        if (input.type !== 'submit' && input.type !== 'button' && input.type !== 'hidden') {
+          input.value = "";
+          input.removeAttribute('value');
         }
-      }
-    });
+      });
+      document.querySelectorAll("textarea").forEach(textarea => {
+        textarea.value = "";
+        textarea.removeAttribute('value');
+      });
+      document.querySelectorAll("select").forEach(select => {
+        select.selectedIndex = 0;
+      });
+    };
     
-    // Reset form to ensure controlled components are cleared
+    clearFields();
     form.reset();
+    
+    // Set window.onload for additional clearing
+    if (typeof window !== 'undefined') {
+      window.onload = () => {
+        document.querySelectorAll("input").forEach(input => input.value = "");
+      };
+    }
   }, [form]);
 
   if (!user || user.role !== "company") {
@@ -135,9 +147,8 @@ export default function CompanyApplication() {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8" autoComplete="off">
             {/* Hidden dummy fields to confuse autofill */}
-            <input type="text" name="fake-user-application" autoComplete="username" style={{display: 'none'}} tabIndex={-1} />
-            <input type="password" name="fake-pass-application" autoComplete="current-password" style={{display: 'none'}} tabIndex={-1} />
-            <input type="email" name="fake-email-application" autoComplete="email" style={{display: 'none'}} tabIndex={-1} />
+            <input type="text" name="dummy1" autoComplete="username" style={{position: 'absolute', top: '-1000px', left: '-1000px'}} />
+            <input type="password" name="dummy2" autoComplete="new-password" style={{position: 'absolute', top: '-1000px', left: '-1000px'}} />
             {/* Company Details */}
             <Card>
               <CardHeader>
@@ -154,7 +165,7 @@ export default function CompanyApplication() {
                     <FormItem>
                       <FormLabel>Company Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Your company name" autoComplete="new-company-entity" name="application_company_name_field_z1" {...field} />
+                        <Input placeholder="Your company name" autoComplete="off" name="g4t8r2z9" readOnly onFocus={(e) => e.target.removeAttribute('readonly')} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -169,7 +180,7 @@ export default function CompanyApplication() {
                       <FormLabel>Industry/Field</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
-                          <SelectTrigger autoComplete="new-industry-field" name="application_industry_field_y2">
+                          <SelectTrigger autoComplete="off" name="k5y3n7m1">
                             <SelectValue placeholder="Select your industry" />
                           </SelectTrigger>
                         </FormControl>
@@ -196,8 +207,10 @@ export default function CompanyApplication() {
                         <Textarea
                           placeholder="Describe the internship project you are offering to high school students..."
                           className="min-h-[120px]"
-                          autoComplete="new-project-description"
-                          name="application_project_description_field_x3"
+                          autoComplete="off"
+                          name="w8q4x6p2"
+                          readOnly
+                          onFocus={(e) => e.target.removeAttribute('readonly')}
                           {...field}
                         />
                       </FormControl>
@@ -217,7 +230,7 @@ export default function CompanyApplication() {
                           Website (Required)
                         </FormLabel>
                         <FormControl>
-                          <Input placeholder="Your website URL" autoComplete="new-website-url" name="application_website_url_field_w4" {...field} />
+                          <Input placeholder="Your website URL" autoComplete="off" name="e1s7d9f3" readOnly onFocus={(e) => e.target.removeAttribute('readonly')} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -234,7 +247,7 @@ export default function CompanyApplication() {
                           Location
                         </FormLabel>
                         <FormControl>
-                          <Input placeholder="Your company location" autoComplete="new-location-address" name="application_location_field_v5" {...field} />
+                          <Input placeholder="Your company location" autoComplete="off" name="j6h4b8v5" readOnly onFocus={(e) => e.target.removeAttribute('readonly')} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -299,8 +312,10 @@ export default function CompanyApplication() {
                         <Textarea
                           placeholder="Please specify the technical skills required for this internship (e.g., Python, JavaScript, Marketing, Design, Content Writing, etc.)"
                           className="min-h-[100px]"
-                          autoComplete="new-technical-requirements"
-                          name="application_technical_skills_field_u6"
+                          autoComplete="off"
+                          name="c3z2l9r6"
+                          readOnly
+                          onFocus={(e) => e.target.removeAttribute('readonly')}
                           {...field}
                         />
                       </FormControl>
@@ -319,8 +334,10 @@ export default function CompanyApplication() {
                         <Textarea
                           placeholder="Any other skills or requirements not mentioned above..."
                           className="min-h-[80px]"
-                          autoComplete="new-other-requirements"
-                          name="application_other_skills_field_t7"
+                          autoComplete="off"
+                          name="u7i5o1a4"
+                          readOnly
+                          onFocus={(e) => e.target.removeAttribute('readonly')}
                           {...field}
                         />
                       </FormControl>

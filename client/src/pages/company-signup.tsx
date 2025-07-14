@@ -81,20 +81,32 @@ export default function CompanySignup() {
 
   // Clear all form fields on component mount to prevent autofill
   useEffect(() => {
-    // Clear all input fields
-    const inputs = document.querySelectorAll('input, textarea, select');
-    inputs.forEach((input: any) => {
-      if (input.type !== 'submit' && input.type !== 'button') {
-        input.value = '';
-        input.defaultValue = '';
-        if (input.tagName === 'SELECT') {
-          input.selectedIndex = 0;
+    // Aggressive field clearing
+    const clearFields = () => {
+      document.querySelectorAll("input").forEach(input => {
+        if (input.type !== 'submit' && input.type !== 'button' && input.type !== 'hidden') {
+          input.value = "";
+          input.removeAttribute('value');
         }
-      }
-    });
+      });
+      document.querySelectorAll("textarea").forEach(textarea => {
+        textarea.value = "";
+        textarea.removeAttribute('value');
+      });
+      document.querySelectorAll("select").forEach(select => {
+        select.selectedIndex = 0;
+      });
+    };
     
-    // Reset form to ensure controlled components are cleared
+    clearFields();
     form.reset();
+    
+    // Set window.onload for additional clearing
+    if (typeof window !== 'undefined') {
+      window.onload = () => {
+        document.querySelectorAll("input").forEach(input => input.value = "");
+      };
+    }
   }, [form]);
 
   const signupMutation = useMutation({
@@ -155,9 +167,11 @@ export default function CompanySignup() {
               <Input
                 {...form.register("companyName")}
                 placeholder="Your company name"
-                autoComplete="new-organization-entity"
-                name="signup_step1_company_name_field_a1"
-                id="signup-step1-company-name"
+                autoComplete="off"
+                name="x9k4m7q2"
+                id="x9k4m7q2"
+                readOnly
+                onFocus={(e) => e.target.removeAttribute('readonly')}
               />
               {form.formState.errors.companyName && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.companyName.message}</p>
@@ -170,9 +184,11 @@ export default function CompanySignup() {
                 {...form.register("email")}
                 type="email"
                 placeholder="Your email address"
-                autoComplete="new-email-business"
-                name="signup_step1_email_address_field_b2"
-                id="signup-step1-email-address"
+                autoComplete="off"
+                name="p8w3n5t1"
+                id="p8w3n5t1"
+                readOnly
+                onFocus={(e) => e.target.removeAttribute('readonly')}
               />
               {form.formState.errors.email && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.email.message}</p>
@@ -185,9 +201,11 @@ export default function CompanySignup() {
                 {...form.register("password")}
                 type="password"
                 placeholder="Choose a secure password"
-                autoComplete="new-password-signup"
-                name="signup_step1_password_field_c3"
-                id="signup-step1-password"
+                autoComplete="off"
+                name="b2j6f9l3"
+                id="b2j6f9l3"
+                readOnly
+                onFocus={(e) => e.target.removeAttribute('readonly')}
               />
               {form.formState.errors.password && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.password.message}</p>
@@ -200,9 +218,11 @@ export default function CompanySignup() {
                 {...form.register("confirmPassword")}
                 type="password"
                 placeholder="Confirm your password"
-                autoComplete="new-password-verify"
-                name="signup_step1_confirm_password_field_d4"
-                id="signup-step1-confirm-password"
+                autoComplete="off"
+                name="h7v4x8z5"
+                id="h7v4x8z5"
+                readOnly
+                onFocus={(e) => e.target.removeAttribute('readonly')}
               />
               {form.formState.errors.confirmPassword && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.confirmPassword.message}</p>
@@ -214,9 +234,11 @@ export default function CompanySignup() {
               <Input
                 {...form.register("website")}
                 placeholder="Your company website"
-                autoComplete="new-url-website"
-                name="signup_step1_website_field_e5"
-                id="signup-step1-website"
+                autoComplete="off"
+                name="r5g8c2y6"
+                id="r5g8c2y6"
+                readOnly
+                onFocus={(e) => e.target.removeAttribute('readonly')}
               />
               {form.formState.errors.website && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.website.message}</p>
@@ -233,9 +255,11 @@ export default function CompanySignup() {
               <Input
                 {...form.register("contactName")}
                 placeholder="Full name of contact person"
-                autoComplete="new-contact-person"
-                name="signup_step2_contact_name_field_f6"
-                id="signup-step2-contact-name"
+                autoComplete="off"
+                name="d4k9m2x7"
+                id="d4k9m2x7"
+                readOnly
+                onFocus={(e) => e.target.removeAttribute('readonly')}
               />
               {form.formState.errors.contactName && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.contactName.message}</p>
@@ -247,9 +271,11 @@ export default function CompanySignup() {
               <Input
                 {...form.register("contactTitle")}
                 placeholder="e.g. HR Manager, Founder, etc."
-                autoComplete="new-job-title"
-                name="signup_step2_contact_title_field_g7"
-                id="signup-step2-contact-title"
+                autoComplete="off"
+                name="l8q3w6n1"
+                id="l8q3w6n1"
+                readOnly
+                onFocus={(e) => e.target.removeAttribute('readonly')}
               />
               {form.formState.errors.contactTitle && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.contactTitle.message}</p>
@@ -261,9 +287,11 @@ export default function CompanySignup() {
               <Input
                 {...form.register("phoneNumber")}
                 placeholder="Your phone number"
-                autoComplete="new-phone-number"
-                name="signup_step2_phone_number_field_h8"
-                id="signup-step2-phone-number"
+                autoComplete="off"
+                name="s5t9y4r8"
+                id="s5t9y4r8"
+                readOnly
+                onFocus={(e) => e.target.removeAttribute('readonly')}
               />
               {form.formState.errors.phoneNumber && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.phoneNumber.message}</p>
@@ -275,9 +303,11 @@ export default function CompanySignup() {
               <Input
                 {...form.register("location")}
                 placeholder="Your company location"
-                autoComplete="new-company-location"
-                name="signup_step2_location_field_i9"
-                id="signup-step2-location"
+                autoComplete="off"
+                name="v7b2h5g9"
+                id="v7b2h5g9"
+                readOnly
+                onFocus={(e) => e.target.removeAttribute('readonly')}
               />
               {form.formState.errors.location && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.location.message}</p>
@@ -290,9 +320,11 @@ export default function CompanySignup() {
                 {...form.register("description")}
                 placeholder="Describe the internship opportunity and what students will learn"
                 rows={4}
-                autoComplete="new-internship-description"
-                name="signup_step2_description_field_j10"
-                id="signup-step2-description"
+                autoComplete="off"
+                name="n3c8f1k6"
+                id="n3c8f1k6"
+                readOnly
+                onFocus={(e) => e.target.removeAttribute('readonly')}
               />
               {form.formState.errors.description && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.description.message}</p>
@@ -307,7 +339,7 @@ export default function CompanySignup() {
             <div>
               <Label htmlFor="workArrangement">Work Arrangement *</Label>
               <Select onValueChange={(value) => form.setValue("workArrangement", value)}>
-                <SelectTrigger autoComplete="new-work-arrangement" name="signup_step3_work_arrangement_field_k11" id="signup-step3-work-arrangement">
+                <SelectTrigger autoComplete="off" name="z8x4q1w5" id="z8x4q1w5">
                   <SelectValue placeholder="Select work arrangement" />
                 </SelectTrigger>
                 <SelectContent>
@@ -324,7 +356,7 @@ export default function CompanySignup() {
             <div>
               <Label htmlFor="internshipDuration">Internship Duration *</Label>
               <Select onValueChange={(value) => form.setValue("internshipDuration", value)}>
-                <SelectTrigger autoComplete="new-internship-duration" name="signup_step3_duration_field_l12" id="signup-step3-duration">
+                <SelectTrigger autoComplete="off" name="m9p6k3e7" id="m9p6k3e7">
                   <SelectValue placeholder="Select duration" />
                 </SelectTrigger>
                 <SelectContent>
@@ -346,9 +378,11 @@ export default function CompanySignup() {
                 {...form.register("technicalSkills")}
                 placeholder="Please specify the technical skills required for internships (e.g., Social Media, Marketing, Design, Content Writing, etc.)"
                 rows={3}
-                autoComplete="new-technical-skills"
-                name="signup_step3_tech_skills_field_m13"
-                id="signup-step3-tech-skills"
+                autoComplete="off"
+                name="a2c5v8b4"
+                id="a2c5v8b4"
+                readOnly
+                onFocus={(e) => e.target.removeAttribute('readonly')}
               />
               {form.formState.errors.technicalSkills && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.technicalSkills.message}</p>
@@ -361,9 +395,11 @@ export default function CompanySignup() {
                 {...form.register("otherSkills")}
                 placeholder="Any other skills or requirements not mentioned above..."
                 rows={2}
-                autoComplete="new-additional-skills"
-                name="signup_step3_other_skills_field_n14"
-                id="signup-step3-other-skills"
+                autoComplete="off"
+                name="f7h1j9k2"
+                id="f7h1j9k2"
+                readOnly
+                onFocus={(e) => e.target.removeAttribute('readonly')}
               />
             </div>
 
@@ -411,9 +447,8 @@ export default function CompanySignup() {
 
           <CardContent>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" autoComplete="off">
-              <input type="text" name={`fake-user-step${currentStep}`} autoComplete="username" style={{display: 'none'}} tabIndex={-1} />
-              <input type="password" name={`fake-pass-step${currentStep}`} autoComplete="current-password" style={{display: 'none'}} tabIndex={-1} />
-              <input type="email" name={`fake-email-step${currentStep}`} autoComplete="email" style={{display: 'none'}} tabIndex={-1} />
+              <input type="text" name="dummy1" autoComplete="username" style={{position: 'absolute', top: '-1000px', left: '-1000px'}} />
+              <input type="password" name="dummy2" autoComplete="new-password" style={{position: 'absolute', top: '-1000px', left: '-1000px'}} />
               
               {renderStepContent()}
 

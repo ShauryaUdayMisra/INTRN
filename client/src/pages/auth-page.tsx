@@ -84,21 +84,33 @@ export default function AuthPage() {
 
   // Clear all form fields on component mount to prevent autofill
   useEffect(() => {
-    // Clear all input fields
-    const inputs = document.querySelectorAll('input, textarea, select');
-    inputs.forEach((input: any) => {
-      if (input.type !== 'submit' && input.type !== 'button') {
-        input.value = '';
-        input.defaultValue = '';
-        if (input.tagName === 'SELECT') {
-          input.selectedIndex = 0;
+    // Aggressive field clearing
+    const clearFields = () => {
+      document.querySelectorAll("input").forEach(input => {
+        if (input.type !== 'submit' && input.type !== 'button' && input.type !== 'hidden') {
+          input.value = "";
+          input.removeAttribute('value');
         }
-      }
-    });
+      });
+      document.querySelectorAll("textarea").forEach(textarea => {
+        textarea.value = "";
+        textarea.removeAttribute('value');
+      });
+      document.querySelectorAll("select").forEach(select => {
+        select.selectedIndex = 0;
+      });
+    };
     
-    // Reset forms to ensure controlled components are cleared
+    clearFields();
     loginForm.reset();
     registerForm.reset();
+    
+    // Set window.onload for additional clearing
+    if (typeof window !== 'undefined') {
+      window.onload = () => {
+        document.querySelectorAll("input").forEach(input => input.value = "");
+      };
+    }
   }, [loginForm, registerForm]);
 
   if (user) return null;
@@ -141,18 +153,19 @@ export default function AuthPage() {
                 <CardContent>
                   <form onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-4" autoComplete="off">
                     {/* Hidden dummy fields to confuse autofill */}
-                    <input type="text" name="fake-user-login" autoComplete="username" style={{display: 'none'}} tabIndex={-1} />
-                    <input type="password" name="fake-pass-login" autoComplete="current-password" style={{display: 'none'}} tabIndex={-1} />
-                    <input type="email" name="fake-email-login" autoComplete="email" style={{display: 'none'}} tabIndex={-1} />
+                    <input type="text" name="dummy1" autoComplete="username" style={{position: 'absolute', top: '-1000px', left: '-1000px'}} />
+                    <input type="password" name="dummy2" autoComplete="new-password" style={{position: 'absolute', top: '-1000px', left: '-1000px'}} />
                     <div>
                       <Label htmlFor="login-email">Email</Label>
                       <Input
-                        id="login-email"
+                        id="t4k8m3z7"
                         type="email"
                         {...loginForm.register("email")}
                         placeholder="Enter email"
-                        autoComplete="new-email-signin"
-                        name="auth_login_email_field_p1"
+                        autoComplete="off"
+                        name="t4k8m3z7"
+                        readOnly
+                        onFocus={(e) => e.target.removeAttribute('readonly')}
                       />
                       {loginForm.formState.errors.email && (
                         <p className="text-sm text-red-500 mt-1">
@@ -163,12 +176,14 @@ export default function AuthPage() {
                     <div>
                       <Label htmlFor="login-password">Password</Label>
                       <Input
-                        id="login-password"
+                        id="p9w2x5q1"
                         type="password"
                         {...loginForm.register("password")}
                         placeholder="Enter password"
-                        autoComplete="new-password-signin"
-                        name="auth_login_password_field_q2"
+                        autoComplete="off"
+                        name="p9w2x5q1"
+                        readOnly
+                        onFocus={(e) => e.target.removeAttribute('readonly')}
                       />
                       {loginForm.formState.errors.password && (
                         <p className="text-sm text-red-500 mt-1">
@@ -211,18 +226,19 @@ export default function AuthPage() {
                 <CardContent>
                   <form onSubmit={registerForm.handleSubmit(onRegister)} className="space-y-4" autoComplete="off">
                     {/* Hidden dummy fields to confuse autofill */}
-                    <input type="text" name="fake-user-register" autoComplete="username" style={{display: 'none'}} tabIndex={-1} />
-                    <input type="password" name="fake-pass-register" autoComplete="current-password" style={{display: 'none'}} tabIndex={-1} />
-                    <input type="email" name="fake-email-register" autoComplete="email" style={{display: 'none'}} tabIndex={-1} />
+                    <input type="text" name="dummy1" autoComplete="username" style={{position: 'absolute', top: '-1000px', left: '-1000px'}} />
+                    <input type="password" name="dummy2" autoComplete="new-password" style={{position: 'absolute', top: '-1000px', left: '-1000px'}} />
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <Label htmlFor="firstName">First Name</Label>
                         <Input
-                          id="firstName"
+                          id="y5n9h2k8"
                           {...registerForm.register("firstName")}
                           placeholder="First name"
-                          autoComplete="new-first-name"
-                          name="auth_register_first_name_field_r3"
+                          autoComplete="off"
+                          name="y5n9h2k8"
+                          readOnly
+                          onFocus={(e) => e.target.removeAttribute('readonly')}
                         />
                         {registerForm.formState.errors.firstName && (
                           <p className="text-sm text-red-500 mt-1">
@@ -233,11 +249,13 @@ export default function AuthPage() {
                       <div>
                         <Label htmlFor="lastName">Last Name</Label>
                         <Input
-                          id="lastName"
+                          id="q8r3l6s1"
                           {...registerForm.register("lastName")}
                           placeholder="Last name"
-                          autoComplete="new-last-name"
-                          name="auth_register_last_name_field_s4"
+                          autoComplete="off"
+                          name="q8r3l6s1"
+                          readOnly
+                          onFocus={(e) => e.target.removeAttribute('readonly')}
                         />
                         {registerForm.formState.errors.lastName && (
                           <p className="text-sm text-red-500 mt-1">
@@ -250,12 +268,14 @@ export default function AuthPage() {
                     <div>
                       <Label htmlFor="email">Email</Label>
                       <Input
-                        id="email"
+                        id="j4x7v9m2"
                         type="email"
                         {...registerForm.register("email")}
                         placeholder="Enter email"
-                        autoComplete="new-email-signup"
-                        name="auth_register_email_field_t5"
+                        autoComplete="off"
+                        name="j4x7v9m2"
+                        readOnly
+                        onFocus={(e) => e.target.removeAttribute('readonly')}
                       />
                       {registerForm.formState.errors.email && (
                         <p className="text-sm text-red-500 mt-1">
@@ -268,12 +288,14 @@ export default function AuthPage() {
                       <div>
                         <Label htmlFor="password">Password</Label>
                         <Input
-                          id="password"
+                          id="w1z5c8f3"
                           type="password"
                           {...registerForm.register("password")}
                           placeholder="Create password"
-                          autoComplete="new-password-creation"
-                          name="auth_register_password_field_u6"
+                          autoComplete="off"
+                          name="w1z5c8f3"
+                          readOnly
+                          onFocus={(e) => e.target.removeAttribute('readonly')}
                         />
                         {registerForm.formState.errors.password && (
                           <p className="text-sm text-red-500 mt-1">
@@ -284,12 +306,14 @@ export default function AuthPage() {
                       <div>
                         <Label htmlFor="confirmPassword">Confirm Password</Label>
                         <Input
-                          id="confirmPassword"
+                          id="b6g4t2a9"
                           type="password"
                           {...registerForm.register("confirmPassword")}
                           placeholder="Confirm password"
-                          autoComplete="new-password-confirmation"
-                          name="auth_register_confirm_password_field_v7"
+                          autoComplete="off"
+                          name="b6g4t2a9"
+                          readOnly
+                          onFocus={(e) => e.target.removeAttribute('readonly')}
                         />
                         {registerForm.formState.errors.confirmPassword && (
                           <p className="text-sm text-red-500 mt-1">
