@@ -141,8 +141,9 @@ export default function AuthPage() {
                 <CardContent>
                   <form onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-4" autoComplete="off">
                     {/* Hidden dummy fields to confuse autofill */}
-                    <input type="text" style={{display: 'none'}} autoComplete="username" tabIndex={-1} />
-                    <input type="password" style={{display: 'none'}} autoComplete="current-password" tabIndex={-1} />
+                    <input type="text" name="fake-user-login" autoComplete="username" style={{display: 'none'}} tabIndex={-1} />
+                    <input type="password" name="fake-pass-login" autoComplete="current-password" style={{display: 'none'}} tabIndex={-1} />
+                    <input type="email" name="fake-email-login" autoComplete="email" style={{display: 'none'}} tabIndex={-1} />
                     <div>
                       <Label htmlFor="login-email">Email</Label>
                       <Input
@@ -150,8 +151,8 @@ export default function AuthPage() {
                         type="email"
                         {...loginForm.register("email")}
                         placeholder="Enter email"
-                        autoComplete="new-email-auth"
-                        name="auth_user_email_xyz789"
+                        autoComplete="new-email-signin"
+                        name="auth_login_email_field_p1"
                       />
                       {loginForm.formState.errors.email && (
                         <p className="text-sm text-red-500 mt-1">
@@ -166,8 +167,8 @@ export default function AuthPage() {
                         type="password"
                         {...loginForm.register("password")}
                         placeholder="Enter password"
-                        autoComplete="new-password-login"
-                        name="auth_user_secret_abc123"
+                        autoComplete="new-password-signin"
+                        name="auth_login_password_field_q2"
                       />
                       {loginForm.formState.errors.password && (
                         <p className="text-sm text-red-500 mt-1">
@@ -210,8 +211,9 @@ export default function AuthPage() {
                 <CardContent>
                   <form onSubmit={registerForm.handleSubmit(onRegister)} className="space-y-4" autoComplete="off">
                     {/* Hidden dummy fields to confuse autofill */}
-                    <input type="text" style={{display: 'none'}} autoComplete="username" tabIndex={-1} />
-                    <input type="password" style={{display: 'none'}} autoComplete="current-password" tabIndex={-1} />
+                    <input type="text" name="fake-user-register" autoComplete="username" style={{display: 'none'}} tabIndex={-1} />
+                    <input type="password" name="fake-pass-register" autoComplete="current-password" style={{display: 'none'}} tabIndex={-1} />
+                    <input type="email" name="fake-email-register" autoComplete="email" style={{display: 'none'}} tabIndex={-1} />
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <Label htmlFor="firstName">First Name</Label>
@@ -219,8 +221,8 @@ export default function AuthPage() {
                           id="firstName"
                           {...registerForm.register("firstName")}
                           placeholder="First name"
-                          autoComplete="new-given-name"
-                          name="reg_first_name_def456"
+                          autoComplete="new-first-name"
+                          name="auth_register_first_name_field_r3"
                         />
                         {registerForm.formState.errors.firstName && (
                           <p className="text-sm text-red-500 mt-1">
@@ -234,8 +236,8 @@ export default function AuthPage() {
                           id="lastName"
                           {...registerForm.register("lastName")}
                           placeholder="Last name"
-                          autoComplete="new-family-name"
-                          name="reg_last_name_ghi789"
+                          autoComplete="new-last-name"
+                          name="auth_register_last_name_field_s4"
                         />
                         {registerForm.formState.errors.lastName && (
                           <p className="text-sm text-red-500 mt-1">
@@ -252,8 +254,8 @@ export default function AuthPage() {
                         type="email"
                         {...registerForm.register("email")}
                         placeholder="Enter email"
-                        autoComplete="new-email-register"
-                        name="reg_email_addr_jkl012"
+                        autoComplete="new-email-signup"
+                        name="auth_register_email_field_t5"
                       />
                       {registerForm.formState.errors.email && (
                         <p className="text-sm text-red-500 mt-1">
@@ -270,8 +272,8 @@ export default function AuthPage() {
                           type="password"
                           {...registerForm.register("password")}
                           placeholder="Create password"
-                          autoComplete="new-password-register"
-                          name="reg_password_mno345"
+                          autoComplete="new-password-creation"
+                          name="auth_register_password_field_u6"
                         />
                         {registerForm.formState.errors.password && (
                           <p className="text-sm text-red-500 mt-1">
@@ -286,8 +288,8 @@ export default function AuthPage() {
                           type="password"
                           {...registerForm.register("confirmPassword")}
                           placeholder="Confirm password"
-                          autoComplete="new-password-confirm"
-                          name="reg_confirm_pwd_pqr678"
+                          autoComplete="new-password-confirmation"
+                          name="auth_register_confirm_password_field_v7"
                         />
                         {registerForm.formState.errors.confirmPassword && (
                           <p className="text-sm text-red-500 mt-1">

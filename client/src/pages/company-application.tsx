@@ -135,9 +135,9 @@ export default function CompanyApplication() {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8" autoComplete="off">
             {/* Hidden dummy fields to confuse autofill */}
-            <input type="text" style={{display: 'none'}} autoComplete="username" tabIndex={-1} />
-            <input type="password" style={{display: 'none'}} autoComplete="current-password" tabIndex={-1} />
-            <input type="email" style={{display: 'none'}} autoComplete="email" tabIndex={-1} />
+            <input type="text" name="fake-user-application" autoComplete="username" style={{display: 'none'}} tabIndex={-1} />
+            <input type="password" name="fake-pass-application" autoComplete="current-password" style={{display: 'none'}} tabIndex={-1} />
+            <input type="email" name="fake-email-application" autoComplete="email" style={{display: 'none'}} tabIndex={-1} />
             {/* Company Details */}
             <Card>
               <CardHeader>
@@ -154,7 +154,7 @@ export default function CompanyApplication() {
                     <FormItem>
                       <FormLabel>Company Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Your company name" autoComplete="new-company-name" name="app_org_entity_nop345" {...field} />
+                        <Input placeholder="Your company name" autoComplete="new-company-entity" name="application_company_name_field_z1" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -169,7 +169,7 @@ export default function CompanyApplication() {
                       <FormLabel>Industry/Field</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
-                          <SelectTrigger autoComplete="new-organization-type" name="app_industry_cat_qrs678">
+                          <SelectTrigger autoComplete="new-industry-field" name="application_industry_field_y2">
                             <SelectValue placeholder="Select your industry" />
                           </SelectTrigger>
                         </FormControl>
@@ -196,8 +196,8 @@ export default function CompanyApplication() {
                         <Textarea
                           placeholder="Describe the internship project you are offering to high school students..."
                           className="min-h-[120px]"
-                          autoComplete="new-description-text"
-                          name="app_project_summary_tuv901"
+                          autoComplete="new-project-description"
+                          name="application_project_description_field_x3"
                           {...field}
                         />
                       </FormControl>
@@ -217,7 +217,7 @@ export default function CompanyApplication() {
                           Website (Required)
                         </FormLabel>
                         <FormControl>
-                          <Input placeholder="Your website URL" autoComplete="new-url-address" name="app_web_portal_wxy234" {...field} />
+                          <Input placeholder="Your website URL" autoComplete="new-website-url" name="application_website_url_field_w4" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -234,7 +234,7 @@ export default function CompanyApplication() {
                           Location
                         </FormLabel>
                         <FormControl>
-                          <Input placeholder="Your company location" autoComplete="new-address-line1" name="app_office_addr_zab567" {...field} />
+                          <Input placeholder="Your company location" autoComplete="new-location-address" name="application_location_field_v5" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -299,8 +299,8 @@ export default function CompanyApplication() {
                         <Textarea
                           placeholder="Please specify the technical skills required for this internship (e.g., Python, JavaScript, Marketing, Design, Content Writing, etc.)"
                           className="min-h-[100px]"
-                          autoComplete="new-skills-required"
-                          name="app_tech_skills_cde890"
+                          autoComplete="new-technical-requirements"
+                          name="application_technical_skills_field_u6"
                           {...field}
                         />
                       </FormControl>
@@ -319,8 +319,8 @@ export default function CompanyApplication() {
                         <Textarea
                           placeholder="Any other skills or requirements not mentioned above..."
                           className="min-h-[80px]"
-                          autoComplete="new-additional-skills"
-                          name="app_extra_skills_fgh123"
+                          autoComplete="new-other-requirements"
+                          name="application_other_skills_field_t7"
                           {...field}
                         />
                       </FormControl>

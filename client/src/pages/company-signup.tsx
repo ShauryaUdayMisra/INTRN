@@ -155,9 +155,9 @@ export default function CompanySignup() {
               <Input
                 {...form.register("companyName")}
                 placeholder="Your company name"
-                autoComplete="new-organization"
-                name="step1_biz_entity_xyz123"
-                id="step1-biz-entity"
+                autoComplete="new-organization-entity"
+                name="signup_step1_company_name_field_a1"
+                id="signup-step1-company-name"
               />
               {form.formState.errors.companyName && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.companyName.message}</p>
@@ -170,9 +170,9 @@ export default function CompanySignup() {
                 {...form.register("email")}
                 type="email"
                 placeholder="Your email address"
-                autoComplete="new-email-address"
-                name="step1_contact_addr_abc789"
-                id="step1-contact-addr"
+                autoComplete="new-email-business"
+                name="signup_step1_email_address_field_b2"
+                id="signup-step1-email-address"
               />
               {form.formState.errors.email && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.email.message}</p>
@@ -185,9 +185,9 @@ export default function CompanySignup() {
                 {...form.register("password")}
                 type="password"
                 placeholder="Choose a secure password"
-                autoComplete="new-password-primary"
-                name="step1_secret_key_def456"
-                id="step1-secret-key"
+                autoComplete="new-password-signup"
+                name="signup_step1_password_field_c3"
+                id="signup-step1-password"
               />
               {form.formState.errors.password && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.password.message}</p>
@@ -200,9 +200,9 @@ export default function CompanySignup() {
                 {...form.register("confirmPassword")}
                 type="password"
                 placeholder="Confirm your password"
-                autoComplete="new-password-confirm"
-                name="step1_verify_key_ghi789"
-                id="step1-verify-key"
+                autoComplete="new-password-verify"
+                name="signup_step1_confirm_password_field_d4"
+                id="signup-step1-confirm-password"
               />
               {form.formState.errors.confirmPassword && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.confirmPassword.message}</p>
@@ -214,9 +214,9 @@ export default function CompanySignup() {
               <Input
                 {...form.register("website")}
                 placeholder="Your company website"
-                autoComplete="new-url"
-                name="step1_web_portal_jkl012"
-                id="step1-web-portal"
+                autoComplete="new-url-website"
+                name="signup_step1_website_field_e5"
+                id="signup-step1-website"
               />
               {form.formState.errors.website && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.website.message}</p>
@@ -233,9 +233,9 @@ export default function CompanySignup() {
               <Input
                 {...form.register("contactName")}
                 placeholder="Full name of contact person"
-                autoComplete="new-name"
-                name="step2_rep_person_mno345"
-                id="step2-rep-person"
+                autoComplete="new-contact-person"
+                name="signup_step2_contact_name_field_f6"
+                id="signup-step2-contact-name"
               />
               {form.formState.errors.contactName && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.contactName.message}</p>
@@ -247,9 +247,9 @@ export default function CompanySignup() {
               <Input
                 {...form.register("contactTitle")}
                 placeholder="e.g. HR Manager, Founder, etc."
-                autoComplete="new-organization-title"
-                name="step2_job_role_pqr678"
-                id="step2-job-role"
+                autoComplete="new-job-title"
+                name="signup_step2_contact_title_field_g7"
+                id="signup-step2-contact-title"
               />
               {form.formState.errors.contactTitle && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.contactTitle.message}</p>
@@ -261,9 +261,9 @@ export default function CompanySignup() {
               <Input
                 {...form.register("phoneNumber")}
                 placeholder="Your phone number"
-                autoComplete="new-tel"
-                name="step2_phone_digits_stu901"
-                id="step2-phone-digits"
+                autoComplete="new-phone-number"
+                name="signup_step2_phone_number_field_h8"
+                id="signup-step2-phone-number"
               />
               {form.formState.errors.phoneNumber && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.phoneNumber.message}</p>
@@ -275,9 +275,9 @@ export default function CompanySignup() {
               <Input
                 {...form.register("location")}
                 placeholder="Your company location"
-                autoComplete="new-address-level2"
-                name="step2_office_addr_vwx234"
-                id="step2-office-addr"
+                autoComplete="new-company-location"
+                name="signup_step2_location_field_i9"
+                id="signup-step2-location"
               />
               {form.formState.errors.location && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.location.message}</p>
@@ -290,9 +290,9 @@ export default function CompanySignup() {
                 {...form.register("description")}
                 placeholder="Describe the internship opportunity and what students will learn"
                 rows={4}
-                autoComplete="new-description"
-                name="step2_program_desc_yza567"
-                id="step2-program-desc"
+                autoComplete="new-internship-description"
+                name="signup_step2_description_field_j10"
+                id="signup-step2-description"
               />
               {form.formState.errors.description && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.description.message}</p>
@@ -307,7 +307,7 @@ export default function CompanySignup() {
             <div>
               <Label htmlFor="workArrangement">Work Arrangement *</Label>
               <Select onValueChange={(value) => form.setValue("workArrangement", value)}>
-                <SelectTrigger autoComplete="new-select-option" name="step3_work_type_bcd890" id="step3-work-type">
+                <SelectTrigger autoComplete="new-work-arrangement" name="signup_step3_work_arrangement_field_k11" id="signup-step3-work-arrangement">
                   <SelectValue placeholder="Select work arrangement" />
                 </SelectTrigger>
                 <SelectContent>
@@ -324,7 +324,7 @@ export default function CompanySignup() {
             <div>
               <Label htmlFor="internshipDuration">Internship Duration *</Label>
               <Select onValueChange={(value) => form.setValue("internshipDuration", value)}>
-                <SelectTrigger autoComplete="new-duration" name="step3_time_span_efg123" id="step3-time-span">
+                <SelectTrigger autoComplete="new-internship-duration" name="signup_step3_duration_field_l12" id="signup-step3-duration">
                   <SelectValue placeholder="Select duration" />
                 </SelectTrigger>
                 <SelectContent>
@@ -346,9 +346,9 @@ export default function CompanySignup() {
                 {...form.register("technicalSkills")}
                 placeholder="Please specify the technical skills required for internships (e.g., Social Media, Marketing, Design, Content Writing, etc.)"
                 rows={3}
-                autoComplete="new-skills"
-                name="step3_tech_abilities_hij456"
-                id="step3-tech-abilities"
+                autoComplete="new-technical-skills"
+                name="signup_step3_tech_skills_field_m13"
+                id="signup-step3-tech-skills"
               />
               {form.formState.errors.technicalSkills && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.technicalSkills.message}</p>
@@ -361,9 +361,9 @@ export default function CompanySignup() {
                 {...form.register("otherSkills")}
                 placeholder="Any other skills or requirements not mentioned above..."
                 rows={2}
-                autoComplete="new-other-skills"
-                name="step3_extra_needs_klm789"
-                id="step3-extra-needs"
+                autoComplete="new-additional-skills"
+                name="signup_step3_other_skills_field_n14"
+                id="signup-step3-other-skills"
               />
             </div>
 
@@ -411,10 +411,9 @@ export default function CompanySignup() {
 
           <CardContent>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" autoComplete="off">
-              {/* Hidden dummy fields to confuse autofill */}
-              <input type="text" style={{display: 'none'}} autoComplete="username" tabIndex={-1} />
-              <input type="password" style={{display: 'none'}} autoComplete="current-password" tabIndex={-1} />
-              <input type="email" style={{display: 'none'}} autoComplete="email" tabIndex={-1} />
+              <input type="text" name={`fake-user-step${currentStep}`} autoComplete="username" style={{display: 'none'}} tabIndex={-1} />
+              <input type="password" name={`fake-pass-step${currentStep}`} autoComplete="current-password" style={{display: 'none'}} tabIndex={-1} />
+              <input type="email" name={`fake-email-step${currentStep}`} autoComplete="email" style={{display: 'none'}} tabIndex={-1} />
               
               {renderStepContent()}
 
