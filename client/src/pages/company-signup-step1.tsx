@@ -14,7 +14,14 @@ const step1Schema = z.object({
   email: z.string().email("Please enter a valid email address"),
   password: z.string().min(8, "Password must be at least 8 characters"),
   confirmPassword: z.string(),
-  website: z.string().url("Please enter a valid website URL").min(1, "Website is required"),
+  website: z.string().min(1, "Website is required").refine((url) => {
+    try {
+      new URL(url.startsWith('http') ? url : `https://${url}`);
+      return true;
+    } catch {
+      return false;
+    }
+  }, "Please enter a valid website URL"),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
   path: ["confirmPassword"],
@@ -31,6 +38,9 @@ export default function CompanySignupStep1() {
   });
 
   const onSubmit = (data: Step1Form) => {
+    console.log('Form submission data:', data);
+    console.log('Form errors:', form.formState.errors);
+    
     // Store data in sessionStorage and move to next step
     sessionStorage.setItem('companySignupStep1', JSON.stringify(data));
     setLocation('/company-signup-step2');
@@ -135,6 +145,15 @@ export default function CompanySignupStep1() {
                 </div>
               </div>
 
+              {/* Debug info - remove in production */}
+              {process.env.NODE_ENV === 'development' && (
+                <div className="mt-4 p-4 bg-gray-100 rounded text-xs">
+                  <div>Form Valid: {form.formState.isValid ? 'Yes' : 'No'}</div>
+                  <div>Errors: {JSON.stringify(form.formState.errors, null, 2)}</div>
+                  <div>Values: {JSON.stringify(form.getValues(), null, 2)}</div>
+                </div>
+              )}
+
               <div className="flex justify-between pt-6">
                 <Button
                   type="button"
@@ -147,7 +166,8 @@ export default function CompanySignupStep1() {
 
                 <Button
                   type="submit"
-                  className="flex items-center space-x-2 bg-primary hover:bg-primary/90"
+                  disabled={!form.formState.isValid}
+                  className="flex items-center space-x-2 bg-primary hover:bg-primary/90 disabled:opacity-50"
                 >
                   <span>Next</span>
                   <ArrowRight className="w-4 h-4" />
