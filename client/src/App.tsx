@@ -18,9 +18,6 @@ import AdminBackend from "@/pages/admin-backend";
 import StudentOnboarding from "@/pages/student-onboarding";
 import CompanyApplication from "@/pages/company-application";
 import CompanySignup from "@/pages/company-signup";
-import CompanySignupStep1 from "@/pages/company-signup-step1";
-import CompanySignupStep2 from "@/pages/company-signup-step2";
-import CompanySignupStep3 from "@/pages/company-signup-step3";
 import CompanyInfo from "@/pages/company-info";
 import CompanyThankYou from "@/pages/company-thank-you";
 import CompanyStatus from "@/pages/company-status";
@@ -41,9 +38,6 @@ function Router() {
         <Route path="/auth" component={() => <PageTransition><SimpleAuth /></PageTransition>} />
         <Route path="/company-info" component={() => <PageTransition><CompanyInfo /></PageTransition>} />
         <Route path="/company-signup" component={() => <PageTransition><CompanySignup /></PageTransition>} />
-        <Route path="/company-signup-step1" component={() => <PageTransition><CompanySignupStep1 /></PageTransition>} />
-        <Route path="/company-signup-step2" component={() => <PageTransition><CompanySignupStep2 /></PageTransition>} />
-        <Route path="/company-signup-step3" component={() => <PageTransition><CompanySignupStep3 /></PageTransition>} />
         <Route path="/company-thank-you" component={() => <PageTransition><CompanyThankYou /></PageTransition>} />
         <ProtectedRoute path="/company-status" component={() => <PageTransition><CompanyStatus /></PageTransition>} />
         <ProtectedRoute path="/company-application-status" component={() => <PageTransition><CompanyApplicationStatus /></PageTransition>} />

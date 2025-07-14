@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -65,17 +65,6 @@ const LOCATIONS = [
 ];
 
 export default function CompanySignup() {
-  const [, setLocation] = useLocation();
-  
-  // Redirect to new multi-page flow
-  React.useEffect(() => {
-    setLocation('/company-signup-step1');
-  }, [setLocation]);
-
-  return null;
-}
-
-function CompanySignupOld() {
   const [currentStep, setCurrentStep] = useState(1);
   const [, setLocation] = useLocation();
   const { toast } = useToast();
@@ -149,10 +138,7 @@ function CompanySignupOld() {
                 {...form.register("companyName")}
                 placeholder="Your company name"
                 autoComplete="off"
-                name="company_name_unique_field"
-                data-form-type="other"
-                readOnly
-                onFocus={(e) => e.target.removeAttribute('readonly')}
+                name="company_name_no_autofill"
               />
               {form.formState.errors.companyName && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.companyName.message}</p>
@@ -166,10 +152,7 @@ function CompanySignupOld() {
                 type="email"
                 placeholder="Your email address"
                 autoComplete="off"
-                name="email_unique_field"
-                data-form-type="other"
-                readOnly
-                onFocus={(e) => e.target.removeAttribute('readonly')}
+                name="email_no_autofill"
               />
               {form.formState.errors.email && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.email.message}</p>
@@ -183,10 +166,6 @@ function CompanySignupOld() {
                 type="password"
                 placeholder="Choose a secure password"
                 autoComplete="new-password"
-                name="password_unique_field"
-                data-form-type="other"
-                readOnly
-                onFocus={(e) => e.target.removeAttribute('readonly')}
               />
               {form.formState.errors.password && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.password.message}</p>
@@ -200,10 +179,6 @@ function CompanySignupOld() {
                 type="password"
                 placeholder="Confirm your password"
                 autoComplete="new-password"
-                name="confirm_password_unique_field"
-                data-form-type="other"
-                readOnly
-                onFocus={(e) => e.target.removeAttribute('readonly')}
               />
               {form.formState.errors.confirmPassword && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.confirmPassword.message}</p>
@@ -216,10 +191,6 @@ function CompanySignupOld() {
                 {...form.register("website")}
                 placeholder="Your company website"
                 autoComplete="off"
-                name="website_unique_field"
-                data-form-type="other"
-                readOnly
-                onFocus={(e) => e.target.removeAttribute('readonly')}
               />
               {form.formState.errors.website && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.website.message}</p>
@@ -237,10 +208,7 @@ function CompanySignupOld() {
                 {...form.register("contactName")}
                 placeholder="Full name of contact person"
                 autoComplete="off"
-                name="contact_name_unique_field"
-                data-form-type="other"
-                readOnly
-                onFocus={(e) => e.target.removeAttribute('readonly')}
+                name="contact_name_no_autofill"
               />
               {form.formState.errors.contactName && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.contactName.message}</p>
@@ -253,10 +221,7 @@ function CompanySignupOld() {
                 {...form.register("contactTitle")}
                 placeholder="e.g. HR Manager, Founder, etc."
                 autoComplete="off"
-                name="contact_title_unique_field"
-                data-form-type="other"
-                readOnly
-                onFocus={(e) => e.target.removeAttribute('readonly')}
+                name="contact_title_no_autofill"
               />
               {form.formState.errors.contactTitle && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.contactTitle.message}</p>
@@ -269,10 +234,7 @@ function CompanySignupOld() {
                 {...form.register("phoneNumber")}
                 placeholder="Your phone number"
                 autoComplete="off"
-                name="phone_unique_field"
-                data-form-type="other"
-                readOnly
-                onFocus={(e) => e.target.removeAttribute('readonly')}
+                name="phone_no_autofill"
               />
               {form.formState.errors.phoneNumber && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.phoneNumber.message}</p>
@@ -285,10 +247,7 @@ function CompanySignupOld() {
                 {...form.register("location")}
                 placeholder="Your company location"
                 autoComplete="off"
-                name="location_unique_field"
-                data-form-type="other"
-                readOnly
-                onFocus={(e) => e.target.removeAttribute('readonly')}
+                name="location_no_autofill"
               />
               {form.formState.errors.location && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.location.message}</p>
@@ -296,16 +255,12 @@ function CompanySignupOld() {
             </div>
 
             <div>
-              <Label htmlFor="description">Internship Description *</Label>
+              <Label htmlFor="description">Company Description *</Label>
               <Textarea
                 {...form.register("description")}
-                placeholder="Brief description of the internship opportunities you offer"
+                placeholder="Brief description of your company and what you do"
                 rows={4}
                 autoComplete="off"
-                name="description_unique_field"
-                data-form-type="other"
-                readOnly
-                onFocus={(e) => e.target.removeAttribute('readonly')}
               />
               {form.formState.errors.description && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.description.message}</p>
@@ -419,17 +374,10 @@ function CompanySignupOld() {
           </CardHeader>
 
           <CardContent>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" autoComplete="off" data-form-type="other">
-              {/* Comprehensive anti-autofill decoy fields */}
-              <div style={{position: 'absolute', left: '-9999px', opacity: 0, pointerEvents: 'none'}}>
-                <input type="text" name="username" autoComplete="off" tabIndex={-1} />
-                <input type="email" name="email" autoComplete="off" tabIndex={-1} />
-                <input type="password" name="password" autoComplete="new-password" tabIndex={-1} />
-                <input type="text" name="name" autoComplete="off" tabIndex={-1} />
-                <input type="text" name="company" autoComplete="off" tabIndex={-1} />
-                <input type="tel" name="phone" autoComplete="off" tabIndex={-1} />
-                <input type="text" name="address" autoComplete="off" tabIndex={-1} />
-              </div>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" autoComplete="off">
+              {/* Hidden dummy fields to confuse autofill */}
+              <input type="text" name="fake_email" autoComplete="off" style={{display: 'none'}} tabIndex={-1} />
+              <input type="password" name="fake_password" autoComplete="off" style={{display: 'none'}} tabIndex={-1} />
               
               {renderStepContent()}
 
