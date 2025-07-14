@@ -99,9 +99,9 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-18">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/" className="flex-shrink-0 flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center">
-                <span className="text-white font-bold text-lg">i</span>
+            <Link href="/" className="flex-shrink-0 flex items-center space-x-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center">
+                <span className="text-white font-bold text-base">i</span>
               </div>
               <span className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">intrn</span>
             </Link>
