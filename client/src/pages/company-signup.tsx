@@ -1,45 +1,22 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Progress } from "@/components/ui/progress";
-import { Building2, Users, CheckCircle, ArrowLeft, ArrowRight } from "lucide-react";
+import { Building2, ExternalLink } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
 
-// Simplified 3-step form schema
+// Simple email/password signup schema
 const companySignupSchema = z.object({
-  // Step 1: Basic Information
-  companyName: z.string().min(2, "Company name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
   confirmPassword: z.string(),
-  website: z.string().url("Please enter a valid website URL").min(1, "Website is required"),
-  
-  // Step 2: Company Details
-  contactName: z.string().min(2, "Contact name is required"),
-  contactTitle: z.string().min(2, "Contact title is required"),
-  phoneNumber: z.string().min(10, "Please enter a valid phone number"),
-  location: z.string().min(2, "Company location is required"),
-  description: z.string().min(1, "Please provide an internship description"),
-  
-  // Step 3: Internship Details
-  workArrangement: z.string().min(1, "Please select work arrangement"),
-  internshipDuration: z.string().min(1, "Please select internship duration"),
-  technicalSkills: z.string().min(1, "Please specify technical skills required"),
-  otherSkills: z.string().optional(),
-  
-  // Agreement
-  termsAccepted: z.boolean().refine(val => val === true, "You must accept the terms and conditions"),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
   path: ["confirmPassword"],
@@ -47,25 +24,7 @@ const companySignupSchema = z.object({
 
 type CompanySignupForm = z.infer<typeof companySignupSchema>;
 
-const STEPS = [
-  { id: 1, title: "Basic Information", icon: Building2 },
-  { id: 2, title: "Company Details", icon: Users },
-  { id: 3, title: "Internship Program", icon: CheckCircle },
-];
-
-const TECHNICAL_SKILLS = [
-  "Social Media", "Marketing", "Design", "Content Writing", "Customer Service", 
-  "Data Entry", "Microsoft Office", "Google Workspace", "Photography", 
-  "Video Editing", "Canva Design", "Basic Programming", "Web Development"
-];
-
-const LOCATIONS = [
-  "Mumbai", "Delhi", "Bangalore", "Chennai", "Pune", "Hyderabad", 
-  "Kolkata", "Ahmedabad", "Dhaka", "Karachi", "Lahore", "Colombo"
-];
-
 export default function CompanySignup() {
-  const [currentStep, setCurrentStep] = useState(1);
   const [, setLocation] = useLocation();
   const { toast } = useToast();
 
@@ -73,9 +32,9 @@ export default function CompanySignup() {
     resolver: zodResolver(companySignupSchema),
     mode: "onChange",
     defaultValues: {
-      technicalSkills: "",
-      otherSkills: "",
-      termsAccepted: false,
+      email: "",
+      password: "",
+      confirmPassword: "",
     },
   });
 
@@ -112,10 +71,13 @@ export default function CompanySignup() {
   const signupMutation = useMutation({
     mutationFn: async (data: CompanySignupForm) => {
       const registrationData = {
-        ...data,
+        email: data.email,
+        password: data.password,
         role: "company",
         profileComplete: false,
         username: data.email,
+        firstName: "Company", // Placeholder since we don't collect this anymore
+        lastName: "User",     // Placeholder since we don't collect this anymore
       };
       const response = await apiRequest("POST", "/api/register", registrationData);
       return response.json();
@@ -124,6 +86,11 @@ export default function CompanySignup() {
       // Update the auth context with the newly created user
       queryClient.setQueryData(["/api/user"], user);
       queryClient.invalidateQueries({ queryKey: ["/api/user"] });
+      
+      // Open Google Form in new tab
+      window.open("https://forms.gle/2JHE82ZwarXYMGdE7", "_blank");
+      
+      // Redirect to thank you page
       setLocation("/company-thank-you");
     },
     onError: (error: Error) => {
@@ -136,356 +103,135 @@ export default function CompanySignup() {
   });
 
   const onSubmit = (data: CompanySignupForm) => {
-    if (currentStep < 3) {
-      setCurrentStep(currentStep + 1);
-    } else {
-      signupMutation.mutate(data);
-    }
-  };
-
-  const goToPreviousStep = () => {
-    if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
-    }
-  };
-
-  const goToNextStep = () => {
-    if (currentStep < 3) {
-      setCurrentStep(currentStep + 1);
-    }
-  };
-
-  const progress = (currentStep / STEPS.length) * 100;
-
-  const renderStepContent = () => {
-    switch (currentStep) {
-      case 1:
-        return (
-          <div className="space-y-6">
-            <div>
-              <Label htmlFor="companyName">Company Name *</Label>
-              <Input
-                {...form.register("companyName")}
-                placeholder="Your company name"
-                autoComplete="off"
-                name="x9k4m7q2"
-                id="x9k4m7q2"
-                readOnly
-                onFocus={(e) => e.target.removeAttribute('readonly')}
-              />
-              {form.formState.errors.companyName && (
-                <p className="text-red-500 text-sm mt-1">{form.formState.errors.companyName.message}</p>
-              )}
-            </div>
-
-            <div>
-              <Label htmlFor="email">Email Address *</Label>
-              <Input
-                {...form.register("email")}
-                type="email"
-                placeholder="Your email address"
-                autoComplete="off"
-                name="p8w3n5t1"
-                id="p8w3n5t1"
-                readOnly
-                onFocus={(e) => e.target.removeAttribute('readonly')}
-              />
-              {form.formState.errors.email && (
-                <p className="text-red-500 text-sm mt-1">{form.formState.errors.email.message}</p>
-              )}
-            </div>
-
-            <div>
-              <Label htmlFor="password">Password *</Label>
-              <Input
-                {...form.register("password")}
-                type="password"
-                placeholder="Choose a secure password"
-                autoComplete="off"
-                name="b2j6f9l3"
-                id="b2j6f9l3"
-                readOnly
-                onFocus={(e) => e.target.removeAttribute('readonly')}
-              />
-              {form.formState.errors.password && (
-                <p className="text-red-500 text-sm mt-1">{form.formState.errors.password.message}</p>
-              )}
-            </div>
-
-            <div>
-              <Label htmlFor="confirmPassword">Confirm Password *</Label>
-              <Input
-                {...form.register("confirmPassword")}
-                type="password"
-                placeholder="Confirm your password"
-                autoComplete="off"
-                name="h7v4x8z5"
-                id="h7v4x8z5"
-                readOnly
-                onFocus={(e) => e.target.removeAttribute('readonly')}
-              />
-              {form.formState.errors.confirmPassword && (
-                <p className="text-red-500 text-sm mt-1">{form.formState.errors.confirmPassword.message}</p>
-              )}
-            </div>
-
-            <div>
-              <Label htmlFor="website">Website (Required)</Label>
-              <Input
-                {...form.register("website")}
-                placeholder="Your company website"
-                autoComplete="off"
-                name="r5g8c2y6"
-                id="r5g8c2y6"
-                readOnly
-                onFocus={(e) => e.target.removeAttribute('readonly')}
-              />
-              {form.formState.errors.website && (
-                <p className="text-red-500 text-sm mt-1">{form.formState.errors.website.message}</p>
-              )}
-            </div>
-          </div>
-        );
-
-      case 2:
-        return (
-          <div className="space-y-6">
-            <div>
-              <Label htmlFor="contactName">Contact Person Name *</Label>
-              <Input
-                {...form.register("contactName")}
-                placeholder="Full name of contact person"
-                autoComplete="off"
-                name="d4k9m2x7"
-                id="d4k9m2x7"
-                readOnly
-                onFocus={(e) => e.target.removeAttribute('readonly')}
-              />
-              {form.formState.errors.contactName && (
-                <p className="text-red-500 text-sm mt-1">{form.formState.errors.contactName.message}</p>
-              )}
-            </div>
-
-            <div>
-              <Label htmlFor="contactTitle">Contact Person Title *</Label>
-              <Input
-                {...form.register("contactTitle")}
-                placeholder="e.g. HR Manager, Founder, etc."
-                autoComplete="off"
-                name="l8q3w6n1"
-                id="l8q3w6n1"
-                readOnly
-                onFocus={(e) => e.target.removeAttribute('readonly')}
-              />
-              {form.formState.errors.contactTitle && (
-                <p className="text-red-500 text-sm mt-1">{form.formState.errors.contactTitle.message}</p>
-              )}
-            </div>
-
-            <div>
-              <Label htmlFor="phoneNumber">Phone Number *</Label>
-              <Input
-                {...form.register("phoneNumber")}
-                placeholder="Your phone number"
-                autoComplete="off"
-                name="s5t9y4r8"
-                id="s5t9y4r8"
-                readOnly
-                onFocus={(e) => e.target.removeAttribute('readonly')}
-              />
-              {form.formState.errors.phoneNumber && (
-                <p className="text-red-500 text-sm mt-1">{form.formState.errors.phoneNumber.message}</p>
-              )}
-            </div>
-
-            <div>
-              <Label htmlFor="location">Company Location *</Label>
-              <Input
-                {...form.register("location")}
-                placeholder="Your company location"
-                autoComplete="off"
-                name="v7b2h5g9"
-                id="v7b2h5g9"
-                readOnly
-                onFocus={(e) => e.target.removeAttribute('readonly')}
-              />
-              {form.formState.errors.location && (
-                <p className="text-red-500 text-sm mt-1">{form.formState.errors.location.message}</p>
-              )}
-            </div>
-
-            <div>
-              <Label htmlFor="internship-desc">Internship Description *</Label>
-              <Textarea
-                {...form.register("description")}
-                placeholder="Describe the internship opportunity and what students will learn"
-                rows={4}
-                autoComplete="off"
-                name="n3c8f1k6"
-                id="n3c8f1k6"
-                readOnly
-                onFocus={(e) => e.target.removeAttribute('readonly')}
-              />
-              {form.formState.errors.description && (
-                <p className="text-red-500 text-sm mt-1">{form.formState.errors.description.message}</p>
-              )}
-            </div>
-          </div>
-        );
-
-      case 3:
-        return (
-          <div className="space-y-6">
-            <div>
-              <Label htmlFor="workArrangement">Work Arrangement *</Label>
-              <Select onValueChange={(value) => form.setValue("workArrangement", value)}>
-                <SelectTrigger autoComplete="off" name="z8x4q1w5" id="z8x4q1w5">
-                  <SelectValue placeholder="Select work arrangement" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="remote">Remote</SelectItem>
-                  <SelectItem value="hybrid">Hybrid</SelectItem>
-                  <SelectItem value="in-person">In-Person</SelectItem>
-                </SelectContent>
-              </Select>
-              {form.formState.errors.workArrangement && (
-                <p className="text-red-500 text-sm mt-1">{form.formState.errors.workArrangement.message}</p>
-              )}
-            </div>
-
-            <div>
-              <Label htmlFor="internshipDuration">Internship Duration *</Label>
-              <Select onValueChange={(value) => form.setValue("internshipDuration", value)}>
-                <SelectTrigger autoComplete="off" name="m9p6k3e7" id="m9p6k3e7">
-                  <SelectValue placeholder="Select duration" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="1-month">1 Month</SelectItem>
-                  <SelectItem value="2-months">2 Months</SelectItem>
-                  <SelectItem value="3-months">3 Months</SelectItem>
-                  <SelectItem value="6-months">6 Months</SelectItem>
-                  <SelectItem value="flexible">Flexible</SelectItem>
-                </SelectContent>
-              </Select>
-              {form.formState.errors.internshipDuration && (
-                <p className="text-red-500 text-sm mt-1">{form.formState.errors.internshipDuration.message}</p>
-              )}
-            </div>
-
-            <div>
-              <Label htmlFor="technicalSkills">Technical Skills Required *</Label>
-              <Textarea
-                {...form.register("technicalSkills")}
-                placeholder="Please specify the technical skills required for internships (e.g., Social Media, Marketing, Design, Content Writing, etc.)"
-                rows={3}
-                autoComplete="off"
-                name="a2c5v8b4"
-                id="a2c5v8b4"
-                readOnly
-                onFocus={(e) => e.target.removeAttribute('readonly')}
-              />
-              {form.formState.errors.technicalSkills && (
-                <p className="text-red-500 text-sm mt-1">{form.formState.errors.technicalSkills.message}</p>
-              )}
-            </div>
-
-            <div>
-              <Label htmlFor="otherSkills">Other Skills (Optional)</Label>
-              <Textarea
-                {...form.register("otherSkills")}
-                placeholder="Any other skills or requirements not mentioned above..."
-                rows={2}
-                autoComplete="off"
-                name="f7h1j9k2"
-                id="f7h1j9k2"
-                readOnly
-                onFocus={(e) => e.target.removeAttribute('readonly')}
-              />
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                checked={form.watch("termsAccepted")}
-                onCheckedChange={(checked) => form.setValue("termsAccepted", !!checked)}
-              />
-              <Label className="text-sm">
-                I accept the terms and conditions and confirm that all information provided is accurate
-              </Label>
-            </div>
-            {form.formState.errors.termsAccepted && (
-              <p className="text-red-500 text-sm">{form.formState.errors.termsAccepted.message}</p>
-            )}
-          </div>
-        );
-
-      default:
-        return null;
-    }
+    signupMutation.mutate(data);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-white py-12">
-      <div className="max-w-2xl mx-auto px-4">
-        <Card className="shadow-2xl">
-          <CardHeader className="text-center">
-            <CardTitle className="text-3xl font-bold text-black">Company Registration</CardTitle>
-            <p className="text-black mt-2">Join our platform and connect with talented high school students</p>
-            
-            {/* Progress Bar */}
-            <div className="mt-6">
-              <Progress value={progress} className="h-3" />
-              <div className="flex justify-between mt-2">
-                {STEPS.map((step) => (
-                  <div key={step.id} className={`flex flex-col items-center ${currentStep >= step.id ? 'text-primary' : 'text-gray-400'}`}>
-                    <step.icon className="w-5 h-5 mb-1" />
-                    <span className="text-xs font-medium">{step.title}</span>
-                  </div>
-                ))}
-              </div>
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-purple-50 to-primary-100 flex items-center justify-center p-4">
+      <div className="w-full max-w-md">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="flex items-center justify-center mb-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center mr-3">
+              <Building2 className="h-6 w-6 text-white" />
             </div>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">intrn</h1>
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Join as a Company</h2>
+          <p className="text-gray-600">Connect with talented high school students</p>
+        </div>
+
+        <Card className="border-0 shadow-xl">
+          <CardHeader className="text-center pb-4">
+            <CardTitle className="flex items-center justify-center gap-2">
+              <Building2 className="h-5 w-5 text-primary" />
+              Company Registration
+            </CardTitle>
+            <CardDescription>
+              Create your account to get started
+            </CardDescription>
           </CardHeader>
 
           <CardContent>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" autoComplete="off">
+              {/* Hidden dummy fields to confuse autofill */}
               <input type="text" name="dummy1" autoComplete="username" style={{position: 'absolute', top: '-1000px', left: '-1000px'}} />
               <input type="password" name="dummy2" autoComplete="new-password" style={{position: 'absolute', top: '-1000px', left: '-1000px'}} />
               
-              {renderStepContent()}
-
-              <div className="flex justify-between pt-6">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={goToPreviousStep}
-                  disabled={currentStep === 1}
-                  className="flex items-center space-x-2"
-                >
-                  <ArrowLeft className="w-4 h-4" />
-                  <span>Previous</span>
-                </Button>
-
-                {currentStep < 3 ? (
-                  <Button
-                    type="button"
-                    onClick={goToNextStep}
-                    className="flex items-center space-x-2 bg-primary hover:bg-primary/90"
-                  >
-                    <span>Next</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </Button>
-                ) : (
-                  <Button
-                    type="submit"
-                    disabled={signupMutation.isPending}
-                    className="bg-primary hover:bg-primary/90"
-                  >
-                    {signupMutation.isPending ? "Creating Account..." : "Complete Registration"}
-                  </Button>
+              <div>
+                <Label htmlFor="email">Email Address *</Label>
+                <Input
+                  {...form.register("email")}
+                  type="email"
+                  placeholder="Enter your email address"
+                  autoComplete="off"
+                  name="x9k4m7q2"
+                  id="x9k4m7q2"
+                  readOnly
+                  onFocus={(e) => e.target.removeAttribute('readonly')}
+                />
+                {form.formState.errors.email && (
+                  <p className="text-red-500 text-sm mt-1">{form.formState.errors.email.message}</p>
                 )}
               </div>
+
+              <div>
+                <Label htmlFor="password">Password *</Label>
+                <Input
+                  {...form.register("password")}
+                  type="password"
+                  placeholder="Choose a secure password"
+                  autoComplete="off"
+                  name="p8w3n5t1"
+                  id="p8w3n5t1"
+                  readOnly
+                  onFocus={(e) => e.target.removeAttribute('readonly')}
+                />
+                {form.formState.errors.password && (
+                  <p className="text-red-500 text-sm mt-1">{form.formState.errors.password.message}</p>
+                )}
+              </div>
+
+              <div>
+                <Label htmlFor="confirmPassword">Confirm Password *</Label>
+                <Input
+                  {...form.register("confirmPassword")}
+                  type="password"
+                  placeholder="Confirm your password"
+                  autoComplete="off"
+                  name="h7v4x8z5"
+                  id="h7v4x8z5"
+                  readOnly
+                  onFocus={(e) => e.target.removeAttribute('readonly')}
+                />
+                {form.formState.errors.confirmPassword && (
+                  <p className="text-red-500 text-sm mt-1">{form.formState.errors.confirmPassword.message}</p>
+                )}
+              </div>
+
+              <Button 
+                type="submit" 
+                className="w-full bg-primary hover:bg-primary/90" 
+                disabled={signupMutation.isPending}
+              >
+                {signupMutation.isPending ? "Creating Account..." : "Sign Up"}
+              </Button>
             </form>
+
+            {/* Google Form Information */}
+            <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <div className="flex items-start gap-3">
+                <ExternalLink className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                <div>
+                  <h3 className="font-medium text-blue-900 mb-1">Next Step: Company Details</h3>
+                  <p className="text-sm text-blue-700 mb-3">
+                    After creating your account, you'll be redirected to fill out your company description and internship details.
+                  </p>
+                  <a 
+                    href="https://forms.gle/2JHE82ZwarXYMGdE7" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800 underline"
+                  >
+                    Preview the form <ExternalLink className="h-3 w-3" />
+                  </a>
+                </div>
+              </div>
+            </div>
           </CardContent>
         </Card>
+
+        <div className="text-center mt-6">
+          <p className="text-sm text-gray-500">
+            Already have an account?{" "}
+            <button 
+              onClick={() => setLocation("/auth")}
+              className="text-primary hover:text-primary/80 font-medium"
+            >
+              Sign in here
+            </button>
+          </p>
+        </div>
       </div>
     </div>
   );
