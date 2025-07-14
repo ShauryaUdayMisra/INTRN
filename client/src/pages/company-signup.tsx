@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -65,6 +65,17 @@ const LOCATIONS = [
 ];
 
 export default function CompanySignup() {
+  const [, setLocation] = useLocation();
+  
+  // Redirect to new multi-page flow
+  React.useEffect(() => {
+    setLocation('/company-signup-step1');
+  }, [setLocation]);
+
+  return null;
+}
+
+function CompanySignupOld() {
   const [currentStep, setCurrentStep] = useState(1);
   const [, setLocation] = useLocation();
   const { toast } = useToast();

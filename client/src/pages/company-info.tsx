@@ -102,7 +102,7 @@ export default function CompanyInfo() {
               <Button 
                 size="lg" 
                 className="bg-primary hover:bg-primary/90 text-white text-xl px-12 py-6 rounded-2xl font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
-                onClick={() => setLocation("/company-signup")}
+                onClick={() => setLocation("/company-signup-step1")}
               >
                 start your journey
                 <ArrowRight className="ml-3 h-6 w-6" />
