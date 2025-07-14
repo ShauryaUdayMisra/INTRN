@@ -131,7 +131,7 @@ export default function CompanyApplication() {
                     <FormItem>
                       <FormLabel>Company Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Your company name" {...field} />
+                        <Input placeholder="Your company name" autoComplete="off" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -173,6 +173,7 @@ export default function CompanyApplication() {
                         <Textarea
                           placeholder="Describe the internship project you are offering to high school students..."
                           className="min-h-[120px]"
+                          autoComplete="off"
                           {...field}
                         />
                       </FormControl>
@@ -192,7 +193,7 @@ export default function CompanyApplication() {
                           Website (Required)
                         </FormLabel>
                         <FormControl>
-                          <Input placeholder="Your website URL" {...field} />
+                          <Input placeholder="Your website URL" autoComplete="off" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -209,7 +210,7 @@ export default function CompanyApplication() {
                           Location
                         </FormLabel>
                         <FormControl>
-                          <Input placeholder="Your company location" {...field} />
+                          <Input placeholder="Your company location" autoComplete="off" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -274,6 +275,7 @@ export default function CompanyApplication() {
                         <Textarea
                           placeholder="Please specify the technical skills required for this internship (e.g., Python, JavaScript, Marketing, Design, Content Writing, etc.)"
                           className="min-h-[100px]"
+                          autoComplete="off"
                           {...field}
                         />
                       </FormControl>
@@ -292,6 +294,7 @@ export default function CompanyApplication() {
                         <Textarea
                           placeholder="Any other skills or requirements not mentioned above..."
                           className="min-h-[80px]"
+                          autoComplete="off"
                           {...field}
                         />
                       </FormControl>

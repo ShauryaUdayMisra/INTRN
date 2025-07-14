@@ -137,6 +137,7 @@ export default function CompanySignup() {
               <Input
                 {...form.register("companyName")}
                 placeholder="Your company name"
+                autoComplete="off"
               />
               {form.formState.errors.companyName && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.companyName.message}</p>
@@ -149,6 +150,7 @@ export default function CompanySignup() {
                 {...form.register("email")}
                 type="email"
                 placeholder="Your email address"
+                autoComplete="off"
               />
               {form.formState.errors.email && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.email.message}</p>
@@ -184,6 +186,7 @@ export default function CompanySignup() {
               <Input
                 {...form.register("website")}
                 placeholder="Your company website"
+                autoComplete="off"
               />
               {form.formState.errors.website && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.website.message}</p>
@@ -200,6 +203,7 @@ export default function CompanySignup() {
               <Input
                 {...form.register("contactName")}
                 placeholder="Full name of contact person"
+                autoComplete="off"
               />
               {form.formState.errors.contactName && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.contactName.message}</p>
@@ -211,6 +215,7 @@ export default function CompanySignup() {
               <Input
                 {...form.register("contactTitle")}
                 placeholder="e.g. HR Manager, Founder, etc."
+                autoComplete="off"
               />
               {form.formState.errors.contactTitle && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.contactTitle.message}</p>
@@ -222,6 +227,7 @@ export default function CompanySignup() {
               <Input
                 {...form.register("phoneNumber")}
                 placeholder="Your phone number"
+                autoComplete="off"
               />
               {form.formState.errors.phoneNumber && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.phoneNumber.message}</p>
@@ -233,6 +239,7 @@ export default function CompanySignup() {
               <Input
                 {...form.register("location")}
                 placeholder="Your company location"
+                autoComplete="off"
               />
               {form.formState.errors.location && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.location.message}</p>
@@ -245,6 +252,7 @@ export default function CompanySignup() {
                 {...form.register("description")}
                 placeholder="Brief description of your company and what you do"
                 rows={4}
+                autoComplete="off"
               />
               {form.formState.errors.description && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.description.message}</p>
@@ -298,6 +306,7 @@ export default function CompanySignup() {
                 {...form.register("technicalSkills")}
                 placeholder="Please specify the technical skills required for internships (e.g., Social Media, Marketing, Design, Content Writing, etc.)"
                 rows={3}
+                autoComplete="off"
               />
               {form.formState.errors.technicalSkills && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.technicalSkills.message}</p>
@@ -310,6 +319,7 @@ export default function CompanySignup() {
                 {...form.register("otherSkills")}
                 placeholder="Any other skills or requirements not mentioned above..."
                 rows={2}
+                autoComplete="off"
               />
             </div>
 
