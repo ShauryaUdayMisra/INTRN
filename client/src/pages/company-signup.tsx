@@ -30,7 +30,7 @@ const companySignupSchema = z.object({
   contactTitle: z.string().min(2, "Contact title is required"),
   phoneNumber: z.string().min(10, "Please enter a valid phone number"),
   location: z.string().min(2, "Company location is required"),
-  description: z.string().min(1, "Please provide a company description"),
+  description: z.string().min(1, "Please provide an internship description"),
   
   // Step 3: Internship Details
   workArrangement: z.string().min(1, "Please select work arrangement"),
@@ -138,7 +138,8 @@ export default function CompanySignup() {
                 {...form.register("companyName")}
                 placeholder="Your company name"
                 autoComplete="off"
-                name="company_name_no_autofill"
+                name="business_entity_field"
+                id="business-entity"
               />
               {form.formState.errors.companyName && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.companyName.message}</p>
@@ -152,7 +153,8 @@ export default function CompanySignup() {
                 type="email"
                 placeholder="Your email address"
                 autoComplete="off"
-                name="email_no_autofill"
+                name="primary_contact_address"
+                id="primary-contact"
               />
               {form.formState.errors.email && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.email.message}</p>
@@ -166,6 +168,8 @@ export default function CompanySignup() {
                 type="password"
                 placeholder="Choose a secure password"
                 autoComplete="new-password"
+                name="access_credential_1"
+                id="access-credential-1"
               />
               {form.formState.errors.password && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.password.message}</p>
@@ -179,6 +183,8 @@ export default function CompanySignup() {
                 type="password"
                 placeholder="Confirm your password"
                 autoComplete="new-password"
+                name="access_credential_2"
+                id="access-credential-2"
               />
               {form.formState.errors.confirmPassword && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.confirmPassword.message}</p>
@@ -191,6 +197,8 @@ export default function CompanySignup() {
                 {...form.register("website")}
                 placeholder="Your company website"
                 autoComplete="off"
+                name="online_presence_url"
+                id="online-presence"
               />
               {form.formState.errors.website && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.website.message}</p>
@@ -208,7 +216,8 @@ export default function CompanySignup() {
                 {...form.register("contactName")}
                 placeholder="Full name of contact person"
                 autoComplete="off"
-                name="contact_name_no_autofill"
+                name="representative_fullname_field"
+                id="representative-fullname"
               />
               {form.formState.errors.contactName && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.contactName.message}</p>
@@ -221,7 +230,8 @@ export default function CompanySignup() {
                 {...form.register("contactTitle")}
                 placeholder="e.g. HR Manager, Founder, etc."
                 autoComplete="off"
-                name="contact_title_no_autofill"
+                name="position_designation_field"
+                id="position-designation"
               />
               {form.formState.errors.contactTitle && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.contactTitle.message}</p>
@@ -234,7 +244,8 @@ export default function CompanySignup() {
                 {...form.register("phoneNumber")}
                 placeholder="Your phone number"
                 autoComplete="off"
-                name="phone_no_autofill"
+                name="communication_number_field"
+                id="communication-number"
               />
               {form.formState.errors.phoneNumber && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.phoneNumber.message}</p>
@@ -247,7 +258,8 @@ export default function CompanySignup() {
                 {...form.register("location")}
                 placeholder="Your company location"
                 autoComplete="off"
-                name="location_no_autofill"
+                name="headquarters_address_field"
+                id="headquarters-address"
               />
               {form.formState.errors.location && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.location.message}</p>
@@ -255,12 +267,14 @@ export default function CompanySignup() {
             </div>
 
             <div>
-              <Label htmlFor="description">Company Description *</Label>
+              <Label htmlFor="internship-desc">Internship Description *</Label>
               <Textarea
                 {...form.register("description")}
-                placeholder="Brief description of your company and what you do"
+                placeholder="Describe the internship opportunity and what students will learn"
                 rows={4}
                 autoComplete="off"
+                name="internship_desc_field"
+                id="internship-desc"
               />
               {form.formState.errors.description && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.description.message}</p>
