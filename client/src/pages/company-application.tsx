@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useAuth } from "@/hooks/use-auth";
 import { useLocation } from "wouter";
 import { useMutation } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { Building, Shield, FileText, MapPin, Globe, AlertTriangle } from "lucide-react";
@@ -96,6 +97,24 @@ export default function CompanyApplication() {
     submitApplicationMutation.mutate(data);
   };
 
+  // Clear all form fields on component mount to prevent autofill
+  useEffect(() => {
+    // Clear all input fields
+    const inputs = document.querySelectorAll('input, textarea, select');
+    inputs.forEach((input: any) => {
+      if (input.type !== 'submit' && input.type !== 'button') {
+        input.value = '';
+        input.defaultValue = '';
+        if (input.tagName === 'SELECT') {
+          input.selectedIndex = 0;
+        }
+      }
+    });
+    
+    // Reset form to ensure controlled components are cleared
+    form.reset();
+  }, [form]);
+
   if (!user || user.role !== "company") {
     setLocation("/");
     return null;
@@ -116,8 +135,9 @@ export default function CompanyApplication() {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8" autoComplete="off">
             {/* Hidden dummy fields to confuse autofill */}
-            <input type="text" name="fake_email_comp_app" autoComplete="off" style={{display: 'none'}} tabIndex={-1} />
-            <input type="password" name="fake_password_comp_app" autoComplete="off" style={{display: 'none'}} tabIndex={-1} />
+            <input type="text" style={{display: 'none'}} autoComplete="username" tabIndex={-1} />
+            <input type="password" style={{display: 'none'}} autoComplete="current-password" tabIndex={-1} />
+            <input type="email" style={{display: 'none'}} autoComplete="email" tabIndex={-1} />
             {/* Company Details */}
             <Card>
               <CardHeader>
@@ -134,7 +154,7 @@ export default function CompanyApplication() {
                     <FormItem>
                       <FormLabel>Company Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Your company name" autoComplete="off" name="organization_name_application" {...field} />
+                        <Input placeholder="Your company name" autoComplete="new-company-name" name="app_org_entity_nop345" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -149,7 +169,7 @@ export default function CompanyApplication() {
                       <FormLabel>Industry/Field</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
-                          <SelectTrigger autoComplete="off" name="industry_sector_application">
+                          <SelectTrigger autoComplete="new-organization-type" name="app_industry_cat_qrs678">
                             <SelectValue placeholder="Select your industry" />
                           </SelectTrigger>
                         </FormControl>
@@ -176,8 +196,8 @@ export default function CompanyApplication() {
                         <Textarea
                           placeholder="Describe the internship project you are offering to high school students..."
                           className="min-h-[120px]"
-                          autoComplete="off"
-                          name="project_description_application"
+                          autoComplete="new-description-text"
+                          name="app_project_summary_tuv901"
                           {...field}
                         />
                       </FormControl>
@@ -197,7 +217,7 @@ export default function CompanyApplication() {
                           Website (Required)
                         </FormLabel>
                         <FormControl>
-                          <Input placeholder="Your website URL" autoComplete="off" name="website_url_application" {...field} />
+                          <Input placeholder="Your website URL" autoComplete="new-url-address" name="app_web_portal_wxy234" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -214,7 +234,7 @@ export default function CompanyApplication() {
                           Location
                         </FormLabel>
                         <FormControl>
-                          <Input placeholder="Your company location" autoComplete="off" name="office_location_application" {...field} />
+                          <Input placeholder="Your company location" autoComplete="new-address-line1" name="app_office_addr_zab567" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -279,8 +299,8 @@ export default function CompanyApplication() {
                         <Textarea
                           placeholder="Please specify the technical skills required for this internship (e.g., Python, JavaScript, Marketing, Design, Content Writing, etc.)"
                           className="min-h-[100px]"
-                          autoComplete="off"
-                          name="technical_skills_application"
+                          autoComplete="new-skills-required"
+                          name="app_tech_skills_cde890"
                           {...field}
                         />
                       </FormControl>
@@ -299,8 +319,8 @@ export default function CompanyApplication() {
                         <Textarea
                           placeholder="Any other skills or requirements not mentioned above..."
                           className="min-h-[80px]"
-                          autoComplete="off"
-                          name="other_skills_application"
+                          autoComplete="new-additional-skills"
+                          name="app_extra_skills_fgh123"
                           {...field}
                         />
                       </FormControl>
