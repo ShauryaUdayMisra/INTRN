@@ -134,7 +134,7 @@ export default function CompanyApplication() {
                     <FormItem>
                       <FormLabel>Company Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Your company name" autoComplete="off" {...field} />
+                        <Input placeholder="Your company name" autoComplete="off" name="organization_name_application" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -149,7 +149,7 @@ export default function CompanyApplication() {
                       <FormLabel>Industry/Field</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
-                          <SelectTrigger>
+                          <SelectTrigger autoComplete="off" name="industry_sector_application">
                             <SelectValue placeholder="Select your industry" />
                           </SelectTrigger>
                         </FormControl>
@@ -177,6 +177,7 @@ export default function CompanyApplication() {
                           placeholder="Describe the internship project you are offering to high school students..."
                           className="min-h-[120px]"
                           autoComplete="off"
+                          name="project_description_application"
                           {...field}
                         />
                       </FormControl>
@@ -196,7 +197,7 @@ export default function CompanyApplication() {
                           Website (Required)
                         </FormLabel>
                         <FormControl>
-                          <Input placeholder="Your website URL" autoComplete="off" {...field} />
+                          <Input placeholder="Your website URL" autoComplete="off" name="website_url_application" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -213,7 +214,7 @@ export default function CompanyApplication() {
                           Location
                         </FormLabel>
                         <FormControl>
-                          <Input placeholder="Your company location" autoComplete="off" {...field} />
+                          <Input placeholder="Your company location" autoComplete="off" name="office_location_application" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -279,6 +280,7 @@ export default function CompanyApplication() {
                           placeholder="Please specify the technical skills required for this internship (e.g., Python, JavaScript, Marketing, Design, Content Writing, etc.)"
                           className="min-h-[100px]"
                           autoComplete="off"
+                          name="technical_skills_application"
                           {...field}
                         />
                       </FormControl>
@@ -298,6 +300,7 @@ export default function CompanyApplication() {
                           placeholder="Any other skills or requirements not mentioned above..."
                           className="min-h-[80px]"
                           autoComplete="off"
+                          name="other_skills_application"
                           {...field}
                         />
                       </FormControl>

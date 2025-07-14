@@ -289,7 +289,7 @@ export default function CompanySignup() {
             <div>
               <Label htmlFor="workArrangement">Work Arrangement *</Label>
               <Select onValueChange={(value) => form.setValue("workArrangement", value)}>
-                <SelectTrigger>
+                <SelectTrigger autoComplete="off" name="work_setup_arrangement" id="work-setup-arrangement">
                   <SelectValue placeholder="Select work arrangement" />
                 </SelectTrigger>
                 <SelectContent>
@@ -306,7 +306,7 @@ export default function CompanySignup() {
             <div>
               <Label htmlFor="internshipDuration">Internship Duration *</Label>
               <Select onValueChange={(value) => form.setValue("internshipDuration", value)}>
-                <SelectTrigger>
+                <SelectTrigger autoComplete="off" name="program_duration_period" id="program-duration-period">
                   <SelectValue placeholder="Select duration" />
                 </SelectTrigger>
                 <SelectContent>
@@ -329,6 +329,8 @@ export default function CompanySignup() {
                 placeholder="Please specify the technical skills required for internships (e.g., Social Media, Marketing, Design, Content Writing, etc.)"
                 rows={3}
                 autoComplete="off"
+                name="required_competencies_field"
+                id="required-competencies"
               />
               {form.formState.errors.technicalSkills && (
                 <p className="text-red-500 text-sm mt-1">{form.formState.errors.technicalSkills.message}</p>
@@ -342,6 +344,8 @@ export default function CompanySignup() {
                 placeholder="Any other skills or requirements not mentioned above..."
                 rows={2}
                 autoComplete="off"
+                name="additional_requirements_field"
+                id="additional-requirements"
               />
             </div>
 
