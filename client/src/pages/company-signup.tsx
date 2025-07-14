@@ -31,7 +31,7 @@ export default function CompanySignup() {
 
   const form = useForm<CompanySignupForm>({
     resolver: zodResolver(companySignupSchema),
-    mode: "onBlur",
+    mode: "onChange",
     defaultValues: {
       email: "",
       password: "",
@@ -105,6 +105,8 @@ export default function CompanySignup() {
   });
 
   const onSubmit = (data: CompanySignupForm) => {
+    console.log("Form submitted with data:", data);
+    console.log("Form errors:", form.formState.errors);
     signupMutation.mutate(data);
   };
 
@@ -141,13 +143,12 @@ export default function CompanySignup() {
               <input type="password" name="dummy2" autoComplete="new-password" style={{position: 'absolute', top: '-1000px', left: '-1000px'}} />
               
               <div>
-                <Label htmlFor="email">Email Address *</Label>
+                <Label htmlFor="x9k4m7q2">Email Address *</Label>
                 <Input
                   {...form.register("email")}
                   type="email"
                   placeholder="Enter your email address"
                   autoComplete="off"
-                  name="x9k4m7q2"
                   id="x9k4m7q2"
                   readOnly
                   onFocus={(e) => e.target.removeAttribute('readonly')}
@@ -158,13 +159,12 @@ export default function CompanySignup() {
               </div>
 
               <div>
-                <Label htmlFor="password">Password *</Label>
+                <Label htmlFor="p8w3n5t1">Password *</Label>
                 <Input
                   {...form.register("password")}
                   type="password"
                   placeholder="Choose a secure password"
                   autoComplete="off"
-                  name="p8w3n5t1"
                   id="p8w3n5t1"
                   readOnly
                   onFocus={(e) => e.target.removeAttribute('readonly')}
@@ -175,13 +175,12 @@ export default function CompanySignup() {
               </div>
 
               <div>
-                <Label htmlFor="confirmPassword">Confirm Password *</Label>
+                <Label htmlFor="h7v4x8z5">Confirm Password *</Label>
                 <Input
                   {...form.register("confirmPassword")}
                   type="password"
                   placeholder="Confirm your password"
                   autoComplete="off"
-                  name="h7v4x8z5"
                   id="h7v4x8z5"
                   readOnly
                   onFocus={(e) => e.target.removeAttribute('readonly')}
