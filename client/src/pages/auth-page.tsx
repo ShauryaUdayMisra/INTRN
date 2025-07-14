@@ -120,7 +120,7 @@ export default function AuthPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <form onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-4">
+                  <form onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-4" autoComplete="off">
                     <div>
                       <Label htmlFor="login-email">Email</Label>
                       <Input
@@ -128,6 +128,8 @@ export default function AuthPage() {
                         type="email"
                         {...loginForm.register("email")}
                         placeholder="Enter email"
+                        autoComplete="off"
+                        name="login_email_no_autofill"
                       />
                       {loginForm.formState.errors.email && (
                         <p className="text-sm text-red-500 mt-1">
@@ -142,6 +144,8 @@ export default function AuthPage() {
                         type="password"
                         {...loginForm.register("password")}
                         placeholder="Enter password"
+                        autoComplete="new-password"
+                        name="login_password_no_autofill"
                       />
                       {loginForm.formState.errors.password && (
                         <p className="text-sm text-red-500 mt-1">
@@ -182,7 +186,7 @@ export default function AuthPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <form onSubmit={registerForm.handleSubmit(onRegister)} className="space-y-4">
+                  <form onSubmit={registerForm.handleSubmit(onRegister)} className="space-y-4" autoComplete="off">
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <Label htmlFor="firstName">First Name</Label>
@@ -190,6 +194,8 @@ export default function AuthPage() {
                           id="firstName"
                           {...registerForm.register("firstName")}
                           placeholder="First name"
+                          autoComplete="off"
+                          name="first_name_no_autofill"
                         />
                         {registerForm.formState.errors.firstName && (
                           <p className="text-sm text-red-500 mt-1">
@@ -203,6 +209,8 @@ export default function AuthPage() {
                           id="lastName"
                           {...registerForm.register("lastName")}
                           placeholder="Last name"
+                          autoComplete="off"
+                          name="last_name_no_autofill"
                         />
                         {registerForm.formState.errors.lastName && (
                           <p className="text-sm text-red-500 mt-1">
@@ -219,6 +227,8 @@ export default function AuthPage() {
                         type="email"
                         {...registerForm.register("email")}
                         placeholder="Enter email"
+                        autoComplete="off"
+                        name="register_email_no_autofill"
                       />
                       {registerForm.formState.errors.email && (
                         <p className="text-sm text-red-500 mt-1">
@@ -235,6 +245,8 @@ export default function AuthPage() {
                           type="password"
                           {...registerForm.register("password")}
                           placeholder="Create password"
+                          autoComplete="new-password"
+                          name="register_password_no_autofill"
                         />
                         {registerForm.formState.errors.password && (
                           <p className="text-sm text-red-500 mt-1">
@@ -249,6 +261,8 @@ export default function AuthPage() {
                           type="password"
                           {...registerForm.register("confirmPassword")}
                           placeholder="Confirm password"
+                          autoComplete="new-password"
+                          name="confirm_password_no_autofill"
                         />
                         {registerForm.formState.errors.confirmPassword && (
                           <p className="text-sm text-red-500 mt-1">
