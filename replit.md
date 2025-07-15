@@ -98,9 +98,19 @@ InternHub is a full-stack web application that connects students with internship
 
 Preferred communication style: Simple, everyday language.
 
-## Recent Achievements (July 14, 2025)
+## Recent Achievements (July 15, 2025)
 
-### Simplified Company Signup + External Form Integration (Latest - July 14, 2025)
+### Navigation & Admin User Management Enhancement (Latest - July 15, 2025)
+- ✅ **Fixed "Get Started" Button Routing**: Now takes users to sign-up tab instead of sign-in, with URL parameters (?tab=register)
+- ✅ **Enhanced Admin User Management**: Complete detailed view of all user profiles separated by role
+- ✅ **Student Profile Details**: Admin can view email, encrypted password, location, university, graduation year, skills, bio, and onboarding data
+- ✅ **Company Profile Details**: Admin can view email, encrypted password, website, location, company field, description, and approval status
+- ✅ **Admin Account Display**: Special section showing admin usernames and access levels
+- ✅ **Email Validation Fixes**: Stopped blinking error messages by changing form validation mode to "onSubmit"
+- ✅ **Admin Gmail Login**: Admin accounts can now sign in with admin1@gmail.com format (password: "admin")
+- ✅ **Smart Tab Navigation**: Landing page buttons use URL parameters to direct users to appropriate authentication tabs
+
+### Simplified Company Signup + External Form Integration (July 14, 2025)
 - ✅ **Complete Company Signup Redesign**: Simplified from 3-step form to simple email/password registration
 - ✅ **External Google Form Integration**: After signup, automatically opens `https://forms.gle/2JHE82ZwarXYMGdE7` in new tab
 - ✅ **Streamlined UX Flow**: Email/Password → Google Form (new tab) → Thank You Page (current tab)

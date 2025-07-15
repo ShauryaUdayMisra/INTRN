@@ -121,42 +121,185 @@ export default function AdminPage() {
           </TabsList>
 
           <TabsContent value="users" className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold">User Management</h2>
-              <div className="flex gap-2">
-                <Badge variant="secondary">{stats.totalStudents} Students</Badge>
-                <Badge variant="secondary">{stats.totalCompanies} Companies</Badge>
-              </div>
-            </div>
-            
-            <div className="space-y-4">
-              {users.map((user) => (
-                <Card key={user.id}>
-                  <CardContent className="p-6">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <h3 className="font-semibold">
-                          {user.firstName && user.lastName 
-                            ? `${user.firstName} ${user.lastName}` 
-                            : user.companyName || user.username
-                          }
-                        </h3>
-                        <p className="text-gray-600">{user.email}</p>
-                        <p className="text-sm text-gray-500">
-                          Joined {new Date(user.createdAt).toLocaleDateString()}
-                        </p>
+            {/* Students Section */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Users className="h-5 w-5" />
+                  Student Accounts ({users.filter(u => u.role === "student").length})
+                </CardTitle>
+                <CardDescription>
+                  View detailed student profiles including onboarding information
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {users.filter(u => u.role === "student").map((user) => (
+                    <div key={user.id} className="border rounded-lg p-4 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-semibold text-lg">{user.firstName} {user.lastName}</p>
+                          <p className="text-sm text-gray-600">{user.email}</p>
+                        </div>
+                        <Badge variant="outline">Student</Badge>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Badge variant={user.role === "admin" ? "default" : "secondary"}>
-                          {user.role}
-                        </Badge>
-                        <Button size="sm" variant="outline">Manage</Button>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+                        <div>
+                          <p className="font-medium text-gray-700">Password (Encrypted)</p>
+                          <p className="text-xs text-gray-500 font-mono break-all">{user.password?.substring(0, 20)}...</p>
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-700">Location</p>
+                          <p>{user.location || "Not specified"}</p>
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-700">University</p>
+                          <p>{user.university || "Not specified"}</p>
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-700">Graduation Year</p>
+                          <p>{user.graduationYear || "Not specified"}</p>
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-700">Profile Complete</p>
+                          <p>{user.profileComplete ? "Yes" : "No"}</p>
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-700">Joined</p>
+                          <p>{user.createdAt ? new Date(user.createdAt).toLocaleDateString() : "Unknown"}</p>
+                        </div>
+                      </div>
+                      
+                      {user.skills && user.skills.length > 0 && (
+                        <div>
+                          <p className="font-medium text-gray-700 mb-2">Skills</p>
+                          <div className="flex flex-wrap gap-1">
+                            {user.skills.map((skill, index) => (
+                              <Badge key={index} variant="secondary" className="text-xs">{skill}</Badge>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      
+                      {user.bio && (
+                        <div>
+                          <p className="font-medium text-gray-700">Bio</p>
+                          <p className="text-sm text-gray-600">{user.bio}</p>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                  {users.filter(u => u.role === "student").length === 0 && (
+                    <p className="text-center text-gray-500 py-8">No student accounts found</p>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Companies Section */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Building className="h-5 w-5" />
+                  Company Accounts ({users.filter(u => u.role === "company").length})
+                </CardTitle>
+                <CardDescription>
+                  View company account details and approval status
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {users.filter(u => u.role === "company").map((user) => (
+                    <div key={user.id} className="border rounded-lg p-4 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-semibold text-lg">{user.firstName} {user.lastName}</p>
+                          <p className="text-sm text-gray-600">{user.email}</p>
+                          {user.companyName && <p className="text-sm font-medium text-primary">{user.companyName}</p>}
+                        </div>
+                        <div className="flex gap-2">
+                          <Badge variant="secondary">Company</Badge>
+                          <Badge variant={user.isApproved ? 'default' : 'destructive'}>
+                            {user.isApproved ? 'Approved' : 'Pending'}
+                          </Badge>
+                        </div>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+                        <div>
+                          <p className="font-medium text-gray-700">Password (Encrypted)</p>
+                          <p className="text-xs text-gray-500 font-mono break-all">{user.password?.substring(0, 20)}...</p>
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-700">Website</p>
+                          <p>{user.website || "Not specified"}</p>
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-700">Location</p>
+                          <p>{user.location || "Not specified"}</p>
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-700">Company Field</p>
+                          <p>{user.companyField || "Not specified"}</p>
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-700">Profile Complete</p>
+                          <p>{user.profileComplete ? "Yes" : "No"}</p>
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-700">Joined</p>
+                          <p>{user.createdAt ? new Date(user.createdAt).toLocaleDateString() : "Unknown"}</p>
+                        </div>
+                      </div>
+                      
+                      {user.bio && (
+                        <div>
+                          <p className="font-medium text-gray-700">Company Description</p>
+                          <p className="text-sm text-gray-600">{user.bio}</p>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                  {users.filter(u => u.role === "company").length === 0 && (
+                    <p className="text-center text-gray-500 py-8">No company accounts found</p>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Admin Section */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <AlertTriangle className="h-5 w-5" />
+                  Admin Accounts ({users.filter(u => u.role === "admin").length})
+                </CardTitle>
+                <CardDescription>
+                  Platform administrators with full access
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {users.filter(u => u.role === "admin").map((user) => (
+                    <div key={user.id} className="border rounded-lg p-4 space-y-3 bg-amber-50 border-amber-200">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-semibold text-lg">{user.firstName || user.username} {user.lastName}</p>
+                          <p className="text-sm text-gray-600">{user.email}</p>
+                        </div>
+                        <Badge variant="default">Admin</Badge>
+                      </div>
+                      
+                      <div className="text-sm">
+                        <p className="font-medium text-gray-700">Username: {user.username}</p>
+                        <p className="text-xs text-gray-500">Access Level: Full Platform Control</p>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           </TabsContent>
 
           <TabsContent value="internships" className="space-y-6">

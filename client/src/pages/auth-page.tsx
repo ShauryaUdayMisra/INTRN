@@ -48,7 +48,11 @@ type RegisterForm = z.infer<typeof registerSchema>;
 export default function AuthPage() {
   const { user, loginMutation, registerMutation } = useAuth();
   const [, setLocation] = useLocation();
-  const [activeTab, setActiveTab] = useState("login");
+  
+  // Check URL parameter to determine which tab to show
+  const urlParams = new URLSearchParams(window.location.search);
+  const tabFromUrl = urlParams.get("tab");
+  const [activeTab, setActiveTab] = useState(tabFromUrl === "register" ? "register" : "login");
   
   // Check if this is a Replit Auth demo
   const isReplitDemo = new URLSearchParams(window.location.search).get("demo") === "replit";
