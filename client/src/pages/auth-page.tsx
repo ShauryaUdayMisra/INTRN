@@ -13,12 +13,26 @@ import { GraduationCap, Building, Users, TrendingUp, Award, Globe } from "lucide
 import SocialLogin from "@/components/social-login";
 
 const loginSchema = z.object({
-  email: z.string().email("Valid email is required"),
+  email: z.string().min(1, "Email is required").refine((email) => {
+    // Allow admin accounts with @gmail.com format
+    if (email.includes("admin") && email.endsWith("@gmail.com")) {
+      return true;
+    }
+    // Regular email validation
+    return z.string().email().safeParse(email).success;
+  }, "Please enter a valid email address"),
   password: z.string().min(1, "Password is required"),
 });
 
 const registerSchema = z.object({
-  email: z.string().email("Valid email is required"),
+  email: z.string().min(1, "Email is required").refine((email) => {
+    // Allow admin accounts with @gmail.com format
+    if (email.includes("admin") && email.endsWith("@gmail.com")) {
+      return true;
+    }
+    // Regular email validation
+    return z.string().email().safeParse(email).success;
+  }, "Please enter a valid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
   confirmPassword: z.string(),
   firstName: z.string().min(1, "First name is required"),
@@ -41,6 +55,7 @@ export default function AuthPage() {
 
   const loginForm = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
+    mode: "onSubmit", // Prevents blinking by only validating on submit
     defaultValues: {
       email: "",
       password: "",
@@ -49,6 +64,7 @@ export default function AuthPage() {
 
   const registerForm = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
+    mode: "onSubmit", // Prevents blinking by only validating on submit
     defaultValues: {
       email: "",
       password: "",
