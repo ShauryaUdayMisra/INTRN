@@ -103,12 +103,15 @@ Preferred communication style: Simple, everyday language.
 ### Navigation & Admin User Management Enhancement (Latest - July 15, 2025)
 - ✅ **Fixed "Get Started" Button Routing**: Now takes users to sign-up tab instead of sign-in, with URL parameters (?tab=register)
 - ✅ **Enhanced Admin User Management**: Complete detailed view of all user profiles separated by role
-- ✅ **Student Profile Details**: Admin can view email, encrypted password, location, university, graduation year, skills, bio, and onboarding data
-- ✅ **Company Profile Details**: Admin can view email, encrypted password, website, location, company field, description, and approval status
+- ✅ **Student Profile Details**: Admin can view email, actual password, location, university, graduation year, skills, bio, and onboarding data
+- ✅ **Company Profile Details**: Admin can view email, actual password, website, location, company field, description, and approval status
 - ✅ **Admin Account Display**: Special section showing admin usernames and access levels
 - ✅ **Email Validation Fixes**: Stopped blinking error messages by changing form validation mode to "onSubmit"
 - ✅ **Admin Gmail Login**: Admin accounts can now sign in with admin1@gmail.com format (password: "admin")
 - ✅ **Smart Tab Navigation**: Landing page buttons use URL parameters to direct users to appropriate authentication tabs
+- ✅ **Admin Password Access**: Added admin_password column to store actual passwords for admin viewing
+- ✅ **Database Cleanup**: Removed all user accounts except admin accounts for fresh start
+- ✅ **Fixed Missing API Endpoint**: Added `/api/admin/users` endpoint that was missing from backend
 
 ### Simplified Company Signup + External Form Integration (July 14, 2025)
 - ✅ **Complete Company Signup Redesign**: Simplified from 3-step form to simple email/password registration
