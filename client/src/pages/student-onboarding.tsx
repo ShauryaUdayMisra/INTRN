@@ -24,6 +24,7 @@ const onboardingSchema = z.object({
   preferredCompanies: z.array(z.string()).min(1, "Please select at least one company"),
   location: z.string().min(1, "Please enter your location"),
   grade: z.string().min(1, "Please select your grade"),
+  schoolName: z.string().min(1, "Please enter your school name"),
 });
 
 type OnboardingForm = z.infer<typeof onboardingSchema>;
@@ -81,6 +82,7 @@ export default function StudentOnboarding() {
       preferredCompanies: [],
       location: "",
       grade: "",
+      schoolName: "",
     },
   });
 
@@ -397,6 +399,31 @@ export default function StudentOnboarding() {
                           <SelectItem value="12th">12th Grade</SelectItem>
                         </SelectContent>
                       </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </CardContent>
+            </Card>
+
+            {/* School Name */}
+            <Card>
+              <CardHeader>
+                <CardTitle>What's your school name?</CardTitle>
+                <p className="text-sm text-gray-600">Tell us which school you attend</p>
+              </CardHeader>
+              <CardContent>
+                <FormField
+                  control={form.control}
+                  name="schoolName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          placeholder="e.g., Delhi Public School"
+                          {...field}
+                        />
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}

@@ -41,6 +41,7 @@ export const users = pgTable("users", {
   university: text("university"),
   graduationYear: integer("graduation_year"),
   grade: text("grade", { enum: ["9th", "10th", "11th", "12th"] }),
+  schoolName: text("school_name"),
   isApproved: boolean("is_approved").default(false),
   termsAccepted: boolean("terms_accepted").default(false),
   profileComplete: boolean("profile_complete").default(false),

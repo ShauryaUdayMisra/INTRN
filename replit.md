@@ -114,6 +114,7 @@ Preferred communication style: Simple, everyday language.
 - ✅ **Fixed Missing API Endpoint**: Added `/api/admin/users` endpoint that was missing from backend
 - ✅ **Updated Button Text**: Changed "Get Started"/"Get Started Today" to "For Highschoolers"/"I'm a Highschooler" for better targeting
 - ✅ **Added Grade Field**: Added grade selection (9th, 10th, 11th, 12th) to student onboarding form
+- ✅ **Added School Name Field**: Added school name input field to student onboarding for educational background
 - ✅ **Removed Fake Accounts**: Eliminated all automatic creation of fake users (Rahul Sharma, Priya Singh, etc.) from seed script
 
 ### Simplified Company Signup + External Form Integration (July 14, 2025)
