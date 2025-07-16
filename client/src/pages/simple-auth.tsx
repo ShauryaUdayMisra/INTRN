@@ -339,20 +339,7 @@ export default function SimpleAuth() {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-4 text-center">
-            <div>
-              <Users className="h-6 w-6 mx-auto mb-2" />
-              <p className="text-sm">10,000+ Students</p>
-            </div>
-            <div>
-              <TrendingUp className="h-6 w-6 mx-auto mb-2" />
-              <p className="text-sm">500+ Companies</p>
-            </div>
-            <div>
-              <Award className="h-6 w-6 mx-auto mb-2" />
-              <p className="text-sm">95% Success Rate</p>
-            </div>
-          </div>
+          
         </div>
       </div>
     </div>
