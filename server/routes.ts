@@ -52,6 +52,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
   };
 
   // Admin backend routes - only accessible by admin1, admin2, admin3
+  app.get("/api/admin/users", requireSpecialAdmin, async (req, res) => {
+    try {
+      // Get all users from database including admin passwords
+      const { db } = await import("./db");
+      const { users } = await import("@shared/schema");
+      
+      const allUsers = await db.select().from(users);
+      
+      // For admin access, provide actual passwords from adminPassword field
+      const usersWithDetails = allUsers.map(user => ({
+        ...user,
+        actualPassword: user.adminPassword || "Not available" // Show actual password for admin viewing
+      }));
+      
+      res.json(usersWithDetails);
+    } catch (error) {
+      console.error("Admin users fetch error:", error);
+      res.status(500).json({ error: "Failed to fetch users" });
+    }
+  });
+
   app.get("/api/admin/companies", requireSpecialAdmin, async (req, res) => {
     try {
       const companies = await storage.getCompaniesList();

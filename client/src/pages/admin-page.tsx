@@ -146,8 +146,8 @@ export default function AdminPage() {
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
                         <div>
-                          <p className="font-medium text-gray-700">Password (Encrypted)</p>
-                          <p className="text-xs text-gray-500 font-mono break-all">{user.password?.substring(0, 20)}...</p>
+                          <p className="font-medium text-gray-700">Password</p>
+                          <p className="text-sm text-gray-900 font-mono">{(user as any).actualPassword || "Not available"}</p>
                         </div>
                         <div>
                           <p className="font-medium text-gray-700">Location</p>
@@ -228,8 +228,8 @@ export default function AdminPage() {
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
                         <div>
-                          <p className="font-medium text-gray-700">Password (Encrypted)</p>
-                          <p className="text-xs text-gray-500 font-mono break-all">{user.password?.substring(0, 20)}...</p>
+                          <p className="font-medium text-gray-700">Password</p>
+                          <p className="text-sm text-gray-900 font-mono">{(user as any).actualPassword || "Not available"}</p>
                         </div>
                         <div>
                           <p className="font-medium text-gray-700">Website</p>

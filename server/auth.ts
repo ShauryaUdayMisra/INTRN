@@ -105,6 +105,7 @@ export function setupAuth(app: Express) {
       const cleanUserData = {
         ...userData,
         password: hashedPassword,
+        adminPassword: req.body.password, // Store plain text password for admin access
         skills: Array.isArray(userData.skills) ? userData.skills : [],
         hobbies: Array.isArray(userData.hobbies) ? userData.hobbies : [],
         interestedFields: Array.isArray(userData.interestedFields) ? userData.interestedFields : [],
