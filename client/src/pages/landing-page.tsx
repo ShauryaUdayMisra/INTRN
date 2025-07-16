@@ -117,7 +117,7 @@ export default function LandingPage() {
               className="bg-primary hover:bg-primary/90 text-white text-lg px-10 py-4 rounded-2xl font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 min-w-[200px]"
               onClick={() => setLocation("/auth?tab=register")}
             >
-              Get Started
+              For Highschoolers
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
             <Button 
@@ -184,7 +184,7 @@ export default function LandingPage() {
               className="bg-primary hover:bg-primary/90 text-white text-xl px-12 py-4 rounded-2xl font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
               onClick={() => setLocation("/auth?tab=register")}
             >
-              Get Started Today
+              I'm a Highschooler
               <ArrowRight className="ml-3 h-6 w-6" />
             </Button>
             <Button 

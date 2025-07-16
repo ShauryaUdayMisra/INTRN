@@ -112,6 +112,7 @@ Preferred communication style: Simple, everyday language.
 - ✅ **Admin Password Access**: Added admin_password column to store actual passwords for admin viewing
 - ✅ **Database Cleanup**: Removed all user accounts except admin accounts for fresh start
 - ✅ **Fixed Missing API Endpoint**: Added `/api/admin/users` endpoint that was missing from backend
+- ✅ **Updated Button Text**: Changed "Get Started"/"Get Started Today" to "For Highschoolers"/"I'm a Highschooler" for better targeting
 
 ### Simplified Company Signup + External Form Integration (July 14, 2025)
 - ✅ **Complete Company Signup Redesign**: Simplified from 3-step form to simple email/password registration
