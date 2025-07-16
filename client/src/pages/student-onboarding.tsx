@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useAuth } from "@/hooks/use-auth";
 import { useLocation } from "wouter";
 import { useMutation } from "@tanstack/react-query";
@@ -22,6 +23,7 @@ const onboardingSchema = z.object({
   internshipDuration: z.string().min(1, "Please select internship duration"),
   preferredCompanies: z.array(z.string()).min(1, "Please select at least one company"),
   location: z.string().min(1, "Please enter your location"),
+  grade: z.string().min(1, "Please select your grade"),
 });
 
 type OnboardingForm = z.infer<typeof onboardingSchema>;
@@ -78,6 +80,7 @@ export default function StudentOnboarding() {
       internshipDuration: "",
       preferredCompanies: [],
       location: "",
+      grade: "",
     },
   });
 
@@ -362,6 +365,38 @@ export default function StudentOnboarding() {
                           {...field}
                         />
                       </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </CardContent>
+            </Card>
+
+            {/* Grade */}
+            <Card>
+              <CardHeader>
+                <CardTitle>What grade are you in?</CardTitle>
+                <p className="text-sm text-gray-600">Help us find age-appropriate opportunities</p>
+              </CardHeader>
+              <CardContent>
+                <FormField
+                  control={form.control}
+                  name="grade"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select your grade" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="9th">9th Grade</SelectItem>
+                          <SelectItem value="10th">10th Grade</SelectItem>
+                          <SelectItem value="11th">11th Grade</SelectItem>
+                          <SelectItem value="12th">12th Grade</SelectItem>
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
                   )}
