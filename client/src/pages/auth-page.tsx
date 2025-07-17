@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { GraduationCap, Building, Users, TrendingUp, Award, Globe } from "lucide-react";
-import SocialLogin from "@/components/social-login";
+
 
 const loginSchema = z.object({
   email: z.string().min(1, "Email is required").refine((email) => {
@@ -184,8 +184,6 @@ export default function AuthPage() {
                         placeholder="Enter email"
                         autoComplete="off"
                         name="t4k8m3z7"
-                        readOnly
-                        onFocus={(e) => e.target.removeAttribute('readonly')}
                       />
                       {loginForm.formState.errors.email && (
                         <p className="text-sm text-red-500 mt-1">
@@ -202,8 +200,6 @@ export default function AuthPage() {
                         placeholder="Enter password"
                         autoComplete="off"
                         name="p9w2x5q1"
-                        readOnly
-                        onFocus={(e) => e.target.removeAttribute('readonly')}
                       />
                       {loginForm.formState.errors.password && (
                         <p className="text-sm text-red-500 mt-1">
@@ -219,18 +215,6 @@ export default function AuthPage() {
                       {loginMutation.isPending ? "Signing In..." : "Sign In"}
                     </Button>
                   </form>
-                  
-                  <div className="mt-6">
-                    <div className="relative">
-                      <div className="absolute inset-0 flex items-center">
-                        <span className="w-full border-t" />
-                      </div>
-                      <div className="relative flex justify-center text-xs uppercase">
-                        <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
-                      </div>
-                    </div>
-                    <SocialLogin />
-                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -257,8 +241,6 @@ export default function AuthPage() {
                           placeholder="First name"
                           autoComplete="off"
                           name="y5n9h2k8"
-                          readOnly
-                          onFocus={(e) => e.target.removeAttribute('readonly')}
                         />
                         {registerForm.formState.errors.firstName && (
                           <p className="text-sm text-red-500 mt-1">
@@ -274,8 +256,6 @@ export default function AuthPage() {
                           placeholder="Last name"
                           autoComplete="off"
                           name="q8r3l6s1"
-                          readOnly
-                          onFocus={(e) => e.target.removeAttribute('readonly')}
                         />
                         {registerForm.formState.errors.lastName && (
                           <p className="text-sm text-red-500 mt-1">
@@ -294,8 +274,6 @@ export default function AuthPage() {
                         placeholder="Enter email"
                         autoComplete="off"
                         name="j4x7v9m2"
-                        readOnly
-                        onFocus={(e) => e.target.removeAttribute('readonly')}
                       />
                       {registerForm.formState.errors.email && (
                         <p className="text-sm text-red-500 mt-1">
@@ -314,8 +292,6 @@ export default function AuthPage() {
                           placeholder="Create password"
                           autoComplete="off"
                           name="w1z5c8f3"
-                          readOnly
-                          onFocus={(e) => e.target.removeAttribute('readonly')}
                         />
                         {registerForm.formState.errors.password && (
                           <p className="text-sm text-red-500 mt-1">
@@ -332,8 +308,6 @@ export default function AuthPage() {
                           placeholder="Confirm password"
                           autoComplete="off"
                           name="b6g4t2a9"
-                          readOnly
-                          onFocus={(e) => e.target.removeAttribute('readonly')}
                         />
                         {registerForm.formState.errors.confirmPassword && (
                           <p className="text-sm text-red-500 mt-1">
@@ -352,17 +326,6 @@ export default function AuthPage() {
                     </Button>
                   </form>
                   
-                  <div className="mt-6">
-                    <div className="relative">
-                      <div className="absolute inset-0 flex items-center">
-                        <span className="w-full border-t" />
-                      </div>
-                      <div className="relative flex justify-center text-xs uppercase">
-                        <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
-                      </div>
-                    </div>
-                    <SocialLogin />
-                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
