@@ -154,6 +154,14 @@ export default function AdminPage() {
                           <p>{user.location || "Not specified"}</p>
                         </div>
                         <div>
+                          <p className="font-medium text-gray-700">Grade</p>
+                          <p>{(user as any).grade || "Not specified"}</p>
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-700">School Name</p>
+                          <p>{(user as any).schoolName || "Not specified"}</p>
+                        </div>
+                        <div>
                           <p className="font-medium text-gray-700">University</p>
                           <p>{user.university || "Not specified"}</p>
                         </div>
@@ -179,6 +187,46 @@ export default function AdminPage() {
                               <Badge key={index} variant="secondary" className="text-xs">{skill}</Badge>
                             ))}
                           </div>
+                        </div>
+                      )}
+
+                      {(user as any).hobbies && (user as any).hobbies.length > 0 && (
+                        <div>
+                          <p className="font-medium text-gray-700 mb-2">Hobbies</p>
+                          <div className="flex flex-wrap gap-1">
+                            {(user as any).hobbies.map((hobby: string, index: number) => (
+                              <Badge key={index} variant="outline" className="text-xs">{hobby}</Badge>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {(user as any).interestedFields && (user as any).interestedFields.length > 0 && (
+                        <div>
+                          <p className="font-medium text-gray-700 mb-2">Interested Fields</p>
+                          <div className="flex flex-wrap gap-1">
+                            {(user as any).interestedFields.map((field: string, index: number) => (
+                              <Badge key={index} variant="default" className="text-xs">{field}</Badge>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {(user as any).preferredCompanies && (user as any).preferredCompanies.length > 0 && (
+                        <div>
+                          <p className="font-medium text-gray-700 mb-2">Preferred Companies</p>
+                          <div className="flex flex-wrap gap-1">
+                            {(user as any).preferredCompanies.map((company: string, index: number) => (
+                              <Badge key={index} variant="destructive" className="text-xs">{company}</Badge>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {(user as any).internshipDuration && (
+                        <div>
+                          <p className="font-medium text-gray-700">Internship Duration Preference</p>
+                          <p className="text-sm text-gray-600">{(user as any).internshipDuration}</p>
                         </div>
                       )}
                       
