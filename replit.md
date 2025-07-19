@@ -119,6 +119,7 @@ Preferred communication style: Simple, everyday language.
 - ✅ **Removed Fake Accounts**: Eliminated all automatic creation of fake users (Rahul Sharma, Priya Singh, etc.) from seed script
 - ✅ **Removed Replit Auth**: Eliminated "Sign in with Replit" social login option from authentication page
 - ✅ **Fixed Keyboard Responsiveness**: Removed `readOnly` attribute from input fields that was causing multiple key presses needed for typing
+- ✅ **Added Founder Story Blog**: Added "Why I Started INTRN" as featured article covering the origin story from 8th grade competition idea to current platform
 
 ### Simplified Company Signup + External Form Integration (July 14, 2025)
 - ✅ **Complete Company Signup Redesign**: Simplified from 3-step form to simple email/password registration

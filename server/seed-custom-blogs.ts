@@ -4,6 +4,36 @@ import { eq } from "drizzle-orm";
 
 const customBlogPosts = [
   {
+    title: "Why I Started INTRN",
+    slug: "why-i-started-intrn",
+    content: `INTRN originally started as an idea for a random school competition back in 8th grade. I remember seeing this tech competition that looked really cool and modern, but I didn't have any existing project or product to showcase. I still wanted to participate, so I came up with something completely new — a platform where high school students could find internships to help them build experience and explore career paths.
+
+At the time, it was more of a concept than an actual product. I put together a very basic website with no backend, no data, and no real system to onboard companies or list internships. But even though the competition didn't lead to much, the idea stuck with me. It planted a seed that would eventually grow into INTRN as it is today.
+
+## The Real-World Experience That Changed Everything
+
+Fast forward two years, and I found myself doing an internship at JNU, one of India's top research universities. That internship happened only because the professor was my close family. It was an incredible experience, and it opened my eyes to just how important internships can be — not just for college applications, but also for learning skills and building connections.
+
+That experience made me think: what about students who don't have those kinds of connections? That's when I realised the true value of INTRN — as to why the concept was so good and how exactly it could also help someone like me who wanted to do internships in other fields but lacked the connections too.
+
+## From Concept to Reality
+
+So, in the summer after 10th grade, I came back to the idea of INTRN. This time, I made a fully functioning website, onboarded a couple of companies, and started giving out student internships. Even though it's still in its starting stage, this whole process has taught me a lot — from connecting with people and companies to understanding how to make a website properly, to building a functioning backend, how to use APIs, and learning basic UI/UX.
+
+So, after rediscovering the website and adding proper functionality, I started onboarding companies and learning more about how to market and build INTRN into something truly meaningful — where, no matter the connection, money, or anything, any student could get an internship if they had the desire and will to do so.
+
+## Full Circle
+
+So, a last-minute idea from a school competition truly came a full 360 and morphed into something truly impactful and great. Today, INTRN isn't just about internships — it's about creating equal opportunities for all students to explore their potential, regardless of their background or connections.
+
+This journey has taught me that sometimes the best ideas come from the simplest observations: that talented students deserve opportunities, and those opportunities shouldn't depend on who you know, but on your willingness to learn and grow.`,
+    excerpt: "The origin story of INTRN - from a last-minute school competition idea to a platform creating equal internship opportunities for all students.",
+    tags: ["founder-story", "startup-journey", "student-empowerment", "equal-opportunity"],
+    category: "founder-insights",
+    published: true,
+    featuredImage: null
+  },
+  {
     title: "Why Internships Matter More Than Ever in 2025",
     slug: "why-internships-matter-2025",
     content: `In a world that's evolving faster than ever, the traditional route of studying hard, getting good grades, and then landing a job is no longer enough. Employers are looking for something more — real-world experience, problem-solving ability, and initiative. That's where internships come in. In 2025, internships have become a critical part of a student's journey, not just a nice-to-have.
