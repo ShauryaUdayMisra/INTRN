@@ -138,7 +138,7 @@ export default function BlogPage() {
                 <p className="text-gray-600 mb-6">
                   {filteredPosts[0].excerpt}
                 </p>
-                <Button>Read Full Article</Button>
+                <Button onClick={() => setLocation(`/blog/${filteredPosts[0].slug}`)}>Read Full Article</Button>
               </CardContent>
             </Card>
           </div>
