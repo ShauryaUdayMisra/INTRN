@@ -327,14 +327,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
     
     try {
-      const validatedData = insertApplicationSchema.parse(req.body);
+      const applicationData = {
+        internshipId: req.body.internshipId,
+        coverLetter: req.body.coverLetter || "Application submitted through INTRN platform",
+        resume: req.body.resume || "Available upon request",
+        status: req.body.status || "pending"
+      };
+      
+      const validatedData = insertApplicationSchema.parse(applicationData);
       const application = await storage.createApplication({
         ...validatedData,
         studentId: req.user.id,
       });
       res.status(201).json(application);
     } catch (error) {
-      res.status(400).json({ message: "Invalid application data" });
+      console.error("Application creation error:", error);
+      res.status(400).json({ message: "Invalid application data", error: error.message });
     }
   });
 

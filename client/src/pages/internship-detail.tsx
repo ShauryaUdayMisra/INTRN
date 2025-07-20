@@ -66,12 +66,14 @@ export default function InternshipDetail() {
   const applyMutation = useMutation({
     mutationFn: async () => {
       if (!internship) throw new Error("No internship found");
+      if (!user) throw new Error("User not authenticated");
       return apiRequest(`/api/applications`, {
         method: "POST",
         body: {
           internshipId: internship.id,
           coverLetter: "Application submitted through INTRN platform",
-          resume: "Available upon request"
+          resume: "Available upon request",
+          status: "pending"
         }
       });
     },
@@ -256,7 +258,7 @@ export default function InternshipDetail() {
                           rel="noopener noreferrer"
                           className="text-primary hover:underline"
                         >
-                          {company.website}
+                          https://ripplesofhope.in/
                         </a>
                       </div>
                     )}

@@ -38,7 +38,7 @@ export async function seedRipplesInternship() {
           companyName: "Ripples of Hope",
           companyField: "Social Impact",
           location: "UP, Bihar, Uttarakhand, MP",
-          website: "https://ripplesofhope.org",
+          website: "https://ripplesofhope.in/",
           isApproved: true,
           profileComplete: true,
         })
