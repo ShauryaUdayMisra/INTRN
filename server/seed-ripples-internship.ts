@@ -54,7 +54,7 @@ export async function seedRipplesInternship() {
       requirements: "Excel proficiency required. More importantly, understanding of the socio-cultural fabric of the poor in rural India. Research experience preferred but not required. Willingness to travel to rural locations is a plus.",
       location: "UP, Bihar, Uttarakhand, MP (also available online)",
       type: "hybrid",
-      duration: "2-3 months",
+      duration: "7-28 days",
       skills: ["Excel", "Research", "Cultural Understanding", "Data Analysis", "Field Work"],
       applicationDeadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
       startDate: new Date(Date.now() + 45 * 24 * 60 * 60 * 1000), // 45 days from now
