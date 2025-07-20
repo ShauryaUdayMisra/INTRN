@@ -179,8 +179,13 @@ export default function LandingPage() {
             {/* Ripples of Hope */}
             <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50" onClick={() => setLocation("/auth?tab=register")}>
               <div className="relative h-48 bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center overflow-hidden">
-                <div className="w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center">
-                  <Globe className="w-10 h-10 text-white" />
+                {/* Water ripple effect visual */}
+                <div className="relative">
+                  <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center animate-pulse">
+                    <Globe className="w-8 h-8 text-white" />
+                  </div>
+                  <div className="absolute inset-0 w-16 h-16 border-2 border-blue-400 rounded-full animate-ping opacity-75"></div>
+                  <div className="absolute inset-0 w-20 h-20 -m-2 border-2 border-blue-300 rounded-full animate-ping opacity-50" style={{animationDelay: '0.5s'}}></div>
                 </div>
               </div>
               <CardContent className="p-6">
@@ -202,8 +207,14 @@ export default function LandingPage() {
             {/* Vireon Labs */}
             <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50" onClick={() => setLocation("/auth?tab=register")}>
               <div className="relative h-48 bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center overflow-hidden">
-                <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center">
-                  <Brain className="w-10 h-10 text-white" />
+                {/* DNA helix visual for biotech */}
+                <div className="relative">
+                  <div className="w-16 h-16 bg-green-500 rounded-xl flex items-center justify-center transform rotate-12 group-hover:rotate-45 transition-transform duration-500">
+                    <Brain className="w-8 h-8 text-white" />
+                  </div>
+                  <div className="absolute top-2 left-2 w-3 h-3 bg-green-400 rounded-full animate-bounce"></div>
+                  <div className="absolute bottom-2 right-2 w-2 h-2 bg-green-300 rounded-full animate-bounce" style={{animationDelay: '0.3s'}}></div>
+                  <div className="absolute top-8 right-0 w-2 h-2 bg-green-600 rounded-full animate-bounce" style={{animationDelay: '0.6s'}}></div>
                 </div>
               </div>
               <CardContent className="p-6">
@@ -225,8 +236,14 @@ export default function LandingPage() {
             {/* Blupeak Ventures */}
             <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50" onClick={() => setLocation("/auth?tab=register")}>
               <div className="relative h-48 bg-gradient-to-br from-purple-50 to-purple-100 flex items-center justify-center overflow-hidden">
-                <div className="w-20 h-20 bg-purple-500 rounded-full flex items-center justify-center">
-                  <TrendingUp className="w-10 h-10 text-white" />
+                {/* Mountain peak visual for venture capital */}
+                <div className="relative">
+                  <div className="w-16 h-16 bg-purple-500 rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
+                    <TrendingUp className="w-8 h-8 text-white" />
+                  </div>
+                  {/* Mountain peaks background */}
+                  <div className="absolute -top-4 -left-8 w-0 h-0 border-l-[20px] border-r-[20px] border-b-[30px] border-l-transparent border-r-transparent border-b-purple-300 opacity-60"></div>
+                  <div className="absolute -top-2 left-4 w-0 h-0 border-l-[15px] border-r-[15px] border-b-[20px] border-l-transparent border-r-transparent border-b-purple-400 opacity-80"></div>
                 </div>
               </div>
               <CardContent className="p-6">
