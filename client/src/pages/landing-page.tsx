@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useAuth } from "@/hooks/use-auth";
 import { useEffect } from "react";
 import { useLocation } from "wouter";
-import { ArrowRight, Zap, Compass, TrendingUp, Sparkles, Brain, Award, Flame, Target, GraduationCap } from "lucide-react";
+import { ArrowRight, Zap, Compass, TrendingUp, Sparkles, Brain, Award, Flame, Target, GraduationCap, Globe } from "lucide-react";
 
 // Custom Diploma Scroll Icon Component (based on attached image)
 const DiplomaIcon = ({ className }: { className?: string }) => (
@@ -163,6 +163,87 @@ export default function LandingPage() {
             <p className="text-black leading-relaxed">
               Create a strong resume, gain references, and build connections that help you succeed in college and career.
             </p>
+          </div>
+        </div>
+
+        {/* Featured Internships - Preview Section */}
+        <div className="mb-24">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-black mb-6">Explore Real Internship Opportunities</h2>
+            <p className="text-xl text-black max-w-2xl mx-auto">
+              Join high schoolers working on meaningful projects at top organizations
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Ripples of Hope */}
+            <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50" onClick={() => setLocation("/auth?tab=register")}>
+              <div className="relative h-48 bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center overflow-hidden">
+                <div className="w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center">
+                  <Globe className="w-10 h-10 text-white" />
+                </div>
+              </div>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">Social Impact</span>
+                  <span className="text-gray-500 text-sm">Remote + Travel</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">Ripples of Hope</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Research the impact of sports on marriage choices of adolescent girls in underprivileged communities in rural North India. Field work opportunities in UP, Bihar...
+                </p>
+                <div className="mt-4 flex items-center justify-between">
+                  <span className="text-primary font-semibold">Apply Now</span>
+                  <ArrowRight className="w-4 h-4 text-primary group-hover:translate-x-1 transition-transform" />
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Vireon Labs */}
+            <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50" onClick={() => setLocation("/auth?tab=register")}>
+              <div className="relative h-48 bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center overflow-hidden">
+                <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center">
+                  <Brain className="w-10 h-10 text-white" />
+                </div>
+              </div>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">Biotechnology</span>
+                  <span className="text-gray-500 text-sm">Remote</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">Vireon Labs</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Join our biotechnology research team to work on cutting-edge genetic analysis projects. Learn lab techniques, data analysis, and contribute to real research publications...
+                </p>
+                <div className="mt-4 flex items-center justify-between">
+                  <span className="text-primary font-semibold">Apply Now</span>
+                  <ArrowRight className="w-4 h-4 text-primary group-hover:translate-x-1 transition-transform" />
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Blupeak Ventures */}
+            <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50" onClick={() => setLocation("/auth?tab=register")}>
+              <div className="relative h-48 bg-gradient-to-br from-purple-50 to-purple-100 flex items-center justify-center overflow-hidden">
+                <div className="w-20 h-20 bg-purple-500 rounded-full flex items-center justify-center">
+                  <TrendingUp className="w-10 h-10 text-white" />
+                </div>
+              </div>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">Venture Capital</span>
+                  <span className="text-gray-500 text-sm">Hybrid</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">Blupeak Ventures</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Gain insights into startup investments and venture capital. Analyze market trends, conduct due diligence research, and learn about the startup ecosystem from industry experts...
+                </p>
+                <div className="mt-4 flex items-center justify-between">
+                  <span className="text-primary font-semibold">Apply Now</span>
+                  <ArrowRight className="w-4 h-4 text-primary group-hover:translate-x-1 transition-transform" />
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
 

@@ -326,6 +326,19 @@ export default function AuthPage() {
                     </Button>
                   </form>
                   
+                  {/* For Companies Button */}
+                  <div className="mt-4 pt-4 border-t border-gray-200">
+                    <p className="text-center text-sm text-gray-600 mb-3">Are you a company looking to hire interns?</p>
+                    <Button 
+                      variant="outline" 
+                      className="w-full border-2 border-primary text-primary hover:bg-primary hover:text-white"
+                      onClick={() => setLocation("/company-info")}
+                    >
+                      <Building className="mr-2 h-4 w-4" />
+                      For Companies
+                    </Button>
+                  </div>
+                  
                 </CardContent>
               </Card>
             </TabsContent>

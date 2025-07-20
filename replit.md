@@ -120,6 +120,10 @@ Preferred communication style: Simple, everyday language.
 - ✅ **Removed Replit Auth**: Eliminated "Sign in with Replit" social login option from authentication page
 - ✅ **Fixed Keyboard Responsiveness**: Removed `readOnly` attribute from input fields that was causing multiple key presses needed for typing
 - ✅ **Added Founder Story Blog**: Added "Why I Started INTRN" as featured article covering the origin story from 8th grade competition idea to current platform
+- ✅ **Fixed Blog Navigation**: Fixed "Read Full Article" button to properly navigate to full blog post detail page
+- ✅ **Enhanced Blog Display**: Founder story now appears both as featured article and first card in blog grid for maximum visibility
+- ✅ **Added Internship Preview Section**: Added featured internships section on landing page with Ripples of Hope, Vireon Labs, and Blupeak Ventures
+- ✅ **Enhanced Student Signup**: Added "For Companies" button in student signup page for easy company registration access
 
 ### Simplified Company Signup + External Form Integration (July 14, 2025)
 - ✅ **Complete Company Signup Redesign**: Simplified from 3-step form to simple email/password registration
