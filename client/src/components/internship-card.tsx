@@ -6,6 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { Internship } from "@shared/schema";
+import { useLocation } from "wouter";
 import { MapPin, Clock, DollarSign, Heart, Building, Edit, Eye } from "lucide-react";
 import { useState } from "react";
 
@@ -17,6 +18,7 @@ interface InternshipCardProps {
 export default function InternshipCard({ internship, showManage = false }: InternshipCardProps) {
   const { user } = useAuth();
   const { toast } = useToast();
+  const [, setLocation] = useLocation();
   const [isFavorite, setIsFavorite] = useState(false);
 
   const applyMutation = useMutation({
@@ -96,8 +98,15 @@ export default function InternshipCard({ internship, showManage = false }: Inter
     return "C";
   };
 
+  const handleCardClick = () => {
+    setLocation(`/internship/${internship.id}`);
+  };
+
   return (
-    <Card className="bg-white hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 hover:border-primary/20">
+    <Card 
+      className="bg-white hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 hover:border-primary/20 cursor-pointer"
+      onClick={handleCardClick}
+    >
       <CardContent className="p-6">
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center">
@@ -116,7 +125,10 @@ export default function InternshipCard({ internship, showManage = false }: Inter
               className={`text-gray-400 hover:text-red-500 transition-colors ${
                 isFavorite ? "text-red-500" : ""
               }`}
-              onClick={handleToggleFavorite}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleToggleFavorite();
+              }}
               disabled={favoriteMutation.isPending}
             >
               <Heart className={`h-4 w-4 ${isFavorite ? "fill-current" : ""}`} />

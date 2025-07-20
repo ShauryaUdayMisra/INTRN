@@ -26,6 +26,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   await seedSampleData();
   await seedCustomBlogs();
   
+  // Import and call ripples internship seeding
+  const { seedRipplesInternship } = await import("./seed-ripples-internship");
+  await seedRipplesInternship();
+  
   // Replit Auth user route
   app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
     try {
@@ -426,6 +430,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
     
     res.json(req.user);
+  });
+
+  // Get user by ID (public info only)
+  app.get("/api/users/:id", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const user = await storage.getUser(id);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      // Return only public information
+      const publicUser = {
+        id: user.id,
+        companyName: user.companyName,
+        companyField: user.companyField,
+        location: user.location,
+        website: user.website,
+      };
+      res.json(publicUser);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch user" });
+    }
   });
 
   app.put("/api/profile", async (req, res) => {

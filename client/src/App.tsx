@@ -13,6 +13,8 @@ import DashboardPage from "@/pages/dashboard-simple";
 import SearchPage from "@/pages/search-page";
 import BlogPage from "@/pages/blog-page";
 import BlogPostDetail from "@/pages/blog-post-detail";
+import InternshipDetail from "@/pages/internship-detail";
+import ApplicationSuccess from "@/pages/application-success";
 import AdminPage from "@/pages/admin-page";
 import AdminBackend from "@/pages/admin-backend";
 import StudentOnboarding from "@/pages/student-onboarding";
@@ -45,6 +47,8 @@ function Router() {
         <ProtectedRoute path="/search" component={() => <PageTransition><SearchPage /></PageTransition>} />
         <Route path="/blog/:slug" component={() => <PageTransition><BlogPostDetail /></PageTransition>} />
         <Route path="/blog" component={() => <PageTransition><BlogPage /></PageTransition>} />
+        <Route path="/internship/:id" component={() => <PageTransition><InternshipDetail /></PageTransition>} />
+        <Route path="/application-success" component={() => <PageTransition><ApplicationSuccess /></PageTransition>} />
         <ProtectedRoute path="/admin" component={() => <PageTransition><AdminPage /></PageTransition>} />
         <Route path="/admin-backend" component={() => <PageTransition><AdminBackend /></PageTransition>} />
         <Route path="/status" component={() => <PageTransition><PlatformStatus /></PageTransition>} />
