@@ -115,7 +115,6 @@ export default function InternshipCard({ internship, showManage = false }: Inter
             </div>
             <div className="ml-3">
               <h3 className="font-semibold text-gray-900">{internship.title}</h3>
-              <p className="text-gray-600 text-sm">Company ID: {internship.companyId}</p>
             </div>
           </div>
           {user?.role === "student" && (
