@@ -13,7 +13,24 @@ export async function seedRipplesInternship() {
       .where(eq(internships.title, "Research Intern - Social Impact of Sports"));
 
     if (existingInternship.length > 0) {
-      console.log("⏭️ Ripples of Hope internship already exists");
+      // Update existing internship with correct data
+      await db
+        .update(internships)
+        .set({
+          duration: "7-28 days",
+          location: "UP, Bihar, Uttarakhand, MP (also available online)",
+        })
+        .where(eq(internships.title, "Research Intern - Social Impact of Sports"));
+      
+      // Also update the company website
+      await db
+        .update(users)
+        .set({
+          website: "https://ripplesofhope.in/",
+        })
+        .where(eq(users.companyName, "Ripples of Hope"));
+      
+      console.log("✅ Ripples of Hope internship updated successfully!");
       return;
     }
 

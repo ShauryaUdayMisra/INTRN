@@ -67,14 +67,11 @@ export default function InternshipDetail() {
     mutationFn: async () => {
       if (!internship) throw new Error("No internship found");
       if (!user) throw new Error("User not authenticated");
-      return apiRequest(`/api/applications`, {
-        method: "POST",
-        body: {
-          internshipId: internship.id,
-          coverLetter: "Application submitted through INTRN platform",
-          resume: "Available upon request",
-          status: "pending"
-        }
+      return apiRequest("POST", "/api/applications", {
+        internshipId: internship.id,
+        coverLetter: "Application submitted through INTRN platform",
+        resume: "Available upon request",
+        status: "pending"
       });
     },
     onSuccess: () => {
