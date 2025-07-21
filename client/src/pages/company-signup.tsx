@@ -111,45 +111,46 @@ export default function CompanySignup() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-purple-50 to-primary-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-purple-50 to-primary-100 flex items-center justify-center p-4 sm:p-6">
       <div className="w-full max-w-md">
         {/* Header */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-6 sm:mb-8">
           <div className="flex items-center justify-center mb-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center mr-3">
-              <Building2 className="h-6 w-6 text-white" />
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center mr-3">
+              <Building2 className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
             </div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">intrn</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">intrn</h1>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Join as a Company</h2>
-          <p className="text-gray-600">Connect with talented high school students</p>
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Join as a Company</h2>
+          <p className="text-sm sm:text-base text-gray-600">Connect with talented high school students</p>
         </div>
 
         <Card className="border-0 shadow-xl">
           <CardHeader className="text-center pb-4">
-            <CardTitle className="flex items-center justify-center gap-2">
+            <CardTitle className="flex items-center justify-center gap-2 text-lg sm:text-xl">
               <Building2 className="h-5 w-5 text-primary" />
               Company Registration
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-sm sm:text-base">
               Create your account to get started
             </CardDescription>
           </CardHeader>
 
-          <CardContent>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" autoComplete="off">
+          <CardContent className="px-4 sm:px-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 sm:space-y-6" autoComplete="off">
               {/* Hidden dummy fields to confuse autofill */}
               <input type="text" name="dummy1" autoComplete="username" style={{position: 'absolute', top: '-1000px', left: '-1000px'}} />
               <input type="password" name="dummy2" autoComplete="new-password" style={{position: 'absolute', top: '-1000px', left: '-1000px'}} />
               
-              <div>
-                <Label htmlFor="x9k4m7q2">Email Address *</Label>
+              <div className="space-y-2">
+                <Label htmlFor="x9k4m7q2" className="text-sm sm:text-base font-medium">Email Address *</Label>
                 <Input
                   {...form.register("email")}
                   type="email"
                   placeholder="Enter your email address"
                   autoComplete="off"
                   id="x9k4m7q2"
+                  className="h-11 sm:h-12 text-base"
                   readOnly
                   onFocus={(e) => e.target.removeAttribute('readonly')}
                 />
@@ -158,14 +159,15 @@ export default function CompanySignup() {
                 )}
               </div>
 
-              <div>
-                <Label htmlFor="p8w3n5t1">Password *</Label>
+              <div className="space-y-2">
+                <Label htmlFor="p8w3n5t1" className="text-sm sm:text-base font-medium">Password *</Label>
                 <Input
                   {...form.register("password")}
                   type="password"
                   placeholder="Choose a secure password"
                   autoComplete="off"
                   id="p8w3n5t1"
+                  className="h-11 sm:h-12 text-base"
                   readOnly
                   onFocus={(e) => e.target.removeAttribute('readonly')}
                 />
@@ -174,14 +176,15 @@ export default function CompanySignup() {
                 )}
               </div>
 
-              <div>
-                <Label htmlFor="h7v4x8z5">Confirm Password *</Label>
+              <div className="space-y-2">
+                <Label htmlFor="h7v4x8z5" className="text-sm sm:text-base font-medium">Confirm Password *</Label>
                 <Input
                   {...form.register("confirmPassword")}
                   type="password"
                   placeholder="Confirm your password"
                   autoComplete="off"
                   id="h7v4x8z5"
+                  className="h-11 sm:h-12 text-base"
                   readOnly
                   onFocus={(e) => e.target.removeAttribute('readonly')}
                 />
@@ -192,7 +195,7 @@ export default function CompanySignup() {
 
               <Button 
                 type="submit" 
-                className="w-full bg-primary hover:bg-primary/90" 
+                className="w-full h-11 sm:h-12 bg-primary hover:bg-primary/90 text-base sm:text-lg font-medium mt-6" 
                 disabled={signupMutation.isPending}
               >
                 {signupMutation.isPending ? "Creating Account..." : "Sign Up"}

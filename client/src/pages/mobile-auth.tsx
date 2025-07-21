@@ -124,18 +124,24 @@ export default function MobileAuth() {
                 Connect. Learn. Grow.
               </p>
               <div className="grid grid-cols-2 gap-4 mb-6">
-                <div className="text-center">
+                <button 
+                  onClick={() => setActiveTab("register")}
+                  className="text-center p-2 rounded-lg hover:bg-primary/5 transition-colors"
+                >
                   <div className="bg-primary/10 rounded-full p-3 w-12 h-12 mx-auto mb-2 flex items-center justify-center">
                     <GraduationCap className="h-6 w-6 text-primary" />
                   </div>
                   <p className="text-xs text-gray-600">For Students</p>
-                </div>
-                <div className="text-center">
+                </button>
+                <button 
+                  onClick={() => setLocation("/company-info")}
+                  className="text-center p-2 rounded-lg hover:bg-primary/5 transition-colors"
+                >
                   <div className="bg-primary/10 rounded-full p-3 w-12 h-12 mx-auto mb-2 flex items-center justify-center">
                     <Building className="h-6 w-6 text-primary" />
                   </div>
                   <p className="text-xs text-gray-600">For Companies</p>
-                </div>
+                </button>
               </div>
             </div>
 
