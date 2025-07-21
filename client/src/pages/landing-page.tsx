@@ -22,10 +22,14 @@ export default function LandingPage() {
   const { user, isLoading } = useAuth();
   const [, setLocation] = useLocation();
 
-  // Auto-redirect logged-in users to dashboard using useEffect
+  // Auto-redirect logged-in users to appropriate dashboard using useEffect
   useEffect(() => {
     if (!isLoading && user) {
-      setLocation("/dashboard");
+      if (user.role === "company") {
+        setLocation("/company-dashboard");
+      } else {
+        setLocation("/dashboard");
+      }
     }
   }, [user, isLoading, setLocation]);
 

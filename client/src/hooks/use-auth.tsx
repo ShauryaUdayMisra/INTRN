@@ -41,8 +41,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     },
     onSuccess: (user: SelectUser) => {
       queryClient.setQueryData(["/api/user"], user);
-      // Redirect to dashboard after successful login
-      window.location.href = "/dashboard";
+      // Redirect based on user role after successful login
+      if (user.role === "company") {
+        window.location.href = "/company-dashboard";
+      } else {
+        window.location.href = "/dashboard";
+      }
     },
     onError: (error: Error) => {
       toast({
@@ -80,8 +84,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         } else if (user.role === "company" && !user.profileComplete) {
           window.location.href = "/company-application";
         } else {
-          // For completed profiles, redirect to dashboard
-          window.location.href = "/dashboard";
+          // For completed profiles, redirect based on role
+          if (user.role === "company") {
+            window.location.href = "/company-dashboard";
+          } else {
+            window.location.href = "/dashboard";
+          }
         }
       });
     },

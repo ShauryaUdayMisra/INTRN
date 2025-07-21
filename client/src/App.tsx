@@ -24,6 +24,7 @@ import CompanyInfo from "@/pages/company-info";
 import CompanyThankYou from "@/pages/company-thank-you";
 import CompanyStatus from "@/pages/company-status";
 import CompanyApplicationStatus from "@/pages/company-application-status";
+import CompanyDashboard from "@/pages/company-dashboard";
 import PlatformStatus from "@/pages/platform-status";
 import OAuthSetup from "@/pages/oauth-setup";
 import HelpPage from "@/pages/help-page";
@@ -43,6 +44,7 @@ function Router() {
         <Route path="/company-thank-you" component={() => <PageTransition><CompanyThankYou /></PageTransition>} />
         <ProtectedRoute path="/company-status" component={() => <PageTransition><CompanyStatus /></PageTransition>} />
         <ProtectedRoute path="/company-application-status" component={() => <PageTransition><CompanyApplicationStatus /></PageTransition>} />
+        <ProtectedRoute path="/company-dashboard" component={() => <PageTransition><CompanyDashboard /></PageTransition>} />
         <ProtectedRoute path="/dashboard" component={() => <PageTransition><DashboardPage /></PageTransition>} />
         <ProtectedRoute path="/search" component={() => <PageTransition><SearchPage /></PageTransition>} />
         <Route path="/blog/:slug" component={() => <PageTransition><BlogPostDetail /></PageTransition>} />
