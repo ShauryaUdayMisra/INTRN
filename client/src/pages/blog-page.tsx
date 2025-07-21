@@ -47,7 +47,7 @@ export default function BlogPage() {
     queryKey: ["/api/blog"],
   });
 
-  const categories = [...new Set(blogPosts.map(post => post.category).filter(Boolean))];
+  const categories = Array.from(new Set(blogPosts.map(post => post.category).filter(Boolean)));
 
   const filteredPosts = blogPosts.filter(post => {
     const matchesSearch = !searchQuery || 
@@ -129,7 +129,7 @@ export default function BlogPage() {
                 <div className="flex items-center mb-3">
                   <Badge>{filteredPosts[0].category}</Badge>
                   <span className="text-gray-500 text-sm ml-4">
-                    {new Date(filteredPosts[0].createdAt).toLocaleDateString()}
+                    {filteredPosts[0].createdAt ? new Date(filteredPosts[0].createdAt).toLocaleDateString() : 'Recently'}
                   </span>
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">

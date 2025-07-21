@@ -82,11 +82,8 @@ export default function MobileAuth() {
 
   if (user) {
     setTimeout(() => {
-      if (user.role === "company") {
-        setLocation("/company-dashboard");
-      } else {
-        setLocation("/dashboard");
-      }
+      // All logged-in users go to regular dashboard
+      setLocation("/dashboard");
     }, 0);
     return (
       <div className="min-h-screen flex items-center justify-center">
