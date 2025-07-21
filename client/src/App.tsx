@@ -8,7 +8,7 @@ import { AnimatePresence } from "framer-motion";
 import PageTransition from "@/components/page-transition";
 import HomePage from "@/pages/home-page";
 import LandingPage from "@/pages/landing-page";
-import SimpleAuth from "@/pages/simple-auth";
+import MobileAuth from "@/pages/mobile-auth";
 import DashboardPage from "@/pages/dashboard-simple";
 import SearchPage from "@/pages/search-page";
 import BlogPage from "@/pages/blog-page";
@@ -38,7 +38,7 @@ function Router() {
     <AnimatePresence mode="wait">
       <Switch key={location}>
         <Route path="/" component={() => <PageTransition><LandingPage /></PageTransition>} />
-        <Route path="/auth" component={() => <PageTransition><SimpleAuth /></PageTransition>} />
+        <Route path="/auth" component={() => <PageTransition><MobileAuth /></PageTransition>} />
         <Route path="/company-info" component={() => <PageTransition><CompanyInfo /></PageTransition>} />
         <Route path="/company-signup" component={() => <PageTransition><CompanySignup /></PageTransition>} />
         <Route path="/company-thank-you" component={() => <PageTransition><CompanyThankYou /></PageTransition>} />

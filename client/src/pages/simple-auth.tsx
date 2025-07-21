@@ -92,19 +92,21 @@ export default function SimpleAuth() {
   }
 
   return (
-    <div className="min-h-screen flex">
-      {/* Left Column - Forms */}
-      <div className="flex-1 flex items-center justify-center p-8 bg-white">
-        <div className="w-full max-w-md">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-primary">intrn</h1>
-            <p className="text-gray-600 mt-2">Connect. Learn. Grow.</p>
-            {isReplitDemo && (
-              <div className="mt-4 p-3 bg-blue-100 border border-blue-300 rounded-lg text-blue-800 text-sm">
-                <p><strong>Replit Auth Demo:</strong> This feature redirects here to show the integration capability. Use the regular sign-in below to access the platform.</p>
-              </div>
-            )}
-          </div>
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-purple-50 to-primary-100">
+      {/* Mobile-First Single Column Layout */}
+      <div className="min-h-screen flex flex-col lg:flex-row">
+        {/* Main Content - Forms */}
+        <div className="flex-1 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+          <div className="w-full max-w-md">
+            <div className="text-center mb-6 lg:mb-8">
+              <h1 className="text-2xl sm:text-3xl font-bold text-primary">intrn</h1>
+              <p className="text-gray-600 mt-2 text-sm sm:text-base">Connect. Learn. Grow.</p>
+              {isReplitDemo && (
+                <div className="mt-4 p-3 bg-blue-100 border border-blue-300 rounded-lg text-blue-800 text-sm">
+                  <p><strong>Replit Auth Demo:</strong> This feature redirects here to show the integration capability. Use the regular sign-in below to access the platform.</p>
+                </div>
+              )}
+            </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="grid w-full grid-cols-2">
