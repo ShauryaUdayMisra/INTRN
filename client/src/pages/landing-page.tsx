@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useAuth } from "@/hooks/use-auth";
 import { useEffect } from "react";
 import { useLocation } from "wouter";
-import { ArrowRight, Zap, Compass, TrendingUp, Sparkles, Brain, Award, Flame, Target, GraduationCap, Globe } from "lucide-react";
+import { ArrowRight, Zap, Compass, Sparkles, Award, Flame, Target, GraduationCap, Globe } from "lucide-react";
 
 // Custom Diploma Scroll Icon Component (based on attached image)
 const DiplomaIcon = ({ className }: { className?: string }) => (
@@ -137,7 +137,7 @@ export default function LandingPage() {
         <div className="grid md:grid-cols-3 gap-12 mb-24">
           <div className="text-center group">
             <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg border border-primary-100 group-hover:shadow-xl transition-all duration-300">
-              <Brain className="w-10 h-10 text-black" />
+              <Target className="w-10 h-10 text-black" />
             </div>
             <h3 className="text-2xl font-bold text-black mb-4">Gain Real Experience</h3>
             <p className="text-black leading-relaxed">
@@ -175,7 +175,7 @@ export default function LandingPage() {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-1 gap-8 max-w-md mx-auto">
             {/* Ripples of Hope */}
             <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50" onClick={() => setLocation("/auth?tab=register")}>
               <div className="relative h-48 bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center overflow-hidden">
@@ -204,63 +204,7 @@ export default function LandingPage() {
               </CardContent>
             </Card>
 
-            {/* Vireon Labs */}
-            <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50" onClick={() => setLocation("/auth?tab=register")}>
-              <div className="relative h-48 bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center overflow-hidden">
-                {/* DNA helix visual for biotech */}
-                <div className="relative">
-                  <div className="w-16 h-16 bg-green-500 rounded-xl flex items-center justify-center transform rotate-12 group-hover:rotate-45 transition-transform duration-500">
-                    <Brain className="w-8 h-8 text-white" />
-                  </div>
-                  <div className="absolute top-2 left-2 w-3 h-3 bg-green-400 rounded-full animate-bounce"></div>
-                  <div className="absolute bottom-2 right-2 w-2 h-2 bg-green-300 rounded-full animate-bounce" style={{animationDelay: '0.3s'}}></div>
-                  <div className="absolute top-8 right-0 w-2 h-2 bg-green-600 rounded-full animate-bounce" style={{animationDelay: '0.6s'}}></div>
-                </div>
-              </div>
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">Biotechnology</span>
-                  <span className="text-gray-500 text-sm">Remote</span>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Vireon Labs</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  Join our biotechnology research team to work on cutting-edge genetic analysis projects. Learn lab techniques, data analysis, and contribute to real research publications...
-                </p>
-                <div className="mt-4 flex items-center justify-between">
-                  <span className="text-primary font-semibold">Apply Now</span>
-                  <ArrowRight className="w-4 h-4 text-primary group-hover:translate-x-1 transition-transform" />
-                </div>
-              </CardContent>
-            </Card>
 
-            {/* Blupeak Ventures */}
-            <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50" onClick={() => setLocation("/auth?tab=register")}>
-              <div className="relative h-48 bg-gradient-to-br from-purple-50 to-purple-100 flex items-center justify-center overflow-hidden">
-                {/* Mountain peak visual for venture capital */}
-                <div className="relative">
-                  <div className="w-16 h-16 bg-purple-500 rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
-                    <TrendingUp className="w-8 h-8 text-white" />
-                  </div>
-                  {/* Mountain peaks background */}
-                  <div className="absolute -top-4 -left-8 w-0 h-0 border-l-[20px] border-r-[20px] border-b-[30px] border-l-transparent border-r-transparent border-b-purple-300 opacity-60"></div>
-                  <div className="absolute -top-2 left-4 w-0 h-0 border-l-[15px] border-r-[15px] border-b-[20px] border-l-transparent border-r-transparent border-b-purple-400 opacity-80"></div>
-                </div>
-              </div>
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">Venture Capital</span>
-                  <span className="text-gray-500 text-sm">Hybrid</span>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Blupeak Ventures</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  Gain insights into startup investments and venture capital. Analyze market trends, conduct due diligence research, and learn about the startup ecosystem from industry experts...
-                </p>
-                <div className="mt-4 flex items-center justify-between">
-                  <span className="text-primary font-semibold">Apply Now</span>
-                  <ArrowRight className="w-4 h-4 text-primary group-hover:translate-x-1 transition-transform" />
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </div>
 
