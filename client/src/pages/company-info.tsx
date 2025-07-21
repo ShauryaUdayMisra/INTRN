@@ -7,13 +7,13 @@ export default function CompanyInfo() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-white">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-20">
         {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-6xl font-bold text-black mb-6">
+        <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+          <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-black mb-4 sm:mb-6">
             Welcome to <span className="text-primary">INTRN</span>
           </h1>
-          <p className="text-xl text-black max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg lg:text-xl text-black max-w-2xl mx-auto px-4">
             — we're excited to have you on board.
           </p>
         </div>
