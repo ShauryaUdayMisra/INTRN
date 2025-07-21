@@ -94,53 +94,63 @@ export default function MobileAuth() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-purple-50 to-primary-100">
-      {/* Mobile-First Design */}
-      <div className="min-h-screen flex flex-col">
-        {/* Header with Back Button */}
-        <div className="flex items-center justify-between p-4 sm:p-6">
-          <Button
-            variant="ghost"
-            onClick={() => setLocation("/")}
-            className="flex items-center text-gray-600 hover:text-gray-900"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
-          </Button>
-          <div className="text-center">
-            <h1 className="text-2xl sm:text-3xl font-bold text-primary">intrn</h1>
-          </div>
-          <div className="w-16"></div> {/* Spacer for centering */}
-        </div>
-
-        {/* Main Content */}
-        <div className="flex-1 flex items-center justify-center px-4 sm:px-6 pb-8">
-          <div className="w-full max-w-md">
-            {/* Hero Text - Mobile Friendly */}
-            <div className="text-center mb-6 lg:hidden">
-              <p className="text-gray-600 text-sm sm:text-base mb-6">
-                Connect. Learn. Grow.
-              </p>
-              <div className="grid grid-cols-2 gap-4 mb-6">
-                <button 
-                  onClick={() => setActiveTab("register")}
-                  className="text-center p-2 rounded-lg hover:bg-primary/5 transition-colors"
-                >
-                  <div className="bg-primary/10 rounded-full p-3 w-12 h-12 mx-auto mb-2 flex items-center justify-center">
-                    <GraduationCap className="h-6 w-6 text-primary" />
-                  </div>
-                  <p className="text-xs text-gray-600">For Students</p>
-                </button>
-                <button 
-                  onClick={() => setLocation("/company-info")}
-                  className="text-center p-2 rounded-lg hover:bg-primary/5 transition-colors"
-                >
-                  <div className="bg-primary/10 rounded-full p-3 w-12 h-12 mx-auto mb-2 flex items-center justify-center">
-                    <Building className="h-6 w-6 text-primary" />
-                  </div>
-                  <p className="text-xs text-gray-600">For Companies</p>
-                </button>
-              </div>
+      {/* Responsive Design */}
+      <div className="min-h-screen flex flex-col lg:flex-row">
+        {/* Left side - Form content */}
+        <div className="flex-1 lg:max-w-2xl flex flex-col">
+          {/* Header with Back Button */}
+          <div className="flex items-center justify-between p-4 sm:p-6">
+            <Button
+              variant="ghost"
+              onClick={() => setLocation("/")}
+              className="flex items-center text-gray-600 hover:text-gray-900"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Button>
+            <div className="text-center lg:hidden">
+              <h1 className="text-2xl sm:text-3xl font-bold text-primary">intrn</h1>
             </div>
+            <div className="w-16 lg:hidden"></div> {/* Spacer for centering on mobile */}
+          </div>
+
+          {/* Main Content */}
+          <div className="flex-1 flex items-center justify-center px-4 sm:px-6 pb-8">
+            <div className="w-full max-w-md">
+              {/* Desktop Logo */}
+              <div className="hidden lg:block text-center mb-8">
+                <h1 className="text-4xl font-bold text-primary mb-4">intrn</h1>
+                <p className="text-gray-600 text-lg">
+                  Connect. Learn. Grow.
+                </p>
+              </div>
+
+              {/* Hero Text - Mobile Friendly */}
+              <div className="text-center mb-6 lg:hidden">
+                <p className="text-gray-600 text-sm sm:text-base mb-6">
+                  Connect. Learn. Grow.
+                </p>
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  <button 
+                    onClick={() => setActiveTab("register")}
+                    className="text-center p-2 rounded-lg hover:bg-primary/5 transition-colors"
+                  >
+                    <div className="bg-primary/10 rounded-full p-3 w-12 h-12 mx-auto mb-2 flex items-center justify-center">
+                      <GraduationCap className="h-6 w-6 text-primary" />
+                    </div>
+                    <p className="text-xs text-gray-600">For Students</p>
+                  </button>
+                  <button 
+                    onClick={() => setLocation("/company-info")}
+                    className="text-center p-2 rounded-lg hover:bg-primary/5 transition-colors"
+                  >
+                    <div className="bg-primary/10 rounded-full p-3 w-12 h-12 mx-auto mb-2 flex items-center justify-center">
+                      <Building className="h-6 w-6 text-primary" />
+                    </div>
+                    <p className="text-xs text-gray-600">For Companies</p>
+                  </button>
+                </div>
+              </div>
 
             {/* Authentication Forms */}
             <Tabs value={activeTab} onValueChange={setActiveTab}>
@@ -304,7 +314,8 @@ export default function MobileAuth() {
                   </CardContent>
                 </Card>
               </TabsContent>
-            </Tabs>
+              </Tabs>
+            </div>
           </div>
         </div>
 
