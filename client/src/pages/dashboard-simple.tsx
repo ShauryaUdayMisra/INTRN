@@ -30,13 +30,95 @@ export default function DashboardSimple() {
     return null;
   }
 
-  if (user.role !== "student") {
+  // Check if this is Ripples of Hope company
+  const isRipplesOfHope = user.email === "Sameer.walia@ripplesofhope.in";
+
+  // Company Dashboard for approved companies
+  if (user.role === "company" && user.isApproved) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100">
         <Navigation />
         <div className="container mx-auto px-4 py-8">
-          <h1 className="text-3xl font-bold text-black mb-8">Dashboard</h1>
-          <p className="text-black">Company dashboard features coming soon...</p>
+          <div className="max-w-6xl mx-auto">
+            <h1 className="text-3xl font-bold text-black mb-8">Company Dashboard</h1>
+            
+            {/* Success Message */}
+            <div className="text-center mb-12">
+              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <TrendingUp className="w-12 h-12 text-green-600" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                Thank You for Signing Up!
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Your internship is now live on our platform and students can browse and apply.
+              </p>
+            </div>
+
+            {/* Internship Status for Ripples of Hope */}
+            {isRipplesOfHope && (
+              <Card className="mb-8 border-primary-200 bg-primary-50">
+                <CardHeader>
+                  <CardTitle className="text-primary-800">Your Live Internship</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    <h3 className="font-semibold text-primary-900">Research Intern - Social Impact</h3>
+                    <p className="text-primary-700">
+                      Research the impact of sports on marriage choices of adolescent girls in underprivileged communities in rural North India.
+                    </p>
+                    <div className="flex items-center space-x-4 text-sm text-primary-600">
+                      <span className="bg-primary-100 px-2 py-1 rounded">Remote + Travel</span>
+                      <span>Duration: 7-28 days</span>
+                      <span>Location: UP, Bihar</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Main Dashboard Sections */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => setLocation("/search")}>
+                <CardHeader>
+                  <CardTitle className="flex items-center text-black">
+                    <Search className="w-6 h-6 mr-2 text-primary" />
+                    Browse Internships
+                  </CardTitle>
+                  <CardDescription className="text-black">Explore other internship opportunities on the platform</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-gray-600">See what other companies are offering and stay updated with trends</p>
+                </CardContent>
+              </Card>
+
+              <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => setLocation("/blog")}>
+                <CardHeader>
+                  <CardTitle className="flex items-center text-black">
+                    <BookOpen className="w-6 h-6 mr-2 text-primary" />
+                    Read Our Blog
+                  </CardTitle>
+                  <CardDescription className="text-black">Career insights, industry trends, and success stories</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-gray-600">Stay updated with the latest in internships and career development</p>
+                </CardContent>
+              </Card>
+
+              <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => setLocation("/help")}>
+                <CardHeader>
+                  <CardTitle className="flex items-center text-black">
+                    <HelpCircle className="w-6 h-6 mr-2 text-primary" />
+                    Help & Support
+                  </CardTitle>
+                  <CardDescription className="text-black">Get assistance and learn how to optimize your listings</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-gray-600">Access guides, FAQs, and contact support for any questions</p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
         </div>
       </div>
     );
