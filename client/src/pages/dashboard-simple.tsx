@@ -30,8 +30,9 @@ export default function DashboardSimple() {
     return null;
   }
 
-  // Check if this is Ripples of Hope company
+  // Check if this is Ripples of Hope company or Prelude Novel Ventures
   const isRipplesOfHope = user.email === "Sameer.walia@ripplesofhope.in";
+  const isPreludeNovelVentures = user.email === "sr@preludelie.om";
 
   // Company Dashboard for approved companies
   if (user.role === "company" && user.isApproved) {
@@ -71,6 +72,28 @@ export default function DashboardSimple() {
                       <span className="bg-primary-100 px-2 py-1 rounded">Remote + Travel</span>
                       <span>Duration: 7-28 days</span>
                       <span>Location: UP, Bihar</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Internship Status for Prelude Novel Ventures */}
+            {isPreludeNovelVentures && (
+              <Card className="mb-8 border-purple-200 bg-purple-50">
+                <CardHeader>
+                  <CardTitle className="text-purple-800">Your Live Internship</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    <h3 className="font-semibold text-purple-900">Research & Presentation Specialist</h3>
+                    <p className="text-purple-700">
+                      Research emerging event trends, compile comprehensive data insights, and create compelling presentations for innovative event intellectual properties.
+                    </p>
+                    <div className="flex items-center space-x-4 text-sm text-purple-600">
+                      <span className="bg-purple-100 px-2 py-1 rounded">Hybrid</span>
+                      <span>Duration: 1-3 Months</span>
+                      <span>Location: Bhubaneswar</span>
                     </div>
                   </div>
                 </CardContent>

@@ -20,7 +20,7 @@ export async function seedPreludeInternship() {
         .insert(users)
         .values({
           username: "prelude.ventures",
-          email: "prelude@preludelive.com",
+          email: "sr@preludelie.om",
           password: "prelude123",
           adminPassword: "prelude123",
           role: "company",
@@ -53,7 +53,7 @@ export async function seedPreludeInternship() {
           title: "Research & Presentation Specialist",
           description: "Join our dynamic team to research emerging event trends, compile comprehensive data insights, and create compelling presentations for innovative event intellectual properties. You'll dive deep into market research, analyze industry developments, and transform raw data into visually engaging presentations that drive our creative event concepts forward.",
           location: "Bhubaneswar",
-          type: "Hybrid",
+          type: "hybrid",
           duration: "1-3 Months",
           skills: ["Research Skills", "Data Analysis", "PowerPoint", "Creative Presentation", "Internet Research", "Content Writing"],
           requirements: "Interest in diverse topics with strong browsing skills to collate data from various online sources. Proficiency in presentation software with creative flair for visual storytelling. Curiosity-driven mindset and attention to detail.",
@@ -72,7 +72,7 @@ export async function seedPreludeInternship() {
           title: "Research & Presentation Specialist",
           description: "Join our dynamic team to research emerging event trends, compile comprehensive data insights, and create compelling presentations for innovative event intellectual properties. You'll dive deep into market research, analyze industry developments, and transform raw data into visually engaging presentations that drive our creative event concepts forward.",
           location: "Bhubaneswar",
-          type: "Hybrid",
+          type: "hybrid",
           duration: "1-3 Months",
           skills: ["Research Skills", "Data Analysis", "PowerPoint", "Creative Presentation", "Internet Research", "Content Writing"],
           requirements: "Interest in diverse topics with strong browsing skills to collate data from various online sources. Proficiency in presentation software with creative flair for visual storytelling. Curiosity-driven mindset and attention to detail.",
