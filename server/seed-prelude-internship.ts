@@ -36,6 +36,14 @@ export async function seedPreludeInternship() {
       companyId = newCompany.id;
     } else {
       companyId = existingCompany.id;
+      // Update existing company to ensure it's approved
+      await db
+        .update(users)
+        .set({
+          isApproved: true,
+          profileComplete: true
+        })
+        .where(eq(users.id, existingCompany.id));
     }
 
     // Check if internship already exists
