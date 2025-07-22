@@ -179,7 +179,7 @@ export default function LandingPage() {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-1 gap-8 max-w-md mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Ripples of Hope */}
             <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50" onClick={() => setLocation("/auth?tab=register")}>
               <div className="relative h-48 bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center overflow-hidden">
@@ -208,7 +208,33 @@ export default function LandingPage() {
               </CardContent>
             </Card>
 
-
+            {/* Prelude Novel Ventures */}
+            <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50" onClick={() => setLocation("/auth?tab=register")}>
+              <div className="relative h-48 bg-gradient-to-br from-purple-50 to-purple-100 flex items-center justify-center overflow-hidden">
+                {/* Event management visual */}
+                <div className="relative">
+                  <div className="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center animate-pulse">
+                    <Sparkles className="w-8 h-8 text-white" />
+                  </div>
+                  <div className="absolute inset-0 w-16 h-16 border-2 border-purple-400 rounded-full animate-ping opacity-75"></div>
+                  <div className="absolute inset-0 w-20 h-20 -m-2 border-2 border-purple-300 rounded-full animate-ping opacity-50" style={{animationDelay: '0.5s'}}></div>
+                </div>
+              </div>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">Event Management</span>
+                  <span className="text-gray-500 text-sm">Hybrid</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">Prelude Novel Ventures</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Research emerging event trends, compile data insights, and create compelling presentations for innovative event intellectual properties. Transform data into visual stories...
+                </p>
+                <div className="mt-4 flex items-center justify-between">
+                  <span className="text-primary font-semibold">Apply Now</span>
+                  <ArrowRight className="w-4 h-4 text-primary group-hover:translate-x-1 transition-transform" />
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
 
