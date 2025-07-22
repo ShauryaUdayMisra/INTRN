@@ -39,34 +39,9 @@ export default function CompanySignup() {
     },
   });
 
-  // Clear all form fields on component mount to prevent autofill
+  // Reset form on mount
   useEffect(() => {
-    // Aggressive field clearing
-    const clearFields = () => {
-      document.querySelectorAll("input").forEach(input => {
-        if (input.type !== 'submit' && input.type !== 'button' && input.type !== 'hidden') {
-          input.value = "";
-          input.removeAttribute('value');
-        }
-      });
-      document.querySelectorAll("textarea").forEach(textarea => {
-        textarea.value = "";
-        textarea.removeAttribute('value');
-      });
-      document.querySelectorAll("select").forEach(select => {
-        select.selectedIndex = 0;
-      });
-    };
-    
-    clearFields();
     form.reset();
-    
-    // Set window.onload for additional clearing
-    if (typeof window !== 'undefined') {
-      window.onload = () => {
-        document.querySelectorAll("input").forEach(input => input.value = "");
-      };
-    }
   }, [form]);
 
   const signupMutation = useMutation({
@@ -137,22 +112,15 @@ export default function CompanySignup() {
           </CardHeader>
 
           <CardContent className="px-4 sm:px-6">
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 sm:space-y-6" autoComplete="off">
-              {/* Hidden dummy fields to confuse autofill */}
-              <input type="text" name="dummy1" autoComplete="username" style={{position: 'absolute', top: '-1000px', left: '-1000px'}} />
-              <input type="password" name="dummy2" autoComplete="new-password" style={{position: 'absolute', top: '-1000px', left: '-1000px'}} />
-              
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 sm:space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="x9k4m7q2" className="text-sm sm:text-base font-medium">Email Address *</Label>
+                <Label htmlFor="email" className="text-sm sm:text-base font-medium">Email Address *</Label>
                 <Input
                   {...form.register("email")}
                   type="email"
                   placeholder="Enter your email address"
-                  autoComplete="off"
-                  id="x9k4m7q2"
+                  id="email"
                   className="h-11 sm:h-12 text-base"
-                  readOnly
-                  onFocus={(e) => e.target.removeAttribute('readonly')}
                 />
                 {form.formState.errors.email && (
                   <p className="text-red-500 text-sm mt-1">{form.formState.errors.email.message}</p>
@@ -160,16 +128,13 @@ export default function CompanySignup() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="p8w3n5t1" className="text-sm sm:text-base font-medium">Password *</Label>
+                <Label htmlFor="password" className="text-sm sm:text-base font-medium">Password *</Label>
                 <Input
                   {...form.register("password")}
                   type="password"
                   placeholder="Choose a secure password"
-                  autoComplete="off"
-                  id="p8w3n5t1"
+                  id="password"
                   className="h-11 sm:h-12 text-base"
-                  readOnly
-                  onFocus={(e) => e.target.removeAttribute('readonly')}
                 />
                 {form.formState.errors.password && (
                   <p className="text-red-500 text-sm mt-1">{form.formState.errors.password.message}</p>
@@ -177,16 +142,13 @@ export default function CompanySignup() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="h7v4x8z5" className="text-sm sm:text-base font-medium">Confirm Password *</Label>
+                <Label htmlFor="confirmPassword" className="text-sm sm:text-base font-medium">Confirm Password *</Label>
                 <Input
                   {...form.register("confirmPassword")}
                   type="password"
                   placeholder="Confirm your password"
-                  autoComplete="off"
-                  id="h7v4x8z5"
+                  id="confirmPassword"
                   className="h-11 sm:h-12 text-base"
-                  readOnly
-                  onFocus={(e) => e.target.removeAttribute('readonly')}
                 />
                 {form.formState.errors.confirmPassword && (
                   <p className="text-red-500 text-sm mt-1">{form.formState.errors.confirmPassword.message}</p>

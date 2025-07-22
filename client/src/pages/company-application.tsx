@@ -145,10 +145,7 @@ export default function CompanyApplication() {
         </div>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8" autoComplete="off">
-            {/* Hidden dummy fields to confuse autofill */}
-            <input type="text" name="dummy1" autoComplete="username" style={{position: 'absolute', top: '-1000px', left: '-1000px'}} />
-            <input type="password" name="dummy2" autoComplete="new-password" style={{position: 'absolute', top: '-1000px', left: '-1000px'}} />
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             {/* Company Details */}
             <Card>
               <CardHeader>
@@ -165,7 +162,7 @@ export default function CompanyApplication() {
                     <FormItem>
                       <FormLabel>Company Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Your company name" autoComplete="off" name="g4t8r2z9" readOnly onFocus={(e) => e.target.removeAttribute('readonly')} {...field} />
+                        <Input placeholder="Your company name" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -180,7 +177,7 @@ export default function CompanyApplication() {
                       <FormLabel>Industry/Field</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
-                          <SelectTrigger autoComplete="off" name="k5y3n7m1">
+                          <SelectTrigger>
                             <SelectValue placeholder="Select your industry" />
                           </SelectTrigger>
                         </FormControl>
@@ -207,10 +204,6 @@ export default function CompanyApplication() {
                         <Textarea
                           placeholder="Describe the internship project you are offering to high school students..."
                           className="min-h-[120px]"
-                          autoComplete="off"
-                          name="w8q4x6p2"
-                          readOnly
-                          onFocus={(e) => e.target.removeAttribute('readonly')}
                           {...field}
                         />
                       </FormControl>
@@ -230,7 +223,7 @@ export default function CompanyApplication() {
                           Website (Required)
                         </FormLabel>
                         <FormControl>
-                          <Input placeholder="Your website URL" autoComplete="off" name="e1s7d9f3" readOnly onFocus={(e) => e.target.removeAttribute('readonly')} {...field} />
+                          <Input placeholder="Your website URL" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -312,10 +305,6 @@ export default function CompanyApplication() {
                         <Textarea
                           placeholder="Please specify the technical skills required for this internship (e.g., Python, JavaScript, Marketing, Design, Content Writing, etc.)"
                           className="min-h-[100px]"
-                          autoComplete="off"
-                          name="c3z2l9r6"
-                          readOnly
-                          onFocus={(e) => e.target.removeAttribute('readonly')}
                           {...field}
                         />
                       </FormControl>
@@ -334,10 +323,6 @@ export default function CompanyApplication() {
                         <Textarea
                           placeholder="Any other skills or requirements not mentioned above..."
                           className="min-h-[80px]"
-                          autoComplete="off"
-                          name="u7i5o1a4"
-                          readOnly
-                          onFocus={(e) => e.target.removeAttribute('readonly')}
                           {...field}
                         />
                       </FormControl>
