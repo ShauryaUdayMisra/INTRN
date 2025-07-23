@@ -227,7 +227,7 @@ export default function LandingPage() {
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3">Prelude Novel Ventures</h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
-                  Research emerging event trends, compile data insights, and create compelling presentations for innovative event intellectual properties. Transform data into visual stories...
+                  Interns will be responsible for conducting research, collating relevant data, and preparing basic presentations to support the development of new event IPs...
                 </p>
                 <div className="mt-4 flex items-center justify-between">
                   <span className="text-primary font-semibold">Apply Now</span>

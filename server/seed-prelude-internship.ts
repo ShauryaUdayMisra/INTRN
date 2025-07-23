@@ -21,8 +21,8 @@ export async function seedPreludeInternship() {
         .values({
           username: "prelude.ventures",
           email: "sr@preludelie.om",
-          password: "prelude123",
-          adminPassword: "prelude123",
+          password: "Sanu1910",
+          adminPassword: "Sanu1910",
           role: "company",
           companyName: "Prelude Novel Ventures Pvt Ltd",
           website: "www.preludelive.com",
@@ -59,7 +59,7 @@ export async function seedPreludeInternship() {
         .set({
           companyId,
           title: "Research & Presentation Specialist",
-          description: "Join our dynamic team to research emerging event trends, compile comprehensive data insights, and create compelling presentations for innovative event intellectual properties. You'll dive deep into market research, analyze industry developments, and transform raw data into visually engaging presentations that drive our creative event concepts forward.",
+          description: "Interns will be responsible for conducting research, collating relevant data, and preparing basic presentations to support the development of new event IPs (Intellectual Properties). The role offers exposure to the early planning and ideation stages of event creation, with opportunities to contribute to concept-building and content structuring.",
           location: "Bhubaneswar",
           type: "hybrid",
           duration: "1-3 Months",
@@ -78,7 +78,7 @@ export async function seedPreludeInternship() {
         .values({
           companyId,
           title: "Research & Presentation Specialist",
-          description: "Join our dynamic team to research emerging event trends, compile comprehensive data insights, and create compelling presentations for innovative event intellectual properties. You'll dive deep into market research, analyze industry developments, and transform raw data into visually engaging presentations that drive our creative event concepts forward.",
+          description: "Interns will be responsible for conducting research, collating relevant data, and preparing basic presentations to support the development of new event IPs (Intellectual Properties). The role offers exposure to the early planning and ideation stages of event creation, with opportunities to contribute to concept-building and content structuring.",
           location: "Bhubaneswar",
           type: "hybrid",
           duration: "1-3 Months",
