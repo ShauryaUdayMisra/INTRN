@@ -59,14 +59,14 @@ export function HamburgerNavigation() {
   return (
     <>
       {/* Hamburger Button */}
-      <div className="fixed top-6 left-6 z-50">
+      <div className="fixed top-4 left-4 z-50">
         <Button
           variant="ghost"
           size="icon"
           onClick={toggleMenu}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className="w-12 h-12 bg-white border border-gray-200 hover:bg-gray-50 transition-all duration-300 rounded-xl shadow-lg"
+          className="w-10 h-10 bg-gray-100/70 border-0 hover:bg-gray-200/80 transition-all duration-300 rounded-lg"
         >
           <div className="relative w-6 h-6 flex items-center justify-center">
             {/* Hamburger Lines */}
@@ -88,10 +88,10 @@ export function HamburgerNavigation() {
 
       {/* Profile Button - Top Right */}
       {user && (
-        <div className="fixed top-6 right-6 z-50">
+        <div className="fixed top-4 right-4 z-50">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="w-12 h-12 bg-white border border-gray-200 hover:bg-gray-50 transition-all duration-300 rounded-xl shadow-lg">
+              <Button variant="ghost" size="icon" className="w-10 h-10 bg-gray-100/70 border-0 hover:bg-gray-200/80 transition-all duration-300 rounded-lg">
                 <Avatar className="w-8 h-8">
                   <AvatarFallback className="bg-purple-100 text-purple-600 font-semibold">
                     {user.firstName?.[0] || user.email?.[0]?.toUpperCase() || "U"}
@@ -126,7 +126,7 @@ export function HamburgerNavigation() {
         {/* Header */}
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-3 ml-8">
               <DiplomaIcon className="w-8 h-8 text-purple-600" />
               <span className="text-2xl font-bold text-gray-900">intrn</span>
             </div>
