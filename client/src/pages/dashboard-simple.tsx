@@ -1,5 +1,5 @@
 import { useAuth } from "@/hooks/use-auth";
-import Navigation from "@/components/navigation";
+import { HamburgerNavigation } from "@/components/hamburger-navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
@@ -38,7 +38,7 @@ export default function DashboardSimple() {
   if (user.role === "company" && user.isApproved) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100">
-        <Navigation />
+        <HamburgerNavigation />
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-6xl mx-auto">
             <h1 className="text-3xl font-bold text-black mb-8">Company Dashboard</h1>
@@ -149,7 +149,7 @@ export default function DashboardSimple() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100">
-      <Navigation />
+      <HamburgerNavigation />
       
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">

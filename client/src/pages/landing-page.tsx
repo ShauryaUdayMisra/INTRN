@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/use-auth";
+import { HamburgerNavigation } from "@/components/hamburger-navigation";
 import { useEffect } from "react";
 import { useLocation } from "wouter";
 import { ArrowRight, Zap, Compass, Sparkles, Award, Flame, Target, GraduationCap, Globe } from "lucide-react";
@@ -43,6 +44,8 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-purple-50 to-primary-100">
+      <HamburgerNavigation />
+      
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-lg shadow-sm border-b border-primary-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

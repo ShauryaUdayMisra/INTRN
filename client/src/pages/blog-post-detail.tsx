@@ -1,6 +1,6 @@
 import { useParams, useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import Navigation from "@/components/navigation";
+import { HamburgerNavigation } from "@/components/hamburger-navigation";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -26,7 +26,7 @@ export default function BlogPostDetail() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Navigation />
+        <HamburgerNavigation />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="animate-pulse">
             <div className="h-8 bg-gray-300 rounded w-3/4 mb-6"></div>
@@ -46,7 +46,7 @@ export default function BlogPostDetail() {
   if (error || !post) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Navigation />
+        <HamburgerNavigation />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <Card>
             <CardContent className="p-8 text-center">
@@ -67,7 +67,7 @@ export default function BlogPostDetail() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navigation />
+      <HamburgerNavigation />
       
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Back Button */}

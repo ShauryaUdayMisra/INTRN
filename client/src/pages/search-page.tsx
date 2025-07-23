@@ -1,4 +1,4 @@
-import Navigation from "@/components/navigation";
+import { HamburgerNavigation } from "@/components/hamburger-navigation";
 import SearchFilters from "@/components/search-filters";
 import InternshipCard from "@/components/internship-card";
 import { Card, CardContent } from "@/components/ui/card";
@@ -37,7 +37,7 @@ export default function SearchPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navigation />
+      <HamburgerNavigation />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Search Header */}

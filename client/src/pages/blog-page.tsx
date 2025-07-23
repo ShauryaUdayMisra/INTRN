@@ -1,4 +1,4 @@
-import Navigation from "@/components/navigation";
+import { HamburgerNavigation } from "@/components/hamburger-navigation";
 import BlogPostCard from "@/components/blog-post-card";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -66,7 +66,7 @@ export default function BlogPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navigation />
+      <HamburgerNavigation />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Blog Header - Centered */}

@@ -1,4 +1,4 @@
-import Navigation from "@/components/navigation";
+import { HamburgerNavigation } from "@/components/hamburger-navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { HelpCircle, Mail, Phone, MessageCircle, Book, User, Search } from "lucide-react";
@@ -10,7 +10,7 @@ export default function HelpPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100">
-      <Navigation />
+      <HamburgerNavigation />
       
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
