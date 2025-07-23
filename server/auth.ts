@@ -43,21 +43,28 @@ export function setupAuth(app: Express) {
 
   passport.use(
     new LocalStrategy(async (username, password, done) => {
+      let user;
+      
       // Handle admin@gmail.com format by extracting just the admin part
-      let lookupUsername = username;
       if (username.includes("admin") && username.endsWith("@gmail.com")) {
         // Extract admin1, admin2, etc. from admin1@gmail.com format
-        lookupUsername = username.split("@")[0];
+        const lookupUsername = username.split("@")[0];
+        user = await storage.getUserByUsername(lookupUsername);
+        
+        // Special handling for admin1, admin2, admin3 with plain text password
+        if (user && ['admin1', 'admin2', 'admin3'].includes(lookupUsername) && password === 'admin') {
+          return done(null, user);
+        }
+      } else if (username.includes("@")) {
+        // Email-based login
+        user = await storage.getUserByEmail(username);
+      } else {
+        // Username-based login
+        user = await storage.getUserByUsername(username);
       }
       
-      const user = await storage.getUserByUsername(lookupUsername);
       if (!user) {
         return done(null, false);
-      }
-      
-      // Special handling for admin1, admin2, admin3 with plain text password
-      if (['admin1', 'admin2', 'admin3'].includes(lookupUsername) && password === 'admin') {
-        return done(null, user);
       }
       
       // Regular password comparison for other users
