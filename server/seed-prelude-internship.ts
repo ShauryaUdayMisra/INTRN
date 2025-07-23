@@ -20,7 +20,7 @@ export async function seedPreludeInternship() {
         .insert(users)
         .values({
           username: "prelude.ventures",
-          email: "sr@preludelie.om",
+          email: "sr@preludelive.com",
           password: "Sanu1910",
           adminPassword: "Sanu1910",
           role: "company",

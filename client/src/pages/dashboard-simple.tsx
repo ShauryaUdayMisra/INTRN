@@ -32,7 +32,7 @@ export default function DashboardSimple() {
 
   // Check if this is Ripples of Hope company or Prelude Novel Ventures
   const isRipplesOfHope = user.email === "Sameer.walia@ripplesofhope.in";
-  const isPreludeNovelVentures = user.email === "sr@preludelie.om";
+  const isPreludeNovelVentures = user.email === "sr@preludelive.com";
 
   // Company Dashboard for approved companies
   if (user.role === "company" && user.isApproved) {
