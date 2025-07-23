@@ -72,9 +72,9 @@ export function HamburgerNavigation() {
             {/* Hamburger Lines */}
             <div className={`absolute transition-all duration-300 ${isHovered ? 'opacity-0 scale-0' : 'opacity-100 scale-100'}`}>
               <div className="space-y-1.5">
-                <div className="w-5 h-0.5 bg-gray-600 rounded-full"></div>
-                <div className="w-5 h-0.5 bg-gray-600 rounded-full"></div>
-                <div className="w-5 h-0.5 bg-gray-600 rounded-full"></div>
+                <div className="w-5 h-0.5 bg-purple-600 rounded-full"></div>
+                <div className="w-5 h-0.5 bg-purple-600 rounded-full"></div>
+                <div className="w-5 h-0.5 bg-purple-600 rounded-full"></div>
               </div>
             </div>
             
