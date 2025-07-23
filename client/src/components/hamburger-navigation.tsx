@@ -66,7 +66,7 @@ export function HamburgerNavigation() {
           onClick={toggleMenu}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className="w-12 h-12 bg-white/80 backdrop-blur-sm border border-gray-200 hover:bg-white/90 transition-all duration-300 rounded-xl shadow-lg"
+          className="w-12 h-12 bg-white border border-gray-200 hover:bg-gray-50 transition-all duration-300 rounded-xl shadow-lg"
         >
           <div className="relative w-6 h-6 flex items-center justify-center">
             {/* Hamburger Lines */}
@@ -91,7 +91,7 @@ export function HamburgerNavigation() {
         <div className="fixed top-6 right-6 z-50">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="w-12 h-12 bg-white/80 backdrop-blur-sm border border-gray-200 hover:bg-white/90 transition-all duration-300 rounded-xl shadow-lg">
+              <Button variant="ghost" size="icon" className="w-12 h-12 bg-white border border-gray-200 hover:bg-gray-50 transition-all duration-300 rounded-xl shadow-lg">
                 <Avatar className="w-8 h-8">
                   <AvatarFallback className="bg-purple-100 text-purple-600 font-semibold">
                     {user.firstName?.[0] || user.email?.[0]?.toUpperCase() || "U"}
@@ -116,7 +116,7 @@ export function HamburgerNavigation() {
       {/* Overlay */}
       {isOpen && (
         <div 
-          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 transition-opacity duration-300"
+          className="fixed inset-0 bg-black/20 z-40 transition-opacity duration-300"
           onClick={closeMenu}
         />
       )}
