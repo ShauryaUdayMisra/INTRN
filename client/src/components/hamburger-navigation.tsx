@@ -116,13 +116,13 @@ export function HamburgerNavigation() {
       {/* Overlay */}
       {isOpen && (
         <div 
-          className="fixed inset-0 bg-black/20 z-40 transition-opacity duration-300"
+          className="fixed inset-0 bg-black/40 z-40 transition-opacity duration-300"
           onClick={closeMenu}
         />
       )}
 
       {/* Sidebar Menu */}
-      <div className={`fixed top-0 left-0 h-full w-80 bg-white shadow-2xl z-45 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <div className={`fixed top-0 left-0 h-full w-80 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         {/* Header */}
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center justify-between">
@@ -154,19 +154,21 @@ export function HamburgerNavigation() {
             const isActive = location === item.path;
             
             return (
-              <Link key={item.path} href={item.path}>
-                <button
-                  onClick={closeMenu}
-                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-colors duration-200 ${
-                    isActive 
-                      ? 'bg-purple-100 text-purple-700 font-medium' 
-                      : 'text-gray-700 hover:bg-gray-100'
-                  }`}
-                >
-                  <Icon className="w-5 h-5" />
-                  <span>{item.label}</span>
-                </button>
-              </Link>
+              <button
+                key={item.path}
+                onClick={() => {
+                  closeMenu();
+                  window.location.href = item.path;
+                }}
+                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-colors duration-200 cursor-pointer ${
+                  isActive 
+                    ? 'bg-purple-100 text-purple-700 font-medium' 
+                    : 'text-gray-700 hover:bg-gray-100'
+                }`}
+              >
+                <Icon className="w-5 h-5" />
+                <span>{item.label}</span>
+              </button>
             );
           })}
         </div>
@@ -175,23 +177,25 @@ export function HamburgerNavigation() {
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200">
           {!user ? (
             <div className="space-y-2">
-              <Link href="/auth?tab=login">
-                <Button 
-                  variant="outline" 
-                  className="w-full" 
-                  onClick={closeMenu}
-                >
-                  Sign In
-                </Button>
-              </Link>
-              <Link href="/auth?tab=register">
-                <Button 
-                  className="w-full bg-purple-600 hover:bg-purple-700" 
-                  onClick={closeMenu}
-                >
-                  Get Started
-                </Button>
-              </Link>
+              <Button 
+                variant="outline" 
+                className="w-full" 
+                onClick={() => {
+                  closeMenu();
+                  window.location.href = "/auth?tab=login";
+                }}
+              >
+                Sign In
+              </Button>
+              <Button 
+                className="w-full bg-purple-600 hover:bg-purple-700" 
+                onClick={() => {
+                  closeMenu();
+                  window.location.href = "/auth?tab=register";
+                }}
+              >
+                Get Started
+              </Button>
             </div>
           ) : (
             <Button 
