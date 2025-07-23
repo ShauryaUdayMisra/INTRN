@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { User, LogOut, Menu, X, BookOpen, Search, Settings, HelpCircle, Shield, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -6,6 +6,13 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+
+// Extend Window interface for hamburger toggle
+declare global {
+  interface Window {
+    hamburgerToggle?: () => void;
+  }
+}
 
 // INTRN Logo component - Pillar/Column style from landing page
 const DiplomaIcon = ({ className }: { className?: string }) => (
@@ -20,9 +27,16 @@ const DiplomaIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export function HamburgerNavigation() {
+interface HamburgerNavigationProps {
+  onToggleFromLogo?: () => void;
+}
+
+export function HamburgerNavigation(props: HamburgerNavigationProps = {}) {
+  const { onToggleFromLogo } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [showHamburger, setShowHamburger] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
   const [location, setLocation] = useLocation();
   const queryClient = useQueryClient();
 
@@ -48,6 +62,37 @@ export function HamburgerNavigation() {
     setIsOpen(false);
   };
 
+  // Scroll detection for hamburger visibility
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      setScrollY(currentScrollY);
+      
+      // Show hamburger when scrolled down at least 100px
+      // Hide when scrolling up towards the logo (within 50px of top)
+      if (currentScrollY > 100 && currentScrollY > 50) {
+        setShowHamburger(true);
+      } else if (currentScrollY < 50) {
+        setShowHamburger(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Expose toggle function to parent component
+  useEffect(() => {
+    if (onToggleFromLogo) {
+      window.hamburgerToggle = toggleMenu;
+    }
+    return () => {
+      if (window.hamburgerToggle) {
+        delete window.hamburgerToggle;
+      }
+    };
+  }, [onToggleFromLogo]);
+
   const navItems = [
     { label: "Dashboard", path: "/dashboard", icon: GraduationCap, show: user },
     { label: "Browse Internships", path: "/search", icon: Search, show: true },
@@ -58,16 +103,17 @@ export function HamburgerNavigation() {
 
   return (
     <>
-      {/* Hamburger Button */}
-      <div className="fixed top-4 left-4 z-50">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={toggleMenu}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          className="w-10 h-10 bg-transparent hover:bg-transparent transition-all duration-300"
-        >
+      {/* Hamburger Button - Only show when scrolled */}
+      {showHamburger && (
+        <div className="fixed top-4 left-4 z-50">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleMenu}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            className="w-10 h-10 bg-transparent hover:bg-transparent transition-all duration-300"
+          >
           <div className="relative w-5 h-5 flex items-center justify-center">
             {/* Hamburger Lines */}
             <div className={`absolute transition-all duration-300 ${isHovered ? 'opacity-0 scale-0' : 'opacity-100 scale-100'}`}>
@@ -83,8 +129,9 @@ export function HamburgerNavigation() {
               <DiplomaIcon className="w-5 h-5 text-purple-600" />
             </div>
           </div>
-        </Button>
-      </div>
+          </Button>
+        </div>
+      )}
 
       {/* Profile Button - Top Right */}
       {user && (

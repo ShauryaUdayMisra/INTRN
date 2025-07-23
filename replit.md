@@ -98,9 +98,19 @@ InternHub is a full-stack web application that connects students with internship
 
 Preferred communication style: Simple, everyday language.
 
-## Recent Achievements (July 15, 2025)
+## Recent Achievements (July 23, 2025)
 
-### Navigation & Admin User Management Enhancement (Latest - July 15, 2025)
+### Smart Scroll-Based Hamburger Navigation (Latest - July 23, 2025)
+- ✅ **Scroll-Based Visibility**: Hamburger menu only appears when scrolled down 100px+
+- ✅ **Logo Collision Prevention**: Menu disappears when scrolling up to within 50px of top
+- ✅ **Clickable Logo Navigation**: Landing page logo click opens hamburger menu
+- ✅ **Purple Brand Colors**: Hamburger lines use INTRN purple (`bg-purple-600`)
+- ✅ **Mobile-Optimized**: Designed specifically for mobile viewport experience
+- ✅ **Transparent Integration**: Buttons blend seamlessly with page background
+- ✅ **Fixed Click Functionality**: All navigation buttons properly functional
+- ✅ **Dynamic Positioning**: Menu adapts to scroll position to avoid header collision
+
+### Navigation & Admin User Management Enhancement (July 15, 2025)
 - ✅ **Fixed "Get Started" Button Routing**: Now takes users to sign-up tab instead of sign-in, with URL parameters (?tab=register)
 - ✅ **Enhanced Admin User Management**: Complete detailed view of all user profiles separated by role
 - ✅ **Student Profile Details**: Admin can view email, actual password, location, university, graduation year, skills, bio, and onboarding data

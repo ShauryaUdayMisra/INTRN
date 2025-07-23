@@ -50,10 +50,17 @@ export default function LandingPage() {
       <header className="bg-white/80 backdrop-blur-lg shadow-sm border-b border-primary-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
-            <div className="flex items-center space-x-3">
+            <button 
+              onClick={() => {
+                if (window.hamburgerToggle) {
+                  window.hamburgerToggle();
+                }
+              }}
+              className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
+            >
               <DiplomaIcon className="w-8 h-8 text-black" />
               <span className="text-3xl font-bold text-black">intrn</span>
-            </div>
+            </button>
             {!user ? (
               <Button 
                 onClick={() => setLocation("/auth")}
