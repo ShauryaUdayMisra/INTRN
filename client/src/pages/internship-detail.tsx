@@ -252,12 +252,12 @@ export default function InternshipDetail() {
                         <Globe className="w-4 h-4 mr-2" />
                         <span className="font-medium mr-2">Website:</span>
                         <a 
-                          href={company.website} 
+                          href={company.website.startsWith('http') ? company.website : `https://${company.website}`} 
                           target="_blank" 
                           rel="noopener noreferrer"
                           className="text-primary hover:underline"
                         >
-                          https://ripplesofhope.in/
+                          {company.website}
                         </a>
                       </div>
                     )}

@@ -109,6 +109,7 @@ Preferred communication style: Simple, everyday language.
 - ✅ **Transparent Integration**: Buttons blend seamlessly with page background
 - ✅ **Fixed Click Functionality**: All navigation buttons properly functional
 - ✅ **Dynamic Positioning**: Menu adapts to scroll position to avoid header collision
+- ✅ **Fixed Website Display Bug**: Corrected hardcoded Ripples of Hope URL in internship details to show dynamic company websites
 
 ### Navigation & Admin User Management Enhancement (July 15, 2025)
 - ✅ **Fixed "Get Started" Button Routing**: Now takes users to sign-up tab instead of sign-in, with URL parameters (?tab=register)
