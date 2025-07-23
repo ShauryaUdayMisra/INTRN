@@ -66,21 +66,21 @@ export function HamburgerNavigation() {
           onClick={toggleMenu}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className="w-10 h-10 bg-gray-100/70 border-0 hover:bg-gray-200/80 transition-all duration-300 rounded-lg"
+          className="w-10 h-10 bg-transparent hover:bg-transparent transition-all duration-300"
         >
-          <div className="relative w-6 h-6 flex items-center justify-center">
+          <div className="relative w-5 h-5 flex items-center justify-center">
             {/* Hamburger Lines */}
             <div className={`absolute transition-all duration-300 ${isHovered ? 'opacity-0 scale-0' : 'opacity-100 scale-100'}`}>
               <div className="space-y-1.5">
-                <div className="w-6 h-0.5 bg-gray-700 rounded-full"></div>
-                <div className="w-6 h-0.5 bg-gray-700 rounded-full"></div>
-                <div className="w-6 h-0.5 bg-gray-700 rounded-full"></div>
+                <div className="w-5 h-0.5 bg-gray-600 rounded-full"></div>
+                <div className="w-5 h-0.5 bg-gray-600 rounded-full"></div>
+                <div className="w-5 h-0.5 bg-gray-600 rounded-full"></div>
               </div>
             </div>
             
             {/* INTRN Logo */}
             <div className={`absolute transition-all duration-300 ${isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}>
-              <DiplomaIcon className="w-6 h-6 text-purple-600" />
+              <DiplomaIcon className="w-5 h-5 text-purple-600" />
             </div>
           </div>
         </Button>
@@ -91,9 +91,9 @@ export function HamburgerNavigation() {
         <div className="fixed top-4 right-4 z-50">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="w-10 h-10 bg-gray-100/70 border-0 hover:bg-gray-200/80 transition-all duration-300 rounded-lg">
-                <Avatar className="w-8 h-8">
-                  <AvatarFallback className="bg-purple-100 text-purple-600 font-semibold">
+              <Button variant="ghost" size="icon" className="w-10 h-10 bg-transparent hover:bg-transparent transition-all duration-300">
+                <Avatar className="w-7 h-7">
+                  <AvatarFallback className="bg-gray-300 text-gray-700 font-semibold text-sm">
                     {user.firstName?.[0] || user.email?.[0]?.toUpperCase() || "U"}
                   </AvatarFallback>
                 </Avatar>
