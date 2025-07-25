@@ -64,6 +64,15 @@ export function HamburgerNavigation(props: HamburgerNavigationProps = {}) {
 
   // Scroll detection for hamburger visibility
   useEffect(() => {
+    const isLandingPage = location === "/";
+    
+    if (!isLandingPage) {
+      // Show hamburger immediately on all non-landing pages
+      setShowHamburger(true);
+      return;
+    }
+
+    // Landing page: only show on scroll
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       setScrollY(currentScrollY);
@@ -79,7 +88,7 @@ export function HamburgerNavigation(props: HamburgerNavigationProps = {}) {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [location]);
 
   // Expose toggle function to parent component
   useEffect(() => {
@@ -103,7 +112,7 @@ export function HamburgerNavigation(props: HamburgerNavigationProps = {}) {
 
   return (
     <>
-      {/* Hamburger Button - Only show when scrolled */}
+      {/* Hamburger Button - Always visible except on landing page (scroll-based) */}
       {showHamburger && (
         <div className="fixed top-4 left-4 z-50">
           <Button
