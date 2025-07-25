@@ -205,7 +205,7 @@ export function HamburgerNavigation(props: HamburgerNavigationProps = {}) {
                 key={item.path}
                 onClick={() => {
                   closeMenu();
-                  window.location.href = item.path;
+                  setLocation(item.path);
                 }}
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-colors duration-200 cursor-pointer ${
                   isActive 
