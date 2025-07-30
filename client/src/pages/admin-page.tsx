@@ -395,23 +395,21 @@ export default function AdminPage() {
               </div>
             </div>
             
-            <div className="space-y-4">
+            <div className="space-y-6">
               {applications.map((application) => (
                 <Card key={application.id}>
                   <CardContent className="p-6">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <h3 className="font-semibold">
-                          Application #{application.id}
-                        </h3>
-                        <p className="text-gray-600">
-                          Student ID: {application.studentId} → Internship ID: {application.internshipId}
-                        </p>
-                        <p className="text-sm text-gray-500">
-                          Applied {new Date(application.appliedAt).toLocaleDateString()}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-2">
+                    <div className="space-y-4">
+                      {/* Header with Status */}
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h3 className="font-semibold text-lg">
+                            Application #{application.id}
+                          </h3>
+                          <p className="text-sm text-gray-500">
+                            Applied {new Date(application.appliedAt).toLocaleDateString()}
+                          </p>
+                        </div>
                         <Badge variant={
                           application.status === "accepted" ? "default" :
                           application.status === "rejected" ? "destructive" :
@@ -419,7 +417,104 @@ export default function AdminPage() {
                         }>
                           {application.status}
                         </Badge>
-                        <Button size="sm" variant="outline">View Details</Button>
+                      </div>
+
+                      {/* Student Information */}
+                      <div className="border rounded-lg p-4 bg-blue-50">
+                        <h4 className="font-medium text-blue-900 mb-3 flex items-center gap-2">
+                          <Users className="h-4 w-4" />
+                          Student Information
+                        </h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-sm">
+                          <div>
+                            <p className="font-medium text-gray-700">Name</p>
+                            <p>{application.studentFirstName} {application.studentLastName}</p>
+                          </div>
+                          <div>
+                            <p className="font-medium text-gray-700">Email</p>
+                            <p className="font-mono text-blue-600">{application.studentEmail}</p>
+                          </div>
+                          <div>
+                            <p className="font-medium text-gray-700">Location</p>
+                            <p>{application.studentLocation || "Not specified"}</p>
+                          </div>
+                          {application.studentGrade && (
+                            <div>
+                              <p className="font-medium text-gray-700">Grade</p>
+                              <p>{application.studentGrade}</p>
+                            </div>
+                          )}
+                          {application.studentSchoolName && (
+                            <div>
+                              <p className="font-medium text-gray-700">School</p>
+                              <p>{application.studentSchoolName}</p>
+                            </div>
+                          )}
+                          {application.studentUniversity && (
+                            <div>
+                              <p className="font-medium text-gray-700">University</p>
+                              <p>{application.studentUniversity}</p>
+                            </div>
+                          )}
+                        </div>
+                        {application.studentSkills && application.studentSkills.length > 0 && (
+                          <div className="mt-3">
+                            <p className="font-medium text-gray-700 mb-1">Skills</p>
+                            <div className="flex flex-wrap gap-1">
+                              {application.studentSkills.map((skill, index) => (
+                                <Badge key={index} variant="outline" className="text-xs">{skill}</Badge>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                        {application.studentBio && (
+                          <div className="mt-3">
+                            <p className="font-medium text-gray-700 mb-1">Bio</p>
+                            <p className="text-sm text-gray-600">{application.studentBio}</p>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Internship & Company Information */}
+                      <div className="border rounded-lg p-4 bg-green-50">
+                        <h4 className="font-medium text-green-900 mb-3 flex items-center gap-2">
+                          <Building className="h-4 w-4" />
+                          Internship & Company Details
+                        </h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <p className="font-medium text-gray-700">Internship Title</p>
+                            <p className="font-semibold">{application.internshipTitle}</p>
+                            <p className="text-sm text-gray-600 mt-1">
+                              {application.internshipType} • {application.internshipDuration}
+                            </p>
+                            <p className="text-sm text-gray-600">📍 {application.internshipLocation}</p>
+                          </div>
+                          <div>
+                            <p className="font-medium text-gray-700">Company</p>
+                            <p className="font-semibold">{application.company?.companyName}</p>
+                            <p className="text-sm text-gray-600">{application.company?.companyField}</p>
+                            <p className="text-sm font-mono text-green-600">{application.company?.companyEmail}</p>
+                            {application.company?.companyWebsite && (
+                              <p className="text-sm text-blue-600">{application.company.companyWebsite}</p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Cover Letter */}
+                      {application.coverLetter && (
+                        <div className="border rounded-lg p-4 bg-gray-50">
+                          <h4 className="font-medium text-gray-900 mb-2">Cover Letter</h4>
+                          <p className="text-sm text-gray-700">{application.coverLetter}</p>
+                        </div>
+                      )}
+
+                      {/* Action Buttons */}
+                      <div className="flex justify-end gap-2 pt-2 border-t">
+                        <Button size="sm" variant="outline">Contact Student</Button>
+                        <Button size="sm" variant="outline">Contact Company</Button>
+                        <Button size="sm">Manage Status</Button>
                       </div>
                     </div>
                   </CardContent>

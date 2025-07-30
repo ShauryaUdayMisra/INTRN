@@ -44,6 +44,7 @@ export interface IStorage {
   deleteBlogPost(id: number): Promise<boolean>;
   
   // Admin-specific methods
+  getApplicationsWithDetails(): Promise<any[]>;
   getCompaniesList(): Promise<User[]>;
   getStudentsList(): Promise<User[]>;
   getPendingSignups(): Promise<User[]>;
@@ -271,6 +272,65 @@ export class DatabaseStorage implements IStorage {
   }
 
   // Admin-specific methods
+  async getApplicationsWithDetails(): Promise<any[]> {
+    const result = await db
+      .select({
+        id: applications.id,
+        status: applications.status,
+        appliedAt: applications.appliedAt,
+        coverLetter: applications.coverLetter,
+        resume: applications.resume,
+        studentId: applications.studentId,
+        internshipId: applications.internshipId,
+        // Student details
+        studentFirstName: users.firstName,
+        studentLastName: users.lastName,
+        studentEmail: users.email,
+        studentLocation: users.location,
+        studentSkills: users.skills,
+        studentBio: users.bio,
+        studentGrade: users.grade,
+        studentSchoolName: users.schoolName,
+        studentUniversity: users.university,
+        studentGraduationYear: users.graduationYear,
+        // Internship details
+        internshipTitle: internships.title,
+        internshipDescription: internships.description,
+        internshipLocation: internships.location,
+        internshipType: internships.type,
+        internshipDuration: internships.duration,
+        // Company details
+        companyId: internships.companyId,
+      })
+      .from(applications)
+      .innerJoin(users, eq(applications.studentId, users.id))
+      .innerJoin(internships, eq(applications.internshipId, internships.id))
+      .orderBy(desc(applications.appliedAt));
+
+    // Get company details separately to avoid table alias conflicts
+    const applicationsWithCompanies = await Promise.all(
+      result.map(async (app) => {
+        const [company] = await db
+          .select({
+            companyName: users.companyName,
+            companyEmail: users.email,
+            companyWebsite: users.website,
+            companyLocation: users.location,
+            companyField: users.companyField,
+          })
+          .from(users)
+          .where(eq(users.id, app.companyId));
+
+        return {
+          ...app,
+          company,
+        };
+      })
+    );
+
+    return applicationsWithCompanies;
+  }
+
   async getCompaniesList(): Promise<User[]> {
     const companies = await db.select().from(users).where(eq(users.role, "company"));
     return companies;

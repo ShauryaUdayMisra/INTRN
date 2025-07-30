@@ -140,9 +140,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin routes for applications management
   app.get("/api/admin/applications", requireSpecialAdmin, async (req, res) => {
     try {
-      const applications = await storage.getApplications();
+      const applications = await storage.getApplicationsWithDetails();
       res.json(applications);
     } catch (error) {
+      console.error("Admin applications fetch error:", error);
       res.status(500).json({ error: "Failed to fetch applications" });
     }
   });
