@@ -12,28 +12,43 @@ import { Redirect } from "wouter";
 export default function AdminPage() {
   const { user } = useAuth();
 
+  // Check if user is one of the special admin accounts
+  const isSpecialAdmin = user && ['admin1', 'admin2', 'admin3'].includes(user.username);
+
   const { data: users = [] } = useQuery<User[]>({
     queryKey: ["/api/admin/users"],
-    enabled: user?.role === "admin",
+    enabled: !!isSpecialAdmin,
   });
 
   const { data: internships = [] } = useQuery<Internship[]>({
     queryKey: ["/api/internships"],
-    enabled: user?.role === "admin",
+    enabled: !!isSpecialAdmin,
   });
 
-  const { data: applications = [] } = useQuery<Application[]>({
+  const { data: applications = [] } = useQuery<any[]>({
     queryKey: ["/api/admin/applications"],
-    enabled: user?.role === "admin",
+    enabled: !!isSpecialAdmin,
   });
 
   const { data: blogPosts = [] } = useQuery<BlogPost[]>({
     queryKey: ["/api/admin/blog"],
-    enabled: user?.role === "admin",
+    enabled: !!isSpecialAdmin,
   });
 
   if (!user || user.role !== "admin") {
     return <Redirect to="/dashboard" />;
+  }
+
+  if (!isSpecialAdmin) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">Access Restricted</h1>
+          <p className="text-gray-600">You need special admin privileges to access this page.</p>
+          <p className="text-sm text-gray-500 mt-2">Contact system administrator for access.</p>
+        </div>
+      </div>
+    );
   }
 
   const stats = {
