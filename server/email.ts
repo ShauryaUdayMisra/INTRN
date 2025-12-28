@@ -44,8 +44,15 @@ export async function sendWelcomeEmail(to: string, firstName: string): Promise<b
   try {
     const { client, fromEmail } = await getResendClient();
     
-    await client.emails.send({
-      from: fromEmail || 'INTRN <intrnxyz@gmail.com>',
+    // Use Resend's onboarding domain - gmail.com is not allowed by Resend
+    // Only use fromEmail if it's from a verified non-gmail domain
+    const senderEmail = (fromEmail && !fromEmail.includes('@gmail.com')) 
+      ? fromEmail 
+      : 'INTRN <onboarding@resend.dev>';
+    console.log(`Sending welcome email from: ${senderEmail} to: ${to}`);
+    
+    const result = await client.emails.send({
+      from: senderEmail,
       to: [to],
       subject: 'Welcome to INTRN - Your Internship Journey Begins!',
       html: `
@@ -89,6 +96,7 @@ export async function sendWelcomeEmail(to: string, firstName: string): Promise<b
       `
     });
     
+    console.log(`Welcome email result:`, JSON.stringify(result));
     console.log(`Welcome email sent to ${to}`);
     return true;
   } catch (error) {
@@ -110,8 +118,14 @@ export async function sendApplicationAcceptedEmail(
     const { client, fromEmail } = await getResendClient();
     const confirmationLink = `${baseUrl}/api/applications/confirm/${confirmationToken}`;
     
-    await client.emails.send({
-      from: fromEmail || 'INTRN <intrnxyz@gmail.com>',
+    // Use Resend's onboarding domain - gmail.com is not allowed by Resend
+    const senderEmail = (fromEmail && !fromEmail.includes('@gmail.com')) 
+      ? fromEmail 
+      : 'INTRN <onboarding@resend.dev>';
+    console.log(`Sending acceptance email from: ${senderEmail} to: ${to}`);
+    
+    const result = await client.emails.send({
+      from: senderEmail,
       to: [to],
       subject: `🎉 Congratulations! Your Application Has Been Accepted - ${internshipTitle}`,
       html: `
@@ -167,6 +181,7 @@ export async function sendApplicationAcceptedEmail(
       `
     });
     
+    console.log(`Application accepted email result:`, JSON.stringify(result));
     console.log(`Application accepted email sent to ${to}`);
     return true;
   } catch (error) {
@@ -185,8 +200,13 @@ export async function sendApplicationReceivedEmail(
   try {
     const { client, fromEmail } = await getResendClient();
     
+    // Use Resend's onboarding domain - gmail.com is not allowed by Resend
+    const senderEmail = (fromEmail && !fromEmail.includes('@gmail.com')) 
+      ? fromEmail 
+      : 'INTRN <onboarding@resend.dev>';
+    
     await client.emails.send({
-      from: fromEmail || 'INTRN <intrnxyz@gmail.com>',
+      from: senderEmail,
       to: [to],
       subject: `Application Received - ${internshipTitle} at ${companyName}`,
       html: `
