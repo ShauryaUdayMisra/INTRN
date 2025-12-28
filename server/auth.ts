@@ -6,6 +6,7 @@ import { scrypt, randomBytes, timingSafeEqual } from "crypto";
 import { promisify } from "util";
 import { storage } from "./storage";
 import { User as SelectUser } from "@shared/schema";
+import { sendWelcomeEmail } from "./email";
 
 declare global {
   namespace Express {
@@ -122,6 +123,13 @@ export function setupAuth(app: Express) {
       const user = await storage.createUser(cleanUserData);
 
       console.log("User created successfully:", user.id);
+
+      // Send welcome email for student signups
+      if (user.role === 'student' && user.email) {
+        sendWelcomeEmail(user.email, user.firstName || 'Student').catch(err => {
+          console.error("Failed to send welcome email:", err);
+        });
+      }
 
       req.login(user, (err) => {
         if (err) {

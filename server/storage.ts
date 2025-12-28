@@ -29,6 +29,9 @@ export interface IStorage {
   getApplication(id: number): Promise<Application | undefined>;
   createApplication(application: InsertApplication): Promise<Application>;
   updateApplicationStatus(id: number, status: string): Promise<Application | undefined>;
+  setApplicationConfirmationToken(id: number, token: string): Promise<Application | undefined>;
+  confirmApplication(token: string): Promise<Application | undefined>;
+  getApplicationByToken(token: string): Promise<Application | undefined>;
   
   // Favorites methods
   getFavorites(studentId: number): Promise<Favorite[]>;
@@ -200,6 +203,35 @@ export class DatabaseStorage implements IStorage {
       .update(applications)
       .set({ status })
       .where(eq(applications.id, id))
+      .returning();
+    return application || undefined;
+  }
+
+  async setApplicationConfirmationToken(id: number, token: string): Promise<Application | undefined> {
+    const [application] = await db
+      .update(applications)
+      .set({ confirmationToken: token })
+      .where(eq(applications.id, id))
+      .returning();
+    return application || undefined;
+  }
+
+  async getApplicationByToken(token: string): Promise<Application | undefined> {
+    const [application] = await db
+      .select()
+      .from(applications)
+      .where(eq(applications.confirmationToken, token));
+    return application || undefined;
+  }
+
+  async confirmApplication(token: string): Promise<Application | undefined> {
+    const [application] = await db
+      .update(applications)
+      .set({ 
+        confirmed: true, 
+        confirmedAt: new Date() 
+      })
+      .where(eq(applications.confirmationToken, token))
       .returning();
     return application || undefined;
   }

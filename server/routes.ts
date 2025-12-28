@@ -8,6 +8,8 @@ import { seedSampleData } from "./seed-data";
 import { seedBlogPosts } from "./seed-blog";
 import { seedCustomBlogs } from "./seed-custom-blogs";
 import { insertInternshipSchema, insertApplicationSchema, insertBlogPostSchema } from "@shared/schema";
+import { sendApplicationReceivedEmail, sendApplicationAcceptedEmail } from "./email";
+import { nanoid } from "nanoid";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Authentication routes
@@ -156,6 +158,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!application) {
         return res.status(404).json({ error: "Application not found" });
       }
+      
+      // If accepted, send acceptance email with confirmation link
+      if (status === 'accepted') {
+        const student = await storage.getUser(application.studentId);
+        const internship = await storage.getInternship(application.internshipId);
+        
+        if (student && internship) {
+          const company = await storage.getUser(internship.companyId);
+          const confirmationToken = nanoid(32);
+          
+          // Save the confirmation token
+          await storage.setApplicationConfirmationToken(id, confirmationToken);
+          
+          // Get the base URL from environment
+          const baseUrl = process.env.REPLIT_DEV_DOMAIN 
+            ? `https://${process.env.REPLIT_DEV_DOMAIN}` 
+            : 'http://localhost:5000';
+          
+          // Send acceptance email with confirmation link
+          sendApplicationAcceptedEmail(
+            student.email,
+            student.firstName || 'Student',
+            internship.title,
+            company?.companyName || 'Company',
+            confirmationToken,
+            baseUrl
+          ).catch(err => console.error("Failed to send acceptance email:", err));
+        }
+      }
+      
       res.json(application);
     } catch (error) {
       res.status(500).json({ error: "Failed to update application status" });
@@ -341,10 +373,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const validatedData = insertApplicationSchema.parse(applicationData);
       const application = await storage.createApplication(validatedData);
+      
+      // Send application received email to student
+      const internship = await storage.getInternship(req.body.internshipId);
+      if (internship && req.user.email) {
+        const company = await storage.getUser(internship.companyId);
+        sendApplicationReceivedEmail(
+          req.user.email,
+          req.user.firstName || 'Student',
+          internship.title,
+          company?.companyName || 'Company'
+        ).catch(err => console.error("Failed to send application email:", err));
+      }
+      
       res.status(201).json(application);
     } catch (error) {
       console.error("Application creation error:", error);
-      res.status(400).json({ message: "Invalid application data", error: error.message });
+      res.status(400).json({ message: "Invalid application data", error: (error as Error).message });
+    }
+  });
+
+  // Confirmation endpoint - when student clicks the link in acceptance email
+  app.get("/api/applications/confirm/:token", async (req, res) => {
+    try {
+      const { token } = req.params;
+      const application = await storage.confirmApplication(token);
+      
+      if (!application) {
+        return res.redirect("/?error=invalid-confirmation");
+      }
+      
+      // Redirect to a success page
+      res.redirect("/?confirmed=true");
+    } catch (error) {
+      console.error("Confirmation error:", error);
+      res.redirect("/?error=confirmation-failed");
     }
   });
 

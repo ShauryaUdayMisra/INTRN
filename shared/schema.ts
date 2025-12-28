@@ -74,6 +74,9 @@ export const applications = pgTable("applications", {
   coverLetter: text("cover_letter"),
   resume: text("resume"),
   status: text("status", { enum: ["pending", "reviewed", "accepted", "rejected"] }).default("pending"),
+  confirmationToken: text("confirmation_token"),
+  confirmed: boolean("confirmed").default(false),
+  confirmedAt: timestamp("confirmed_at"),
   appliedAt: timestamp("applied_at").defaultNow(),
 });
 
