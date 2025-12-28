@@ -208,6 +208,7 @@ export function HamburgerNavigation(props: HamburgerNavigationProps = {}) {
             
             const Icon = item.icon;
             const isActive = location === item.path;
+            const isBrowseInternships = item.label === "Browse Internships";
             
             return (
               <button
@@ -217,9 +218,11 @@ export function HamburgerNavigation(props: HamburgerNavigationProps = {}) {
                   setLocation(item.path);
                 }}
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-colors duration-200 cursor-pointer ${
-                  isActive 
-                    ? 'bg-purple-100 text-purple-700 font-medium' 
-                    : 'text-gray-700 hover:bg-gray-100'
+                  isBrowseInternships
+                    ? 'bg-purple-600 text-white font-medium hover:bg-purple-700'
+                    : isActive 
+                      ? 'bg-purple-100 text-purple-700 font-medium' 
+                      : 'text-gray-700 hover:bg-gray-100'
                 }`}
               >
                 <Icon className="w-5 h-5" />
