@@ -46,7 +46,7 @@ function Router() {
         <ProtectedRoute path="/company-application-status" component={() => <PageTransition><CompanyApplicationStatus /></PageTransition>} />
         <ProtectedRoute path="/company-dashboard" component={() => <PageTransition><CompanyDashboard /></PageTransition>} />
         <ProtectedRoute path="/dashboard" component={() => <PageTransition><DashboardPage /></PageTransition>} />
-        <ProtectedRoute path="/search" component={() => <PageTransition><SearchPage /></PageTransition>} />
+        <Route path="/search" component={() => <PageTransition><SearchPage /></PageTransition>} />
         <Route path="/blog/:slug" component={() => <PageTransition><BlogPostDetail /></PageTransition>} />
         <Route path="/blog" component={() => <PageTransition><BlogPage /></PageTransition>} />
         <Route path="/internship/:id" component={() => <PageTransition><InternshipDetail /></PageTransition>} />
