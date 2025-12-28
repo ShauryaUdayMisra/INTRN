@@ -44,11 +44,8 @@ export async function sendWelcomeEmail(to: string, firstName: string): Promise<b
   try {
     const { client, fromEmail } = await getResendClient();
     
-    // Use Resend's onboarding domain - gmail.com is not allowed by Resend
-    // Only use fromEmail if it's from a verified non-gmail domain
-    const senderEmail = (fromEmail && !fromEmail.includes('@gmail.com')) 
-      ? fromEmail 
-      : 'INTRN <onboarding@resend.dev>';
+    // Use verified intrn.xyz domain
+    const senderEmail = 'INTRN <hello@intrn.xyz>';
     console.log(`Sending welcome email from: ${senderEmail} to: ${to}`);
     
     const result = await client.emails.send({
@@ -118,10 +115,8 @@ export async function sendApplicationAcceptedEmail(
     const { client, fromEmail } = await getResendClient();
     const confirmationLink = `${baseUrl}/api/applications/confirm/${confirmationToken}`;
     
-    // Use Resend's onboarding domain - gmail.com is not allowed by Resend
-    const senderEmail = (fromEmail && !fromEmail.includes('@gmail.com')) 
-      ? fromEmail 
-      : 'INTRN <onboarding@resend.dev>';
+    // Use verified intrn.xyz domain
+    const senderEmail = 'INTRN <hello@intrn.xyz>';
     console.log(`Sending acceptance email from: ${senderEmail} to: ${to}`);
     
     const result = await client.emails.send({
@@ -200,10 +195,8 @@ export async function sendApplicationReceivedEmail(
   try {
     const { client, fromEmail } = await getResendClient();
     
-    // Use Resend's onboarding domain - gmail.com is not allowed by Resend
-    const senderEmail = (fromEmail && !fromEmail.includes('@gmail.com')) 
-      ? fromEmail 
-      : 'INTRN <onboarding@resend.dev>';
+    // Use verified intrn.xyz domain
+    const senderEmail = 'INTRN <hello@intrn.xyz>';
     
     await client.emails.send({
       from: senderEmail,
