@@ -45,7 +45,7 @@ export async function sendWelcomeEmail(to: string, firstName: string): Promise<b
     const { client, fromEmail } = await getResendClient();
     
     // Use verified intrn.xyz domain
-    const senderEmail = 'INTRN <hello@intrn.xyz>';
+    const senderEmail = 'INTRN <team@intrn.xyz>';
     console.log(`Sending welcome email from: ${senderEmail} to: ${to}`);
     
     const result = await client.emails.send({
@@ -116,7 +116,7 @@ export async function sendApplicationAcceptedEmail(
     const confirmationLink = `${baseUrl}/api/applications/confirm/${confirmationToken}`;
     
     // Use verified intrn.xyz domain
-    const senderEmail = 'INTRN <hello@intrn.xyz>';
+    const senderEmail = 'INTRN <team@intrn.xyz>';
     console.log(`Sending acceptance email from: ${senderEmail} to: ${to}`);
     
     const result = await client.emails.send({
@@ -196,7 +196,7 @@ export async function sendApplicationReceivedEmail(
     const { client, fromEmail } = await getResendClient();
     
     // Use verified intrn.xyz domain
-    const senderEmail = 'INTRN <hello@intrn.xyz>';
+    const senderEmail = 'INTRN <team@intrn.xyz>';
     
     await client.emails.send({
       from: senderEmail,
