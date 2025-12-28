@@ -46,9 +46,9 @@ export function HamburgerNavigation(props: HamburgerNavigationProps = {}) {
 
   const handleLogout = async () => {
     try {
-      await apiRequest("/api/logout", { method: "POST" });
+      await apiRequest("POST", "/api/logout");
       queryClient.clear();
-      setLocation("/");
+      window.location.href = "/";
     } catch (error) {
       console.error("Logout error:", error);
     }
