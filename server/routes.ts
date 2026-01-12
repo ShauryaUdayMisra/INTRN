@@ -36,6 +36,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   const { seedPreludeInternship } = await import("./seed-prelude-internship");
   await seedPreludeInternship();
   
+  // Import and call Bir Terraces internship seeding
+  const { seedBirTerracesInternship } = await import("./seed-bir-terraces");
+  await seedBirTerracesInternship();
+  
   // Replit Auth user route
   app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
     try {
