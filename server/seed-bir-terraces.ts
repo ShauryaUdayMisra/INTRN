@@ -22,7 +22,7 @@ export async function seedBirTerracesInternship() {
         .set({
           duration: "7-28 days",
           location: "Nainital, Uttarakhand",
-          type: "hybrid",
+          type: "online",
           description: "Looking for a social media intern who can navigate the trends and create reels/posts based on our legacy media base. You will help manage our Instagram presence and create engaging content for our mountain retreat property.",
           requirements: "Preferably versed with Instagram Ads and ChatGPT. If not, we would love to train you. Creative mindset and understanding of social media trends required.",
           skills: ["Social Media", "Instagram", "Content Creation", "Reels", "ChatGPT", "Instagram Ads"],
@@ -71,7 +71,7 @@ export async function seedBirTerracesInternship() {
       description: "Looking for a social media intern who can navigate the trends and create reels/posts based on our legacy media base. You will help manage our Instagram presence and create engaging content for our mountain retreat property located in beautiful Nainital, Uttarakhand.",
       requirements: "Preferably versed with Instagram Ads and ChatGPT. If not, we would love to train you. Creative mindset and understanding of social media trends required. Passion for travel and hospitality is a plus.",
       location: "Nainital, Uttarakhand",
-      type: "hybrid",
+      type: "online",
       duration: "7-28 days",
       skills: ["Social Media", "Instagram", "Content Creation", "Reels", "ChatGPT", "Instagram Ads"],
       applicationDeadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),

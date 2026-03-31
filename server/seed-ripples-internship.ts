@@ -70,7 +70,7 @@ export async function seedRipplesInternship() {
       description: "To understand the impact of sports on marriage choices of adolescent girls in underprivileged and marginalised communities in rural North India. While it can be done online, it would be better if the person can also travel for 6-7 days to our locations in the states mentioned. You'll work directly with field researchers and analyze socio-cultural data to understand how sports participation influences life choices in these communities.",
       requirements: "Excel proficiency required. More importantly, understanding of the socio-cultural fabric of the poor in rural India. Research experience preferred but not required. Willingness to travel to rural locations is a plus.",
       location: "UP, Bihar, Uttarakhand, MP (also available online)",
-      type: "hybrid",
+      type: "online",
       duration: "7-28 days",
       skills: ["Excel", "Research", "Cultural Understanding", "Data Analysis", "Field Work"],
       applicationDeadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
