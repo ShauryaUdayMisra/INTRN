@@ -171,18 +171,6 @@ export default function DashboardSimple() {
                 </CardContent>
               </Card>
 
-              <Card className="cursor-pointer hover:shadow-lg transition-shadow" onClick={() => window.location.href = "/student-onboarding"}>
-                <CardHeader>
-                  <CardTitle className="flex items-center text-black">
-                    <Settings className="w-6 h-6 mr-2 text-primary" />
-                    Edit Profile
-                  </CardTitle>
-                  <CardDescription className="text-black">Update your skills, experience, and preferences</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-gray-600">Keep your profile updated to get better internship matches</p>
-                </CardContent>
-              </Card>
 
 
 

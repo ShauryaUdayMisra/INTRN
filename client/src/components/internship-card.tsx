@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useAuth } from "@/hooks/use-auth";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -9,6 +10,8 @@ import { Internship } from "@shared/schema";
 import { useLocation } from "wouter";
 import { MapPin, Clock, DollarSign, Heart, Building, Edit, Eye } from "lucide-react";
 import { useState } from "react";
+
+const FILLED_INTERNSHIP_ID = 239;
 
 interface InternshipCardProps {
   internship: Internship;
@@ -20,6 +23,9 @@ export default function InternshipCard({ internship, showManage = false }: Inter
   const { toast } = useToast();
   const [, setLocation] = useLocation();
   const [isFavorite, setIsFavorite] = useState(false);
+  const [showFilledDialog, setShowFilledDialog] = useState(false);
+
+  const isFilled = internship.id === FILLED_INTERNSHIP_ID;
 
   const applyMutation = useMutation({
     mutationFn: async () => {
@@ -99,12 +105,27 @@ export default function InternshipCard({ internship, showManage = false }: Inter
   };
 
   const handleCardClick = () => {
+    if (isFilled) {
+      setShowFilledDialog(true);
+      return;
+    }
     setLocation(`/internship/${internship.id}`);
   };
 
   return (
+    <>
+    <Dialog open={showFilledDialog} onOpenChange={setShowFilledDialog}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Position Already Filled</DialogTitle>
+          <DialogDescription>
+            This internship position has already been filled. Please explore other opportunities available on the platform.
+          </DialogDescription>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
     <Card 
-      className="bg-white hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 hover:border-primary/20 cursor-pointer"
+      className={`bg-white hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 hover:border-primary/20 cursor-pointer ${isFilled ? "opacity-50 grayscale" : ""}`}
       onClick={handleCardClick}
     >
       <CardContent className="p-6">
@@ -201,5 +222,6 @@ export default function InternshipCard({ internship, showManage = false }: Inter
         </div>
       </CardContent>
     </Card>
+    </>
   );
 }
