@@ -240,7 +240,7 @@ export default function CompanyApplication() {
                           Location
                         </FormLabel>
                         <FormControl>
-                          <Input placeholder="Your company location" autoComplete="off" name="j6h4b8v5" readOnly onFocus={(e) => e.target.removeAttribute('readonly')} {...field} />
+                          <Input placeholder="Your company location" autoComplete="off" readOnly onFocus={(e) => e.target.removeAttribute('readonly')} {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

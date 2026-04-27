@@ -43,7 +43,7 @@ export default function BlogPostCard({ post }: BlogPostCardProps) {
           )}
           <div className="flex items-center text-gray-500 text-sm">
             <Calendar className="mr-1 h-3 w-3" />
-            {new Date(post.createdAt).toLocaleDateString()}
+            {post.createdAt ? new Date(post.createdAt).toLocaleDateString() : ""}
           </div>
         </div>
 

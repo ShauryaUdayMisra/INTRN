@@ -165,12 +165,6 @@ export default function InternshipCard({ internship, showManage = false }: Inter
             <Clock className="mr-2 h-4 w-4 text-primary" />
             <span>{internship.duration}</span>
           </div>
-          {internship.salary && (
-            <div className="flex items-center text-gray-600 text-sm">
-              <DollarSign className="mr-2 h-4 w-4 text-primary" />
-              <span>{internship.salary}</span>
-            </div>
-          )}
         </div>
 
         <p className="text-gray-700 text-sm mb-4 line-clamp-3">
@@ -194,7 +188,7 @@ export default function InternshipCard({ internship, showManage = false }: Inter
 
         <div className="flex items-center justify-between">
           <span className="text-xs text-gray-500">
-            Posted {new Date(internship.createdAt).toLocaleDateString()}
+            {internship.createdAt ? `Posted ${new Date(internship.createdAt).toLocaleDateString()}` : ""}
           </span>
           
           <div className="flex gap-2">

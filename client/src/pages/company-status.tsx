@@ -89,9 +89,9 @@ export default function CompanyStatus() {
                     <div className="flex items-center justify-between">
                       <CardTitle className="text-xl text-black">{request.companyName}</CardTitle>
                       <div className="flex items-center gap-2">
-                        {getStatusIcon(request.status)}
-                        <Badge className={getStatusColor(request.status)}>
-                          {request.status}
+                        {getStatusIcon(request.status ?? "pending")}
+                        <Badge className={getStatusColor(request.status ?? "pending")}>
+                          {request.status ?? "pending"}
                         </Badge>
                       </div>
                     </div>
@@ -100,13 +100,15 @@ export default function CompanyStatus() {
                     <div className="grid md:grid-cols-2 gap-4 text-sm">
                       <div>
                         <h4 className="font-semibold text-black mb-2">Company Details</h4>
-                        <p className="text-black"><strong>Industry:</strong> {request.industry}</p>
-                        <p className="text-black"><strong>Size:</strong> {request.companySize}</p>
+                        <p className="text-black"><strong>Field:</strong> {request.companyField}</p>
+                        <p className="text-black"><strong>Internship Type:</strong> {request.internshipType}</p>
                         <p className="text-black"><strong>Location:</strong> {request.location}</p>
                       </div>
                       <div>
                         <h4 className="font-semibold text-black mb-2">Application Info</h4>
-                        <p className="text-black"><strong>Submitted:</strong> {new Date(request.createdAt).toLocaleDateString()}</p>
+                        {request.submittedAt && (
+                          <p className="text-black"><strong>Submitted:</strong> {new Date(request.submittedAt).toLocaleDateString()}</p>
+                        )}
                         {request.reviewedAt && (
                           <p className="text-black"><strong>Reviewed:</strong> {new Date(request.reviewedAt).toLocaleDateString()}</p>
                         )}

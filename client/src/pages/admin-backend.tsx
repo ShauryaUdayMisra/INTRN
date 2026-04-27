@@ -22,6 +22,8 @@ export default function AdminBackend() {
   const { toast } = useToast();
   const [selectedTab, setSelectedTab] = useState("overview");
   const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [editUserEmail, setEditUserEmail] = useState("");
+  const [editUserRole, setEditUserRole] = useState("");
   const [editingInternship, setEditingInternship] = useState<Internship | null>(null);
 
   // Check if user is one of the special admin accounts
@@ -301,7 +303,11 @@ export default function AdminBackend() {
                         <div className="flex gap-2">
                           <Dialog>
                             <DialogTrigger asChild>
-                              <Button variant="outline" size="sm" onClick={() => setEditingUser(user)}>
+                              <Button variant="outline" size="sm" onClick={() => {
+                                setEditingUser(user);
+                                setEditUserEmail(user.email ?? "");
+                                setEditUserRole(user.role ?? "");
+                              }}>
                                 <Edit className="h-4 w-4" />
                               </Button>
                             </DialogTrigger>
@@ -312,11 +318,11 @@ export default function AdminBackend() {
                               <div className="space-y-4">
                                 <div>
                                   <label className="text-sm font-medium">Email</label>
-                                  <Input defaultValue={user.email} />
+                                  <Input value={editUserEmail} onChange={(e) => setEditUserEmail(e.target.value)} />
                                 </div>
                                 <div>
                                   <label className="text-sm font-medium">Role</label>
-                                  <Select defaultValue={user.role}>
+                                  <Select value={editUserRole} onValueChange={setEditUserRole}>
                                     <SelectTrigger>
                                       <SelectValue />
                                     </SelectTrigger>
@@ -327,7 +333,7 @@ export default function AdminBackend() {
                                     </SelectContent>
                                   </Select>
                                 </div>
-                                <Button onClick={() => updateUserMutation.mutate({ id: user.id, updates: { profileComplete: true } })}>
+                                <Button onClick={() => updateUserMutation.mutate({ id: user.id, updates: { email: editUserEmail, role: editUserRole as "student" | "company" | "admin" } })}>
                                   Save Changes
                                 </Button>
                               </div>

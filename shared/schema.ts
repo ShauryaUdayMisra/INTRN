@@ -57,7 +57,7 @@ export const internships = pgTable("internships", {
   description: text("description").notNull(),
   requirements: text("requirements"),
   location: text("location").notNull(),
-  type: text("type", { enum: ["remote", "onsite", "hybrid"] }).notNull(),
+  type: text("type", { enum: ["remote", "onsite", "hybrid", "online"] }).notNull(),
   duration: text("duration").notNull(),
   skills: text("skills").array(),
   applicationDeadline: timestamp("application_deadline"),

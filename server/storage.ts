@@ -111,7 +111,7 @@ export class DatabaseStorage implements IStorage {
     return user;
   }
 
-  async updateUser(id: string, updates: Partial<InsertUser>): Promise<User | undefined> {
+  async updateUser(id: number, updates: Partial<InsertUser>): Promise<User | undefined> {
     const [user] = await db
       .update(users)
       .set(updates)
@@ -166,8 +166,10 @@ export class DatabaseStorage implements IStorage {
   }
 
   async deleteInternship(id: number): Promise<boolean> {
+    await db.delete(applications).where(eq(applications.internshipId, id));
+    await db.delete(favorites).where(eq(favorites.internshipId, id));
     const result = await db.delete(internships).where(eq(internships.id, id));
-    return result.rowCount > 0;
+    return (result.rowCount ?? 0) > 0;
   }
 
   // Application methods
@@ -257,7 +259,7 @@ export class DatabaseStorage implements IStorage {
     const result = await db
       .delete(favorites)
       .where(and(eq(favorites.studentId, studentId), eq(favorites.internshipId, internshipId)));
-    return result.rowCount > 0;
+    return (result.rowCount ?? 0) > 0;
   }
 
   // Blog methods
@@ -300,7 +302,7 @@ export class DatabaseStorage implements IStorage {
 
   async deleteBlogPost(id: number): Promise<boolean> {
     const result = await db.delete(blogPosts).where(eq(blogPosts.id, id));
-    return result.rowCount > 0;
+    return (result.rowCount ?? 0) > 0;
   }
 
   // Admin-specific methods
