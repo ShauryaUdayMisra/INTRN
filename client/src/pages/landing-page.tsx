@@ -309,7 +309,7 @@ export default function LandingPage() {
               Empowering the next generation of talent across South Asia
             </p>
             <div className="border-t border-gray-300 pt-8">
-              <p className="text-black">&copy; 2025 INTRN. Built for high school students.</p>
+              <p className="text-black">&copy; 2026 INTRN. Built for high school students.</p>
             </div>
           </div>
         </div>

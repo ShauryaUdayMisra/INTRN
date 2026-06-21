@@ -112,9 +112,9 @@ export function HamburgerNavigation(props: HamburgerNavigationProps = {}) {
 
   return (
     <>
-      {/* Hamburger Button - Always visible except on landing page (scroll-based) */}
+      {/* Hamburger Button - mobile only */}
       {showHamburger && (
-        <div className="fixed top-4 left-4 z-50">
+        <div className="fixed top-4 left-4 z-50 lg:hidden">
           <Button
             variant="ghost"
             size="icon"
@@ -142,10 +142,10 @@ export function HamburgerNavigation(props: HamburgerNavigationProps = {}) {
         </div>
       )}
 
-      {/* Top Right: Sign Up (logged out) or Profile avatar (logged in).
+      {/* Top Right: Sign Up / avatar — mobile only.
           Gated by showHamburger so it doesn't overlap the landing page's own header. */}
       {showHamburger && (
-      <div className="fixed top-4 right-4 z-50">
+      <div className="fixed top-4 right-4 z-50 lg:hidden">
         {user ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -177,6 +177,60 @@ export function HamburgerNavigation(props: HamburgerNavigationProps = {}) {
           </Button>
         )}
       </div>
+      )}
+
+      {/* Desktop Nav Bar — hidden on mobile, replaces hamburger on large screens */}
+      {showHamburger && (
+        <div className="hidden lg:flex fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 h-14 px-8 items-center justify-between shadow-sm">
+          <button onClick={() => setLocation("/")} className="text-xl font-bold text-primary hover:opacity-75 transition-opacity">
+            intrn
+          </button>
+          <nav className="flex items-center gap-8">
+            <button onClick={() => setLocation("/search")} className={`text-sm font-medium transition-colors ${location === "/search" ? "text-primary" : "text-gray-600 hover:text-primary"}`}>
+              Browse Internships
+            </button>
+            <button onClick={() => setLocation("/blog")} className={`text-sm font-medium transition-colors ${location === "/blog" ? "text-primary" : "text-gray-600 hover:text-primary"}`}>
+              Blog
+            </button>
+            <button onClick={() => setLocation("/help")} className={`text-sm font-medium transition-colors ${location === "/help" ? "text-primary" : "text-gray-600 hover:text-primary"}`}>
+              Help
+            </button>
+          </nav>
+          <div className="flex items-center gap-2">
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="w-9 h-9">
+                    <Avatar className="w-7 h-7">
+                      <AvatarFallback className="bg-gray-300 text-gray-700 font-semibold text-sm">
+                        {user.firstName?.[0] || user.email?.[0]?.toUpperCase() || "U"}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56 mt-2">
+                  <DropdownMenuItem onClick={() => setLocation("/profile")} className="cursor-pointer">
+                    <User className="mr-2 h-4 w-4" />
+                    Profile Settings
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-red-600 focus:text-red-600">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Sign Out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <div className="flex items-center gap-2">
+                <Button variant="ghost" size="sm" onClick={() => setLocation("/auth?tab=login")}>
+                  Sign In
+                </Button>
+                <Button size="sm" className="bg-purple-600 hover:bg-purple-700" onClick={() => setLocation("/auth?tab=register")}>
+                  Sign Up
+                </Button>
+              </div>
+            )}
+          </div>
+        </div>
       )}
 
       {/* Overlay */}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "@/hooks/use-auth";
-import { useLocation } from "wouter";
+import { useLocation, Link } from "wouter";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -109,7 +109,9 @@ export default function MobileAuth() {
               Back
             </Button>
             <div className="text-center lg:hidden">
-              <h1 className="text-2xl sm:text-3xl font-bold text-primary">intrn</h1>
+              <Link to="/">
+                <h1 className="text-2xl sm:text-3xl font-bold text-primary hover:opacity-75 transition-opacity cursor-pointer">intrn</h1>
+              </Link>
             </div>
             <div className="w-16 lg:hidden"></div> {/* Spacer for centering on mobile */}
           </div>
@@ -119,7 +121,9 @@ export default function MobileAuth() {
             <div className="w-full max-w-md">
               {/* Desktop Logo */}
               <div className="hidden lg:block text-center mb-8">
-                <h1 className="text-4xl font-bold text-primary mb-4">intrn</h1>
+                <Link to="/">
+                  <h1 className="text-4xl font-bold text-primary mb-4 hover:opacity-75 transition-opacity cursor-pointer">intrn</h1>
+                </Link>
                 <p className="text-gray-600 text-lg">
                   Connect. Learn. Grow.
                 </p>
