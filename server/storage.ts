@@ -1,6 +1,6 @@
 import { users, internships, applications, favorites, blogPosts, companyRequests, type User, type UpsertUser, type InsertUser, type Internship, type InsertInternship, type Application, type InsertApplication, type Favorite, type BlogPost, type InsertBlogPost, type CompanyRequest, type InsertCompanyRequest } from "@shared/schema";
 import { db } from "./db";
-import { eq, and, desc, ilike, or } from "drizzle-orm";
+import { eq, and, desc, ilike, or, count } from "drizzle-orm";
 import session from "express-session";
 import connectPg from "connect-pg-simple";
 import { pool } from "./db";
@@ -56,6 +56,7 @@ export interface IStorage {
   getCompanyRequests(): Promise<CompanyRequest[]>;
   createCompanyRequest(request: InsertCompanyRequest & { userId: number }): Promise<CompanyRequest>;
   updateCompanyRequestStatus(id: number, status: string, adminNotes?: string, reviewedBy?: number): Promise<CompanyRequest | undefined>;
+  getStats(): Promise<{ students: number; companies: number; applications: number; internships: number }>;
   
   sessionStore: session.SessionStore;
 }
@@ -421,6 +422,19 @@ export class DatabaseStorage implements IStorage {
       .where(eq(companyRequests.id, id))
       .returning();
     return updatedRequest;
+  }
+
+  async getStats(): Promise<{ students: number; companies: number; applications: number; internships: number }> {
+    const [studentsResult] = await db.select({ count: count() }).from(users).where(eq(users.role, "student"));
+    const [companiesResult] = await db.select({ count: count() }).from(users).where(eq(users.role, "company"));
+    const [applicationsResult] = await db.select({ count: count() }).from(applications);
+    const [internshipsResult] = await db.select({ count: count() }).from(internships).where(eq(internships.isActive, true));
+    return {
+      students: Number(studentsResult.count),
+      companies: Number(companiesResult.count),
+      applications: Number(applicationsResult.count),
+      internships: Number(internshipsResult.count),
+    };
   }
 }
 

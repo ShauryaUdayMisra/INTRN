@@ -282,6 +282,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Public platform stats
+  app.get("/api/stats", async (req, res) => {
+    try {
+      const stats = await storage.getStats();
+      res.json(stats);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch stats" });
+    }
+  });
+
   // Internship routes
   app.get("/api/internships", async (req, res) => {
     try {

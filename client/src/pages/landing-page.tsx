@@ -2,10 +2,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/use-auth";
 import { HamburgerNavigation } from "@/components/hamburger-navigation";
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
-import { ArrowRight, Zap, Compass, Sparkles, Award, Flame, Target, GraduationCap, Globe } from "lucide-react";
-import { getInternshipImage } from "@/lib/internship-images";
+import { ArrowRight, Sparkles, GraduationCap, Briefcase, BookOpen, Rocket, Building, Clock, MapPin } from "lucide-react";
+import { getInternshipImage, getTitleGradient } from "@/lib/internship-images";
 
 // Custom Diploma Scroll Icon Component (based on attached image)
 const DiplomaIcon = ({ className }: { className?: string }) => (
@@ -20,9 +21,53 @@ const DiplomaIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+function StatCounter({ value, label, suffix = "+" }: { value: number; label: string; suffix?: string }) {
+  const [count, setCount] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting && !hasStarted) setHasStarted(true); },
+      { threshold: 0.3 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [hasStarted]);
+
+  useEffect(() => {
+    if (!hasStarted || value === 0) return;
+    const steps = 60;
+    const increment = value / steps;
+    let current = 0;
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= value) { setCount(value); clearInterval(timer); }
+      else setCount(Math.floor(current));
+    }, 1500 / steps);
+    return () => clearInterval(timer);
+  }, [hasStarted, value]);
+
+  return (
+    <div ref={ref} className="text-center">
+      <div className="text-4xl md:text-5xl font-bold text-primary mb-2">{count}{suffix}</div>
+      <div className="text-sm text-gray-500 font-medium">{label}</div>
+    </div>
+  );
+}
+
 export default function LandingPage() {
   const { user, isLoading } = useAuth();
   const [, setLocation] = useLocation();
+
+  const { data: stats } = useQuery<{ students: number; companies: number; applications: number; internships: number }>({
+    queryKey: ["/api/stats"],
+  });
+
+  const { data: internships } = useQuery<any[]>({
+    queryKey: ["/api/internships"],
+  });
+  const previewInternships = (internships ?? []).slice(0, 3);
 
   // Auto-redirect logged-in users to appropriate dashboard using useEffect
   useEffect(() => {
@@ -157,98 +202,118 @@ export default function LandingPage() {
 
 
 
+        {/* Live Impact Counter */}
+        <div className="mb-24">
+          <div className="bg-white rounded-3xl p-10 shadow-lg border border-primary-100">
+            <p className="text-center text-xs font-semibold text-primary uppercase tracking-widest mb-10">Live Platform Stats</p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
+              <StatCounter value={stats?.students ?? 0} label="Students Registered" />
+              <StatCounter value={stats?.applications ?? 0} label="Applications Submitted" />
+              <StatCounter value={stats?.internships ?? 0} suffix="" label="Live Internships" />
+              <StatCounter value={stats?.companies ?? 0} label="Partner Companies" />
+            </div>
+          </div>
+        </div>
+
         {/* Features - Clean and Minimalist */}
-        <div className="grid md:grid-cols-3 gap-12 mb-24">
-          <div className="text-center group">
-            <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg border border-primary-100 group-hover:shadow-xl transition-all duration-300">
-              <Target className="w-10 h-10 text-black" />
+        <div className="bg-white rounded-3xl px-10 py-14 mb-24 shadow-sm border border-gray-100">
+          <div className="grid md:grid-cols-3 gap-12">
+            <div className="text-center group">
+              <div className="w-20 h-20 bg-primary/5 rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:bg-primary/10 transition-all duration-300">
+                <Briefcase className="w-10 h-10 text-primary" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Gain Real Experience</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Work on meaningful projects, learn from professionals, and build skills for your future career.
+              </p>
             </div>
-            <h3 className="text-2xl font-bold text-black mb-4">Gain Real Experience</h3>
-            <p className="text-black leading-relaxed">
-              Work on meaningful projects, learn from professionals, and build skills for your future career.
-            </p>
-          </div>
 
-          <div className="text-center group">
-            <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg border border-primary-100 group-hover:shadow-xl transition-all duration-300">
-              <Zap className="w-10 h-10 text-black" />
+            <div className="text-center group">
+              <div className="w-20 h-20 bg-primary/5 rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:bg-primary/10 transition-all duration-300">
+                <BookOpen className="w-10 h-10 text-primary" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Learn New Skills</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Develop valuable workplace skills, work with mentors, and discover career paths that interest you.
+              </p>
             </div>
-            <h3 className="text-2xl font-bold text-black mb-4">Learn New Skills</h3>
-            <p className="text-black leading-relaxed">
-              Develop valuable workplace skills, work with mentors, and discover career paths that interest you.
-            </p>
-          </div>
 
-          <div className="text-center group">
-            <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg border border-primary-100 group-hover:shadow-xl transition-all duration-300">
-              <Award className="w-10 h-10 text-black" />
+            <div className="text-center group">
+              <div className="w-20 h-20 bg-primary/5 rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:bg-primary/10 transition-all duration-300">
+                <Rocket className="w-10 h-10 text-primary" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Build Your Future</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Create a strong resume, gain references, and build connections that help you succeed in college and career.
+              </p>
             </div>
-            <h3 className="text-2xl font-bold text-black mb-4">Build Your Future</h3>
-            <p className="text-black leading-relaxed">
-              Create a strong resume, gain references, and build connections that help you succeed in college and career.
-            </p>
           </div>
         </div>
 
         {/* Featured Internships - Preview Section */}
         <div className="mb-24">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-black mb-6">Explore Real Internship Opportunities</h2>
-            <p className="text-xl text-black max-w-2xl mx-auto">
-              Join high schoolers working on meaningful projects at top organizations
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Ripples of Hope */}
-            <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50" onClick={() => setLocation("/internship/236")}>
-              <div className="relative h-48 overflow-hidden">
-                <img
-                  src={getInternshipImage("Research Intern - Social Impact of Sports")}
-                  alt="Ripples of Hope"
-                  className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">Social Impact</span>
-                  <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">Online</span>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Ripples of Hope</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  Research the impact of sports on marriage choices of adolescent girls in underprivileged communities in rural North India. Field work opportunities in UP, Bihar...
-                </p>
-                <div className="mt-4 flex items-center justify-between">
-                  <span className="text-primary font-semibold">Apply Now</span>
-                  <ArrowRight className="w-4 h-4 text-primary group-hover:translate-x-1 transition-transform" />
-                </div>
-              </CardContent>
-            </Card>
+          <div className="bg-primary/5 rounded-3xl px-10 py-14">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-gray-900 mb-4">Explore Real Internship Opportunities</h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Join high schoolers working on meaningful projects at real organisations
+              </p>
+            </div>
 
-            {/* Prelude Novel Ventures */}
-            <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50" onClick={() => setLocation("/internship/237")}>
-              <div className="relative h-48 overflow-hidden">
-                <img
-                  src={getInternshipImage("Research & Presentation Specialist")}
-                  alt="Prelude Novel Ventures"
-                  className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">Event Management</span>
-                  <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">Online</span>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Prelude Novel Ventures</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  Interns will be responsible for conducting research, collating relevant data, and preparing basic presentations to support the development of new event IPs...
-                </p>
-                <div className="mt-4 flex items-center justify-between">
-                  <span className="text-primary font-semibold">Apply Now</span>
-                  <ArrowRight className="w-4 h-4 text-primary group-hover:translate-x-1 transition-transform" />
-                </div>
-              </CardContent>
-            </Card>
+            <div className="grid md:grid-cols-3 gap-6">
+              {previewInternships.map((internship: any) => {
+                const image = getInternshipImage(internship.title);
+                const gradient = getTitleGradient(internship.title);
+                return (
+                  <Card
+                    key={internship.id}
+                    className="group hover:shadow-xl transition-all duration-300 cursor-pointer hover:border-primary/30 overflow-hidden"
+                    onClick={() => setLocation(`/internship/${internship.id}`)}
+                  >
+                    <div className="relative h-36 overflow-hidden">
+                      {image ? (
+                        <img src={image} alt={internship.title} className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      ) : (
+                        <div className={`h-full w-full bg-gradient-to-br ${gradient} flex items-center justify-center`}>
+                          <Building className="w-12 h-12 text-white/60" />
+                        </div>
+                      )}
+                    </div>
+                    <CardContent className="p-5">
+                      <h3 className="font-bold text-gray-900 mb-2 line-clamp-1 text-sm">{internship.title}</h3>
+                      <div className="flex items-center gap-3 text-xs text-gray-500 mb-3">
+                        <span className="flex items-center gap-1">
+                          <MapPin className="w-3 h-3" />
+                          {internship.location?.split("(")[0].trim() || "Online"}
+                        </span>
+                        {internship.hoursPerWeek && (
+                          <span className="flex items-center gap-1">
+                            <Clock className="w-3 h-3" />
+                            {internship.hoursPerWeek}h/wk
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-gray-600 text-xs line-clamp-2 mb-4">{internship.description}</p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-primary text-sm font-semibold">Apply Now</span>
+                        <ArrowRight className="w-4 h-4 text-primary group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+
+            <div className="text-center mt-10">
+              <Button
+                variant="outline"
+                className="border-primary text-primary hover:bg-primary hover:text-white px-8 py-2.5 rounded-xl font-medium transition-all"
+                onClick={() => setLocation("/search")}
+              >
+                View All {stats?.internships ?? 9} Internships
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
           </div>
         </div>
 
@@ -262,7 +327,7 @@ export default function LandingPage() {
             </span>
           </h2>
           <p className="text-xl text-black mb-10 max-w-2xl mx-auto">
-            Join thousands of students and companies building the next generation of talent.
+            Join {stats?.students ?? 41}+ students and {stats?.companies ?? 13}+ companies building the next generation of talent.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <Button 
