@@ -325,7 +325,7 @@ export default function MobileAuth() {
             <div className="text-white text-center max-w-lg">
               <h2 className="text-3xl xl:text-4xl font-bold mb-4">Welcome to intrn</h2>
               <p className="text-lg xl:text-xl mb-8">
-                South Asia's premier platform connecting talented students with innovative companies
+                Where high school students find real internships and build skills for the future.
               </p>
               <div className="grid grid-cols-2 gap-6">
                 <div className="text-center">
@@ -333,14 +333,14 @@ export default function MobileAuth() {
                     <GraduationCap className="h-8 w-8" />
                   </div>
                   <h3 className="font-semibold mb-2">For Students</h3>
-                  <p className="text-sm text-white/90">Find internships that match your skills</p>
+                  <p className="text-sm text-white/90">Find hands-on internships built for high schoolers</p>
                 </div>
                 <div className="text-center">
                   <div className="bg-white/20 rounded-full p-4 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
                     <Building className="h-8 w-8" />
                   </div>
                   <h3 className="font-semibold mb-2">For Companies</h3>
-                  <p className="text-sm text-white/90">Discover top talent</p>
+                  <p className="text-sm text-white/90">Connect with motivated young talent</p>
                 </div>
               </div>
             </div>

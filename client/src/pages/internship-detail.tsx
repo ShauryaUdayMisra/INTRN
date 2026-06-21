@@ -77,8 +77,8 @@ export default function InternshipDetail() {
     },
     onSuccess: () => {
       toast({
-        title: "Application Submitted!",
-        description: "Your application has been submitted and the INTRN team will get back to you.",
+        title: "Application sent!",
+        description: "Your application is on its way. The INTRN team will be in touch soon!",
       });
       queryClient.invalidateQueries({ queryKey: ["/api/applications"] });
       setLocation("/application-success");
@@ -117,6 +117,14 @@ export default function InternshipDetail() {
   const handleApply = () => {
     if (!user) {
       setLocation("/auth?tab=register");
+      return;
+    }
+    if (user.role !== "student") {
+      toast({
+        title: "Students only",
+        description: "Only student accounts can apply. Create a free student account to apply for internships.",
+        variant: "destructive",
+      });
       return;
     }
     applyMutation.mutate();
@@ -275,12 +283,12 @@ export default function InternshipDetail() {
                   size="lg"
                   disabled={applyMutation.isPending}
                 >
-                  {applyMutation.isPending ? "Submitting..." : "Sign Up for Internship"}
+                  {applyMutation.isPending ? "Submitting..." : user ? "Apply for This Internship" : "Sign Up to Apply"}
                 </Button>
                 
                 {!user && (
                   <p className="text-sm text-gray-600 text-center">
-                    You need to create an account to apply
+                    Create a free account to apply — it only takes a minute.
                   </p>
                 )}
               </CardContent>

@@ -38,8 +38,8 @@ export default function InternshipCard({ internship, showManage = false }: Inter
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/applications"] });
       toast({
-        title: "Application Submitted",
-        description: "Your application has been submitted successfully!",
+        title: "Application sent!",
+        description: "Your application is on its way. We'll be in touch soon!",
       });
     },
   });
@@ -56,10 +56,10 @@ export default function InternshipCard({ internship, showManage = false }: Inter
       setIsFavorite(!isFavorite);
       queryClient.invalidateQueries({ queryKey: ["/api/favorites"] });
       toast({
-        title: isFavorite ? "Removed from Favorites" : "Added to Favorites",
+        title: isFavorite ? "Removed from favorites" : "Saved to favorites",
         description: isFavorite 
-          ? "Internship removed from your favorites" 
-          : "Internship added to your favorites",
+          ? "This internship was removed from your saved list." 
+          : "This internship was added to your saved list.",
       });
     },
   });
@@ -77,8 +77,8 @@ export default function InternshipCard({ internship, showManage = false }: Inter
     
     if (user.role !== "student") {
       toast({
-        title: "Student account required",
-        description: "Only student accounts can apply for internships",
+        title: "Students only",
+        description: "Only student accounts can apply. Create a free student account to apply for internships.",
         variant: "destructive",
       });
       return;
@@ -90,8 +90,8 @@ export default function InternshipCard({ internship, showManage = false }: Inter
   const handleToggleFavorite = () => {
     if (!user || user.role !== "student") {
       toast({
-        title: "Student account required",
-        description: "Only students can save favorites",
+        title: "Students only",
+        description: "Only students can save internships. Create a free student account to start saving your favorites.",
         variant: "destructive",
       });
       return;
@@ -116,9 +116,9 @@ export default function InternshipCard({ internship, showManage = false }: Inter
     <Dialog open={showFilledDialog} onOpenChange={setShowFilledDialog}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Position Already Filled</DialogTitle>
+          <DialogTitle>This spot's already taken</DialogTitle>
           <DialogDescription>
-            This internship position has already been filled. Please explore other opportunities available on the platform.
+            This internship has already been filled — but there are plenty of other great opportunities waiting for you. Keep exploring!
           </DialogDescription>
         </DialogHeader>
       </DialogContent>
