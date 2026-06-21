@@ -142,7 +142,9 @@ export function HamburgerNavigation(props: HamburgerNavigationProps = {}) {
         </div>
       )}
 
-      {/* Top Right: Sign Up (logged out) or Profile avatar (logged in) */}
+      {/* Top Right: Sign Up (logged out) or Profile avatar (logged in).
+          Gated by showHamburger so it doesn't overlap the landing page's own header. */}
+      {showHamburger && (
       <div className="fixed top-4 right-4 z-50">
         {user ? (
           <DropdownMenu>
@@ -175,6 +177,7 @@ export function HamburgerNavigation(props: HamburgerNavigationProps = {}) {
           </Button>
         )}
       </div>
+      )}
 
       {/* Overlay */}
       {isOpen && (

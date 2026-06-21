@@ -1,0 +1,2 @@
+- [Navigation layout](navigation-layout.md) — landing page has its own header AND a global floating hamburger nav; gate floating controls by `showHamburger` to avoid overlap.
+- [Internship images](internship-images.md) — card/detail/landing share an exact-title→image map; title changes silently drop images.

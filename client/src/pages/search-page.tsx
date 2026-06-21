@@ -39,10 +39,11 @@ export default function SearchPage() {
     <div className="min-h-screen bg-gray-50">
       <HamburgerNavigation />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-8">
         {/* Search Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4 ml-16">Find Your Perfect Internship</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Find Your Perfect Internship</h1>
+          <p className="text-gray-500 mb-4">Browse online internships built for high school students.</p>
           
           <Card>
             <CardContent className="p-6">

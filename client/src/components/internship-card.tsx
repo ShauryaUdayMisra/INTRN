@@ -8,8 +8,9 @@ import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { Internship } from "@shared/schema";
 import { useLocation } from "wouter";
-import { MapPin, Clock, DollarSign, Heart, Building, Edit, Eye } from "lucide-react";
+import { MapPin, Clock, Heart, Edit, Eye } from "lucide-react";
 import { useState } from "react";
+import { getInternshipImage, getTitleGradient } from "@/lib/internship-images";
 
 const FILLED_INTERNSHIP_ID = 239;
 
@@ -64,6 +65,11 @@ export default function InternshipCard({ internship, showManage = false }: Inter
   });
 
   const handleApply = () => {
+    if (isFilled) {
+      setShowFilledDialog(true);
+      return;
+    }
+
     if (!user) {
       setLocation("/auth?tab=register");
       return;
@@ -94,11 +100,8 @@ export default function InternshipCard({ internship, showManage = false }: Inter
     favoriteMutation.mutate();
   };
 
-  // Generate company logo placeholder
-  const getCompanyInitial = () => {
-    // This would typically come from company data
-    return "C";
-  };
+  const internshipImage = getInternshipImage(internship.title);
+  const gradient = getTitleGradient(internship.title);
 
   const handleCardClick = () => {
     if (isFilled) {
@@ -121,52 +124,62 @@ export default function InternshipCard({ internship, showManage = false }: Inter
       </DialogContent>
     </Dialog>
     <Card 
-      className={`bg-white hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 hover:border-primary/20 cursor-pointer ${isFilled ? "opacity-50 grayscale" : ""}`}
+      className={`group bg-white hover:shadow-xl transform hover:-translate-y-1.5 transition-all duration-300 border border-gray-100 hover:border-primary/30 cursor-pointer overflow-hidden flex flex-col h-full ${isFilled ? "opacity-60 grayscale" : ""}`}
       onClick={handleCardClick}
     >
-      <CardContent className="p-6">
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex items-center">
-            <div className="w-12 h-12 bg-gradient-to-br from-primary to-secondary-500 rounded-lg flex items-center justify-center text-white font-bold">
-              {getCompanyInitial()}
-            </div>
-            <div className="ml-3">
-              <h3 className="font-semibold text-gray-900">{internship.title}</h3>
-            </div>
+      {/* Image banner */}
+      <div className="relative h-36 w-full overflow-hidden">
+        {internshipImage ? (
+          <img
+            src={internshipImage}
+            alt={internship.title}
+            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+        ) : (
+          <div className={`h-full w-full bg-gradient-to-br ${gradient} flex items-center justify-center`}>
+            <span className="text-white text-4xl font-bold">
+              {internship.title.charAt(0).toUpperCase()}
+            </span>
           </div>
-          {user?.role === "student" && (
-            <Button
-              variant="ghost"
-              size="icon"
-              className={`text-gray-400 hover:text-red-500 transition-colors ${
-                isFavorite ? "text-red-500" : ""
-              }`}
-              onClick={(e) => {
-                e.stopPropagation();
-                handleToggleFavorite();
-              }}
-              disabled={favoriteMutation.isPending}
-            >
-              <Heart className={`h-4 w-4 ${isFavorite ? "fill-current" : ""}`} />
-            </Button>
-          )}
-        </div>
-        
-        <div className="mb-4 space-y-2">
-          <div className="flex items-center gap-2">
-            <Badge className="bg-green-100 text-green-700 hover:bg-green-100 text-xs font-medium">Online</Badge>
+        )}
+        <Badge className="absolute top-3 left-3 bg-white/90 backdrop-blur text-green-700 hover:bg-white text-xs font-semibold shadow-sm">
+          ● Online
+        </Badge>
+        {user?.role === "student" && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className={`absolute top-2 right-2 h-8 w-8 rounded-full bg-white/90 backdrop-blur hover:bg-white text-gray-500 hover:text-red-500 shadow-sm ${
+              isFavorite ? "text-red-500" : ""
+            }`}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleToggleFavorite();
+            }}
+            disabled={favoriteMutation.isPending}
+          >
+            <Heart className={`h-4 w-4 ${isFavorite ? "fill-current" : ""}`} />
+          </Button>
+        )}
+      </div>
+
+      <CardContent className="p-5 flex flex-col flex-1">
+        <h3 className="font-semibold text-gray-900 text-lg leading-snug mb-3 line-clamp-2">
+          {internship.title}
+        </h3>
+
+        <div className="space-y-1.5 mb-3">
+          <div className="flex items-center text-gray-600 text-sm">
+            <MapPin className="mr-2 h-4 w-4 text-primary flex-shrink-0" />
+            <span className="truncate">{internship.location}</span>
           </div>
           <div className="flex items-center text-gray-600 text-sm">
-            <MapPin className="mr-2 h-4 w-4 text-primary" />
-            <span>{internship.location}</span>
-          </div>
-          <div className="flex items-center text-gray-600 text-sm">
-            <Clock className="mr-2 h-4 w-4 text-primary" />
+            <Clock className="mr-2 h-4 w-4 text-primary flex-shrink-0" />
             <span>{internship.duration}</span>
           </div>
         </div>
 
-        <p className="text-gray-700 text-sm mb-4 line-clamp-3">
+        <p className="text-gray-600 text-sm mb-4 line-clamp-2">
           {internship.description}
         </p>
 
@@ -185,8 +198,8 @@ export default function InternshipCard({ internship, showManage = false }: Inter
           </div>
         )}
 
-        <div className="flex items-center justify-between">
-          <span className="text-xs text-gray-500">
+        <div className="flex items-center justify-between mt-auto pt-2 border-t border-gray-100">
+          <span className="text-xs text-gray-400">
             {internship.createdAt ? `Posted ${new Date(internship.createdAt).toLocaleDateString()}` : ""}
           </span>
           
@@ -205,7 +218,10 @@ export default function InternshipCard({ internship, showManage = false }: Inter
             ) : (
               <Button 
                 size="sm" 
-                onClick={handleApply}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleApply();
+                }}
                 disabled={applyMutation.isPending}
               >
                 {applyMutation.isPending ? "Applying..." : "Apply Now"}

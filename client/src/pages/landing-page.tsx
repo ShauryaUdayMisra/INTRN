@@ -5,6 +5,7 @@ import { HamburgerNavigation } from "@/components/hamburger-navigation";
 import { useEffect } from "react";
 import { useLocation } from "wouter";
 import { ArrowRight, Zap, Compass, Sparkles, Award, Flame, Target, GraduationCap, Globe } from "lucide-react";
+import { getInternshipImage } from "@/lib/internship-images";
 
 // Custom Diploma Scroll Icon Component (based on attached image)
 const DiplomaIcon = ({ className }: { className?: string }) => (
@@ -201,15 +202,12 @@ export default function LandingPage() {
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Ripples of Hope */}
             <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50" onClick={() => setLocation("/internship/236")}>
-              <div className="relative h-48 bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center overflow-hidden">
-                {/* Water ripple effect visual */}
-                <div className="relative">
-                  <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center animate-pulse">
-                    <Globe className="w-8 h-8 text-white" />
-                  </div>
-                  <div className="absolute inset-0 w-16 h-16 border-2 border-blue-400 rounded-full animate-ping opacity-75"></div>
-                  <div className="absolute inset-0 w-20 h-20 -m-2 border-2 border-blue-300 rounded-full animate-ping opacity-50" style={{animationDelay: '0.5s'}}></div>
-                </div>
+              <div className="relative h-48 overflow-hidden">
+                <img
+                  src={getInternshipImage("Research Intern - Social Impact of Sports")}
+                  alt="Ripples of Hope"
+                  className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
               </div>
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-3">
@@ -229,15 +227,12 @@ export default function LandingPage() {
 
             {/* Prelude Novel Ventures */}
             <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50" onClick={() => setLocation("/internship/237")}>
-              <div className="relative h-48 bg-gradient-to-br from-purple-50 to-purple-100 flex items-center justify-center overflow-hidden">
-                {/* Event management visual */}
-                <div className="relative">
-                  <div className="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center animate-pulse">
-                    <Sparkles className="w-8 h-8 text-white" />
-                  </div>
-                  <div className="absolute inset-0 w-16 h-16 border-2 border-purple-400 rounded-full animate-ping opacity-75"></div>
-                  <div className="absolute inset-0 w-20 h-20 -m-2 border-2 border-purple-300 rounded-full animate-ping opacity-50" style={{animationDelay: '0.5s'}}></div>
-                </div>
+              <div className="relative h-48 overflow-hidden">
+                <img
+                  src={getInternshipImage("Research & Presentation Specialist")}
+                  alt="Prelude Novel Ventures"
+                  className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
               </div>
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-3">
