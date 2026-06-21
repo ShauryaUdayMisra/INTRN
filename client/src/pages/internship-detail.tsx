@@ -22,6 +22,18 @@ import {
   GraduationCap
 } from "lucide-react";
 import rippleImage from "@assets/download (1)_1753000655307.png";
+import kebabSnackImage from "@assets/generated_images/flat_lay_of_colorful_512a.png";
+import kebabSocialImage from "@assets/generated_images/young_person_at_a_c315.png";
+import chandPearlImage from "@assets/generated_images/elegant_white_and_cream_7a6c.png";
+import chandGenZImage from "@assets/generated_images/mood_board_aesthetic_trendy_1748.png";
+
+const internshipImages: Record<string, string> = {
+  "Research Intern - Social Impact of Sports": rippleImage,
+  "Kids' Snack Market Research Intern": kebabSnackImage,
+  "Social Media Content Creator Intern": kebabSocialImage,
+  "Pearl Education Content Design Intern": chandPearlImage,
+  "Gen Z Jewellery Trend Research Intern": chandGenZImage,
+};
 
 type Internship = {
   id: number;
@@ -122,8 +134,7 @@ export default function InternshipDetail() {
     applyMutation.mutate();
   };
 
-  // Check if this is the Ripples of Hope internship to show the special image
-  const isRipplesOfHope = internship.title.includes("Research Intern - Social Impact");
+  const internshipImage = internshipImages[internship.title];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -143,10 +154,10 @@ export default function InternshipDetail() {
           <div className="flex items-start gap-6">
             {/* Company Logo/Image */}
             <div className="flex-shrink-0">
-              {isRipplesOfHope ? (
+              {internshipImage ? (
                 <img 
-                  src={rippleImage} 
-                  alt="Ripples of Hope" 
+                  src={internshipImage}
+                  alt={internship.title}
                   className="w-20 h-20 rounded-xl object-cover border-2 border-gray-200"
                 />
               ) : (

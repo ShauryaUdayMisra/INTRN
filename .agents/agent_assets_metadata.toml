@@ -1,0 +1,26 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "FuNmkEDN7tYY4ykHea0cf"
+uri = "file://attached_assets/generated_images/flat_lay_of_colorful_512a.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "UovZkYFBO7jPitdvyTznb"
+uri = "file://attached_assets/generated_images/young_person_at_a_c315.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "rUwtBmKb2qJlJjWdBY7EK"
+uri = "file://attached_assets/generated_images/elegant_white_and_cream_7a6c.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "asDYW3nMH1tiye7l-d1K6"
+uri = "file://attached_assets/generated_images/mood_board_aesthetic_trendy_1748.png"
+type = "image"
+title = "generated_image"
