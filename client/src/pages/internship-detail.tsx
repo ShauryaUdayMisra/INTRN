@@ -168,10 +168,7 @@ export default function InternshipDetail() {
               </div>
               
               <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary">
-                  {internship.type === "remote" ? "Remote" : 
-                   internship.type === "onsite" ? "On-site" : "Hybrid"}
-                </Badge>
+                <Badge className="bg-green-100 text-green-700 hover:bg-green-100">Online</Badge>
                 <Badge variant="outline">{internship.duration}</Badge>
                 <Badge variant="outline">{company?.companyField || "General"}</Badge>
               </div>
@@ -317,7 +314,7 @@ export default function InternshipDetail() {
                   <Users className="w-5 h-5 text-gray-400 mt-0.5" />
                   <div>
                     <p className="font-medium text-sm">Type</p>
-                    <p className="text-gray-600 capitalize">{internship.type}</p>
+                    <p className="text-gray-600">Online</p>
                   </div>
                 </div>
 

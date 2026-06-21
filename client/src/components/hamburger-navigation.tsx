@@ -142,9 +142,9 @@ export function HamburgerNavigation(props: HamburgerNavigationProps = {}) {
         </div>
       )}
 
-      {/* Profile Button - Top Right */}
-      {user && (
-        <div className="fixed top-4 right-4 z-50">
+      {/* Top Right: Sign Up (logged out) or Profile avatar (logged in) */}
+      <div className="fixed top-4 right-4 z-50">
+        {user ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="w-10 h-10 bg-transparent hover:bg-transparent transition-all duration-300">
@@ -166,8 +166,15 @@ export function HamburgerNavigation(props: HamburgerNavigationProps = {}) {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        </div>
-      )}
+        ) : (
+          <Button
+            className="bg-purple-600 hover:bg-purple-700 text-white text-sm px-4 py-2 rounded-xl shadow-md"
+            onClick={() => setLocation("/auth?tab=register")}
+          >
+            Sign Up
+          </Button>
+        )}
+      </div>
 
       {/* Overlay */}
       {isOpen && (

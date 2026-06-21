@@ -65,11 +65,7 @@ export default function InternshipCard({ internship, showManage = false }: Inter
 
   const handleApply = () => {
     if (!user) {
-      toast({
-        title: "Sign in required",
-        description: "Please sign in to apply for internships",
-        variant: "destructive",
-      });
+      setLocation("/auth?tab=register");
       return;
     }
     
@@ -157,6 +153,9 @@ export default function InternshipCard({ internship, showManage = false }: Inter
         </div>
         
         <div className="mb-4 space-y-2">
+          <div className="flex items-center gap-2">
+            <Badge className="bg-green-100 text-green-700 hover:bg-green-100 text-xs font-medium">Online</Badge>
+          </div>
           <div className="flex items-center text-gray-600 text-sm">
             <MapPin className="mr-2 h-4 w-4 text-primary" />
             <span>{internship.location}</span>

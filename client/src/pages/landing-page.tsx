@@ -62,12 +62,21 @@ export default function LandingPage() {
               <span className="text-3xl font-bold text-black">intrn</span>
             </button>
             {!user ? (
-              <Button 
-                onClick={() => setLocation("/auth")}
-                className="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl"
-              >
-                Sign In
-              </Button>
+              <div className="flex items-center gap-3">
+                <Button 
+                  variant="ghost"
+                  onClick={() => setLocation("/auth")}
+                  className="text-gray-700 hover:text-primary px-4 py-2 font-medium"
+                >
+                  Sign In
+                </Button>
+                <Button 
+                  onClick={() => setLocation("/auth?tab=register")}
+                  className="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl"
+                >
+                  Sign Up
+                </Button>
+              </div>
             ) : (
               <div className="flex items-center gap-4">
                 <span className="text-gray-700">Welcome, {user.firstName}!</span>
@@ -191,7 +200,7 @@ export default function LandingPage() {
           
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Ripples of Hope */}
-            <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50" onClick={() => setLocation("/auth?tab=register")}>
+            <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50" onClick={() => setLocation("/internship/236")}>
               <div className="relative h-48 bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center overflow-hidden">
                 {/* Water ripple effect visual */}
                 <div className="relative">
@@ -205,7 +214,7 @@ export default function LandingPage() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-3">
                   <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">Social Impact</span>
-                  <span className="text-gray-500 text-sm">Remote + Travel</span>
+                  <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">Online</span>
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3">Ripples of Hope</h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
@@ -219,7 +228,7 @@ export default function LandingPage() {
             </Card>
 
             {/* Prelude Novel Ventures */}
-            <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50" onClick={() => setLocation("/auth?tab=register")}>
+            <Card className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50" onClick={() => setLocation("/internship/237")}>
               <div className="relative h-48 bg-gradient-to-br from-purple-50 to-purple-100 flex items-center justify-center overflow-hidden">
                 {/* Event management visual */}
                 <div className="relative">
@@ -233,7 +242,7 @@ export default function LandingPage() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between mb-3">
                   <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">Event Management</span>
-                  <span className="text-gray-500 text-sm">Hybrid</span>
+                  <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">Online</span>
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3">Prelude Novel Ventures</h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
