@@ -2,3 +2,4 @@
 - [Internship images](internship-images.md) — card/detail/landing share an exact-title→image map; title changes silently drop images.
 - [Seed title lookups](seed-title-lookups.md) — seeded internships are keyed by title & dev re-seeds on save; rename DB rows before changing seed lookup titles or duplicates appear.
 - [Admin dashboard](admin-dashboard.md) — two admin pages (/admin user-facing, /admin-backend mgmt); gate by isSpecialAdmin; use /api/admin/internships (all) not /api/internships (active-only) for admin totals.
+- [Admin-only application fields](admin-only-fields.md) — adminStatus & other internal app columns leak via GET /api/applications unless stripped server-side; UI omission is not enough.

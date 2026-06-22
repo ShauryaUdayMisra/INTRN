@@ -81,6 +81,12 @@ export default function MobileAuth() {
     registerMutation.mutate(registrationPayload);
   };
 
+  useSeo({
+    title: "Sign In or Sign Up — INTRN",
+    description: "Create your free INTRN account to apply for high school internships, or sign in to manage your applications.",
+    noIndex: true,
+  });
+
   if (user) {
     setTimeout(() => {
       // All logged-in users go to regular dashboard
@@ -92,12 +98,6 @@ export default function MobileAuth() {
       </div>
     );
   }
-
-  useSeo({
-    title: "Sign In or Sign Up — INTRN",
-    description: "Create your free INTRN account to apply for high school internships, or sign in to manage your applications.",
-    noIndex: true,
-  });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-purple-50 to-primary-100">

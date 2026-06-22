@@ -202,6 +202,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Admin-only organisation status (pending/confirmed/completed) — never shown to students, no emails sent
+  app.patch("/api/admin/applications/:id/admin-status", requireSpecialAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const { adminStatus } = req.body;
+      if (!["pending", "confirmed", "completed"].includes(adminStatus)) {
+        return res.status(400).json({ error: "Invalid admin status" });
+      }
+      const application = await storage.updateApplicationAdminStatus(id, adminStatus);
+      if (!application) {
+        return res.status(404).json({ error: "Application not found" });
+      }
+      res.json(application);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update admin status" });
+    }
+  });
+
   // Admin routes for internships management
   app.get("/api/admin/internships", requireSpecialAdmin, async (req, res) => {
     try {
@@ -387,8 +405,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       } else {
         return res.status(400).json({ message: "Invalid request" });
       }
-      
-      res.json(applications);
+
+      // adminStatus is admin-only organisation metadata — never expose it to students/companies
+      const sanitized = applications.map(({ adminStatus, ...rest }: any) => rest);
+      res.json(sanitized);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch applications" });
     }

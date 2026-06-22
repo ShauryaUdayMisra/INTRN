@@ -6,12 +6,17 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { useQuery } from "@tanstack/react-query";
+import {
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+} from "@/components/ui/select";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 import { User, Internship, BlogPost } from "@shared/schema";
 import {
   Users, Building, FileText, GraduationCap, Shield, LogOut, Home,
   Search, BookOpen, Briefcase, TrendingUp, CheckCircle, Clock, XCircle,
+  ChevronDown, ChevronRight, Download,
 } from "lucide-react";
 import { Redirect, Link } from "wouter";
 import {
@@ -22,6 +27,7 @@ import {
 interface ApplicationDetail {
   id: number;
   status: string;
+  adminStatus?: string;
   appliedAt: string;
   coverLetter?: string;
   studentId: number;
@@ -69,9 +75,42 @@ function statusBadge(status: string) {
   }
 }
 
+const ADMIN_STATUS_STYLES: Record<string, string> = {
+  pending: "border-amber-300 text-amber-700 bg-amber-50",
+  confirmed: "border-blue-300 text-blue-700 bg-blue-50",
+  completed: "border-green-300 text-green-700 bg-green-50",
+};
+
 export default function AdminPage() {
   const { user } = useAuth();
+  const { toast } = useToast();
   const [appSearch, setAppSearch] = useState("");
+  const [expandedStudents, setExpandedStudents] = useState<Record<number, boolean>>({});
+
+  const toggleStudent = (id: number) =>
+    setExpandedStudents((prev) => ({ ...prev, [id]: !prev[id] }));
+
+  const adminStatusMutation = useMutation({
+    mutationFn: async ({ id, adminStatus }: { id: number; adminStatus: string }) => {
+      const res = await apiRequest("PATCH", `/api/admin/applications/${id}/admin-status`, { adminStatus });
+      return res.json();
+    },
+    onMutate: async ({ id, adminStatus }) => {
+      await queryClient.cancelQueries({ queryKey: ["/api/admin/applications"] });
+      const prev = queryClient.getQueryData<ApplicationDetail[]>(["/api/admin/applications"]);
+      queryClient.setQueryData<ApplicationDetail[]>(["/api/admin/applications"], (old) =>
+        (old || []).map((a) => (a.id === id ? { ...a, adminStatus } : a))
+      );
+      return { prev };
+    },
+    onError: (_err, _vars, context) => {
+      if (context?.prev) queryClient.setQueryData(["/api/admin/applications"], context.prev);
+      toast({ title: "Couldn't update status", description: "Please try again.", variant: "destructive" });
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/applications"] });
+    },
+  });
 
   const isSpecialAdmin = user && ["admin1", "admin2", "admin3"].includes(user.username);
 
@@ -181,6 +220,49 @@ export default function AdminPage() {
     );
   });
 
+  // Group the filtered applications by student so each name appears once
+  const groupedByStudent = Object.values(
+    filteredApplications.reduce((acc, a) => {
+      if (!acc[a.studentId]) {
+        acc[a.studentId] = {
+          studentId: a.studentId,
+          name: `${a.studentFirstName || ""} ${a.studentLastName || ""}`.trim() || "Unknown student",
+          email: a.studentEmail,
+          grade: a.studentGrade,
+          school: a.studentSchoolName,
+          location: a.studentLocation,
+          apps: [] as ApplicationDetail[],
+        };
+      }
+      acc[a.studentId].apps.push(a);
+      return acc;
+    }, {} as Record<number, { studentId: number; name: string; email?: string; grade?: string; school?: string; location?: string; apps: ApplicationDetail[] }>)
+  ).sort((a, b) => b.apps.length - a.apps.length || a.name.localeCompare(b.name));
+
+  const exportApplicationsCsv = () => {
+    const headers = ["Student", "Email", "Grade", "School", "Internship", "Company", "Applied", "Application Status", "Admin Status"];
+    const rows = filteredApplications.map((a) => [
+      `${a.studentFirstName || ""} ${a.studentLastName || ""}`.trim(),
+      a.studentEmail || "",
+      a.studentGrade || "",
+      a.studentSchoolName || "",
+      a.internshipTitle || "",
+      a.company?.companyName || "",
+      a.appliedAt ? new Date(a.appliedAt).toLocaleDateString() : "",
+      a.status || "",
+      a.adminStatus || "pending",
+    ]);
+    const escape = (v: string) => `"${String(v).replace(/"/g, '""')}"`;
+    const csv = [headers, ...rows].map((r) => r.map(escape).join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `intrn-applications-${new Date().toISOString().slice(0, 10)}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
   const isLoading = usersLoading || internshipsLoading || appsLoading;
 
   return (
@@ -285,7 +367,14 @@ export default function AdminPage() {
                           <BarChart data={applicationsPerInternship} layout="vertical" margin={{ left: 10, right: 20 }}>
                             <CartesianGrid strokeDasharray="3 3" horizontal={false} />
                             <XAxis type="number" allowDecimals={false} />
-                            <YAxis type="category" dataKey="name" width={120} tick={{ fontSize: 11 }} />
+                            <YAxis
+                              type="category"
+                              dataKey="name"
+                              width={150}
+                              tick={{ fontSize: 11 }}
+                              interval={0}
+                              tickFormatter={(v: string) => (v.length > 20 ? v.slice(0, 19) + "…" : v)}
+                            />
                             <Tooltip />
                             <Bar dataKey="applicants" fill="#8b5cf6" radius={[0, 4, 4, 0]} />
                           </BarChart>
@@ -307,7 +396,16 @@ export default function AdminPage() {
                       ) : (
                         <ResponsiveContainer width="100%" height={320}>
                           <PieChart>
-                            <Pie data={statusData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={110} label>
+                            <Pie
+                              data={statusData}
+                              dataKey="value"
+                              nameKey="name"
+                              cx="50%"
+                              cy="50%"
+                              outerRadius={90}
+                              labelLine={false}
+                              label={({ percent }) => (percent > 0.06 ? `${Math.round(percent * 100)}%` : "")}
+                            >
                               {statusData.map((entry) => (
                                 <Cell key={entry.name} fill={STATUS_COLORS[entry.name.toLowerCase()] || "#8b5cf6"} />
                               ))}
@@ -335,7 +433,14 @@ export default function AdminPage() {
                           <BarChart data={applicationsPerCompany} layout="vertical" margin={{ left: 10, right: 20 }}>
                             <CartesianGrid strokeDasharray="3 3" horizontal={false} />
                             <XAxis type="number" allowDecimals={false} />
-                            <YAxis type="category" dataKey="name" width={120} tick={{ fontSize: 11 }} />
+                            <YAxis
+                              type="category"
+                              dataKey="name"
+                              width={150}
+                              tick={{ fontSize: 11 }}
+                              interval={0}
+                              tickFormatter={(v: string) => (v.length > 20 ? v.slice(0, 19) + "…" : v)}
+                            />
                             <Tooltip />
                             <Bar dataKey="applicants" fill="#a855f7" radius={[0, 4, 4, 0]} />
                           </BarChart>
@@ -376,13 +481,26 @@ export default function AdminPage() {
           <TabsContent value="applications" className="space-y-4">
             <Card>
               <CardHeader>
-                <CardTitle className="text-base">Who's Applying to What</CardTitle>
-                <CardDescription>
-                  {stats.totalApplications} total applications — search by student, internship, or company
-                </CardDescription>
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                  <div>
+                    <CardTitle className="text-base">Who's Applying to What</CardTitle>
+                    <CardDescription>
+                      {groupedByStudent.length} student{groupedByStudent.length !== 1 ? "s" : ""} · {stats.totalApplications} total applications — each student is listed once; click to expand
+                    </CardDescription>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={exportApplicationsCsv}
+                    disabled={filteredApplications.length === 0}
+                    className="shrink-0"
+                  >
+                    <Download className="w-4 h-4 mr-2" /> Export CSV
+                  </Button>
+                </div>
                 <div className="pt-2">
                   <Input
-                    placeholder="Search applications…"
+                    placeholder="Search by student, internship, or company…"
                     value={appSearch}
                     onChange={(e) => setAppSearch(e.target.value)}
                     className="max-w-sm"
@@ -392,53 +510,102 @@ export default function AdminPage() {
               <CardContent>
                 {appsLoading ? (
                   <div className="text-center py-12 text-gray-500">Loading applications…</div>
-                ) : filteredApplications.length === 0 ? (
+                ) : groupedByStudent.length === 0 ? (
                   <div className="text-center py-12 text-gray-500">No applications found.</div>
                 ) : (
                   <div className="space-y-3">
-                    {filteredApplications.map((a) => (
-                      <div key={a.id} className="border border-gray-200 rounded-xl p-4 hover:border-purple-200 transition-colors">
-                        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
-                          <div className="flex items-start gap-3">
-                            <Avatar className="w-10 h-10">
-                              <AvatarFallback className="bg-purple-100 text-purple-700 font-semibold">
-                                {(a.studentFirstName?.[0] || "?") + (a.studentLastName?.[0] || "")}
-                              </AvatarFallback>
-                            </Avatar>
-                            <div>
-                              <p className="font-semibold text-gray-900">
-                                {a.studentFirstName} {a.studentLastName}
-                              </p>
-                              <p className="text-sm text-gray-500">{a.studentEmail}</p>
-                              <div className="flex flex-wrap gap-2 mt-1 text-xs text-gray-500">
-                                {a.studentGrade && <span>{a.studentGrade} Grade</span>}
-                                {a.studentSchoolName && <span>• {a.studentSchoolName}</span>}
-                                {a.studentLocation && <span>• {a.studentLocation}</span>}
+                    {groupedByStudent.map((g) => {
+                      const open = !!expandedStudents[g.studentId];
+                      return (
+                        <div key={g.studentId} className="border border-gray-200 rounded-xl overflow-hidden">
+                          {/* Student header row — name shown once */}
+                          <button
+                            type="button"
+                            onClick={() => toggleStudent(g.studentId)}
+                            className="w-full flex items-center justify-between gap-3 p-4 text-left hover:bg-purple-50/50 transition-colors"
+                          >
+                            <div className="flex items-center gap-3 min-w-0">
+                              {open ? (
+                                <ChevronDown className="w-4 h-4 text-purple-600 shrink-0" />
+                              ) : (
+                                <ChevronRight className="w-4 h-4 text-gray-400 shrink-0" />
+                              )}
+                              <Avatar className="w-10 h-10 shrink-0">
+                                <AvatarFallback className="bg-purple-100 text-purple-700 font-semibold">
+                                  {(g.name[0] || "?").toUpperCase()}
+                                </AvatarFallback>
+                              </Avatar>
+                              <div className="min-w-0">
+                                <p className="font-semibold text-gray-900 truncate">{g.name}</p>
+                                <p className="text-sm text-gray-500 truncate">{g.email}</p>
+                                <div className="flex flex-wrap gap-2 mt-0.5 text-xs text-gray-500">
+                                  {g.grade && <span>{g.grade} Grade</span>}
+                                  {g.school && <span>• {g.school}</span>}
+                                </div>
                               </div>
                             </div>
-                          </div>
-                          <div className="text-right shrink-0">
-                            {statusBadge(a.status)}
-                            <p className="text-xs text-gray-400 mt-1">
-                              {a.appliedAt ? new Date(a.appliedAt).toLocaleDateString() : ""}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="mt-3 pt-3 border-t border-gray-100 flex flex-wrap gap-x-6 gap-y-1 text-sm">
-                          <span className="text-gray-700">
-                            <Briefcase className="w-3.5 h-3.5 inline mr-1 text-purple-500" />
-                            <span className="font-medium">{a.internshipTitle || "—"}</span>
-                          </span>
-                          <span className="text-gray-700">
-                            <Building className="w-3.5 h-3.5 inline mr-1 text-blue-500" />
-                            {a.company?.companyName || "—"}
-                          </span>
-                          {a.internshipLocation && (
-                            <span className="text-gray-500">{a.internshipLocation}</span>
+                            <Badge variant="secondary" className="shrink-0">
+                              {g.apps.length} application{g.apps.length !== 1 ? "s" : ""}
+                            </Badge>
+                          </button>
+
+                          {/* Expanded list of everywhere this student applied */}
+                          {open && (
+                            <div className="border-t border-gray-100 divide-y divide-gray-100 bg-gray-50/40">
+                              {g.apps.map((a) => (
+                                <div key={a.id} className="p-4 flex flex-col gap-3">
+                                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+                                    <div className="text-sm">
+                                      <span className="text-gray-800 font-medium">
+                                        <Briefcase className="w-3.5 h-3.5 inline mr-1 text-purple-500" />
+                                        {a.internshipTitle || "—"}
+                                      </span>
+                                      <div className="text-gray-600 mt-1">
+                                        <Building className="w-3.5 h-3.5 inline mr-1 text-blue-500" />
+                                        {a.company?.companyName || "—"}
+                                        {a.internshipLocation && (
+                                          <span className="text-gray-400"> • {a.internshipLocation}</span>
+                                        )}
+                                      </div>
+                                    </div>
+                                    <div className="text-left sm:text-right shrink-0">
+                                      {statusBadge(a.status || "pending")}
+                                      <p className="text-xs text-gray-400 mt-1">
+                                        {a.appliedAt ? new Date(a.appliedAt).toLocaleDateString() : ""}
+                                      </p>
+                                    </div>
+                                  </div>
+                                  {/* Admin-only organisation status — never shown to students */}
+                                  <div className="flex items-center gap-2 pt-1">
+                                    <span className="text-xs font-medium text-gray-500">Admin tracking:</span>
+                                    <Select
+                                      value={a.adminStatus || "pending"}
+                                      onValueChange={(value) =>
+                                        adminStatusMutation.mutate({ id: a.id, adminStatus: value })
+                                      }
+                                    >
+                                      <SelectTrigger
+                                        className={`h-7 w-[140px] text-xs font-medium ${ADMIN_STATUS_STYLES[a.adminStatus || "pending"]}`}
+                                      >
+                                        <SelectValue />
+                                      </SelectTrigger>
+                                      <SelectContent>
+                                        <SelectItem value="pending">Pending</SelectItem>
+                                        <SelectItem value="confirmed">Confirmed</SelectItem>
+                                        <SelectItem value="completed">Completed</SelectItem>
+                                      </SelectContent>
+                                    </Select>
+                                    <span className="text-[11px] text-gray-400 hidden sm:inline">
+                                      (only you can see this)
+                                    </span>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
                           )}
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 )}
               </CardContent>

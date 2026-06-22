@@ -30,6 +30,7 @@ export interface IStorage {
   getApplication(id: number): Promise<Application | undefined>;
   createApplication(application: InsertApplication): Promise<Application>;
   updateApplicationStatus(id: number, status: string): Promise<Application | undefined>;
+  updateApplicationAdminStatus(id: number, adminStatus: string): Promise<Application | undefined>;
   setApplicationConfirmationToken(id: number, token: string): Promise<Application | undefined>;
   confirmApplication(token: string): Promise<Application | undefined>;
   getApplicationByToken(token: string): Promise<Application | undefined>;
@@ -215,6 +216,15 @@ export class DatabaseStorage implements IStorage {
     return application || undefined;
   }
 
+  async updateApplicationAdminStatus(id: number, adminStatus: string): Promise<Application | undefined> {
+    const [application] = await db
+      .update(applications)
+      .set({ adminStatus: adminStatus as any })
+      .where(eq(applications.id, id))
+      .returning();
+    return application || undefined;
+  }
+
   async setApplicationConfirmationToken(id: number, token: string): Promise<Application | undefined> {
     const [application] = await db
       .update(applications)
@@ -317,6 +327,7 @@ export class DatabaseStorage implements IStorage {
       .select({
         id: applications.id,
         status: applications.status,
+        adminStatus: applications.adminStatus,
         appliedAt: applications.appliedAt,
         coverLetter: applications.coverLetter,
         resume: applications.resume,
