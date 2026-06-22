@@ -182,8 +182,9 @@ export default function AdminPage() {
 
   const applicationsPerInternship = Object.values(
     applications.reduce((acc, a) => {
-      const key = a.internshipTitle || "Unknown";
-      if (!acc[key]) acc[key] = { name: key, applicants: 0 };
+      const key = String(a.internshipId);
+      const companyName = a.company?.companyName || "Unknown";
+      if (!acc[key]) acc[key] = { name: companyName, applicants: 0 };
       acc[key].applicants += 1;
       return acc;
     }, {} as Record<string, { name: string; applicants: number }>)
