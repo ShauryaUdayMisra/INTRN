@@ -1,3 +1,4 @@
+import { useSeo } from "@/hooks/use-seo";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useParams, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
@@ -57,6 +58,13 @@ export default function InternshipDetail() {
 
   const { data: internship, isLoading } = useQuery<Internship>({
     queryKey: [`/api/internships/${id}`],
+  });
+
+  useSeo({
+    title: internship ? `${internship.title} Internship — INTRN` : "Internship — INTRN",
+    description: internship
+      ? `Apply for the ${internship.title} internship${internship.location ? ` in ${internship.location}` : ""}. Designed for high school students on INTRN.`
+      : "Find internship opportunities for high school students on INTRN.",
   });
 
   const { data: company } = useQuery<Company>({

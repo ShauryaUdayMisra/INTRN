@@ -1,3 +1,4 @@
+import { useSeo } from "@/hooks/use-seo";
 import { HamburgerNavigation } from "@/components/hamburger-navigation";
 import BlogPostCard from "@/components/blog-post-card";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,6 +13,11 @@ import { useAuth } from "@/hooks/use-auth";
 import { useLocation } from "wouter";
 
 export default function BlogPage() {
+  useSeo({
+    title: "Career Insights & Advice — INTRN Blog",
+    description: "Read expert career advice for high school students. Tips on internships, skill-building, and launching your career early.",
+  });
+
   const { user, isLoading: authLoading } = useAuth();
   const [, setLocation] = useLocation();
 

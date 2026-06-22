@@ -1,3 +1,4 @@
+import { useSeo } from "@/hooks/use-seo";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/use-auth";
@@ -68,6 +69,13 @@ export default function LandingPage() {
     queryKey: ["/api/internships"],
   });
   const previewInternships = (internships ?? []).slice(0, 3);
+
+  useSeo({
+    title: "INTRN — Internships for Highschoolers",
+    description: "Find meaningful internship opportunities designed for high school students across South Asia. Gain real-world experience, build skills, and launch your career early.",
+    ogTitle: "INTRN — Internships for Highschoolers",
+    ogDescription: "The leading platform connecting high school students with internship opportunities. Real experience, real learning.",
+  });
 
   // Auto-redirect logged-in users to appropriate dashboard using useEffect
   useEffect(() => {

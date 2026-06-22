@@ -1,3 +1,4 @@
+import { useSeo } from "@/hooks/use-seo";
 import { HamburgerNavigation } from "@/components/hamburger-navigation";
 import SearchFilters from "@/components/search-filters";
 import InternshipCard from "@/components/internship-card";
@@ -10,6 +11,11 @@ import { Search, Filter } from "lucide-react";
 import { Internship } from "@shared/schema";
 
 export default function SearchPage() {
+  useSeo({
+    title: "Search Internships — INTRN",
+    description: "Browse and filter internship opportunities for high school students. Search by field, location, and duration to find the perfect fit.",
+  });
+
   const [searchQuery, setSearchQuery] = useState("");
   const [filters, setFilters] = useState({
     location: "",

@@ -1,3 +1,4 @@
+import { useSeo } from "@/hooks/use-seo";
 import { useParams, useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { HamburgerNavigation } from "@/components/hamburger-navigation";
@@ -21,6 +22,12 @@ export default function BlogPostDetail() {
       }
       return response.json();
     },
+  });
+
+  useSeo({
+    title: post ? `${post.title} — INTRN Blog` : "INTRN Blog",
+    description: post?.excerpt ?? "Career advice for high school students on INTRN.",
+    ogType: "article",
   });
 
   if (isLoading) {

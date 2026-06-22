@@ -1,3 +1,4 @@
+import { useSeo } from "@/hooks/use-seo";
 import Navigation from "@/components/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -36,6 +37,8 @@ export default function HomePage() {
     e.preventDefault();
     setLocation("/search");
   };
+
+  useSeo({ title: "Dashboard — INTRN", noIndex: true });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">

@@ -1,3 +1,4 @@
+import { useSeo } from "@/hooks/use-seo";
 import { useState } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { useLocation, Link } from "wouter";
@@ -91,6 +92,12 @@ export default function MobileAuth() {
       </div>
     );
   }
+
+  useSeo({
+    title: "Sign In or Sign Up — INTRN",
+    description: "Create your free INTRN account to apply for high school internships, or sign in to manage your applications.",
+    noIndex: true,
+  });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-purple-50 to-primary-100">

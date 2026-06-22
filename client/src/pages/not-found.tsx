@@ -1,8 +1,10 @@
+import { useSeo } from "@/hooks/use-seo";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { GraduationCap } from "lucide-react";
 
 export default function NotFound() {
+  useSeo({ title: "Page Not Found — INTRN", noIndex: true });
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gray-50 text-center px-4">
       <GraduationCap className="h-16 w-16 text-purple-300 mb-6" />
