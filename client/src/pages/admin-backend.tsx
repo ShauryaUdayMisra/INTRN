@@ -65,6 +65,10 @@ export default function AdminBackend() {
     enabled: !!isSpecialAdmin,
   });
 
+  const { data: platformStats } = useQuery<{students: number; companies: number; applications: number; internships: number; blogPosts: number}>({
+    queryKey: ["/api/stats"],
+  });
+
   // Mutations
   const updateUserMutation = useMutation({
     mutationFn: async ({ id, updates }: { id: number; updates: Partial<User> }) => {
@@ -204,9 +208,9 @@ export default function AdminBackend() {
         </div>
 
         {/* Detailed Views */}
-        <Tabs defaultValue="overview" className="space-y-6">
+        <Tabs defaultValue="statistics" className="space-y-6">
           <TabsList className="grid w-full grid-cols-6">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsTrigger value="statistics">Statistics</TabsTrigger>
             <TabsTrigger value="users">Users</TabsTrigger>
             <TabsTrigger value="internships">Internships</TabsTrigger>
             <TabsTrigger value="applications">Applications</TabsTrigger>
@@ -214,46 +218,125 @@ export default function AdminBackend() {
             <TabsTrigger value="requests">Requests</TabsTrigger>
           </TabsList>
 
-          {/* Overview Tab */}
-          <TabsContent value="overview" className="space-y-6">
+          {/* Statistics Tab */}
+          <TabsContent value="statistics" className="space-y-6">
+            <h3 className="text-lg font-semibold">Platform Statistics</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Total Users</CardTitle>
-                  <Users className="h-4 w-4 text-muted-foreground" />
+                  <CardTitle className="text-sm font-medium">Total Students</CardTitle>
+                  <GraduationCap className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{companies.length + students.length}</div>
+                  <div className="text-2xl font-bold">{platformStats?.students ?? students.length}</div>
+                  <p className="text-xs text-muted-foreground mt-1">Registered student accounts</p>
                 </CardContent>
               </Card>
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Internships</CardTitle>
+                  <CardTitle className="text-sm font-medium">Total Companies</CardTitle>
                   <Building className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{internships.length}</div>
+                  <div className="text-2xl font-bold">{platformStats?.companies ?? companies.length}</div>
+                  <p className="text-xs text-muted-foreground mt-1">Approved company partners</p>
                 </CardContent>
               </Card>
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Applications</CardTitle>
+                  <CardTitle className="text-sm font-medium">Total Applications</CardTitle>
                   <FileText className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{applications.length}</div>
+                  <div className="text-2xl font-bold">{platformStats?.applications ?? applications.length}</div>
+                  <p className="text-xs text-muted-foreground mt-1">Submitted applications</p>
                 </CardContent>
               </Card>
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Blog Posts</CardTitle>
-                  <FileText className="h-4 w-4 text-muted-foreground" />
+                  <CardTitle className="text-sm font-medium">Live Internships</CardTitle>
+                  <BarChart3 className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">{blogPosts.length}</div>
+                  <div className="text-2xl font-bold">{platformStats?.internships ?? internships.length}</div>
+                  <p className="text-xs text-muted-foreground mt-1">Active listings</p>
                 </CardContent>
               </Card>
             </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-base">Application Breakdown</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Pending</span>
+                    <Badge variant="secondary">{applications.filter(a => a.status === "pending").length}</Badge>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Reviewed</span>
+                    <Badge variant="outline">{applications.filter(a => a.status === "reviewed").length}</Badge>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Accepted</span>
+                    <Badge variant="default">{applications.filter(a => a.status === "accepted").length}</Badge>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Rejected</span>
+                    <Badge variant="destructive">{applications.filter(a => a.status === "rejected").length}</Badge>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-base">Company Requests</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Total Requests</span>
+                    <Badge variant="secondary">{companyRequests.length}</Badge>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Pending Review</span>
+                    <Badge variant="outline">{companyRequests.filter(r => r.status === "pending").length}</Badge>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Approved</span>
+                    <Badge variant="default">{companyRequests.filter(r => r.status === "approved").length}</Badge>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-600">Rejected</span>
+                    <Badge variant="destructive">{companyRequests.filter(r => r.status === "rejected").length}</Badge>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">Content Overview</CardTitle>
+              </CardHeader>
+              <CardContent className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-purple-600">{blogPosts.length}</div>
+                  <div className="text-xs text-gray-500 mt-1">Blog Posts</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-green-600">{blogPosts.filter(p => p.published).length}</div>
+                  <div className="text-xs text-gray-500 mt-1">Published</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-blue-600">{pendingSignups.length}</div>
+                  <div className="text-xs text-gray-500 mt-1">Pending Signups</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-orange-600">{internships.filter(i => i.isActive).length}</div>
+                  <div className="text-xs text-gray-500 mt-1">Active Listings</div>
+                </div>
+              </CardContent>
+            </Card>
           </TabsContent>
 
           {/* Users Tab */}

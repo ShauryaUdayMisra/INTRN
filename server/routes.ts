@@ -231,6 +231,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Admin routes for blog management
+  app.get("/api/admin/blog", requireSpecialAdmin, async (req, res) => {
+    try {
+      const posts = await storage.getBlogPosts();
+      res.json(posts);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch blog posts" });
+    }
+  });
+
   app.patch("/api/admin/blog/:id", requireSpecialAdmin, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
