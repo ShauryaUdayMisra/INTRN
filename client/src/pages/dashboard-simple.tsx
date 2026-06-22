@@ -86,14 +86,14 @@ export default function DashboardSimple() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    <h3 className="font-semibold text-purple-900">Research & Presentation Specialist</h3>
+                    <h3 className="font-semibold text-purple-900">Research & Presentation Intern for a Live Events Company</h3>
                     <p className="text-purple-700">
                       Research emerging event trends, compile comprehensive data insights, and create compelling presentations for innovative event intellectual properties.
                     </p>
                     <div className="flex items-center space-x-4 text-sm text-purple-600">
                       <span className="bg-purple-100 px-2 py-1 rounded">Hybrid</span>
                       <span>Duration: 1-3 Months</span>
-                      <span>Location: Bhubaneswar</span>
+                      <span>Location: Bhubaneswar (Online)</span>
                     </div>
                   </div>
                 </CardContent>

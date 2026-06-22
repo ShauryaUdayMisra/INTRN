@@ -9,7 +9,7 @@ export async function seedBirTerracesInternship() {
     const existingInternship = await db
       .select()
       .from(internships)
-      .where(eq(internships.title, "Social Media Intern"));
+      .where(eq(internships.title, "Social Media & Content Intern for a Luxury Mountain Homestay"));
 
     const existingCompany = await db
       .select()
@@ -20,14 +20,15 @@ export async function seedBirTerracesInternship() {
       await db
         .update(internships)
         .set({
+          title: "Social Media & Content Intern for a Luxury Mountain Homestay",
           duration: "7-28 days",
-          location: "Nainital, Uttarakhand",
+          location: "Nainital, Uttarakhand (Online)",
           type: "online",
           description: "Looking for a social media intern who can navigate the trends and create reels/posts based on our legacy media base. You will help manage our Instagram presence and create engaging content for our mountain retreat property.",
           requirements: "Preferably versed with Instagram Ads and ChatGPT. If not, we would love to train you. Creative mindset and understanding of social media trends required.",
           skills: ["Social Media", "Instagram", "Content Creation", "Reels", "ChatGPT", "Instagram Ads"],
         })
-        .where(eq(internships.title, "Social Media Intern"));
+        .where(eq(internships.title, "Social Media & Content Intern for a Luxury Mountain Homestay"));
       
       await db
         .update(users)
@@ -67,10 +68,10 @@ export async function seedBirTerracesInternship() {
 
     await db.insert(internships).values({
       companyId: companyUser[0].id,
-      title: "Social Media Intern",
+      title: "Social Media & Content Intern for a Luxury Mountain Homestay",
       description: "Looking for a social media intern who can navigate the trends and create reels/posts based on our legacy media base. You will help manage our Instagram presence and create engaging content for our mountain retreat property located in beautiful Nainital, Uttarakhand.",
       requirements: "Preferably versed with Instagram Ads and ChatGPT. If not, we would love to train you. Creative mindset and understanding of social media trends required. Passion for travel and hospitality is a plus.",
-      location: "Nainital, Uttarakhand",
+      location: "Nainital, Uttarakhand (Online)",
       type: "online",
       duration: "7-28 days",
       skills: ["Social Media", "Instagram", "Content Creation", "Reels", "ChatGPT", "Instagram Ads"],

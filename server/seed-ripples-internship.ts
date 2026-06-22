@@ -10,7 +10,7 @@ export async function seedRipplesInternship() {
     const existingInternship = await db
       .select()
       .from(internships)
-      .where(eq(internships.title, "Research Intern - Social Impact of Sports"));
+      .where(eq(internships.title, "Research Intern for a Rural Sports & Social Impact Nonprofit"));
 
     if (existingInternship.length > 0) {
       // Update existing internship with correct data
@@ -18,9 +18,9 @@ export async function seedRipplesInternship() {
         .update(internships)
         .set({
           duration: "7-28 days",
-          location: "UP, Bihar, Uttarakhand, MP (also available online)",
+          location: "UP, Bihar, Uttarakhand, MP (Online)",
         })
-        .where(eq(internships.title, "Research Intern - Social Impact of Sports"));
+        .where(eq(internships.title, "Research Intern for a Rural Sports & Social Impact Nonprofit"));
       
       // Also update the company website
       await db
@@ -66,10 +66,10 @@ export async function seedRipplesInternship() {
     // Create the Ripples of Hope internship
     await db.insert(internships).values({
       companyId: adminUser[0].id,
-      title: "Research Intern - Social Impact of Sports",
+      title: "Research Intern for a Rural Sports & Social Impact Nonprofit",
       description: "To understand the impact of sports on marriage choices of adolescent girls in underprivileged and marginalised communities in rural North India. While it can be done online, it would be better if the person can also travel for 6-7 days to our locations in the states mentioned. You'll work directly with field researchers and analyze socio-cultural data to understand how sports participation influences life choices in these communities.",
       requirements: "Excel proficiency required. More importantly, understanding of the socio-cultural fabric of the poor in rural India. Research experience preferred but not required. Willingness to travel to rural locations is a plus.",
-      location: "UP, Bihar, Uttarakhand, MP (also available online)",
+      location: "UP, Bihar, Uttarakhand, MP (Online)",
       type: "online",
       duration: "7-28 days",
       skills: ["Excel", "Research", "Cultural Understanding", "Data Analysis", "Field Work"],

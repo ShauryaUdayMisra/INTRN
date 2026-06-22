@@ -75,8 +75,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       
       // Use requestAnimationFrame to ensure state updates happen after render
       requestAnimationFrame(() => {
-        if (user.role === "student" && !user.profileComplete) {
-          window.location.href = "/student-onboarding";
+        if (user.role === "student") {
+          // Students skip onboarding and go straight to browsing internships
+          window.location.href = "/search";
         } else if (user.role === "company" && !user.profileComplete) {
           window.location.href = "/company-application";
         } else {

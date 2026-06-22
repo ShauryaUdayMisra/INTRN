@@ -50,7 +50,7 @@ export async function seedPreludeInternship() {
     const [existingInternship] = await db
       .select()
       .from(internships)
-      .where(eq(internships.title, "Research & Presentation Specialist"));
+      .where(eq(internships.title, "Research & Presentation Intern for a Live Events Company"));
 
     if (existingInternship) {
       // Update existing internship
@@ -58,9 +58,9 @@ export async function seedPreludeInternship() {
         .update(internships)
         .set({
           companyId,
-          title: "Research & Presentation Specialist",
+          title: "Research & Presentation Intern for a Live Events Company",
           description: "Interns will be responsible for conducting research, collating relevant data, and preparing basic presentations to support the development of new event IPs (Intellectual Properties). The role offers exposure to the early planning and ideation stages of event creation, with opportunities to contribute to concept-building and content structuring.",
-          location: "Bhubaneswar",
+          location: "Bhubaneswar (Online)",
           type: "online",
           duration: "1-3 Months",
           skills: ["Research Skills", "Data Analysis", "PowerPoint", "Creative Presentation", "Internet Research", "Content Writing"],
@@ -77,9 +77,9 @@ export async function seedPreludeInternship() {
         .insert(internships)
         .values({
           companyId,
-          title: "Research & Presentation Specialist",
+          title: "Research & Presentation Intern for a Live Events Company",
           description: "Interns will be responsible for conducting research, collating relevant data, and preparing basic presentations to support the development of new event IPs (Intellectual Properties). The role offers exposure to the early planning and ideation stages of event creation, with opportunities to contribute to concept-building and content structuring.",
-          location: "Bhubaneswar",
+          location: "Bhubaneswar (Online)",
           type: "online",
           duration: "1-3 Months",
           skills: ["Research Skills", "Data Analysis", "PowerPoint", "Creative Presentation", "Internet Research", "Content Writing"],

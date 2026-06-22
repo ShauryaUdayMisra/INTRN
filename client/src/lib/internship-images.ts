@@ -9,15 +9,15 @@ import platformOpsImage from "@assets/generated_images/modern_marketing_operatio
 import birTerracesImage from "@assets/generated_images/scenic_himalayan_mountain_retreat_0d63.png";
 
 export const internshipImages: Record<string, string> = {
-  "Research Intern - Social Impact of Sports": rippleImage,
-  "Research & Presentation Specialist": preludeImage,
-  "Content Writing & Editorial Intern": contentWritingImage,
-  "Platform Operations & Marketing Intern": platformOpsImage,
-  "Social Media Intern": birTerracesImage,
-  "Kids' Snack Market Research Intern": kebabSnackImage,
-  "Social Media Content Creator Intern": kebabSocialImage,
-  "Pearl Education Content Design Intern": chandPearlImage,
-  "Gen Z Jewellery Trend Research Intern": chandGenZImage,
+  "Research Intern for a Rural Sports & Social Impact Nonprofit": rippleImage,
+  "Research & Presentation Intern for a Live Events Company": preludeImage,
+  "Content Writing & Editorial Intern for a School Brand": contentWritingImage,
+  "Operations & Marketing Intern for a Student Internship Startup": platformOpsImage,
+  "Social Media & Content Intern for a Luxury Mountain Homestay": birTerracesImage,
+  "Market Research Intern for a Healthy Frozen-Food Brand": kebabSnackImage,
+  "Social Media Content Intern for a Healthy Food Brand": kebabSocialImage,
+  "Content Design Intern for a Heritage Jewellery Brand": chandPearlImage,
+  "Trend Research Intern for a Luxury Jewellery Brand": chandGenZImage,
 };
 
 export function getInternshipImage(title: string): string | undefined {

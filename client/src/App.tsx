@@ -17,7 +17,6 @@ import InternshipDetail from "@/pages/internship-detail";
 import ApplicationSuccess from "@/pages/application-success";
 import AdminPage from "@/pages/admin-page";
 import AdminBackend from "@/pages/admin-backend";
-import StudentOnboarding from "@/pages/student-onboarding";
 import CompanyApplication from "@/pages/company-application";
 import CompanySignup from "@/pages/company-signup";
 import CompanyInfo from "@/pages/company-info";
@@ -56,7 +55,6 @@ function Router() {
         <Route path="/status" component={() => <PageTransition><PlatformStatus /></PageTransition>} />
         <Route path="/oauth-setup" component={() => <PageTransition><OAuthSetup /></PageTransition>} />
         <Route path="/help" component={() => <PageTransition><HelpPage /></PageTransition>} />
-        <ProtectedRoute path="/student-onboarding" component={() => <PageTransition><StudentOnboarding /></PageTransition>} />
         <ProtectedRoute path="/company-application" component={() => <PageTransition><CompanyApplication /></PageTransition>} />
         <Route component={() => <PageTransition><NotFound /></PageTransition>} />
       </Switch>

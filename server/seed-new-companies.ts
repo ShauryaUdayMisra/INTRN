@@ -33,12 +33,12 @@ export async function seedNewCompanyInternships() {
 
     // Project A: Kids' Snack Trend Research
     const existingA = await db.select().from(internships)
-      .where(eq(internships.title, "Kids' Snack Market Research Intern"));
+      .where(eq(internships.title, "Market Research Intern for a Healthy Frozen-Food Brand"));
 
     if (existingA.length === 0) {
       await db.insert(internships).values({
         companyId: kebabId,
-        title: "Kids' Snack Market Research Intern",
+        title: "Market Research Intern for a Healthy Frozen-Food Brand",
         description: `Ever walked down a supermarket aisle and wondered why some products fly off the shelves while others collect dust? Now you can find out — and get real experience doing it.
 
 The Kebabsmith is a Singapore-based frozen kebab and wraps brand built around healthy ingredients and family-friendly meals. We're on a mission to make wholesome food fun — and we need a sharp, curious researcher to help us understand what parents and kids actually want.
@@ -63,12 +63,12 @@ Time commitment: 8–10 hours. Fully online. Perfect for anyone who's curious ab
 
     // Project B: Social Media Content Bank
     const existingB = await db.select().from(internships)
-      .where(eq(internships.title, "Social Media Content Creator Intern"));
+      .where(eq(internships.title, "Social Media Content Intern for a Healthy Food Brand"));
 
     if (existingB.length === 0) {
       await db.insert(internships).values({
         companyId: kebabId,
-        title: "Social Media Content Creator Intern",
+        title: "Social Media Content Intern for a Healthy Food Brand",
         description: `If you spend more time analyzing why a Reel went viral than actually watching it — this internship was made for you.
 
 The Kebabsmith is a Singapore-based frozen kebab brand and we need a creative brain to help us build a full month of social media content from scratch. You'll develop 15 Instagram post ideas, 10 Reels concepts, and 10 customer poll questions that actually get people talking. Then you'll design 5 Canva templates and write the captions to go with them.
@@ -118,12 +118,12 @@ Time commitment: 10–12 hours. Fully online. Ideal for anyone who lives on Inst
 
     // Project C: Pearl Education Content Series
     const existingC = await db.select().from(internships)
-      .where(eq(internships.title, "Pearl Education Content Design Intern"));
+      .where(eq(internships.title, "Content Design Intern for a Heritage Jewellery Brand"));
 
     if (existingC.length === 0) {
       await db.insert(internships).values({
         companyId: chandId,
-        title: "Pearl Education Content Design Intern",
+        title: "Content Design Intern for a Heritage Jewellery Brand",
         description: `Did you know there are over a dozen types of pearls — and most people can't tell the difference? That's exactly the problem you'd help solve.
 
 Chandrani Pearls is one of India's most iconic jewellery brands, founded in Kolkata in 1985 with dozens of stores across the country. They've been dressing women in pearls for four decades — and now they want to connect with a younger audience who barely knows where pearls come from.
@@ -148,12 +148,12 @@ Time commitment: 8–12 hours. Fully online. Great for anyone interested in desi
 
     // Project D: Gen Z Jewellery Trend Report
     const existingD = await db.select().from(internships)
-      .where(eq(internships.title, "Gen Z Jewellery Trend Research Intern"));
+      .where(eq(internships.title, "Trend Research Intern for a Luxury Jewellery Brand"));
 
     if (existingD.length === 0) {
       await db.insert(internships).values({
         companyId: chandId,
-        title: "Gen Z Jewellery Trend Research Intern",
+        title: "Trend Research Intern for a Luxury Jewellery Brand",
         description: `You already know what's trending before it trends. Now imagine getting paid (well, in experience) to prove it.
 
 Chandrani Pearls — a legacy jewellery brand with 40 years of history — wants to understand what your generation actually wants from jewellery. Not what focus groups say. Not what agencies guess. What you and your peers are actually pinning, liking, and buying.
