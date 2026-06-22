@@ -1,7 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useAuth } from "@/hooks/use-auth";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -11,8 +10,6 @@ import { useLocation } from "wouter";
 import { MapPin, Clock, Heart, Edit, Eye } from "lucide-react";
 import { useState } from "react";
 import { getInternshipImage, getTitleGradient } from "@/lib/internship-images";
-
-const FILLED_INTERNSHIP_ID = 239;
 
 interface InternshipCardProps {
   internship: Internship;
@@ -24,9 +21,6 @@ export default function InternshipCard({ internship, showManage = false }: Inter
   const { toast } = useToast();
   const [, setLocation] = useLocation();
   const [isFavorite, setIsFavorite] = useState(false);
-  const [showFilledDialog, setShowFilledDialog] = useState(false);
-
-  const isFilled = internship.id === FILLED_INTERNSHIP_ID;
 
   const applyMutation = useMutation({
     mutationFn: async () => {
@@ -65,11 +59,6 @@ export default function InternshipCard({ internship, showManage = false }: Inter
   });
 
   const handleApply = () => {
-    if (isFilled) {
-      setShowFilledDialog(true);
-      return;
-    }
-
     if (!user) {
       setLocation("/auth?tab=register");
       return;
@@ -104,27 +93,13 @@ export default function InternshipCard({ internship, showManage = false }: Inter
   const gradient = getTitleGradient(internship.title);
 
   const handleCardClick = () => {
-    if (isFilled) {
-      setShowFilledDialog(true);
-      return;
-    }
     setLocation(`/internship/${internship.id}`);
   };
 
   return (
     <>
-    <Dialog open={showFilledDialog} onOpenChange={setShowFilledDialog}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>This spot's already taken</DialogTitle>
-          <DialogDescription>
-            This internship has already been filled — but there are plenty of other great opportunities waiting for you. Keep exploring!
-          </DialogDescription>
-        </DialogHeader>
-      </DialogContent>
-    </Dialog>
     <Card 
-      className={`group bg-white hover:shadow-xl transform hover:-translate-y-1.5 transition-all duration-300 border border-gray-100 hover:border-primary/30 cursor-pointer overflow-hidden flex flex-col h-full ${isFilled ? "opacity-60 grayscale" : ""}`}
+      className="group bg-white hover:shadow-xl transform hover:-translate-y-1.5 transition-all duration-300 border border-gray-100 hover:border-primary/30 cursor-pointer overflow-hidden flex flex-col h-full"
       onClick={handleCardClick}
     >
       {/* Image banner */}
