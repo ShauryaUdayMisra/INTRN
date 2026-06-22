@@ -195,6 +195,11 @@ export function HamburgerNavigation(props: HamburgerNavigationProps = {}) {
             <button onClick={() => setLocation("/help")} className={`text-sm font-medium transition-colors ${location === "/help" ? "text-primary" : "text-gray-600 hover:text-primary"}`}>
               Help
             </button>
+            {user?.role === "admin" && (
+              <button onClick={() => setLocation("/admin")} className={`text-sm font-medium transition-colors ${location === "/admin" ? "text-purple-700" : "text-purple-600 hover:text-purple-700"}`}>
+                Admin Panel
+              </button>
+            )}
           </nav>
           <div className="flex items-center gap-2">
             {user ? (

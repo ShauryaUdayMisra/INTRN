@@ -18,7 +18,9 @@ export default function DashboardSimple() {
 
   // Use useEffect to handle redirects to avoid state update during render
   useEffect(() => {
-    if (user && user.role === "company" && !user.isApproved) {
+    if (user && user.role === "admin") {
+      setLocation("/admin");
+    } else if (user && user.role === "company" && !user.isApproved) {
       setLocation("/company-application-status");
     }
   }, [user, setLocation]);
