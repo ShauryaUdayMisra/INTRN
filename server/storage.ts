@@ -18,6 +18,7 @@ export interface IStorage {
   
   // Internship methods
   getInternships(filters?: { location?: string; skills?: string[]; type?: string }): Promise<Internship[]>;
+  getAllInternships(): Promise<Internship[]>;
   getInternship(id: number): Promise<Internship | undefined>;
   getInternshipsByCompany(companyId: number): Promise<Internship[]>;
   createInternship(internship: InsertInternship & { companyId: number }): Promise<Internship>;
@@ -134,6 +135,10 @@ export class DatabaseStorage implements IStorage {
     }
     
     return await query.orderBy(desc(internships.createdAt));
+  }
+
+  async getAllInternships(): Promise<Internship[]> {
+    return await db.select().from(internships).orderBy(desc(internships.createdAt));
   }
 
   async getInternship(id: number): Promise<Internship | undefined> {

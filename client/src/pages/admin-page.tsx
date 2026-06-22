@@ -1,31 +1,91 @@
+import { useState } from "react";
 import { useAuth } from "@/hooks/use-auth";
-import { HamburgerNavigation } from "@/components/hamburger-navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useQuery } from "@tanstack/react-query";
-import { User, Internship, Application, BlogPost } from "@shared/schema";
-import { Users, Building, BookOpen, FileText, TrendingUp, AlertTriangle } from "lucide-react";
-import { Redirect } from "wouter";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import { User, Internship, BlogPost } from "@shared/schema";
+import {
+  Users, Building, FileText, GraduationCap, Shield, LogOut, Home,
+  Search, BookOpen, Briefcase, TrendingUp, CheckCircle, Clock, XCircle,
+} from "lucide-react";
+import { Redirect, Link } from "wouter";
+import {
+  ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid,
+  Tooltip, PieChart, Pie, Cell, Legend,
+} from "recharts";
+
+interface ApplicationDetail {
+  id: number;
+  status: string;
+  appliedAt: string;
+  coverLetter?: string;
+  studentId: number;
+  internshipId: number;
+  studentFirstName?: string;
+  studentLastName?: string;
+  studentEmail?: string;
+  studentLocation?: string;
+  studentSkills?: string[];
+  studentBio?: string;
+  studentGrade?: string;
+  studentSchoolName?: string;
+  studentUniversity?: string;
+  studentGraduationYear?: string;
+  internshipTitle?: string;
+  internshipLocation?: string;
+  internshipType?: string;
+  companyId: number;
+  company?: {
+    companyName?: string;
+    companyEmail?: string;
+    companyField?: string;
+    companyLocation?: string;
+  };
+}
+
+const CHART_COLORS = ["#8b5cf6", "#a78bfa", "#c4b5fd", "#7c3aed", "#6d28d9", "#9333ea", "#a855f7", "#d8b4fe"];
+const STATUS_COLORS: Record<string, string> = {
+  pending: "#f59e0b",
+  reviewed: "#3b82f6",
+  accepted: "#22c55e",
+  rejected: "#ef4444",
+};
+
+function statusBadge(status: string) {
+  switch (status) {
+    case "accepted":
+      return <Badge className="bg-green-100 text-green-700 hover:bg-green-100">Accepted</Badge>;
+    case "rejected":
+      return <Badge className="bg-red-100 text-red-700 hover:bg-red-100">Rejected</Badge>;
+    case "reviewed":
+      return <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-100">Reviewed</Badge>;
+    default:
+      return <Badge className="bg-amber-100 text-amber-700 hover:bg-amber-100">Pending</Badge>;
+  }
+}
 
 export default function AdminPage() {
   const { user } = useAuth();
+  const [appSearch, setAppSearch] = useState("");
 
-  // Check if user is one of the special admin accounts
-  const isSpecialAdmin = user && ['admin1', 'admin2', 'admin3'].includes(user.username);
+  const isSpecialAdmin = user && ["admin1", "admin2", "admin3"].includes(user.username);
 
-  const { data: users = [] } = useQuery<User[]>({
+  const { data: users = [], isLoading: usersLoading } = useQuery<User[]>({
     queryKey: ["/api/admin/users"],
     enabled: !!isSpecialAdmin,
   });
 
-  const { data: internships = [] } = useQuery<Internship[]>({
-    queryKey: ["/api/internships"],
+  const { data: internships = [], isLoading: internshipsLoading } = useQuery<Internship[]>({
+    queryKey: ["/api/admin/internships"],
     enabled: !!isSpecialAdmin,
   });
 
-  const { data: applications = [] } = useQuery<any[]>({
+  const { data: applications = [], isLoading: appsLoading } = useQuery<ApplicationDetail[]>({
     queryKey: ["/api/admin/applications"],
     enabled: !!isSpecialAdmin,
   });
@@ -34,6 +94,16 @@ export default function AdminPage() {
     queryKey: ["/api/admin/blog"],
     enabled: !!isSpecialAdmin,
   });
+
+  const handleLogout = async () => {
+    try {
+      await apiRequest("POST", "/api/logout");
+      queryClient.clear();
+      window.location.href = "/";
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
 
   if (!user || user.role !== "admin") {
     return <Redirect to="/dashboard" />;
@@ -51,588 +121,478 @@ export default function AdminPage() {
     );
   }
 
+  const students = users.filter((u) => u.role === "student");
+  const companies = users.filter((u) => u.role === "company");
+
   const stats = {
-    totalUsers: users.length,
-    totalStudents: users.filter(u => u.role === "student").length,
-    totalCompanies: users.filter(u => u.role === "company").length,
+    totalStudents: students.length,
+    totalCompanies: companies.length,
     totalInternships: internships.length,
-    activeInternships: internships.filter(i => i.isActive).length,
+    activeInternships: internships.filter((i) => i.isActive).length,
     totalApplications: applications.length,
-    pendingApplications: applications.filter(a => a.status === "pending").length,
-    totalBlogPosts: blogPosts.length,
-    publishedPosts: blogPosts.filter(p => p.published).length,
+    pendingApplications: applications.filter((a) => a.status === "pending").length,
+    acceptedApplications: applications.filter((a) => a.status === "accepted").length,
+    publishedPosts: blogPosts.filter((p) => p.published).length,
   };
+
+  // ---- Analytics aggregations ----
+  const statusData = ["pending", "reviewed", "accepted", "rejected"].map((s) => ({
+    name: s.charAt(0).toUpperCase() + s.slice(1),
+    value: applications.filter((a) => a.status === s).length,
+  })).filter((d) => d.value > 0);
+
+  const applicationsPerInternship = Object.values(
+    applications.reduce((acc, a) => {
+      const key = a.internshipTitle || "Unknown";
+      if (!acc[key]) acc[key] = { name: key, applicants: 0 };
+      acc[key].applicants += 1;
+      return acc;
+    }, {} as Record<string, { name: string; applicants: number }>)
+  ).sort((a, b) => b.applicants - a.applicants);
+
+  const applicationsPerCompany = Object.values(
+    applications.reduce((acc, a) => {
+      const key = a.company?.companyName || "Unknown";
+      if (!acc[key]) acc[key] = { name: key, applicants: 0 };
+      acc[key].applicants += 1;
+      return acc;
+    }, {} as Record<string, { name: string; applicants: number }>)
+  ).sort((a, b) => b.applicants - a.applicants);
+
+  const studentsByGrade = ["9th", "10th", "11th", "12th"].map((g) => ({
+    name: g + " Grade",
+    students: students.filter((s) => s.grade === g).length,
+  }));
+
+  // applicant count per student (engagement)
+  const appsByStudent = applications.reduce((acc, a) => {
+    acc[a.studentId] = (acc[a.studentId] || 0) + 1;
+    return acc;
+  }, {} as Record<number, number>);
+
+  const filteredApplications = applications.filter((a) => {
+    if (!appSearch.trim()) return true;
+    const q = appSearch.toLowerCase();
+    return (
+      `${a.studentFirstName} ${a.studentLastName}`.toLowerCase().includes(q) ||
+      (a.studentEmail || "").toLowerCase().includes(q) ||
+      (a.internshipTitle || "").toLowerCase().includes(q) ||
+      (a.company?.companyName || "").toLowerCase().includes(q)
+    );
+  });
+
+  const isLoading = usersLoading || internshipsLoading || appsLoading;
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <HamburgerNavigation />
-      
+      {/* Dedicated admin top bar — always visible so admins can navigate */}
+      <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-9 h-9 rounded-lg bg-purple-600 flex items-center justify-center">
+              <Shield className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <span className="font-bold text-gray-900 text-lg leading-none">INTRN Admin</span>
+              <p className="text-xs text-gray-500">Control Center</p>
+            </div>
+          </div>
+
+          <nav className="hidden md:flex items-center gap-1">
+            <Link href="/search">
+              <Button variant="ghost" size="sm" className="text-gray-600">
+                <Search className="w-4 h-4 mr-2" /> Internships
+              </Button>
+            </Link>
+            <Link href="/blog">
+              <Button variant="ghost" size="sm" className="text-gray-600">
+                <BookOpen className="w-4 h-4 mr-2" /> Blog
+              </Button>
+            </Link>
+            <Link href="/">
+              <Button variant="ghost" size="sm" className="text-gray-600">
+                <Home className="w-4 h-4 mr-2" /> Main Site
+              </Button>
+            </Link>
+          </nav>
+
+          <div className="flex items-center gap-3">
+            <div className="hidden sm:flex items-center gap-2">
+              <Avatar className="w-8 h-8">
+                <AvatarFallback className="bg-purple-100 text-purple-700 text-sm font-semibold">
+                  {user.firstName?.[0] || user.username[0].toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+              <span className="text-sm font-medium text-gray-700">{user.username}</span>
+            </div>
+            <Button variant="outline" size="sm" onClick={handleLogout} className="text-red-600 border-red-200 hover:bg-red-50">
+              <LogOut className="w-4 h-4 mr-2" /> Logout
+            </Button>
+          </div>
+        </div>
+        {/* Mobile nav row */}
+        <div className="md:hidden border-t border-gray-100 flex items-center justify-around px-2 py-1">
+          <Link href="/search"><Button variant="ghost" size="sm" className="text-gray-600"><Search className="w-4 h-4" /></Button></Link>
+          <Link href="/blog"><Button variant="ghost" size="sm" className="text-gray-600"><BookOpen className="w-4 h-4" /></Button></Link>
+          <Link href="/"><Button variant="ghost" size="sm" className="text-gray-600"><Home className="w-4 h-4" /></Button></Link>
+        </div>
+      </header>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
           <p className="text-gray-600 mt-2">
-            Manage users, internships, applications, and content across the platform.
+            Full overview of students, companies, internships, and applications across the platform.
           </p>
         </div>
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center">
-                <Users className="h-8 w-8 text-blue-500" />
-                <div className="ml-4">
-                  <p className="text-2xl font-bold">{stats.totalUsers}</p>
-                  <p className="text-gray-600">Total Users</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center">
-                <Building className="h-8 w-8 text-green-500" />
-                <div className="ml-4">
-                  <p className="text-2xl font-bold">{stats.totalInternships}</p>
-                  <p className="text-gray-600">Internships</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center">
-                <FileText className="h-8 w-8 text-purple-500" />
-                <div className="ml-4">
-                  <p className="text-2xl font-bold">{stats.totalApplications}</p>
-                  <p className="text-gray-600">Applications</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center">
-                <BookOpen className="h-8 w-8 text-orange-500" />
-                <div className="ml-4">
-                  <p className="text-2xl font-bold">{stats.totalBlogPosts}</p>
-                  <p className="text-gray-600">Blog Posts</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+        {/* Top stat cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <StatCard icon={GraduationCap} label="Students" value={stats.totalStudents} hint="Registered" color="text-purple-600" bg="bg-purple-50" />
+          <StatCard icon={Building} label="Companies" value={stats.totalCompanies} hint="Partners" color="text-blue-600" bg="bg-blue-50" />
+          <StatCard icon={Briefcase} label="Internships" value={stats.totalInternships} hint={`${stats.activeInternships} active`} color="text-green-600" bg="bg-green-50" />
+          <StatCard icon={FileText} label="Applications" value={stats.totalApplications} hint={`${stats.pendingApplications} pending`} color="text-orange-600" bg="bg-orange-50" />
         </div>
 
-        <Tabs defaultValue="users" className="space-y-6">
-          <TabsList>
-            <TabsTrigger value="users">Users</TabsTrigger>
-            <TabsTrigger value="internships">Internships</TabsTrigger>
-            <TabsTrigger value="applications">Applications</TabsTrigger>
-            <TabsTrigger value="blog">Blog Posts</TabsTrigger>
+        <Tabs defaultValue="analytics" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-5">
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
+            <TabsTrigger value="applications">Applications</TabsTrigger>
+            <TabsTrigger value="internships">Internships</TabsTrigger>
+            <TabsTrigger value="students">Students</TabsTrigger>
+            <TabsTrigger value="companies">Companies</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="users" className="space-y-6">
-            {/* Students Section */}
+          {/* ---------------- ANALYTICS ---------------- */}
+          <TabsContent value="analytics" className="space-y-6">
+            {isLoading ? (
+              <div className="text-center py-20 text-gray-500">Loading analytics…</div>
+            ) : (
+              <>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-base flex items-center gap-2">
+                        <TrendingUp className="w-4 h-4 text-purple-600" /> Applications per Internship
+                      </CardTitle>
+                      <CardDescription>How many people applied to each role</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      {applicationsPerInternship.length === 0 ? (
+                        <EmptyChart />
+                      ) : (
+                        <ResponsiveContainer width="100%" height={320}>
+                          <BarChart data={applicationsPerInternship} layout="vertical" margin={{ left: 10, right: 20 }}>
+                            <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+                            <XAxis type="number" allowDecimals={false} />
+                            <YAxis type="category" dataKey="name" width={120} tick={{ fontSize: 11 }} />
+                            <Tooltip />
+                            <Bar dataKey="applicants" fill="#8b5cf6" radius={[0, 4, 4, 0]} />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      )}
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-base flex items-center gap-2">
+                        <FileText className="w-4 h-4 text-purple-600" /> Application Status
+                      </CardTitle>
+                      <CardDescription>Breakdown of where applications stand</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      {statusData.length === 0 ? (
+                        <EmptyChart />
+                      ) : (
+                        <ResponsiveContainer width="100%" height={320}>
+                          <PieChart>
+                            <Pie data={statusData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={110} label>
+                              {statusData.map((entry) => (
+                                <Cell key={entry.name} fill={STATUS_COLORS[entry.name.toLowerCase()] || "#8b5cf6"} />
+                              ))}
+                            </Pie>
+                            <Tooltip />
+                            <Legend />
+                          </PieChart>
+                        </ResponsiveContainer>
+                      )}
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-base flex items-center gap-2">
+                        <Building className="w-4 h-4 text-purple-600" /> Applications per Company
+                      </CardTitle>
+                      <CardDescription>Which companies are getting the most interest</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      {applicationsPerCompany.length === 0 ? (
+                        <EmptyChart />
+                      ) : (
+                        <ResponsiveContainer width="100%" height={320}>
+                          <BarChart data={applicationsPerCompany} layout="vertical" margin={{ left: 10, right: 20 }}>
+                            <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+                            <XAxis type="number" allowDecimals={false} />
+                            <YAxis type="category" dataKey="name" width={120} tick={{ fontSize: 11 }} />
+                            <Tooltip />
+                            <Bar dataKey="applicants" fill="#a855f7" radius={[0, 4, 4, 0]} />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      )}
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-base flex items-center gap-2">
+                        <GraduationCap className="w-4 h-4 text-purple-600" /> Students by Grade
+                      </CardTitle>
+                      <CardDescription>Grade distribution of registered students</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <ResponsiveContainer width="100%" height={320}>
+                        <BarChart data={studentsByGrade} margin={{ left: 0, right: 20 }}>
+                          <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                          <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+                          <YAxis allowDecimals={false} />
+                          <Tooltip />
+                          <Bar dataKey="students" radius={[4, 4, 0, 0]}>
+                            {studentsByGrade.map((_, i) => (
+                              <Cell key={i} fill={CHART_COLORS[i % CHART_COLORS.length]} />
+                            ))}
+                          </Bar>
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </CardContent>
+                  </Card>
+                </div>
+              </>
+            )}
+          </TabsContent>
+
+          {/* ---------------- APPLICATIONS ---------------- */}
+          <TabsContent value="applications" className="space-y-4">
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Users className="h-5 w-5" />
-                  Student Accounts ({users.filter(u => u.role === "student").length})
-                </CardTitle>
+                <CardTitle className="text-base">Who's Applying to What</CardTitle>
                 <CardDescription>
-                  View detailed student profiles including onboarding information
+                  {stats.totalApplications} total applications — search by student, internship, or company
                 </CardDescription>
+                <div className="pt-2">
+                  <Input
+                    placeholder="Search applications…"
+                    value={appSearch}
+                    onChange={(e) => setAppSearch(e.target.value)}
+                    className="max-w-sm"
+                  />
+                </div>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {users.filter(u => u.role === "student").map((user) => (
-                    <div key={user.id} className="border rounded-lg p-4 space-y-3">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="font-semibold text-lg">{user.firstName} {user.lastName}</p>
-                          <p className="text-sm text-gray-600">{user.email}</p>
-                        </div>
-                        <Badge variant="outline">Student</Badge>
-                      </div>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
-                        <div>
-                          <p className="font-medium text-gray-700">Password</p>
-                          <p className="text-sm text-gray-900 font-mono">{(user as any).actualPassword || "Not available"}</p>
-                        </div>
-                        <div>
-                          <p className="font-medium text-gray-700">Location</p>
-                          <p>{user.location || "Not specified"}</p>
-                        </div>
-                        <div>
-                          <p className="font-medium text-gray-700">Grade</p>
-                          <p>{(user as any).grade || "Not specified"}</p>
-                        </div>
-                        <div>
-                          <p className="font-medium text-gray-700">School Name</p>
-                          <p>{(user as any).schoolName || "Not specified"}</p>
-                        </div>
-                        <div>
-                          <p className="font-medium text-gray-700">University</p>
-                          <p>{user.university || "Not specified"}</p>
-                        </div>
-                        <div>
-                          <p className="font-medium text-gray-700">Graduation Year</p>
-                          <p>{user.graduationYear || "Not specified"}</p>
-                        </div>
-                        <div>
-                          <p className="font-medium text-gray-700">Profile Complete</p>
-                          <p>{user.profileComplete ? "Yes" : "No"}</p>
-                        </div>
-                        <div>
-                          <p className="font-medium text-gray-700">Joined</p>
-                          <p>{user.createdAt ? new Date(user.createdAt).toLocaleDateString() : "Unknown"}</p>
-                        </div>
-                      </div>
-                      
-                      {user.skills && user.skills.length > 0 && (
-                        <div>
-                          <p className="font-medium text-gray-700 mb-2">Skills</p>
-                          <div className="flex flex-wrap gap-1">
-                            {user.skills.map((skill, index) => (
-                              <Badge key={index} variant="secondary" className="text-xs">{skill}</Badge>
-                            ))}
+                {appsLoading ? (
+                  <div className="text-center py-12 text-gray-500">Loading applications…</div>
+                ) : filteredApplications.length === 0 ? (
+                  <div className="text-center py-12 text-gray-500">No applications found.</div>
+                ) : (
+                  <div className="space-y-3">
+                    {filteredApplications.map((a) => (
+                      <div key={a.id} className="border border-gray-200 rounded-xl p-4 hover:border-purple-200 transition-colors">
+                        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                          <div className="flex items-start gap-3">
+                            <Avatar className="w-10 h-10">
+                              <AvatarFallback className="bg-purple-100 text-purple-700 font-semibold">
+                                {(a.studentFirstName?.[0] || "?") + (a.studentLastName?.[0] || "")}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div>
+                              <p className="font-semibold text-gray-900">
+                                {a.studentFirstName} {a.studentLastName}
+                              </p>
+                              <p className="text-sm text-gray-500">{a.studentEmail}</p>
+                              <div className="flex flex-wrap gap-2 mt-1 text-xs text-gray-500">
+                                {a.studentGrade && <span>{a.studentGrade} Grade</span>}
+                                {a.studentSchoolName && <span>• {a.studentSchoolName}</span>}
+                                {a.studentLocation && <span>• {a.studentLocation}</span>}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="text-right shrink-0">
+                            {statusBadge(a.status)}
+                            <p className="text-xs text-gray-400 mt-1">
+                              {a.appliedAt ? new Date(a.appliedAt).toLocaleDateString() : ""}
+                            </p>
                           </div>
                         </div>
-                      )}
-
-                      {(user as any).hobbies && (user as any).hobbies.length > 0 && (
-                        <div>
-                          <p className="font-medium text-gray-700 mb-2">Hobbies</p>
-                          <div className="flex flex-wrap gap-1">
-                            {(user as any).hobbies.map((hobby: string, index: number) => (
-                              <Badge key={index} variant="outline" className="text-xs">{hobby}</Badge>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      {(user as any).interestedFields && (user as any).interestedFields.length > 0 && (
-                        <div>
-                          <p className="font-medium text-gray-700 mb-2">Interested Fields</p>
-                          <div className="flex flex-wrap gap-1">
-                            {(user as any).interestedFields.map((field: string, index: number) => (
-                              <Badge key={index} variant="default" className="text-xs">{field}</Badge>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      {(user as any).preferredCompanies && (user as any).preferredCompanies.length > 0 && (
-                        <div>
-                          <p className="font-medium text-gray-700 mb-2">Preferred Companies</p>
-                          <div className="flex flex-wrap gap-1">
-                            {(user as any).preferredCompanies.map((company: string, index: number) => (
-                              <Badge key={index} variant="destructive" className="text-xs">{company}</Badge>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      {(user as any).internshipDuration && (
-                        <div>
-                          <p className="font-medium text-gray-700">Internship Duration Preference</p>
-                          <p className="text-sm text-gray-600">{(user as any).internshipDuration}</p>
-                        </div>
-                      )}
-                      
-                      {user.bio && (
-                        <div>
-                          <p className="font-medium text-gray-700">Bio</p>
-                          <p className="text-sm text-gray-600">{user.bio}</p>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                  {users.filter(u => u.role === "student").length === 0 && (
-                    <p className="text-center text-gray-500 py-8">No student accounts found</p>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Companies Section */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Building className="h-5 w-5" />
-                  Company Accounts ({users.filter(u => u.role === "company").length})
-                </CardTitle>
-                <CardDescription>
-                  View company account details and approval status
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {users.filter(u => u.role === "company").map((user) => (
-                    <div key={user.id} className="border rounded-lg p-4 space-y-3">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="font-semibold text-lg">{user.firstName} {user.lastName}</p>
-                          <p className="text-sm text-gray-600">{user.email}</p>
-                          {user.companyName && <p className="text-sm font-medium text-primary">{user.companyName}</p>}
-                        </div>
-                        <div className="flex gap-2">
-                          <Badge variant="secondary">Company</Badge>
-                          <Badge variant={user.isApproved ? 'default' : 'destructive'}>
-                            {user.isApproved ? 'Approved' : 'Pending'}
-                          </Badge>
+                        <div className="mt-3 pt-3 border-t border-gray-100 flex flex-wrap gap-x-6 gap-y-1 text-sm">
+                          <span className="text-gray-700">
+                            <Briefcase className="w-3.5 h-3.5 inline mr-1 text-purple-500" />
+                            <span className="font-medium">{a.internshipTitle || "—"}</span>
+                          </span>
+                          <span className="text-gray-700">
+                            <Building className="w-3.5 h-3.5 inline mr-1 text-blue-500" />
+                            {a.company?.companyName || "—"}
+                          </span>
+                          {a.internshipLocation && (
+                            <span className="text-gray-500">{a.internshipLocation}</span>
+                          )}
                         </div>
                       </div>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
-                        <div>
-                          <p className="font-medium text-gray-700">Password</p>
-                          <p className="text-sm text-gray-900 font-mono">{(user as any).actualPassword || "Not available"}</p>
-                        </div>
-                        <div>
-                          <p className="font-medium text-gray-700">Website</p>
-                          <p>{user.website || "Not specified"}</p>
-                        </div>
-                        <div>
-                          <p className="font-medium text-gray-700">Location</p>
-                          <p>{user.location || "Not specified"}</p>
-                        </div>
-                        <div>
-                          <p className="font-medium text-gray-700">Company Field</p>
-                          <p>{user.companyField || "Not specified"}</p>
-                        </div>
-                        <div>
-                          <p className="font-medium text-gray-700">Profile Complete</p>
-                          <p>{user.profileComplete ? "Yes" : "No"}</p>
-                        </div>
-                        <div>
-                          <p className="font-medium text-gray-700">Joined</p>
-                          <p>{user.createdAt ? new Date(user.createdAt).toLocaleDateString() : "Unknown"}</p>
-                        </div>
-                      </div>
-                      
-                      {user.bio && (
-                        <div>
-                          <p className="font-medium text-gray-700">Company Description</p>
-                          <p className="text-sm text-gray-600">{user.bio}</p>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                  {users.filter(u => u.role === "company").length === 0 && (
-                    <p className="text-center text-gray-500 py-8">No company accounts found</p>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Admin Section */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <AlertTriangle className="h-5 w-5" />
-                  Admin Accounts ({users.filter(u => u.role === "admin").length})
-                </CardTitle>
-                <CardDescription>
-                  Platform administrators with full access
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {users.filter(u => u.role === "admin").map((user) => (
-                    <div key={user.id} className="border rounded-lg p-4 space-y-3 bg-amber-50 border-amber-200">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="font-semibold text-lg">{user.firstName || user.username} {user.lastName}</p>
-                          <p className="text-sm text-gray-600">{user.email}</p>
-                        </div>
-                        <Badge variant="default">Admin</Badge>
-                      </div>
-                      
-                      <div className="text-sm">
-                        <p className="font-medium text-gray-700">Username: {user.username}</p>
-                        <p className="text-xs text-gray-500">Access Level: Full Platform Control</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
 
-          <TabsContent value="internships" className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold">Internship Management</h2>
-              <div className="flex gap-2">
-                <Badge variant="default">{stats.activeInternships} Active</Badge>
-                <Badge variant="secondary">{stats.totalInternships - stats.activeInternships} Inactive</Badge>
-              </div>
-            </div>
-            
-            <div className="space-y-4">
-              {internships.map((internship) => (
-                <Card key={internship.id}>
-                  <CardContent className="p-6">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <h3 className="font-semibold">{internship.title}</h3>
-                        <p className="text-gray-600">{internship.location}</p>
-                        <p className="text-sm text-gray-500">
-                          {internship.createdAt ? `Posted ${new Date(internship.createdAt).toLocaleDateString()}` : ""}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Badge variant={internship.isActive ? "default" : "secondary"}>
-                          {internship.isActive ? "Active" : "Inactive"}
-                        </Badge>
-                        <Button size="sm" variant="outline">Review</Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-
-          <TabsContent value="applications" className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold">Application Management</h2>
-              <div className="flex gap-2">
-                <Badge variant="default">{stats.pendingApplications} Pending</Badge>
-                <Badge variant="secondary">
-                  {stats.totalApplications - stats.pendingApplications} Processed
-                </Badge>
-              </div>
-            </div>
-            
-            <div className="space-y-6">
-              {applications.map((application) => (
-                <Card key={application.id}>
-                  <CardContent className="p-6">
-                    <div className="space-y-4">
-                      {/* Header with Status */}
-                      <div className="flex justify-between items-start">
+          {/* ---------------- INTERNSHIPS ---------------- */}
+          <TabsContent value="internships" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">Internships & Applicant Counts</CardTitle>
+                <CardDescription>{stats.totalInternships} internships on the platform</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  {internships.map((i) => {
+                    const count = applications.filter((a) => a.internshipId === i.id).length;
+                    const companyName = companies.find((c) => c.id === i.companyId)?.companyName;
+                    return (
+                      <div key={i.id} className="flex items-center justify-between border border-gray-200 rounded-lg p-3">
                         <div>
-                          <h3 className="font-semibold text-lg">
-                            Application #{application.id}
-                          </h3>
-                          <p className="text-sm text-gray-500">
-                            Applied {new Date(application.appliedAt).toLocaleDateString()}
+                          <p className="font-medium text-gray-900">{i.title}</p>
+                          <p className="text-xs text-gray-500">
+                            {companyName || "—"} • {i.location}
+                            {!i.isActive && <span className="text-red-500"> • inactive</span>}
                           </p>
                         </div>
-                        <Badge variant={
-                          application.status === "accepted" ? "default" :
-                          application.status === "rejected" ? "destructive" :
-                          "secondary"
-                        }>
-                          {application.status}
-                        </Badge>
-                      </div>
-
-                      {/* Student Information */}
-                      <div className="border rounded-lg p-4 bg-blue-50">
-                        <h4 className="font-medium text-blue-900 mb-3 flex items-center gap-2">
-                          <Users className="h-4 w-4" />
-                          Student Information
-                        </h4>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-sm">
-                          <div>
-                            <p className="font-medium text-gray-700">Name</p>
-                            <p>{application.studentFirstName} {application.studentLastName}</p>
-                          </div>
-                          <div>
-                            <p className="font-medium text-gray-700">Email</p>
-                            <p className="font-mono text-blue-600">{application.studentEmail}</p>
-                          </div>
-                          <div>
-                            <p className="font-medium text-gray-700">Location</p>
-                            <p>{application.studentLocation || "Not specified"}</p>
-                          </div>
-                          {application.studentGrade && (
-                            <div>
-                              <p className="font-medium text-gray-700">Grade</p>
-                              <p>{application.studentGrade}</p>
-                            </div>
-                          )}
-                          {application.studentSchoolName && (
-                            <div>
-                              <p className="font-medium text-gray-700">School</p>
-                              <p>{application.studentSchoolName}</p>
-                            </div>
-                          )}
-                          {application.studentUniversity && (
-                            <div>
-                              <p className="font-medium text-gray-700">University</p>
-                              <p>{application.studentUniversity}</p>
-                            </div>
-                          )}
+                        <div className="flex items-center gap-2 text-purple-700">
+                          <Users className="w-4 h-4" />
+                          <span className="font-semibold">{count}</span>
+                          <span className="text-xs text-gray-500">applicant{count !== 1 ? "s" : ""}</span>
                         </div>
-                        {application.studentSkills && application.studentSkills.length > 0 && (
-                          <div className="mt-3">
-                            <p className="font-medium text-gray-700 mb-1">Skills</p>
-                            <div className="flex flex-wrap gap-1">
-                              {application.studentSkills.map((skill: string, index: number) => (
-                                <Badge key={index} variant="outline" className="text-xs">{skill}</Badge>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                        {application.studentBio && (
-                          <div className="mt-3">
-                            <p className="font-medium text-gray-700 mb-1">Bio</p>
-                            <p className="text-sm text-gray-600">{application.studentBio}</p>
-                          </div>
-                        )}
                       </div>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
 
-                      {/* Internship & Company Information */}
-                      <div className="border rounded-lg p-4 bg-green-50">
-                        <h4 className="font-medium text-green-900 mb-3 flex items-center gap-2">
-                          <Building className="h-4 w-4" />
-                          Internship & Company Details
-                        </h4>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* ---------------- STUDENTS ---------------- */}
+          <TabsContent value="students" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">Students & Their Stats</CardTitle>
+                <CardDescription>{students.length} registered students</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  {students.map((s) => (
+                    <div key={s.id} className="flex items-center justify-between border border-gray-200 rounded-lg p-3">
+                      <div className="flex items-center gap-3">
+                        <Avatar className="w-9 h-9">
+                          <AvatarFallback className="bg-purple-100 text-purple-700 text-sm font-semibold">
+                            {(s.firstName?.[0] || s.username[0]).toUpperCase()}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="font-medium text-gray-900">
+                            {s.firstName} {s.lastName}
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            {s.email}
+                            {s.grade && <span> • {s.grade} Grade</span>}
+                            {s.schoolName && <span> • {s.schoolName}</span>}
+                          </p>
+                        </div>
+                      </div>
+                      <Badge variant="secondary" className="shrink-0">
+                        {appsByStudent[s.id] || 0} application{(appsByStudent[s.id] || 0) !== 1 ? "s" : ""}
+                      </Badge>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* ---------------- COMPANIES ---------------- */}
+          <TabsContent value="companies" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base">Companies & Their Activity</CardTitle>
+                <CardDescription>{companies.length} registered companies</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  {companies.map((c) => {
+                    const companyInternships = internships.filter((i) => i.companyId === c.id);
+                    const applicantCount = applications.filter((a) => a.companyId === c.id).length;
+                    return (
+                      <div key={c.id} className="flex items-center justify-between border border-gray-200 rounded-lg p-3">
+                        <div className="flex items-center gap-3">
+                          <Avatar className="w-9 h-9">
+                            <AvatarFallback className="bg-blue-100 text-blue-700 text-sm font-semibold">
+                              {(c.companyName?.[0] || c.username[0]).toUpperCase()}
+                            </AvatarFallback>
+                          </Avatar>
                           <div>
-                            <p className="font-medium text-gray-700">Internship Title</p>
-                            <p className="font-semibold">{application.internshipTitle}</p>
-                            <p className="text-sm text-gray-600 mt-1">
-                              {application.internshipType} • {application.internshipDuration}
+                            <p className="font-medium text-gray-900">{c.companyName || c.username}</p>
+                            <p className="text-xs text-gray-500">
+                              {c.email}
+                              {c.companyField && <span> • {c.companyField}</span>}
                             </p>
-                            <p className="text-sm text-gray-600">📍 {application.internshipLocation}</p>
-                          </div>
-                          <div>
-                            <p className="font-medium text-gray-700">Company</p>
-                            <p className="font-semibold">{application.company?.companyName}</p>
-                            <p className="text-sm text-gray-600">{application.company?.companyField}</p>
-                            <p className="text-sm font-mono text-green-600">{application.company?.companyEmail}</p>
-                            {application.company?.companyWebsite && (
-                              <p className="text-sm text-blue-600">{application.company.companyWebsite}</p>
-                            )}
                           </div>
                         </div>
-                      </div>
-
-                      {/* Cover Letter */}
-                      {application.coverLetter && (
-                        <div className="border rounded-lg p-4 bg-gray-50">
-                          <h4 className="font-medium text-gray-900 mb-2">Cover Letter</h4>
-                          <p className="text-sm text-gray-700">{application.coverLetter}</p>
+                        <div className="flex items-center gap-4 text-sm shrink-0">
+                          <span className="text-gray-600">
+                            <Briefcase className="w-3.5 h-3.5 inline mr-1 text-green-500" />
+                            {companyInternships.length}
+                          </span>
+                          <span className="text-gray-600">
+                            <Users className="w-3.5 h-3.5 inline mr-1 text-purple-500" />
+                            {applicantCount}
+                          </span>
                         </div>
-                      )}
-
-                      {/* Action Buttons */}
-                      <div className="flex justify-end gap-2 pt-2 border-t">
-                        <Button size="sm" variant="outline">Contact Student</Button>
-                        <Button size="sm" variant="outline">Contact Company</Button>
-                        <Button size="sm">Manage Status</Button>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-
-          <TabsContent value="blog" className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold">Blog Management</h2>
-              <div className="flex gap-2">
-                <Badge variant="default">{stats.publishedPosts} Published</Badge>
-                <Badge variant="secondary">{stats.totalBlogPosts - stats.publishedPosts} Drafts</Badge>
-                <Button>Create New Post</Button>
-              </div>
-            </div>
-            
-            <div className="space-y-4">
-              {blogPosts.map((post) => (
-                <Card key={post.id}>
-                  <CardContent className="p-6">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <h3 className="font-semibold">{post.title}</h3>
-                        <p className="text-gray-600">{post.category}</p>
-                        <p className="text-sm text-gray-500">
-                          {post.createdAt ? `Created ${new Date(post.createdAt).toLocaleDateString()}` : ""}
-                          {post.publishedAt && ` • Published ${new Date(post.publishedAt).toLocaleDateString()}`}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Badge variant={post.published ? "default" : "secondary"}>
-                          {post.published ? "Published" : "Draft"}
-                        </Badge>
-                        <Button size="sm" variant="outline">Edit</Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-
-          <TabsContent value="analytics" className="space-y-6">
-            <h2 className="text-2xl font-bold">Platform Analytics</h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <TrendingUp className="mr-2 h-5 w-5" />
-                    Growth Metrics
-                  </CardTitle>
-                  <CardDescription>Key performance indicators</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex justify-between">
-                      <span>User Growth Rate</span>
-                      <span className="text-green-500">+12%</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Application Success Rate</span>
-                      <span className="text-blue-500">89%</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Company Satisfaction</span>
-                      <span className="text-purple-500">4.8/5</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <AlertTriangle className="mr-2 h-5 w-5" />
-                    System Health
-                  </CardTitle>
-                  <CardDescription>Platform status and alerts</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <span>Database Status</span>
-                      <Badge variant="default">Healthy</Badge>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span>API Response Time</span>
-                      <Badge variant="default">Fast</Badge>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span>Active Sessions</span>
-                      <Badge variant="secondary">1,247</Badge>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
           </TabsContent>
         </Tabs>
       </div>
+    </div>
+  );
+}
+
+function StatCard({
+  icon: Icon, label, value, hint, color, bg,
+}: {
+  icon: any; label: string; value: number; hint: string; color: string; bg: string;
+}) {
+  return (
+    <Card>
+      <CardContent className="p-4 flex items-center gap-3">
+        <div className={`w-11 h-11 rounded-xl ${bg} flex items-center justify-center shrink-0`}>
+          <Icon className={`w-5 h-5 ${color}`} />
+        </div>
+        <div>
+          <p className="text-2xl font-bold text-gray-900 leading-none">{value}</p>
+          <p className="text-sm font-medium text-gray-700 mt-1">{label}</p>
+          <p className="text-xs text-gray-400">{hint}</p>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function EmptyChart() {
+  return (
+    <div className="h-[320px] flex items-center justify-center text-gray-400 text-sm">
+      No data yet
     </div>
   );
 }

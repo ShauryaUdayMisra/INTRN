@@ -203,6 +203,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Admin routes for internships management
+  app.get("/api/admin/internships", requireSpecialAdmin, async (req, res) => {
+    try {
+      const allInternships = await storage.getAllInternships();
+      res.json(allInternships);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch internships" });
+    }
+  });
+
   app.patch("/api/admin/internships/:id", requireSpecialAdmin, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
