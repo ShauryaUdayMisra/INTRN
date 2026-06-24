@@ -301,7 +301,7 @@ export default function LandingPage() {
                           </span>
                         )}
                       </div>
-                      <p className="text-gray-600 text-xs line-clamp-2 mb-4">{internship.description}</p>
+                      <p className="text-gray-600 text-xs line-clamp-2 mb-4">{internship.description.split('\n').slice(3).join(' ').trimStart()}</p>
                       <div className="flex items-center justify-between">
                         <span className="text-primary text-sm font-semibold">Apply Now</span>
                         <ArrowRight className="w-4 h-4 text-primary group-hover:translate-x-1 transition-transform" />
