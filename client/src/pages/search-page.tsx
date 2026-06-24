@@ -29,11 +29,16 @@ export default function SearchPage() {
   });
 
   const filteredInternships = internships.filter(internship => {
-    const matchesSearch = !searchQuery || 
+    const matchesSearch = !searchQuery ||
       internship.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       internship.description.toLowerCase().includes(searchQuery.toLowerCase());
-    
+
     return matchesSearch;
+  }).sort((a, b) => {
+    // Bir Terraces always shown first (internship ID 240)
+    if (a.id === 240) return -1;
+    if (b.id === 240) return 1;
+    return 0;
   });
 
   const handleSearch = (e: React.FormEvent) => {
