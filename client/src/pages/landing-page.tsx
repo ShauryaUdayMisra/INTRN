@@ -292,12 +292,12 @@ export default function LandingPage() {
                       <div className="flex items-center gap-3 text-xs text-gray-500 mb-3">
                         <span className="flex items-center gap-1">
                           <MapPin className="w-3 h-3" />
-                          {internship.location?.split("(")[0].trim() || "Online"}
+                          {internship.location || "Online"}
                         </span>
-                        {internship.hoursPerWeek && (
+                        {internship.duration && (
                           <span className="flex items-center gap-1">
                             <Clock className="w-3 h-3" />
-                            {internship.hoursPerWeek}h/wk
+                            {internship.duration}
                           </span>
                         )}
                       </div>
