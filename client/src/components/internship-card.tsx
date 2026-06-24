@@ -177,7 +177,7 @@ export default function InternshipCard({ internship, showManage = false }: Inter
         </div>
 
         <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-          {internship.description}
+          {internship.description.split('\n').slice(3).join(' ').trimStart()}
         </p>
 
         {internship.skills && internship.skills.length > 0 && (

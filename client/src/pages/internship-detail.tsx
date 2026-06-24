@@ -208,9 +208,23 @@ export default function InternshipDetail() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-700 leading-relaxed whitespace-pre-line">
-                  {internship.description}
-                </p>
+                {(() => {
+                  const lines = internship.description.split('\n');
+                  const companyName = lines[0];
+                  const tagline = lines[1];
+                  const basedIn = lines[2];
+                  const body = lines.slice(3).join('\n').trimStart();
+                  return (
+                    <div className="space-y-3">
+                      <div>
+                        <p className="font-bold text-gray-900 text-lg">{companyName}</p>
+                        <p className="text-purple-600 font-medium text-sm">{tagline}</p>
+                        <p className="text-gray-500 text-sm italic">{basedIn}</p>
+                      </div>
+                      <p className="text-gray-700 leading-relaxed whitespace-pre-line">{body}</p>
+                    </div>
+                  );
+                })()}
               </CardContent>
             </Card>
 
