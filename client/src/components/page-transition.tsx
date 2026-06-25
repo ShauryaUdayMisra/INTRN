@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 
 interface PageTransitionProps {
   children: ReactNode;
@@ -27,6 +27,10 @@ const pageTransition = {
 };
 
 export default function PageTransition({ children }: PageTransitionProps) {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <motion.div
       initial="initial"

@@ -59,10 +59,10 @@ export async function seedPreludeInternship() {
         .set({
           companyId,
           title: "Research & Presentation Intern for a Live Events Company",
-          description: "Interns will be responsible for conducting research, collating relevant data, and preparing basic presentations to support the development of new event IPs (Intellectual Properties). The role offers exposure to the early planning and ideation stages of event creation, with opportunities to contribute to concept-building and content structuring.",
-          location: "Bhubaneswar (Online)",
+          description: "Prelude Novel Ventures\nA live events company building original event experiences and IPs\nCompany based in Bhubaneswar, India\n\nInterns will be responsible for conducting research, collating relevant data, and preparing basic presentations to support the development of new event IPs (Intellectual Properties). The role offers exposure to the early planning and ideation stages of event creation, with opportunities to contribute to concept-building and content structuring.\n\nYou'll work closely with the team to shape ideas that become real events. If you're curious, organized, and enjoy turning research into clean, compelling presentations, this is a great place to learn how live experiences come to life.\n\nFully online. Great for anyone interested in events, research, and creative production.",
+          location: "Online",
           type: "online",
-          duration: "1-3 Months",
+          duration: "3 weeks",
           skills: ["Research Skills", "Data Analysis", "PowerPoint", "Creative Presentation", "Internet Research", "Content Writing"],
           requirements: "Interest in diverse topics with strong browsing skills to collate data from various online sources. Proficiency in presentation software with creative flair for visual storytelling. Curiosity-driven mindset and attention to detail.",
           applicationDeadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
@@ -78,10 +78,10 @@ export async function seedPreludeInternship() {
         .values({
           companyId,
           title: "Research & Presentation Intern for a Live Events Company",
-          description: "Interns will be responsible for conducting research, collating relevant data, and preparing basic presentations to support the development of new event IPs (Intellectual Properties). The role offers exposure to the early planning and ideation stages of event creation, with opportunities to contribute to concept-building and content structuring.",
-          location: "Bhubaneswar (Online)",
+          description: "Prelude Novel Ventures\nA live events company building original event experiences and IPs\nCompany based in Bhubaneswar, India\n\nInterns will be responsible for conducting research, collating relevant data, and preparing basic presentations to support the development of new event IPs (Intellectual Properties). The role offers exposure to the early planning and ideation stages of event creation, with opportunities to contribute to concept-building and content structuring.\n\nYou'll work closely with the team to shape ideas that become real events. If you're curious, organized, and enjoy turning research into clean, compelling presentations, this is a great place to learn how live experiences come to life.\n\nFully online. Great for anyone interested in events, research, and creative production.",
+          location: "Online",
           type: "online",
-          duration: "1-3 Months",
+          duration: "3 weeks",
           skills: ["Research Skills", "Data Analysis", "PowerPoint", "Creative Presentation", "Internet Research", "Content Writing"],
           requirements: "Interest in diverse topics with strong browsing skills to collate data from various online sources. Proficiency in presentation software with creative flair for visual storytelling. Curiosity-driven mindset and attention to detail.",
           applicationDeadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now

@@ -21,10 +21,10 @@ export async function seedBirTerracesInternship() {
         .update(internships)
         .set({
           title: "Social Media & Content Intern for a Luxury Mountain Homestay",
-          duration: "7-28 days",
-          location: "Nainital, Uttarakhand (Online)",
+          duration: "3 weeks",
+          location: "Online",
           type: "online",
-          description: "Looking for a social media intern who can navigate the trends and create reels/posts based on our legacy media base. You will help manage our Instagram presence and create engaging content for our mountain retreat property.",
+          description: "Bir Terraces\nA luxury mountain homestay nestled in the Himalayas\nCompany based in Nainital, Uttarakhand\n\nLooking for a social media intern who can navigate the trends and create reels/posts based on our legacy media base. You will help manage our Instagram presence and create engaging content for our mountain retreat property.\n\nYou'll get hands-on experience running social media for a real hospitality brand — turning a beautiful mountain property into scroll-stopping content. If you love travel, aesthetics, and storytelling through reels, this one's for you.\n\nFully online. Great for anyone interested in social media, content creation, and hospitality marketing.",
           requirements: "Preferably versed with Instagram Ads and ChatGPT. If not, we would love to train you. Creative mindset and understanding of social media trends required.",
           skills: ["Social Media", "Instagram", "Content Creation", "Reels", "ChatGPT", "Instagram Ads"],
         })
@@ -69,11 +69,11 @@ export async function seedBirTerracesInternship() {
     await db.insert(internships).values({
       companyId: companyUser[0].id,
       title: "Social Media & Content Intern for a Luxury Mountain Homestay",
-      description: "Looking for a social media intern who can navigate the trends and create reels/posts based on our legacy media base. You will help manage our Instagram presence and create engaging content for our mountain retreat property located in beautiful Nainital, Uttarakhand.",
+      description: "Bir Terraces\nA luxury mountain homestay nestled in the Himalayas\nCompany based in Nainital, Uttarakhand\n\nLooking for a social media intern who can navigate the trends and create reels/posts based on our legacy media base. You will help manage our Instagram presence and create engaging content for our mountain retreat property.\n\nYou'll get hands-on experience running social media for a real hospitality brand — turning a beautiful mountain property into scroll-stopping content. If you love travel, aesthetics, and storytelling through reels, this one's for you.\n\nFully online. Great for anyone interested in social media, content creation, and hospitality marketing.",
       requirements: "Preferably versed with Instagram Ads and ChatGPT. If not, we would love to train you. Creative mindset and understanding of social media trends required. Passion for travel and hospitality is a plus.",
-      location: "Nainital, Uttarakhand (Online)",
+      location: "Online",
       type: "online",
-      duration: "7-28 days",
+      duration: "3 weeks",
       skills: ["Social Media", "Instagram", "Content Creation", "Reels", "ChatGPT", "Instagram Ads"],
       applicationDeadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
       startDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),

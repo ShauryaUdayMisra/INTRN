@@ -17,8 +17,9 @@ export async function seedRipplesInternship() {
       await db
         .update(internships)
         .set({
-          duration: "7-28 days",
-          location: "UP, Bihar, Uttarakhand, MP (Online)",
+          duration: "3 weeks",
+          location: "Online",
+          description: "Ripples of Hope\nSocial impact nonprofit driving change across rural India\nCompany based in UP, Bihar, Uttarakhand & MP\n\nTo understand the impact of sports on marriage choices of adolescent girls in underprivileged and marginalised communities in rural North India. While it can be done online, it would be better if the person can also travel for 6-7 days to our locations in the states mentioned. You'll work directly with field researchers and analyze socio-cultural data to understand how sports participation influences life choices in these communities.",
         })
         .where(eq(internships.title, "Research Intern for a Rural Sports & Social Impact Nonprofit"));
       
@@ -67,11 +68,11 @@ export async function seedRipplesInternship() {
     await db.insert(internships).values({
       companyId: adminUser[0].id,
       title: "Research Intern for a Rural Sports & Social Impact Nonprofit",
-      description: "To understand the impact of sports on marriage choices of adolescent girls in underprivileged and marginalised communities in rural North India. While it can be done online, it would be better if the person can also travel for 6-7 days to our locations in the states mentioned. You'll work directly with field researchers and analyze socio-cultural data to understand how sports participation influences life choices in these communities.",
+      description: "Ripples of Hope\nSocial impact nonprofit driving change across rural India\nCompany based in UP, Bihar, Uttarakhand & MP\n\nTo understand the impact of sports on marriage choices of adolescent girls in underprivileged and marginalised communities in rural North India. While it can be done online, it would be better if the person can also travel for 6-7 days to our locations in the states mentioned. You'll work directly with field researchers and analyze socio-cultural data to understand how sports participation influences life choices in these communities.",
       requirements: "Excel proficiency required. More importantly, understanding of the socio-cultural fabric of the poor in rural India. Research experience preferred but not required. Willingness to travel to rural locations is a plus.",
-      location: "UP, Bihar, Uttarakhand, MP (Online)",
+      location: "Online",
       type: "online",
-      duration: "7-28 days",
+      duration: "3 weeks",
       skills: ["Excel", "Research", "Cultural Understanding", "Data Analysis", "Field Work"],
       applicationDeadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
       startDate: new Date(Date.now() + 45 * 24 * 60 * 60 * 1000), // 45 days from now
