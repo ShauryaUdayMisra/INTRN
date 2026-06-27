@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { GraduationCap, Building, ArrowLeft } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const loginSchema = z.object({
   email: z.string().email("Valid email is required"),
@@ -23,6 +24,8 @@ const registerSchema = z.object({
   confirmPassword: z.string(),
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
+  grade: z.enum(["9th", "10th", "11th", "12th"], { required_error: "Please select your grade" }),
+  schoolName: z.string().min(1, "School name is required"),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
   path: ["confirmPassword"],
@@ -56,6 +59,8 @@ export default function MobileAuth() {
       confirmPassword: "",
       firstName: "",
       lastName: "",
+      grade: undefined,
+      schoolName: "",
     },
   });
 
@@ -80,6 +85,8 @@ export default function MobileAuth() {
     };
     registerMutation.mutate(registrationPayload);
   };
+
+  const gradeValue = registerForm.watch("grade");
 
   useSeo({
     title: "Sign In or Sign Up — INTRN",
@@ -260,6 +267,45 @@ export default function MobileAuth() {
                           {registerForm.formState.errors.lastName && (
                             <p className="text-sm text-red-500 mt-1">
                               {registerForm.formState.errors.lastName.message}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label className="text-sm font-medium text-gray-700">Grade</Label>
+                          <Select
+                            value={gradeValue}
+                            onValueChange={(val) => registerForm.setValue("grade", val as any, { shouldValidate: true })}
+                          >
+                            <SelectTrigger className="h-12 text-base border-gray-300 focus:border-primary focus:ring-primary">
+                              <SelectValue placeholder="Select grade" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="9th">9th Grade</SelectItem>
+                              <SelectItem value="10th">10th Grade</SelectItem>
+                              <SelectItem value="11th">11th Grade</SelectItem>
+                              <SelectItem value="12th">12th Grade</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          {registerForm.formState.errors.grade && (
+                            <p className="text-sm text-red-500 mt-1">
+                              {registerForm.formState.errors.grade.message}
+                            </p>
+                          )}
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="schoolName" className="text-sm font-medium text-gray-700">School Name</Label>
+                          <Input
+                            id="schoolName"
+                            {...registerForm.register("schoolName")}
+                            placeholder="Your school name"
+                            className="h-12 text-base border-gray-300 focus:border-primary focus:ring-primary"
+                          />
+                          {registerForm.formState.errors.schoolName && (
+                            <p className="text-sm text-red-500 mt-1">
+                              {registerForm.formState.errors.schoolName.message}
                             </p>
                           )}
                         </div>
