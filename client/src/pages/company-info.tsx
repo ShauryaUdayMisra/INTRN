@@ -1,9 +1,7 @@
-import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { useLocation } from "wouter";
+import { Link } from "wouter";
 
 export default function CompanyInfo() {
-  const [, setLocation] = useLocation();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-white">
@@ -99,22 +97,13 @@ export default function CompanyInfo() {
           {/* CTA Buttons - Mobile Responsive */}
           <div className="text-center space-y-4">
             <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
-              <Button 
-                size="lg" 
-                className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white text-base sm:text-lg lg:text-xl px-6 sm:px-8 lg:px-12 py-3 sm:py-4 lg:py-6 rounded-2xl font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
-                onClick={() => setLocation("/company-signup")}
-              >
+              <Link href="/company-signup" className="w-full sm:w-auto inline-flex items-center justify-center bg-primary hover:bg-primary/90 text-white text-base sm:text-lg lg:text-xl px-6 sm:px-8 lg:px-12 py-3 sm:py-4 lg:py-6 rounded-2xl font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
                 start your journey
                 <ArrowRight className="ml-2 sm:ml-3 h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline"
-                className="w-full sm:w-auto border-primary text-primary hover:bg-primary hover:text-white text-base sm:text-lg lg:text-xl px-6 sm:px-8 lg:px-12 py-3 sm:py-4 lg:py-6 rounded-2xl font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
-                onClick={() => setLocation("/auth")}
-              >
+              </Link>
+              <Link href="/auth" className="w-full sm:w-auto inline-flex items-center justify-center border-2 border-primary text-primary hover:bg-primary hover:text-white text-base sm:text-lg lg:text-xl px-6 sm:px-8 lg:px-12 py-3 sm:py-4 lg:py-6 rounded-2xl font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
                 sign in
-              </Button>
+              </Link>
             </div>
           </div>
         </div>

@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
 import { Search, BookOpen } from "lucide-react";
 import { BlogPost } from "@shared/schema";
 import { useAuth } from "@/hooks/use-auth";
-import { useLocation } from "wouter";
+import { Link, useLocation } from "wouter";
 
 export default function BlogPage() {
   useSeo({
@@ -119,7 +119,9 @@ export default function BlogPage() {
                 <p className="text-gray-600 mb-6">
                   {filteredPosts[0].excerpt}
                 </p>
-                <Button onClick={() => setLocation(`/blog/${filteredPosts[0].slug}`)}>Read Full Article</Button>
+                <Link href={`/blog/${filteredPosts[0].slug}`}>
+                  <Button>Read Full Article</Button>
+                </Link>
               </CardContent>
             </Card>
           </div>

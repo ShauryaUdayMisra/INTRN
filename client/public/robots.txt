@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+Allow: /search
+Allow: /blog
+Allow: /blog/
+Allow: /internship/
+Allow: /company-info
+Allow: /help
+
+Disallow: /api/
+Disallow: /dashboard
+Disallow: /company-dashboard
+Disallow: /company-status
+Disallow: /company-application
+Disallow: /admin
+Disallow: /admin-backend
+Disallow: /profile
+
+Sitemap: https://intrn.replit.app/sitemap.xml

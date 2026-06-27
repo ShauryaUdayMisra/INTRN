@@ -698,6 +698,135 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.status(401).json({ message: "Replit Auth not fully configured" });
   });
 
+  // Dynamic sitemap.xml
+  app.get("/sitemap.xml", async (req, res) => {
+    try {
+      const [internships, blogPosts] = await Promise.all([
+        storage.getInternships({}),
+        storage.getBlogPosts(true),
+      ]);
+
+      const baseUrl = `${req.protocol}://${req.get("host")}`;
+      const now = new Date().toISOString().split("T")[0];
+
+      const staticUrls = [
+        { loc: "/", priority: "1.0", changefreq: "daily" },
+        { loc: "/search", priority: "0.9", changefreq: "daily" },
+        { loc: "/blog", priority: "0.8", changefreq: "weekly" },
+        { loc: "/company-info", priority: "0.7", changefreq: "monthly" },
+        { loc: "/help", priority: "0.5", changefreq: "monthly" },
+      ];
+
+      const internshipUrls = internships.map((i) => ({
+        loc: `/internship/${i.id}`,
+        priority: "0.8",
+        changefreq: "weekly",
+      }));
+
+      const blogUrls = blogPosts.map((p) => ({
+        loc: `/blog/${p.slug}`,
+        priority: "0.7",
+        changefreq: "monthly",
+      }));
+
+      const allUrls = [...staticUrls, ...internshipUrls, ...blogUrls];
+
+      const urlElements = allUrls
+        .map(
+          (u) => `  <url>
+    <loc>${baseUrl}${u.loc}</loc>
+    <lastmod>${now}</lastmod>
+    <changefreq>${u.changefreq}</changefreq>
+    <priority>${u.priority}</priority>
+  </url>`,
+        )
+        .join("\n");
+
+      const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urlElements}
+</urlset>`;
+
+      res.set("Content-Type", "application/xml").send(xml);
+    } catch (error) {
+      res.status(500).send("Failed to generate sitemap");
+    }
+  });
+
+  // Soft-404: validate dynamic public routes before SPA catch-all
+  const NOT_FOUND_HTML = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Not Found — INTRN</title><meta name="robots" content="noindex"></head><body><h1>404 Not Found</h1><p>The page you requested does not exist.</p><a href="/">Go to homepage</a></body></html>`;
+
+  app.get("/internship/:id", async (req, res, next) => {
+    const id = parseInt(req.params.id);
+    if (isNaN(id)) return res.status(404).send(NOT_FOUND_HTML);
+    try {
+      const internship = await storage.getInternship(id);
+      if (!internship) return res.status(404).send(NOT_FOUND_HTML);
+      return next();
+    } catch (e) {
+      console.error("Internship lookup error:", e);
+      return res.status(404).send(NOT_FOUND_HTML);
+    }
+  });
+
+  app.get("/blog/:slug", async (req, res, next) => {
+    try {
+      const post = await storage.getBlogPostBySlug(req.params.slug);
+      if (!post || !post.published) return res.status(404).send(NOT_FOUND_HTML);
+      return next();
+    } catch (e) {
+      console.error("Blog lookup error:", e);
+      return res.status(404).send(NOT_FOUND_HTML);
+    }
+  });
+
+  // Unknown SPA paths: return 404 instead of 200 index.html
+  // Allow file extensions (robots.txt, llms.txt, etc.) to fall through to static serving
+  const KNOWN_SPA_PATHS = new Set([
+    "/",
+    "/auth",
+    "/search",
+    "/blog",
+    "/company-info",
+    "/company-signup",
+    "/company-thank-you",
+    "/application-success",
+    "/help",
+    "/status",
+    "/oauth-setup",
+    "/dashboard",
+    "/company-dashboard",
+    "/company-status",
+    "/company-application-status",
+    "/company-application",
+    "/profile",
+    "/admin",
+    "/admin-backend",
+  ]);
+
+  app.use((req, res, next) => {
+    if (req.path.startsWith("/api/") || req.path.startsWith("/auth/")) {
+      return next();
+    }
+    // Allow Vite internal paths (HMR, module resolution, dev tools)
+    if (req.path.startsWith("/@") || req.path.startsWith("/__")) {
+      return next();
+    }
+    // Allow static files (anything with an extension like .txt, .xml, .js, .css, etc.)
+    if (/\.[a-zA-Z0-9]+$/.test(req.path)) {
+      return next();
+    }
+    const base = req.path.replace(/\/$/, "") || "/";
+    if (
+      KNOWN_SPA_PATHS.has(base) ||
+      /^\/internship\/\d+$/.test(base) ||
+      /^\/blog\/[a-z0-9-]+$/.test(base)
+    ) {
+      return next();
+    }
+    res.status(404).send(NOT_FOUND_HTML);
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

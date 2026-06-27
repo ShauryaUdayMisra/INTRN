@@ -182,23 +182,23 @@ export function HamburgerNavigation(props: HamburgerNavigationProps = {}) {
       {/* Desktop Nav Bar — hidden on mobile, replaces hamburger on large screens */}
       {showHamburger && (
         <div className="hidden lg:flex fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 h-14 px-8 items-center justify-between shadow-sm">
-          <button onClick={() => setLocation("/")} className="text-xl font-bold text-primary hover:opacity-75 transition-opacity">
+          <Link href="/" className="text-xl font-bold text-primary hover:opacity-75 transition-opacity">
             intrn
-          </button>
+          </Link>
           <nav className="flex items-center gap-8">
-            <button onClick={() => setLocation("/search")} className={`text-sm font-medium transition-colors ${location === "/search" ? "text-primary" : "text-gray-600 hover:text-primary"}`}>
+            <Link href="/search" className={`text-sm font-medium transition-colors ${location === "/search" ? "text-primary" : "text-gray-600 hover:text-primary"}`}>
               Browse Internships
-            </button>
-            <button onClick={() => setLocation("/blog")} className={`text-sm font-medium transition-colors ${location === "/blog" ? "text-primary" : "text-gray-600 hover:text-primary"}`}>
+            </Link>
+            <Link href="/blog" className={`text-sm font-medium transition-colors ${location === "/blog" ? "text-primary" : "text-gray-600 hover:text-primary"}`}>
               Blog
-            </button>
-            <button onClick={() => setLocation("/help")} className={`text-sm font-medium transition-colors ${location === "/help" ? "text-primary" : "text-gray-600 hover:text-primary"}`}>
+            </Link>
+            <Link href="/help" className={`text-sm font-medium transition-colors ${location === "/help" ? "text-primary" : "text-gray-600 hover:text-primary"}`}>
               Help
-            </button>
+            </Link>
             {user?.role === "admin" && (
-              <button onClick={() => setLocation("/admin")} className={`text-sm font-medium transition-colors ${location === "/admin" ? "text-purple-700" : "text-purple-600 hover:text-purple-700"}`}>
+              <Link href="/admin" className={`text-sm font-medium transition-colors ${location === "/admin" ? "text-purple-700" : "text-purple-600 hover:text-purple-700"}`}>
                 Admin Panel
-              </button>
+              </Link>
             )}
           </nav>
           <div className="flex items-center gap-2">
@@ -280,12 +280,10 @@ export function HamburgerNavigation(props: HamburgerNavigationProps = {}) {
             const isBrowseInternships = item.label === "Browse Internships";
             
             return (
-              <button
+              <Link
                 key={item.path}
-                onClick={() => {
-                  closeMenu();
-                  setLocation(item.path);
-                }}
+                href={item.path}
+                onClick={closeMenu}
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-colors duration-200 cursor-pointer ${
                   isBrowseInternships
                     ? 'bg-purple-600 text-white font-medium hover:bg-purple-700'
@@ -296,7 +294,7 @@ export function HamburgerNavigation(props: HamburgerNavigationProps = {}) {
               >
                 <Icon className="w-5 h-5" />
                 <span>{item.label}</span>
-              </button>
+              </Link>
             );
           })}
         </div>

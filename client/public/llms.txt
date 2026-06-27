@@ -1,0 +1,37 @@
+# INTRN — Internships for Highschoolers
+
+INTRN is a platform connecting high school students in South Asia with meaningful internship opportunities. The platform is free for students and focuses on learning-oriented, unpaid internships.
+
+## Site Purpose
+
+INTRN helps high school students discover real-world work experience by browsing and applying for internships posted by verified companies. Companies use the platform to find motivated young talent for project-based roles.
+
+## Public Sections
+
+- **Homepage** — https://intrn.replit.app/  
+  Overview of the platform, live stats, and featured internship previews.
+
+- **Internship Search** — https://intrn.replit.app/search  
+  Browse and filter all active internship listings. Supports filtering by location, type, and skills.
+
+- **Internship Detail** — https://intrn.replit.app/internship/:id  
+  Full details for a specific internship including description, requirements, duration, and application form.
+
+- **Blog** — https://intrn.replit.app/blog  
+  Career advice articles, industry insights, and success stories aimed at high school students.
+
+- **Blog Post** — https://intrn.replit.app/blog/:slug  
+  Individual blog articles covering topics like resume writing, interview prep, and career planning.
+
+- **For Companies** — https://intrn.replit.app/company-info  
+  Information for organisations that want to host interns through the platform.
+
+- **Help & Support** — https://intrn.replit.app/help  
+  FAQs and support resources for students and companies.
+
+## Content Notes
+
+- All internships listed are unpaid and learning-focused.
+- The platform serves high school students (ages 14–18) primarily across South Asia.
+- Blog content is written for early-career students and covers internship tips, skill-building, and career exploration.
+- Student and company account pages are behind authentication and are not public.

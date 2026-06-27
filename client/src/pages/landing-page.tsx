@@ -5,7 +5,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { HamburgerNavigation } from "@/components/hamburger-navigation";
 import { useEffect, useState, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useLocation } from "wouter";
+import { Link, useLocation } from "wouter";
 import { ArrowRight, Sparkles, GraduationCap, Briefcase, BookOpen, Rocket, Building, Clock, MapPin } from "lucide-react";
 import { getInternshipImage, getTitleGradient } from "@/lib/internship-images";
 
@@ -189,22 +189,19 @@ export default function LandingPage() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mb-8 px-4">
-            <Button 
-              size="lg" 
-              className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white text-base sm:text-lg px-8 sm:px-10 py-3 sm:py-4 rounded-2xl font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 min-w-[200px]"
-              onClick={() => setLocation("/auth?tab=register")}
+            <Link
+              href="/auth?tab=register"
+              className="w-full sm:w-auto inline-flex items-center justify-center bg-primary hover:bg-primary/90 text-white text-base sm:text-lg px-8 sm:px-10 py-3 sm:py-4 rounded-2xl font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 min-w-[200px]"
             >
               For Highschoolers
               <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="w-full sm:w-auto text-base sm:text-lg px-8 sm:px-10 py-3 sm:py-4 rounded-2xl border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 min-w-[200px]"
-              onClick={() => setLocation("/company-info")}
+            </Link>
+            <Link
+              href="/company-info"
+              className="w-full sm:w-auto inline-flex items-center justify-center text-base sm:text-lg px-8 sm:px-10 py-3 sm:py-4 rounded-2xl border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 min-w-[200px]"
             >
               For Companies
-            </Button>
+            </Link>
           </div>
         </div>
 
@@ -273,10 +270,10 @@ export default function LandingPage() {
                 const image = getInternshipImage(internship.title);
                 const gradient = getTitleGradient(internship.title);
                 return (
-                  <Card
+                  <Link
                     key={internship.id}
-                    className="group hover:shadow-xl transition-all duration-300 cursor-pointer hover:border-primary/30 overflow-hidden"
-                    onClick={() => setLocation(`/internship/${internship.id}`)}
+                    href={`/internship/${internship.id}`}
+                    className="group block hover:shadow-xl transition-all duration-300 cursor-pointer rounded-lg overflow-hidden border border-gray-200 hover:border-primary/30 bg-white"
                   >
                     <div className="relative h-36 overflow-hidden">
                       {image ? (
@@ -287,7 +284,7 @@ export default function LandingPage() {
                         </div>
                       )}
                     </div>
-                    <CardContent className="p-5">
+                    <div className="p-5">
                       <h3 className="font-bold text-gray-900 mb-2 line-clamp-1 text-sm">{internship.title}</h3>
                       <div className="flex items-center gap-3 text-xs text-gray-500 mb-3">
                         <span className="flex items-center gap-1">
@@ -306,21 +303,20 @@ export default function LandingPage() {
                         <span className="text-primary text-sm font-semibold">Apply Now</span>
                         <ArrowRight className="w-4 h-4 text-primary group-hover:translate-x-1 transition-transform" />
                       </div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </Link>
                 );
               })}
             </div>
 
             <div className="text-center mt-10">
-              <Button
-                variant="outline"
-                className="border-primary text-primary hover:bg-primary hover:text-white px-8 py-2.5 rounded-xl font-medium transition-all"
-                onClick={() => setLocation("/search")}
+              <Link
+                href="/search"
+                className="inline-flex items-center border border-primary text-primary hover:bg-primary hover:text-white px-8 py-2.5 rounded-xl font-medium transition-all"
               >
                 View All {stats?.internships ?? 9} Internships
                 <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -338,34 +334,30 @@ export default function LandingPage() {
             Join {stats?.students ?? 41}+ students and {stats?.companies ?? 13}+ companies building the next generation of talent.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <Button 
-              size="lg" 
-              className="bg-primary hover:bg-primary/90 text-white text-xl px-12 py-4 rounded-2xl font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
-              onClick={() => setLocation("/auth?tab=register")}
+            <Link
+              href="/auth?tab=register"
+              className="inline-flex items-center justify-center bg-primary hover:bg-primary/90 text-white text-xl px-12 py-4 rounded-2xl font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
             >
               I'm a Highschooler
               <ArrowRight className="ml-3 h-6 w-6" />
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="text-xl px-12 py-4 rounded-2xl border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
-              onClick={() => setLocation("/company-info")}
+            </Link>
+            <Link
+              href="/company-info"
+              className="inline-flex items-center justify-center text-xl px-12 py-4 rounded-2xl border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
             >
               I'm a Company
               <Sparkles className="ml-3 h-6 w-6" />
-            </Button>
+            </Link>
           </div>
           
           <div className="mt-8 text-center">
             <p className="text-gray-600 mb-4">Already have an account?</p>
-            <Button 
-              variant="ghost" 
-              className="text-primary hover:bg-primary/10 text-lg px-8 py-2 rounded-xl font-medium"
-              onClick={() => setLocation("/auth?tab=login")}
+            <Link
+              href="/auth?tab=login"
+              className="inline-flex items-center justify-center text-primary hover:bg-primary/10 text-lg px-8 py-2 rounded-xl font-medium"
             >
               Sign In
-            </Button>
+            </Link>
           </div>
         </div>
       </main>

@@ -1,4 +1,5 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { CardContent } from "@/components/ui/card";
+import type { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -103,9 +104,32 @@ export default function InternshipCard({ internship, showManage = false }: Inter
   const handleCardClick = () => {
     if (isFilled) {
       setShowFilledDialog(true);
-      return;
     }
-    setLocation(`/internship/${internship.id}`);
+  };
+
+  const CardWrapper = ({ children }: { children: ReactNode }) => {
+    if (isFilled) {
+      return (
+        <div
+          className="group bg-white hover:shadow-xl transform hover:-translate-y-1.5 transition-all duration-300 border border-gray-100 hover:border-primary/30 cursor-pointer overflow-hidden flex flex-col h-full rounded-lg opacity-50 grayscale"
+          onClick={handleCardClick}
+        >
+          {children}
+        </div>
+      );
+    }
+    return (
+      <a
+        href={`/internship/${internship.id}`}
+        className="group bg-white hover:shadow-xl transform hover:-translate-y-1.5 transition-all duration-300 border border-gray-100 hover:border-primary/30 cursor-pointer overflow-hidden flex flex-col h-full rounded-lg block no-underline"
+        onClick={(e) => {
+          e.preventDefault();
+          setLocation(`/internship/${internship.id}`);
+        }}
+      >
+        {children}
+      </a>
+    );
   };
 
   return (
@@ -120,10 +144,7 @@ export default function InternshipCard({ internship, showManage = false }: Inter
         </DialogHeader>
       </DialogContent>
     </Dialog>
-    <Card 
-      className={`group bg-white hover:shadow-xl transform hover:-translate-y-1.5 transition-all duration-300 border border-gray-100 hover:border-primary/30 cursor-pointer overflow-hidden flex flex-col h-full ${isFilled ? "opacity-50 grayscale" : ""}`}
-      onClick={handleCardClick}
-    >
+    <CardWrapper>
       {/* Image banner */}
       <div className="relative h-36 w-full overflow-hidden">
         {internshipImage ? (
@@ -227,7 +248,7 @@ export default function InternshipCard({ internship, showManage = false }: Inter
           </div>
         </div>
       </CardContent>
-    </Card>
+    </CardWrapper>
     </>
   );
 }
