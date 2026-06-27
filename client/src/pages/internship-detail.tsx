@@ -140,9 +140,41 @@ export default function InternshipDetail() {
 
   const internshipImage = getInternshipImage(internship.title);
 
+  const isRemote = internship.type === "remote" || internship.type === "online";
+
+  const jobPostingSchema: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "JobPosting",
+    title: internship.title,
+    description: internship.description,
+    datePosted: internship.createdAt,
+    ...(internship.applicationDeadline && { validThrough: internship.applicationDeadline }),
+    employmentType: "INTERN",
+    ...(internship.skills?.length && { skills: internship.skills.join(", ") }),
+    hiringOrganization: {
+      "@type": "Organization",
+      name: company?.companyName ?? "Company",
+      ...(company?.website && { sameAs: company.website }),
+    },
+    ...(isRemote && { jobLocationType: "TELECOMMUTE" }),
+    ...(internship.location && {
+      jobLocation: {
+        "@type": "Place",
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: internship.location,
+        },
+      },
+    }),
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <HamburgerNavigation />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingSchema) }}
+      />
       {/* Header */}
       <div className="bg-white shadow-sm">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-6">

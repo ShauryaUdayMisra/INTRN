@@ -9,6 +9,79 @@ import { ArrowLeft, Calendar, Clock, User } from "lucide-react";
 import { BlogPost } from "@shared/schema";
 import { format } from "date-fns";
 
+function renderMarkdown(content: string): string {
+  const lines = content.split("\n");
+  const html: string[] = [];
+  let inUl = false;
+  let inOl = false;
+
+  const closeList = () => {
+    if (inUl) { html.push("</ul>"); inUl = false; }
+    if (inOl) { html.push("</ol>"); inOl = false; }
+  };
+
+  const inlineFormat = (text: string): string =>
+    text
+      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+      .replace(/\*(.+?)\*/g, "<em>$1</em>")
+      .replace(/`(.+?)`/g, "<code>$1</code>");
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const trimmed = line.trim();
+
+    if (trimmed === "") {
+      closeList();
+      continue;
+    }
+
+    if (/^#{1}\s/.test(trimmed)) {
+      closeList();
+      html.push(`<h2 class="text-2xl font-bold text-gray-900 mt-8 mb-3">${inlineFormat(trimmed.replace(/^#\s+/, ""))}</h2>`);
+      continue;
+    }
+
+    if (/^#{2}\s/.test(trimmed)) {
+      closeList();
+      html.push(`<h2 class="text-2xl font-bold text-gray-900 mt-8 mb-3">${inlineFormat(trimmed.replace(/^#{2}\s+/, ""))}</h2>`);
+      continue;
+    }
+
+    if (/^#{3}\s/.test(trimmed)) {
+      closeList();
+      html.push(`<h3 class="text-xl font-semibold text-gray-800 mt-6 mb-2">${inlineFormat(trimmed.replace(/^#{3}\s+/, ""))}</h3>`);
+      continue;
+    }
+
+    if (/^#{4,}\s/.test(trimmed)) {
+      closeList();
+      html.push(`<h4 class="text-lg font-semibold text-gray-800 mt-4 mb-2">${inlineFormat(trimmed.replace(/^#{4,}\s+/, ""))}</h4>`);
+      continue;
+    }
+
+    const olMatch = trimmed.match(/^(\d+)\.\s+(.*)/);
+    if (olMatch) {
+      if (inUl) { html.push("</ul>"); inUl = false; }
+      if (!inOl) { html.push('<ol class="list-decimal list-outside ml-6 space-y-1 my-3">'); inOl = true; }
+      html.push(`<li class="text-gray-700">${inlineFormat(olMatch[2])}</li>`);
+      continue;
+    }
+
+    if (/^[-*]\s/.test(trimmed)) {
+      if (inOl) { html.push("</ol>"); inOl = false; }
+      if (!inUl) { html.push('<ul class="list-disc list-outside ml-6 space-y-1 my-3">'); inUl = true; }
+      html.push(`<li class="text-gray-700">${inlineFormat(trimmed.replace(/^[-*]\s+/, ""))}</li>`);
+      continue;
+    }
+
+    closeList();
+    html.push(`<p class="text-gray-700 leading-relaxed my-3">${inlineFormat(trimmed)}</p>`);
+  }
+
+  closeList();
+  return html.join("\n");
+}
+
 export default function BlogPostDetail() {
   const { slug } = useParams();
   const [, setLocation] = useLocation();
@@ -72,9 +145,31 @@ export default function BlogPostDetail() {
     );
   }
 
+  const canonicalUrl = `https://intrn.app/blog/${post.slug}`;
+
+  const blogPostingSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.createdAt,
+    dateModified: post.updatedAt ?? post.createdAt,
+    articleSection: post.category,
+    keywords: Array.isArray(post.tags) ? post.tags.join(", ") : post.tags,
+    author: { "@type": "Organization", name: "INTRN Editorial Team" },
+    publisher: { "@type": "Organization", name: "INTRN" },
+    mainEntityOfPage: canonicalUrl,
+    url: canonicalUrl,
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <HamburgerNavigation />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema) }}
+      />
       
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Back Button */}
@@ -129,13 +224,11 @@ export default function BlogPostDetail() {
               </div>
             </div>
 
-            {/* Content */}
-            <div className="prose prose-gray max-w-none">
-              <div 
-                className="text-gray-700 leading-relaxed space-y-4"
-                dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br />') }}
-              />
-            </div>
+            {/* Content — rendered as semantic HTML from markdown */}
+            <div
+              className="prose prose-gray max-w-none"
+              dangerouslySetInnerHTML={{ __html: renderMarkdown(post.content) }}
+            />
 
             {/* Tags */}
             {post.tags && post.tags.length > 0 && (
