@@ -73,6 +73,7 @@ export default function LandingPage() {
   useSeo({
     title: "INTRN — Internships for Highschoolers",
     description: "Find meaningful internship opportunities designed for high school students across South Asia. Gain real-world experience, build skills, and launch your career early.",
+    canonical: "https://intrn.replit.app/",
     ogTitle: "INTRN — Internships for Highschoolers",
     ogDescription: "The leading platform connecting high school students with internship opportunities. Real experience, real learning.",
   });

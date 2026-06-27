@@ -1,3 +1,4 @@
+import { useSeo } from "@/hooks/use-seo";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Circle, Clock, Users, Building, FileText, Settings, Search, Heart, MessageSquare } from "lucide-react";
@@ -57,6 +58,13 @@ const features = [
 ];
 
 export default function PlatformStatus() {
+  useSeo({
+    title: "Platform Status — INTRN",
+    description: "Check the current status of INTRN features and services.",
+    canonical: "https://intrn.replit.app/status",
+    noIndex: true,
+  });
+
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "completed":

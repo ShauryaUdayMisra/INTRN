@@ -100,6 +100,7 @@ export default function BlogPostDetail() {
   useSeo({
     title: post ? `${post.title} — INTRN Blog` : "INTRN Blog",
     description: post?.excerpt ?? "Career advice for high school students on INTRN.",
+    canonical: post ? `https://intrn.replit.app/blog/${post.slug}` : undefined,
     ogType: "article",
   });
 

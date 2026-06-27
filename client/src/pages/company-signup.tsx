@@ -1,3 +1,4 @@
+import { useSeo } from "@/hooks/use-seo";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,6 +26,13 @@ const companySignupSchema = z.object({
 type CompanySignupForm = z.infer<typeof companySignupSchema>;
 
 export default function CompanySignup() {
+  useSeo({
+    title: "Company Sign Up — INTRN",
+    description: "Create your company account on INTRN to post internship opportunities for high school students.",
+    canonical: "https://intrn.replit.app/company-signup",
+    noIndex: true,
+  });
+
   const [, setLocation] = useLocation();
   const [showFormLink, setShowFormLink] = useState(false);
   const { toast } = useToast();

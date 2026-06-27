@@ -65,6 +65,7 @@ export default function InternshipDetail() {
     description: internship
       ? `Apply for the ${internship.title} internship${internship.location ? ` in ${internship.location}` : ""}. Designed for high school students on INTRN.`
       : "Find internship opportunities for high school students on INTRN.",
+    canonical: internship ? `https://intrn.replit.app/internship/${internship.id}` : undefined,
   });
 
   const { data: company } = useQuery<Company>({

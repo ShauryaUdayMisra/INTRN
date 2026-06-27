@@ -1,9 +1,16 @@
+import { useSeo } from "@/hooks/use-seo";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle, FileText, BookOpen } from "lucide-react";
 
 export default function CompanyThankYou() {
+  useSeo({
+    title: "Application Received — INTRN",
+    description: "Thank you for applying to partner with INTRN. Our team will review your application and get back to you shortly.",
+    noIndex: true,
+  });
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center p-4">
       <Card className="max-w-md w-full">

@@ -1,9 +1,16 @@
+import { useSeo } from "@/hooks/use-seo";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLocation } from "wouter";
 import { CheckCircle, ArrowLeft, MessageCircle, Clock } from "lucide-react";
 
 export default function ApplicationSuccess() {
+  useSeo({
+    title: "Application Submitted — INTRN",
+    description: "Your internship application has been submitted successfully. The INTRN team will review it and be in touch soon.",
+    noIndex: true,
+  });
+
   const [, setLocation] = useLocation();
 
   return (

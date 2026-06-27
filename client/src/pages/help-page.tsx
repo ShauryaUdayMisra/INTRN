@@ -1,9 +1,16 @@
+import { useSeo } from "@/hooks/use-seo";
 import { HamburgerNavigation } from "@/components/hamburger-navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { HelpCircle, Mail, Phone, MessageCircle, Book, User, Search } from "lucide-react";
 
 export default function HelpPage() {
+  useSeo({
+    title: "Help & Support — INTRN",
+    description: "Get help with your INTRN account, internship applications, and more. Contact our support team or browse common questions.",
+    canonical: "https://intrn.replit.app/help",
+  });
+
   const handleEmailSupport = () => {
     window.location.href = "mailto:intrnxyz@gmail.com";
   };

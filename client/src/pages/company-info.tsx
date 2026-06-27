@@ -1,7 +1,13 @@
+import { useSeo } from "@/hooks/use-seo";
 import { ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 
 export default function CompanyInfo() {
+  useSeo({
+    title: "Partner With Us — INTRN for Companies",
+    description: "Learn how to post internship opportunities for high school students on INTRN. Connect with motivated young talent and support early career development.",
+    canonical: "https://intrn.replit.app/company-info",
+  });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-white">

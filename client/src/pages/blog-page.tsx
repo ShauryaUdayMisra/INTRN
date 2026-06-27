@@ -16,6 +16,7 @@ export default function BlogPage() {
   useSeo({
     title: "Career Insights & Advice — INTRN Blog",
     description: "Read expert career advice for high school students. Tips on internships, skill-building, and launching your career early.",
+    canonical: "https://intrn.replit.app/blog",
   });
 
   const { user, isLoading: authLoading } = useAuth();

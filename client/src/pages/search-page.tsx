@@ -14,6 +14,7 @@ export default function SearchPage() {
   useSeo({
     title: "Search Internships — INTRN",
     description: "Browse and filter internship opportunities for high school students. Search by field, location, and duration to find the perfect fit.",
+    canonical: "https://intrn.replit.app/search",
   });
 
   const [searchQuery, setSearchQuery] = useState("");
