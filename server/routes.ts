@@ -765,7 +765,7 @@ ${urlElements}
     if (isNaN(id)) return res.status(404).send(NOT_FOUND_HTML);
     try {
       const internship = await storage.getInternship(id);
-      if (!internship) return res.status(404).send(NOT_FOUND_HTML);
+      if (!internship || !internship.isActive) return res.status(404).send(NOT_FOUND_HTML);
       return next();
     } catch (e) {
       console.error("Internship lookup error:", e);
