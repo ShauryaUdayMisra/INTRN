@@ -277,7 +277,7 @@ export default function LandingPage() {
                   >
                     <div className="relative h-36 overflow-hidden">
                       {image ? (
-                        <img src={image} alt={internship.title} className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <img src={image} alt={internship.title} className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" width="400" height="144" />
                       ) : (
                         <div className={`h-full w-full bg-gradient-to-br ${gradient} flex items-center justify-center`}>
                           <Building className="w-12 h-12 text-white/60" />

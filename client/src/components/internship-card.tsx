@@ -152,6 +152,10 @@ export default function InternshipCard({ internship, showManage = false }: Inter
             src={internshipImage}
             alt={internship.title}
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            loading="lazy"
+            decoding="async"
+            width="400"
+            height="144"
           />
         ) : (
           <div className={`h-full w-full bg-gradient-to-br ${gradient} flex items-center justify-center`}>

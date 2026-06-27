@@ -1,12 +1,12 @@
-import rippleImage from "@assets/download (1)_1753000655307.png";
-import kebabSnackImage from "@assets/generated_images/flat_lay_of_colorful_512a.png";
-import kebabSocialImage from "@assets/generated_images/young_person_at_a_c315.png";
-import chandPearlImage from "@assets/generated_images/elegant_white_and_cream_7a6c.png";
-import chandGenZImage from "@assets/generated_images/mood_board_aesthetic_trendy_1748.png";
-import preludeImage from "@assets/generated_images/professional_flat_lay_of_56ea.png";
-import contentWritingImage from "@assets/generated_images/cozy_editorial_writing_workspace_769a.png";
-import platformOpsImage from "@assets/generated_images/modern_marketing_operations_dashboard_3b5c.png";
-import birTerracesImage from "@assets/generated_images/scenic_himalayan_mountain_retreat_0d63.png";
+import rippleImage from "@assets/generated_images/card-webp/ripple.webp";
+import kebabSnackImage from "@assets/generated_images/card-webp/flat_lay_of_colorful_512a.webp";
+import kebabSocialImage from "@assets/generated_images/card-webp/young_person_at_a_c315.webp";
+import chandPearlImage from "@assets/generated_images/card-webp/elegant_white_and_cream_7a6c.webp";
+import chandGenZImage from "@assets/generated_images/card-webp/mood_board_aesthetic_trendy_1748.webp";
+import preludeImage from "@assets/generated_images/card-webp/professional_flat_lay_of_56ea.webp";
+import contentWritingImage from "@assets/generated_images/card-webp/cozy_editorial_writing_workspace_769a.webp";
+import platformOpsImage from "@assets/generated_images/card-webp/modern_marketing_operations_dashboard_3b5c.webp";
+import birTerracesImage from "@assets/generated_images/card-webp/scenic_himalayan_mountain_retreat_0d63.webp";
 
 export const internshipImages: Record<string, string> = {
   "Research Intern for a Rural Sports & Social Impact Nonprofit": rippleImage,
