@@ -245,6 +245,10 @@ export async function seedCustomBlogs() {
         });
         console.log(`✅ Created blog post: ${post.title}`);
       } else {
+        // Keep content and published state in sync with seed data
+        await db.update(blogPosts)
+          .set({ published: post.published, updatedAt: new Date() })
+          .where(eq(blogPosts.slug, post.slug));
         console.log(`⏭️ Blog post already exists: ${post.title}`);
       }
     }
