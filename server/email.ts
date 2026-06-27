@@ -39,66 +39,76 @@ async function getResendClient() {
   };
 }
 
-// Send welcome email when student signs up
+const BASE_STYLES = `
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; line-height: 1.6; margin: 0; padding: 0; background: #f4f4f5; }
+  .wrapper { background: #f4f4f5; padding: 32px 16px; }
+  .container { max-width: 560px; margin: 0 auto; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .header { background: #7c3aed; color: white; padding: 36px 32px; text-align: center; }
+  .header h1 { margin: 0 0 6px; font-size: 24px; font-weight: 700; color: white; letter-spacing: -0.3px; }
+  .header p { margin: 0; font-size: 15px; color: rgba(255,255,255,0.85); }
+  .content { background: white; padding: 32px; }
+  .content h2 { color: #111827; margin: 0 0 16px; font-size: 20px; font-weight: 600; }
+  .content p { color: #374151; margin: 0 0 14px; font-size: 15px; }
+  .highlight { background: #f5f3ff; border-left: 3px solid #7c3aed; border-radius: 0 8px 8px 0; padding: 16px 20px; margin: 20px 0; }
+  .highlight p { margin: 0 0 8px; font-size: 15px; color: #374151; }
+  .highlight p:last-child { margin: 0; }
+  .highlight strong { color: #111827; }
+  .btn-wrap { text-align: center; margin: 24px 0; }
+  .button { display: inline-block; background: #7c3aed; color: white !important; padding: 14px 36px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 15px; }
+  ul { color: #374151; padding-left: 20px; margin: 0 0 16px; }
+  li { margin-bottom: 10px; font-size: 15px; }
+  li strong { color: #111827; }
+  .divider { border: none; border-top: 1px solid #e5e7eb; margin: 24px 0; }
+  .footer { background: #fafafa; padding: 20px 32px; text-align: center; border-top: 1px solid #e5e7eb; }
+  .footer p { margin: 0 0 4px; font-size: 12px; color: #9ca3af; }
+`;
+
+// ─── 1. Welcome Email ────────────────────────────────────────────────────────
 export async function sendWelcomeEmail(to: string, firstName: string): Promise<boolean> {
   try {
-    const { client, fromEmail } = await getResendClient();
-    
-    // Use verified intrn.xyz domain
-    const senderEmail = 'INTRN <team@intrn.xyz>';
-    console.log(`Sending welcome email from: ${senderEmail} to: ${to}`);
-    
-    const result = await client.emails.send({
-      from: senderEmail,
+    const { client } = await getResendClient();
+
+    await client.emails.send({
+      from: 'INTRN <team@intrn.xyz>',
       to: [to],
-      subject: 'Welcome to INTRN - Your Internship Journey Begins',
+      subject: `You're in, ${firstName || 'there'}! 🎓 Start exploring internships`,
       html: `
         <!DOCTYPE html>
         <html>
-        <head>
-          <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 0; }
-            .container { max-width: 600px; margin: 0 auto; }
-            .header { background: #7c3aed; color: white; padding: 40px 30px; text-align: center; border-radius: 10px 10px 0 0; }
-            .header h1 { margin: 0; font-size: 28px; color: white; }
-            .content { background: white; padding: 30px; border-radius: 0 0 10px 10px; }
-            .content h2 { color: #7c3aed; margin-top: 0; }
-            .content p { color: #7c3aed; }
-            .content ul { color: #7c3aed; padding-left: 20px; }
-            .content li { margin-bottom: 12px; color: #7c3aed; }
-            .content strong { color: #7c3aed; }
-            .button { display: inline-block; background: #7c3aed; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; margin-top: 20px; }
-            .footer { text-align: center; color: #7c3aed; font-size: 12px; margin-top: 20px; padding: 20px; }
-          </style>
-        </head>
+        <head><style>${BASE_STYLES}</style></head>
         <body>
-          <div class="container">
-            <div class="header">
-              <h1>Welcome to INTRN</h1>
-            </div>
-            <div class="content">
-              <h2>Hi ${firstName || 'there'},</h2>
-              <p>Welcome to <strong>INTRN</strong> - the platform that connects high school students with internship opportunities</p>
-              <p>Here's what you can do now:</p>
-              <ul>
-                <li><strong>Complete your profile</strong> - Add your skills, interests, and academic details</li>
-                <li><strong>Browse internships</strong> - Explore opportunities from various companies</li>
-                <li><strong>Apply</strong> - Submit applications with your cover letter</li>
-              </ul>
-              <p>We're excited to help you kickstart your career journey</p>
-              <a href="https://internhub.replit.app/internships" class="button">Explore Internships</a>
-            </div>
-            <div class="footer">
-              <p>© 2024 INTRN - Internships for High Schoolers</p>
-              <p>This email was sent because you signed up on INTRN</p>
+          <div class="wrapper">
+            <div class="container">
+              <div class="header">
+                <h1>Welcome to INTRN 🎓</h1>
+                <p>Real internships for high school students</p>
+              </div>
+              <div class="content">
+                <h2>Hey ${firstName || 'there'}, you're officially in!</h2>
+                <p>You've just joined a platform built specifically for high schoolers like you — where you can get real work experience, build your CV, and actually impress future universities and employers.</p>
+                <p>Here's how to get started:</p>
+                <ul>
+                  <li><strong>Browse internships</strong> — 9 hand-picked opportunities across marketing, research, design, and more</li>
+                  <li><strong>Apply in minutes</strong> — just a cover letter, no CV needed</li>
+                  <li><strong>Track your applications</strong> — see updates directly in your dashboard</li>
+                </ul>
+                <div class="btn-wrap">
+                  <a href="https://intrn.xyz/search" class="button">Browse Internships →</a>
+                </div>
+                <hr class="divider" />
+                <p style="font-size: 13px; color: #6b7280; margin: 0;">Questions? Just reply to this email — we're a small team and we actually read them.</p>
+              </div>
+              <div class="footer">
+                <p>© 2025 INTRN — Internships for High Schoolers</p>
+                <p>You're receiving this because you signed up at intrn.xyz</p>
+              </div>
             </div>
           </div>
         </body>
         </html>
       `
     });
-    
-    console.log(`Welcome email result:`, JSON.stringify(result));
+
     console.log(`Welcome email sent to ${to}`);
     return true;
   } catch (error) {
@@ -107,9 +117,72 @@ export async function sendWelcomeEmail(to: string, firstName: string): Promise<b
   }
 }
 
-// Send application acceptance email with confirmation link
+// ─── 2. Application Received Email ──────────────────────────────────────────
+export async function sendApplicationReceivedEmail(
+  to: string,
+  firstName: string,
+  internshipTitle: string,
+  companyName: string
+): Promise<boolean> {
+  try {
+    const { client } = await getResendClient();
+
+    await client.emails.send({
+      from: 'INTRN <team@intrn.xyz>',
+      to: [to],
+      subject: `Got it! ✅ Your application to ${companyName} is under review`,
+      html: `
+        <!DOCTYPE html>
+        <html>
+        <head><style>${BASE_STYLES}</style></head>
+        <body>
+          <div class="wrapper">
+            <div class="container">
+              <div class="header">
+                <h1>Application Received 📨</h1>
+                <p>You're one step closer to your first internship</p>
+              </div>
+              <div class="content">
+                <h2>Nice work, ${firstName || 'there'}!</h2>
+                <p>Your application has been submitted and is now under review. Here's what you applied for:</p>
+                <div class="highlight">
+                  <p><strong>📋 Role:</strong> ${internshipTitle}</p>
+                  <p><strong>🏢 Company:</strong> ${companyName}</p>
+                  <p><strong>📅 Status:</strong> Under Review</p>
+                </div>
+                <p>What happens next:</p>
+                <ul>
+                  <li>The INTRN team reviews your application first</li>
+                  <li>If selected, the company will be introduced to you</li>
+                  <li>You'll get an email the moment there's an update</li>
+                </ul>
+                <div class="btn-wrap">
+                  <a href="https://intrn.xyz/dashboard" class="button">Track Your Application →</a>
+                </div>
+                <p style="font-size: 13px; color: #6b7280; margin: 0;">In the meantime, keep applying — students who apply to more internships have a much better shot.</p>
+              </div>
+              <div class="footer">
+                <p>© 2025 INTRN — Internships for High Schoolers</p>
+                <p>You're receiving this because you applied for an internship on intrn.xyz</p>
+              </div>
+            </div>
+          </div>
+        </body>
+        </html>
+      `
+    });
+
+    console.log(`Application received email sent to ${to}`);
+    return true;
+  } catch (error) {
+    console.error('Failed to send application received email:', error);
+    return false;
+  }
+}
+
+// ─── 3. Application Accepted Email ──────────────────────────────────────────
 export async function sendApplicationAcceptedEmail(
-  to: string, 
+  to: string,
   firstName: string,
   internshipTitle: string,
   companyName: string,
@@ -117,147 +190,60 @@ export async function sendApplicationAcceptedEmail(
   baseUrl: string
 ): Promise<boolean> {
   try {
-    const { client, fromEmail } = await getResendClient();
+    const { client } = await getResendClient();
     const confirmationLink = `${baseUrl}/api/applications/confirm/${confirmationToken}`;
-    
-    // Use verified intrn.xyz domain
-    const senderEmail = 'INTRN <team@intrn.xyz>';
-    console.log(`Sending acceptance email from: ${senderEmail} to: ${to}`);
-    
-    const result = await client.emails.send({
-      from: senderEmail,
+
+    await client.emails.send({
+      from: 'INTRN <team@intrn.xyz>',
       to: [to],
-      subject: `🎉 Congratulations! Your Application Has Been Accepted - ${internshipTitle}`,
+      subject: `🎉 You've been accepted, ${firstName || 'there'}! One quick step left`,
       html: `
         <!DOCTYPE html>
         <html>
-        <head>
-          <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: linear-gradient(135deg, #10b981, #34d399); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
-            .content { background: #f9fafb; padding: 30px; border-radius: 0 0 10px 10px; }
-            .highlight { background: #ecfdf5; border-left: 4px solid #10b981; padding: 15px; margin: 20px 0; }
-            .button { display: inline-block; background: #10b981; color: white; padding: 15px 40px; text-decoration: none; border-radius: 5px; margin-top: 20px; font-weight: bold; font-size: 16px; }
-            .footer { text-align: center; color: #666; font-size: 12px; margin-top: 20px; }
-            .important { color: #dc2626; font-weight: bold; }
-          </style>
-        </head>
+        <head><style>${BASE_STYLES}
+          .accepted-header { background: linear-gradient(135deg, #7c3aed, #9333ea); }
+          .confirm-box { background: #f5f3ff; border: 1px solid #ddd6fe; border-radius: 10px; padding: 24px; text-align: center; margin: 24px 0; }
+          .confirm-box p { color: #374151; margin: 0 0 16px; font-size: 15px; }
+        </style></head>
         <body>
-          <div class="container">
-            <div class="header">
-              <h1>🎉 Congratulations!</h1>
-              <p>Your Application Has Been Accepted!</p>
-            </div>
-            <div class="content">
-              <h2>Hi ${firstName || 'there'}!</h2>
-              <p>We are thrilled to inform you that your application for the internship has been <strong>accepted</strong>!</p>
-              
-              <div class="highlight">
-                <p><strong>📋 Position:</strong> ${internshipTitle}</p>
-                <p><strong>🏢 Company:</strong> ${companyName}</p>
+          <div class="wrapper">
+            <div class="container">
+              <div class="header accepted-header">
+                <h1>🎉 You're Accepted!</h1>
+                <p>Congratulations — your hard work paid off</p>
               </div>
-              
-              <p class="important">⚠️ Important: Please confirm your acceptance by clicking the button below:</p>
-              
-              <center>
-                <a href="${confirmationLink}" class="button">✅ Confirm My Acceptance</a>
-              </center>
-              
-              <p style="margin-top: 30px;">By confirming, you agree to participate in this internship opportunity. The company will be notified and will reach out to you with next steps.</p>
-              
-              <p>If you have any questions, feel free to reach out to us!</p>
-              
-              <p>Best of luck on your internship journey!</p>
-              <p><strong>The INTRN Team</strong></p>
-            </div>
-            <div class="footer">
-              <p>© 2024 INTRN - Internships for High Schoolers</p>
-              <p>This email was sent because you applied for an internship on INTRN.</p>
+              <div class="content">
+                <h2>Amazing news, ${firstName || 'there'}!</h2>
+                <p>Your application has been accepted. Here are the details:</p>
+                <div class="highlight">
+                  <p><strong>📋 Role:</strong> ${internshipTitle}</p>
+                  <p><strong>🏢 Company:</strong> ${companyName}</p>
+                </div>
+                <div class="confirm-box">
+                  <p>To lock in your spot, please confirm your acceptance below. <strong>You have 48 hours</strong> before this offer expires.</p>
+                  <a href="${confirmationLink}" class="button">Confirm My Acceptance ✅</a>
+                </div>
+                <p>Once you confirm, the company will be notified and will reach out to you directly with next steps — expect to hear from them within a few days.</p>
+                <p>You've earned this. Good luck! 🚀</p>
+                <p><strong>The INTRN Team</strong></p>
+                <hr class="divider" />
+                <p style="font-size: 12px; color: #9ca3af; margin: 0;">If the button doesn't work, copy and paste this link: <span style="color: #7c3aed;">${confirmationLink}</span></p>
+              </div>
+              <div class="footer">
+                <p>© 2025 INTRN — Internships for High Schoolers</p>
+                <p>You're receiving this because you applied for an internship on intrn.xyz</p>
+              </div>
             </div>
           </div>
         </body>
         </html>
       `
     });
-    
-    console.log(`Application accepted email result:`, JSON.stringify(result));
+
     console.log(`Application accepted email sent to ${to}`);
     return true;
   } catch (error) {
     console.error('Failed to send application accepted email:', error);
-    return false;
-  }
-}
-
-// Send notification when student applies to an internship
-export async function sendApplicationReceivedEmail(
-  to: string, 
-  firstName: string,
-  internshipTitle: string,
-  companyName: string
-): Promise<boolean> {
-  try {
-    const { client, fromEmail } = await getResendClient();
-    
-    // Use verified intrn.xyz domain
-    const senderEmail = 'INTRN <team@intrn.xyz>';
-    
-    await client.emails.send({
-      from: senderEmail,
-      to: [to],
-      subject: `Application Received - ${internshipTitle} at ${companyName}`,
-      html: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: linear-gradient(135deg, #7c3aed, #a855f7); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
-            .content { background: #f9fafb; padding: 30px; border-radius: 0 0 10px 10px; }
-            .highlight { background: #f3e8ff; border-left: 4px solid #7c3aed; padding: 15px; margin: 20px 0; }
-            .footer { text-align: center; color: #666; font-size: 12px; margin-top: 20px; }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="header">
-              <h1>📨 Application Received!</h1>
-            </div>
-            <div class="content">
-              <h2>Hi ${firstName || 'there'}!</h2>
-              <p>Thank you for applying! We've received your internship application.</p>
-              
-              <div class="highlight">
-                <p><strong>📋 Position:</strong> ${internshipTitle}</p>
-                <p><strong>🏢 Company:</strong> ${companyName}</p>
-                <p><strong>📅 Status:</strong> Under Review</p>
-              </div>
-              
-              <p>What happens next:</p>
-              <ul>
-                <li>The company will review your application</li>
-                <li>You'll receive an email if you're selected</li>
-                <li>You can track your application status on INTRN</li>
-              </ul>
-              
-              <p>Good luck!</p>
-              <p><strong>The INTRN Team</strong></p>
-            </div>
-            <div class="footer">
-              <p>© 2024 INTRN - Internships for High Schoolers</p>
-            </div>
-          </div>
-        </body>
-        </html>
-      `
-    });
-    
-    console.log(`Application received email sent to ${to}`);
-    return true;
-  } catch (error) {
-    console.error('Failed to send application received email:', error);
     return false;
   }
 }
