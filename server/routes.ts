@@ -43,6 +43,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Import and call new company internships seeding (Kebabsmith + Chandrani Pearls)
   const { seedNewCompanyInternships } = await import("./seed-new-companies");
   await seedNewCompanyInternships();
+
+  // Fix manually-created internships (Wisdom Tree, INTRN) to correct format/location/duration
+  const { seedFixInternships } = await import("./seed-fix-internships");
+  await seedFixInternships();
   
   // Replit Auth user route
   app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
