@@ -711,39 +711,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
       ]);
 
       const baseUrl = `${req.protocol}://${req.get("host")}`;
-      const now = new Date().toISOString().split("T")[0];
+
+      const toDate = (d: Date | null | undefined): string | null =>
+        d ? new Date(d).toISOString().split("T")[0] : null;
 
       const staticUrls = [
-        { loc: "/", priority: "1.0", changefreq: "daily" },
-        { loc: "/search", priority: "0.9", changefreq: "daily" },
-        { loc: "/blog", priority: "0.8", changefreq: "weekly" },
-        { loc: "/company-info", priority: "0.7", changefreq: "monthly" },
-        { loc: "/help", priority: "0.5", changefreq: "monthly" },
+        { loc: "/", priority: "1.0", changefreq: "daily", lastmod: null },
+        { loc: "/search", priority: "0.9", changefreq: "daily", lastmod: null },
+        { loc: "/blog", priority: "0.8", changefreq: "weekly", lastmod: null },
+        { loc: "/company-info", priority: "0.7", changefreq: "monthly", lastmod: null },
+        { loc: "/help", priority: "0.5", changefreq: "monthly", lastmod: null },
       ];
 
       const internshipUrls = internships.map((i) => ({
         loc: `/internship/${i.id}`,
         priority: "0.8",
         changefreq: "weekly",
+        lastmod: toDate((i as any).updatedAt ?? (i as any).createdAt),
       }));
 
       const blogUrls = blogPosts.map((p) => ({
         loc: `/blog/${p.slug}`,
         priority: "0.7",
         changefreq: "monthly",
+        lastmod: toDate((p as any).updatedAt ?? (p as any).createdAt),
       }));
 
       const allUrls = [...staticUrls, ...internshipUrls, ...blogUrls];
 
       const urlElements = allUrls
-        .map(
-          (u) => `  <url>
-    <loc>${baseUrl}${u.loc}</loc>
-    <lastmod>${now}</lastmod>
+        .map((u) => {
+          const lastmodTag = u.lastmod ? `\n    <lastmod>${u.lastmod}</lastmod>` : "";
+          return `  <url>
+    <loc>${baseUrl}${u.loc}</loc>${lastmodTag}
     <changefreq>${u.changefreq}</changefreq>
     <priority>${u.priority}</priority>
-  </url>`,
-        )
+  </url>`;
+        })
         .join("\n");
 
       const xml = `<?xml version="1.0" encoding="UTF-8"?>
