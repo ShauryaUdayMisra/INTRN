@@ -141,6 +141,7 @@ export default function InternshipDetail() {
 
   const internshipImage = getInternshipImage(internship.title);
   const isLogo = isLogoImage(internship.title);
+  const headerCompanyName = internship.description.split('\n')[0];
 
   const isRemote = internship.type === "remote" || internship.type === "online";
 
@@ -207,9 +208,9 @@ export default function InternshipDetail() {
             
             {/* Title and Company Info */}
             <div className="flex-1">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">{internship.title}</h1>
+              <h1 className="text-3xl font-bold text-gray-900 mb-1">{headerCompanyName}</h1>
+              <p className="text-xl text-gray-700 mb-3">{internship.title}</p>
               <div className="flex items-center gap-4 text-lg text-gray-600 mb-4">
-                <span className="font-medium">{company?.companyName || "Company"}</span>
                 <div className="flex items-center">
                   <MapPin className="w-4 h-4 mr-1" />
                   {internship.location}

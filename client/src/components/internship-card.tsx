@@ -101,6 +101,7 @@ export default function InternshipCard({ internship, showManage = false }: Inter
   const internshipImage = getInternshipImage(internship.title);
   const gradient = getTitleGradient(internship.title);
   const isLogo = isLogoImage(internship.title);
+  const companyName = internship.description.split('\n')[0];
 
   const handleCardClick = () => {
     if (isFilled) {
@@ -187,9 +188,12 @@ export default function InternshipCard({ internship, showManage = false }: Inter
       </div>
 
       <CardContent className="p-5 flex flex-col flex-1">
-        <h3 className="font-semibold text-gray-900 text-lg leading-snug mb-3 line-clamp-2">
-          {internship.title}
+        <h3 className="font-semibold text-gray-900 text-lg leading-snug line-clamp-2">
+          {companyName}
         </h3>
+        <p className="text-gray-600 text-sm mt-1 mb-3 line-clamp-2">
+          {internship.title}
+        </p>
 
         <div className="space-y-1.5 mb-3">
           <div className="flex items-center text-gray-600 text-sm">

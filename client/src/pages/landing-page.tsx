@@ -287,7 +287,8 @@ export default function LandingPage() {
                       )}
                     </div>
                     <div className="p-5">
-                      <h3 className="font-bold text-gray-900 mb-2 line-clamp-1 text-sm">{internship.title}</h3>
+                      <h3 className="font-bold text-gray-900 line-clamp-1 text-sm">{internship.description.split('\n')[0]}</h3>
+                      <p className="text-gray-600 text-xs line-clamp-1 mt-0.5 mb-2">{internship.title}</p>
                       <div className="flex items-center gap-3 text-xs text-gray-500 mb-3">
                         <span className="flex items-center gap-1">
                           <MapPin className="w-3 h-3" />
