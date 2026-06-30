@@ -1,7 +1,6 @@
 import rippleImage from "@assets/generated_images/card-webp/ripple.webp";
 import kebabLogo from "@assets/kebabsmith-logo.png";
-import chandPearlImage from "@assets/generated_images/card-webp/elegant_white_and_cream_7a6c.webp";
-import chandGenZImage from "@assets/generated_images/card-webp/mood_board_aesthetic_trendy_1748.webp";
+import chandraniLogo from "@assets/chandrani-logo.png";
 import preludeImage from "@assets/generated_images/card-webp/professional_flat_lay_of_56ea.webp";
 import contentWritingImage from "@assets/generated_images/card-webp/cozy_editorial_writing_workspace_769a.webp";
 import platformOpsImage from "@assets/generated_images/card-webp/modern_marketing_operations_dashboard_3b5c.webp";
@@ -15,8 +14,8 @@ export const internshipImages: Record<string, string> = {
   "Social Media & Content Intern for a Luxury Mountain Homestay": birTerracesImage,
   "Market Research Intern for a Healthy Frozen-Food Brand": kebabLogo,
   "Social Media Content Intern for a Healthy Food Brand": kebabLogo,
-  "Content Design Intern for a Heritage Jewellery Brand": chandPearlImage,
-  "Trend Research Intern for a Luxury Jewellery Brand": chandGenZImage,
+  "Content Design Intern for a Heritage Jewellery Brand": chandraniLogo,
+  "Trend Research Intern for a Luxury Jewellery Brand": chandraniLogo,
 };
 
 export function getInternshipImage(title: string): string | undefined {
@@ -26,6 +25,8 @@ export function getInternshipImage(title: string): string | undefined {
 const logoTitles = new Set<string>([
   "Market Research Intern for a Healthy Frozen-Food Brand",
   "Social Media Content Intern for a Healthy Food Brand",
+  "Content Design Intern for a Heritage Jewellery Brand",
+  "Trend Research Intern for a Luxury Jewellery Brand",
 ]);
 
 export function isLogoImage(title: string): boolean {
