@@ -11,7 +11,7 @@ import { Internship } from "@shared/schema";
 import { useLocation } from "wouter";
 import { MapPin, Clock, Heart, Edit, Eye } from "lucide-react";
 import { useState } from "react";
-import { getInternshipImage, getTitleGradient } from "@/lib/internship-images";
+import { getInternshipImage, getTitleGradient, isLogoImage } from "@/lib/internship-images";
 
 interface InternshipCardProps {
   internship: Internship;
@@ -100,6 +100,7 @@ export default function InternshipCard({ internship, showManage = false }: Inter
 
   const internshipImage = getInternshipImage(internship.title);
   const gradient = getTitleGradient(internship.title);
+  const isLogo = isLogoImage(internship.title);
 
   const handleCardClick = () => {
     if (isFilled) {
@@ -151,7 +152,7 @@ export default function InternshipCard({ internship, showManage = false }: Inter
           <img
             src={internshipImage}
             alt={internship.title}
-            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            className={`h-full w-full transition-transform duration-300 group-hover:scale-105 ${isLogo ? "object-contain bg-white p-4" : "object-cover"}`}
             loading="lazy"
             decoding="async"
             width="400"

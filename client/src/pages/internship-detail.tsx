@@ -22,7 +22,7 @@ import {
   Briefcase,
   GraduationCap
 } from "lucide-react";
-import { getInternshipImage } from "@/lib/internship-images";
+import { getInternshipImage, isLogoImage } from "@/lib/internship-images";
 
 type Internship = {
   id: number;
@@ -140,6 +140,7 @@ export default function InternshipDetail() {
   };
 
   const internshipImage = getInternshipImage(internship.title);
+  const isLogo = isLogoImage(internship.title);
 
   const isRemote = internship.type === "remote" || internship.type === "online";
 
@@ -195,7 +196,7 @@ export default function InternshipDetail() {
                 <img 
                   src={internshipImage}
                   alt={internship.title}
-                  className="w-20 h-20 rounded-xl object-cover border-2 border-gray-200"
+                  className={`w-20 h-20 rounded-xl border-2 border-gray-200 ${isLogo ? "object-contain bg-white p-1.5" : "object-cover"}`}
                 />
               ) : (
                 <div className="w-20 h-20 bg-primary/10 rounded-xl flex items-center justify-center">

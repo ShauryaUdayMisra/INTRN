@@ -4,3 +4,4 @@
 - [Admin dashboard](admin-dashboard.md) — two admin pages (/admin user-facing, /admin-backend mgmt); gate by isSpecialAdmin; use /api/admin/internships (all) not /api/internships (active-only) for admin totals.
 - [Admin-only application fields](admin-only-fields.md) — adminStatus & other internal app columns leak via GET /api/applications unless stripped server-side; UI omission is not enough.
 - [Internship seed reverts](internship-seed-reverts.md) — startup seed scripts in server/seed-*.ts overwrite manual DB edits to internships on every restart; edit the seed files, not just the DB.
+- [tsc vs build](tsc-vs-build.md) — repo has pre-existing tsc errors that don't block dev/build; use npm run build as the real gate, ignore backend/detail-page noise.

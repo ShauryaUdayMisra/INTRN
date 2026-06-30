@@ -1,6 +1,5 @@
 import rippleImage from "@assets/generated_images/card-webp/ripple.webp";
-import kebabSnackImage from "@assets/generated_images/card-webp/flat_lay_of_colorful_512a.webp";
-import kebabSocialImage from "@assets/generated_images/card-webp/young_person_at_a_c315.webp";
+import kebabLogo from "@assets/kebabsmith-logo.png";
 import chandPearlImage from "@assets/generated_images/card-webp/elegant_white_and_cream_7a6c.webp";
 import chandGenZImage from "@assets/generated_images/card-webp/mood_board_aesthetic_trendy_1748.webp";
 import preludeImage from "@assets/generated_images/card-webp/professional_flat_lay_of_56ea.webp";
@@ -14,14 +13,23 @@ export const internshipImages: Record<string, string> = {
   "Content Writing & Editorial Intern for a School Brand": contentWritingImage,
   "Operations & Marketing Intern for a Student Internship Startup": platformOpsImage,
   "Social Media & Content Intern for a Luxury Mountain Homestay": birTerracesImage,
-  "Market Research Intern for a Healthy Frozen-Food Brand": kebabSnackImage,
-  "Social Media Content Intern for a Healthy Food Brand": kebabSocialImage,
+  "Market Research Intern for a Healthy Frozen-Food Brand": kebabLogo,
+  "Social Media Content Intern for a Healthy Food Brand": kebabLogo,
   "Content Design Intern for a Heritage Jewellery Brand": chandPearlImage,
   "Trend Research Intern for a Luxury Jewellery Brand": chandGenZImage,
 };
 
 export function getInternshipImage(title: string): string | undefined {
   return internshipImages[title];
+}
+
+const logoTitles = new Set<string>([
+  "Market Research Intern for a Healthy Frozen-Food Brand",
+  "Social Media Content Intern for a Healthy Food Brand",
+]);
+
+export function isLogoImage(title: string): boolean {
+  return logoTitles.has(title);
 }
 
 const tileGradients = [

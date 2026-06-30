@@ -7,7 +7,7 @@ import { useEffect, useState, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useLocation } from "wouter";
 import { ArrowRight, Sparkles, GraduationCap, Briefcase, BookOpen, Rocket, Building, Clock, MapPin } from "lucide-react";
-import { getInternshipImage, getTitleGradient } from "@/lib/internship-images";
+import { getInternshipImage, getTitleGradient, isLogoImage } from "@/lib/internship-images";
 
 // Custom Diploma Scroll Icon Component (based on attached image)
 const DiplomaIcon = ({ className }: { className?: string }) => (
@@ -270,6 +270,7 @@ export default function LandingPage() {
               {previewInternships.map((internship: any) => {
                 const image = getInternshipImage(internship.title);
                 const gradient = getTitleGradient(internship.title);
+                const isLogo = isLogoImage(internship.title);
                 return (
                   <Link
                     key={internship.id}
@@ -278,7 +279,7 @@ export default function LandingPage() {
                   >
                     <div className="relative h-36 overflow-hidden">
                       {image ? (
-                        <img src={image} alt={internship.title} className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" decoding="async" width="400" height="144" />
+                        <img src={image} alt={internship.title} className={`h-full w-full group-hover:scale-105 transition-transform duration-500 ${isLogo ? "object-contain bg-white p-4" : "object-cover"}`} loading="lazy" decoding="async" width="400" height="144" />
                       ) : (
                         <div className={`h-full w-full bg-gradient-to-br ${gradient} flex items-center justify-center`}>
                           <Building className="w-12 h-12 text-white/60" />
