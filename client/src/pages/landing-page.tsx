@@ -68,7 +68,17 @@ export default function LandingPage() {
   const { data: internships } = useQuery<any[]>({
     queryKey: ["/api/internships"],
   });
-  const previewInternships = (internships ?? []).slice(0, 3);
+  const previewInternships = (() => {
+    const preferredCompanies = ["chandrani pearls", "bir terraces", "ripples of hope"];
+    const all = internships ?? [];
+    const companyOf = (i: any) => (i.description ?? "").split("\n")[0].trim().toLowerCase();
+    const picked: any[] = [];
+    for (const name of preferredCompanies) {
+      const match = all.find((i) => companyOf(i) === name);
+      if (match) picked.push(match);
+    }
+    return picked;
+  })();
 
   useSeo({
     title: "INTRN — Internships for Highschoolers",
