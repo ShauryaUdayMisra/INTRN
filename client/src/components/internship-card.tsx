@@ -25,7 +25,7 @@ export default function InternshipCard({ internship, showManage = false }: Inter
   const [isFavorite, setIsFavorite] = useState(false);
   const [showFilledDialog, setShowFilledDialog] = useState(false);
 
-  const isFilled = internship.id === 238;
+  const isFilled = [238, 241, 242].includes(internship.id);
 
   const applyMutation = useMutation({
     mutationFn: async () => {
