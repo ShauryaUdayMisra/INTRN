@@ -310,7 +310,6 @@ async function renderInternshipDetail(id: string): Promise<string | null> {
     title: internship.title,
     description: internship.description,
     datePosted: internship.createdAt,
-    ...(internship.applicationDeadline && { validThrough: internship.applicationDeadline }),
     employmentType: "INTERN",
     ...(Array.isArray(internship.skills) && internship.skills.length && {
       skills: (internship.skills as string[]).join(", "),
@@ -334,22 +333,12 @@ async function renderInternshipDetail(id: string): Promise<string | null> {
       ? `<p><strong>Skills:</strong> ${(internship.skills as string[]).map(esc).join(", ")}</p>`
       : "";
 
-  const deadlineBlock = internship.applicationDeadline && safeDate(internship.applicationDeadline)
-    ? `<p><strong>Application Deadline:</strong> ${safeDate(internship.applicationDeadline)}</p>`
-    : "";
-
-  const startBlock = internship.startDate && safeDate(internship.startDate)
-    ? `<p><strong>Start Date:</strong> ${safeDate(internship.startDate)}</p>`
-    : "";
-
   const body = `
   <header>
     <h1>${esc(internship.title)}</h1>
     <p><strong>${esc(companyName)}</strong> &mdash; ${esc(internship.location)}</p>
     <p><strong>Type:</strong> ${esc(internship.type)}${internship.duration ? ` &mdash; <strong>Duration:</strong> ${esc(internship.duration)}` : ""}</p>
     ${company?.companyField ? `<p><strong>Field:</strong> ${esc(company.companyField)}</p>` : ""}
-    ${deadlineBlock}
-    ${startBlock}
   </header>
   <main>
     <section>

@@ -1,5 +1,5 @@
 import { db } from "./db";
-import { internships } from "@shared/schema";
+import { internships, users } from "@shared/schema";
 import { eq } from "drizzle-orm";
 
 // These two internships were created manually (no owning seed script), so they
@@ -50,6 +50,14 @@ Be part of the INTRN team and help shape the future of internship opportunities 
         console.log(`🔄 Fixed internship: ${fix.title}`);
       }
     }
+
+    // The INTRN Platform company had a fake placeholder website
+    // (internhub.com). Clear it so no false link is shown on its listing.
+    await db
+      .update(users)
+      .set({ website: null })
+      .where(eq(users.companyName, "INTRN Platform"));
+    console.log("🔄 Cleared fake website for INTRN Platform");
 
     console.log("✅ Manually-created internships fixed!");
   } catch (error) {

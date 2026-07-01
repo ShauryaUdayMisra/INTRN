@@ -12,7 +12,6 @@ import { useToast } from "@/hooks/use-toast";
 import { 
   MapPin, 
   Clock, 
-  Calendar, 
   Users, 
   Building, 
   Globe, 
@@ -151,7 +150,6 @@ export default function InternshipDetail() {
     title: internship.title,
     description: internship.description,
     datePosted: internship.createdAt,
-    ...(internship.applicationDeadline && { validThrough: internship.applicationDeadline }),
     employmentType: "INTERN",
     ...(internship.skills?.length && { skills: internship.skills.join(", ") }),
     hiringOrganization: {
@@ -382,29 +380,6 @@ export default function InternshipDetail() {
                   </div>
                 </div>
 
-                {internship.applicationDeadline && (
-                  <div className="flex items-start gap-3">
-                    <Calendar className="w-5 h-5 text-gray-400 mt-0.5" />
-                    <div>
-                      <p className="font-medium text-sm">Application Deadline</p>
-                      <p className="text-gray-600">
-                        {new Date(internship.applicationDeadline).toLocaleDateString()}
-                      </p>
-                    </div>
-                  </div>
-                )}
-
-                {internship.startDate && (
-                  <div className="flex items-start gap-3">
-                    <Calendar className="w-5 h-5 text-gray-400 mt-0.5" />
-                    <div>
-                      <p className="font-medium text-sm">Start Date</p>
-                      <p className="text-gray-600">
-                        {new Date(internship.startDate).toLocaleDateString()}
-                      </p>
-                    </div>
-                  </div>
-                )}
               </CardContent>
             </Card>
           </div>
