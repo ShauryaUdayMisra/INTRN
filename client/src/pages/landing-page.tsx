@@ -69,7 +69,7 @@ export default function LandingPage() {
     queryKey: ["/api/internships"],
   });
   const previewInternships = (() => {
-    const preferredCompanies = ["chandrani pearls", "bir terraces", "ripples of hope"];
+    const preferredCompanies = ["chandrani pearls", "bir terraces", "l'angélus"];
     const all = internships ?? [];
     const companyOf = (i: any) => (i.description ?? "").split("\n")[0].trim().toLowerCase();
     const picked: any[] = [];
