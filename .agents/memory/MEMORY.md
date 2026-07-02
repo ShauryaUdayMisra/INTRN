@@ -5,3 +5,4 @@
 - [Admin-only application fields](admin-only-fields.md) — adminStatus & other internal app columns leak via GET /api/applications unless stripped server-side; UI omission is not enough.
 - [Internship seed reverts](internship-seed-reverts.md) — startup seed scripts in server/seed-*.ts overwrite manual DB edits to internships on every restart; edit the seed files, not just the DB.
 - [tsc vs build](tsc-vs-build.md) — repo has pre-existing tsc errors that don't block dev/build; use npm run build as the real gate, ignore backend/detail-page noise.
+- [Neon INSERT + type bug](neon-insert-bug.md) — poolQueryViaFetch=true breaks boolean/array deserialization AND crashes plain INSERT; fix: remove that flag so Pool uses WebSocket.

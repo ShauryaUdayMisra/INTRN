@@ -44,6 +44,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   const { seedNewCompanyInternships } = await import("./seed-new-companies");
   await seedNewCompanyInternships();
 
+  // Import and call Singapore restaurant internships seeding
+  const { seedSingaporeRestaurants } = await import("./seed-singapore-restaurants");
+  await seedSingaporeRestaurants();
+
   // Fix manually-created internships (Wisdom Tree, INTRN) to correct format/location/duration
   const { seedFixInternships } = await import("./seed-fix-internships");
   await seedFixInternships();

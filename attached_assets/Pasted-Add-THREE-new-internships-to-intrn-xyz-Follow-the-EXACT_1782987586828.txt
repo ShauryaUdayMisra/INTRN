@@ -1,0 +1,155 @@
+Add THREE new internships to intrn.xyz. Follow the EXACT same structure, layout, 
+component and styling as the existing internship at intrn.xyz/internship/240 
+(Bir Terraces). Same sections in the same order: hero (company name, role title, 
+Online location pin, tag badges), "About This Internship", "Key Details" 
+(Duration / Location / Type), "Requirements & Skills" (paragraph + skill tag 
+pills), and "About [Company]" (Industry / Location / Website). Keep the violet 
+accent. Each internship gets its own detail page like /internship/[id]. Add them 
+to the same data source that powers the existing internships. Do not redesign 
+anything, just add these three entries.
+
+British spelling in all copy. No em dashes. The "About This Internship" copy 
+below is final marketing copy, use it as written.
+
+======================================================================
+INTERNSHIP 1
+======================================================================
+Company name: L'Angélus
+Role title: Marketing & Social Strategy Intern for Singapore's Oldest French Restaurant
+Location pin: Online
+Top tag badges: Online | 3 weeks | Marketing
+Tagline (violet link style): A French institution on Club Street since 1998
+Company based in: Singapore
+
+About This Internship:
+L'Angélus has been serving proper French food on Club Street since 1998, which 
+makes it the oldest single-location French restaurant in Singapore. Escargot in 
+clay pots, duck confit, crêpes suzette flambéed at your table. It is a genuine 
+Singapore institution with a real story to tell, and that story deserves a much 
+bigger audience.
+
+You will dig into how L'Angélus stacks up against every other French restaurant 
+in Singapore. You will map the competition, work out where they win on price and 
+rating, and audit how they show up on Google and Google Maps when someone 
+searches "French restaurant Singapore". Then you will study exactly what is 
+working on Instagram and TikTok for their rivals and turn it into a social media 
+plan they can actually run.
+
+By the end you will have built a full growth and social strategy for a real 
+Singapore landmark, the kind of named, concrete project that stands out on any 
+application. Fully online, three weeks. Perfect if you love food, brands, and 
+working out what makes people choose one place over another.
+
+Requirements & Skills (paragraph):
+No experience needed, we will guide you the whole way. What matters is curiosity 
+about brands and social media, comfort using Google and a simple spreadsheet, 
+and a good eye for what makes content work. Bonus if you already mess around with 
+Instagram, TikTok or Canva.
+
+Skill tag pills: Market Research | Social Media | SEO | Competitor Analysis | Content Strategy | Canva
+
+About L'Angélus:
+Industry: Food & Beverage
+Location: Singapore
+Website: https://www.langelus.sg
+
+======================================================================
+INTERNSHIP 2
+======================================================================
+Company name: Les Bouchons
+Role title: Growth Strategy Intern for a French Steakhouse across Singapore & Malaysia
+Location pin: Online
+Top tag badges: Online | 3 weeks | Marketing
+Tagline (violet link style): The "King of Steak Frites", five outlets across Singapore, Johor Bahru and Kuala Lumpur
+Company based in: Singapore, with outlets across Malaysia
+
+About This Internship:
+Les Bouchons is the self-proclaimed King of Steak Frites, and it has earned the 
+title. Since 2002 it has grown from one shophouse on Ann Siang Road in Singapore 
+into five outlets across Singapore, Johor Bahru and Kuala Lumpur, all built on 
+perfectly grilled steak, free-flow homemade fries and hand-picked French wine.
+
+This one is a proper challenge because you will work across two countries. You 
+will map the steakhouse competition in Singapore and in Malaysia separately, work 
+out where Les Bouchons sits on price and rating, and audit all five outlets' 
+Google Maps listings so they show up when someone searches "best steak near me" 
+in any of their cities. You will break down what is winning on socials for the 
+biggest steakhouses and build them one content formula they can run everywhere.
+
+You will finish with a real multi-market growth strategy for a restaurant group, 
+exactly the kind of work most people do not get to touch until university. Fully 
+online, three weeks. Ideal if you are into business, marketing, and food.
+
+Requirements & Skills (paragraph):
+No experience needed, we will train you. You just need to be curious, organised, 
+and happy to poke around Google Maps, spreadsheets and Instagram. Bonus if you 
+enjoy social media or have used Canva before.
+
+Skill tag pills: Market Research | Local SEO | Social Media | Competitor Analysis | Content Strategy | Google Maps
+
+About Les Bouchons:
+Industry: Food & Beverage
+Location: Singapore and Malaysia
+Website: https://www.lesbouchons.sg
+
+======================================================================
+INTERNSHIP 3
+======================================================================
+Company name: Tapas,24
+Role title: Digital Marketing Intern for a Michelin Chef's Spanish Tapas Bar in Singapore
+Location pin: Online
+Top tag badges: Online | 3 weeks | Marketing
+Tagline (violet link style): The first Asian outpost of Carles Abellán's legendary Barcelona tapas bar
+Company based in: Singapore
+
+About This Internship:
+Tapas,24 is the first Asian outpost of Carles Abellán's legendary Barcelona tapas 
+bar, dropped right on the Singapore River at Robertson Quay. Think sangria, 
+Spanish street cocktails, a roaring Josper grill and a Michelin-starred pedigree, 
+all in one of the most Instagrammable spots in Singapore.
+
+You will work out how Tapas,24 competes with every other Spanish and tapas spot 
+in Singapore, where it sits on price and rating, and how findable it is on Google 
+and Google Maps for searches like "tapas Singapore" and "best paella Singapore". 
+Then comes the fun part. You will study what is working on Instagram and TikTok 
+for the buzziest restaurants in the city and build a social plan that turns the 
+sangria, the grill and the riverside terrace into scroll-stopping content.
+
+This is the dream brief if you love social media and food, because the raw 
+material here is gold and mostly untapped. You will finish with a complete digital 
+and social strategy for a Michelin-chef restaurant in Singapore. Fully online, 
+three weeks.
+
+Requirements & Skills (paragraph):
+No experience needed, we will show you how. Bring a love of social media, a 
+creative eye, and a willingness to research properly. Bonus if you already make 
+content on Instagram or TikTok, or know your way around Canva.
+
+Skill tag pills: Social Media | Content Creation | Market Research | SEO | Instagram | TikTok
+
+About Tapas,24:
+Industry: Food & Beverage
+Location: Singapore
+Website: https://www.tapas24.sg
+
+======================================================================
+MAIN IMAGE FOR EACH INTERNSHIP
+======================================================================
+For each internship's main/hero image, use the restaurant's own logo pulled from 
+their official website (listed above). If you cannot fetch the logo, use a single 
+on-brand photo instead:
+- L'Angélus: a warm French bistro / escargot / Club Street shophouse shot from langelus.sg
+- Les Bouchons: a steak frites hero shot from lesbouchons.sg
+- Tapas,24: a tapas spread, sangria or the Robertson Quay riverside terrace from tapas24.sg
+Keep the image treatment identical to how the Bir Terraces image is displayed 
+(same shape, size and position in the hero).
+
+======================================================================
+GLOBAL NOTES
+======================================================================
+- Make sure "Singapore" appears clearly in the hero or About for all three, 
+  students care that these are Singapore restaurants.
+- Match the exact fonts, spacing, badge styles and card layout of 
+  /internship/240. These should look like they have always been on the site.
+- Give each its own working detail page and make sure they appear in 
+  Browse Internships.

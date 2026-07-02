@@ -1,6 +1,9 @@
 import rippleImage from "@assets/generated_images/card-webp/ripple.webp";
 import kebabLogo from "@assets/kebabsmith-logo.png";
 import chandraniLogo from "@assets/chandrani-logo.png";
+import langelusLogo from "@assets/langelus-logo.png";
+import lesbouchonsLogo from "@assets/lesbouchons-logo.png";
+import tapas24Logo from "@assets/tapas24-logo.png";
 import preludeImage from "@assets/generated_images/card-webp/professional_flat_lay_of_56ea.webp";
 import contentWritingImage from "@assets/generated_images/card-webp/cozy_editorial_writing_workspace_769a.webp";
 import platformOpsImage from "@assets/generated_images/card-webp/modern_marketing_operations_dashboard_3b5c.webp";
@@ -16,6 +19,9 @@ export const internshipImages: Record<string, string> = {
   "Social Media Content Intern for a Healthy Food Brand": kebabLogo,
   "Content Design Intern for a Heritage Jewellery Brand": chandraniLogo,
   "Trend Research Intern for a Luxury Jewellery Brand": chandraniLogo,
+  "Marketing & Social Strategy Intern for Singapore's Oldest French Restaurant": langelusLogo,
+  "Growth Strategy Intern for a French Steakhouse across Singapore & Malaysia": lesbouchonsLogo,
+  "Digital Marketing Intern for a Michelin Chef's Spanish Tapas Bar in Singapore": tapas24Logo,
 };
 
 export function getInternshipImage(title: string): string | undefined {
@@ -27,6 +33,9 @@ const logoTitles = new Set<string>([
   "Social Media Content Intern for a Healthy Food Brand",
   "Content Design Intern for a Heritage Jewellery Brand",
   "Trend Research Intern for a Luxury Jewellery Brand",
+  "Marketing & Social Strategy Intern for Singapore's Oldest French Restaurant",
+  "Growth Strategy Intern for a French Steakhouse across Singapore & Malaysia",
+  "Digital Marketing Intern for a Michelin Chef's Spanish Tapas Bar in Singapore",
 ]);
 
 export function isLogoImage(title: string): boolean {
