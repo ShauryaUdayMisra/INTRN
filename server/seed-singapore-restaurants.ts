@@ -6,10 +6,15 @@ import { execSync } from "child_process";
 // Neon serverless with poolQueryViaFetch=true silently fails on plain INSERT
 // (throws a JS error even though the row is written). We bypass Drizzle for
 // inserts and use psql directly, which works reliably.
+// We pipe SQL via stdin (-f -) to avoid any shell-escaping issues with
+// newlines or special characters in the SQL string.
 function psqlExec(sql: string) {
   const dbUrl = process.env.DATABASE_URL;
   if (!dbUrl) throw new Error("DATABASE_URL not set");
-  execSync(`psql "${dbUrl}" -c ${JSON.stringify(sql)}`, { stdio: "pipe" });
+  execSync(`psql ${JSON.stringify(dbUrl)} -f -`, {
+    input: sql,
+    stdio: ["pipe", "pipe", "pipe"],
+  });
 }
 
 export async function seedSingaporeRestaurants() {
